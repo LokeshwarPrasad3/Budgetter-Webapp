@@ -1,0 +1,66 @@
+TITLE: Budgetter
+
+1. housing_and_utilities:
+  - Room rent
+  - LPG gas
+  - Water bottle
+  - Broom
+  - Lock
+
+2. food:
+  - Buy mess food
+  - Maggie
+  - Chowmein
+  - Samosa
+
+3. groceries:
+  - Tomato
+  - Potato
+  - Onion
+  - Cabbage
+  - Wheat flour
+  - Rice
+  - Salt
+  - Turmeric powder
+  - Cumin
+  - Ghee
+
+4. health:
+  - Paracetamol
+  - Herbal supplements
+
+5. personal_care:
+  - Soap
+  - Toothbrush
+  - Skin cream/powder
+  - Hair oil
+  - Nail cutter
+
+6. transportation:
+  - Travel bus
+
+7. religious:
+  - Mosquito agarbatti
+  - Puja agarbatti
+
+8. stationery:
+  - Pen
+  - Copy
+
+9. electronics:
+  - Charger
+  - Earphone
+
+10. clothing_and_accessories:
+  - Shirt
+  - Pants
+  - Skirt
+
+11. entertainment: []
+
+12. miscellaneous: []
+
+BACKEND:
+
+1. User Model: username, name, email, image
+2. ExpensesModel: user, expenses:[ date:[{ productName, category, price }] ]

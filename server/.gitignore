@@ -1,0 +1,30 @@
+# Node.js dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Optional npm cache directory
+.npm/
+
+# IDE specific files (e.g., VSCode)
+.vscode/
+.idea/
+
+# Temporary folders
+tmp/
+temp/
+
+# Coverage directory used by testing tools like jest
+coverage/
