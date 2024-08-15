@@ -15,7 +15,8 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "mongoose": "^8.5.3"
   },
   "devDependencies": {
     "prettier": "^3.3.3"
