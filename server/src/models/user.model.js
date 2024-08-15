@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import bcrypt from "bcrypt";
 
 const UserSchema = new Schema({
     username: {
@@ -21,7 +22,9 @@ const UserSchema = new Schema({
         trim: true
     },
     avatar: {
+        // https://i.postimg.cc/3wZzNhHn/saotro-2.jpg
         type: String,
+        default: "https://i.postimg.cc/cCWKmfzs/satoro-1.jpg",
     },
     password: {
         type: String,
@@ -36,6 +39,16 @@ const UserSchema = new Schema({
 
 
 // before save password must be encrypted using bcrypt.js
-// password match when login
+UserSchema.pre("save", async function (next) {
+    // this refers to instance document
+    if (!this.isModified("password")) { next(); } // is there req to change password field of current document
+    this.password = await bcrypt.hash(this.password, 10); // before save input password hashed and modified in password field and then save
+    next();
+})
+
+// password match when login 
+UserSchema.methods.isPasswordMatch = async function (password) { // document data have method to access this new method
+    return bcrypt.compare(password, this.password); // user password and stored document password
+}
 
 export const User = mongoose.model("User", UserSchema)
