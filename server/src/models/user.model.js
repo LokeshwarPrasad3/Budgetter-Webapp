@@ -55,4 +55,5 @@ UserSchema.methods.isPasswordMatch = async function (password) { // document dat
     return bcrypt.compare(password, this.password); // user password and stored document password
 }
 
-export const User = mongoose.model("User", UserSchema)
+const User = mongoose.model("User", UserSchema)
+export default User;

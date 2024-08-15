@@ -43,4 +43,5 @@ function arrayLimit(val) {
     return val.length > 0;
 }
 
-export const Expense = mongoose.model("Expense", ExpensesSchema);
+const Expense = mongoose.model("Expense", ExpensesSchema);
+export default Expense;
