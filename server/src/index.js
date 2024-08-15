@@ -1,18 +1,15 @@
 import dotenv from "dotenv";
 dotenv.config({ path: ".env" })
 const PORT = process.env.PORT;
-
-
-import express from "express";
-const app = express();
+import { app } from "./app.js";
 
 
 
-app.get("/", (req, res) => {
-    res.status(200).json({ success: true });
+
+app.on("error", () => {
+    console.log("Error occured");
+    throw error
 })
-
-
 app.listen(PORT, () => {
     console.log(`Server Listen at ${PORT}`);
 })
