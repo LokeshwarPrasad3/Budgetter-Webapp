@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import UserModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export const registerUser = asyncHandler(async (req, res) => {
     const { username, name, email, password } = req.body;
@@ -99,5 +100,30 @@ export const resetPassword = asyncHandler(async (req, res) => {
     )
 })
 
+export const changeAvatar = asyncHandler(async (req, res) => {
+    const avatarFilePath = req.file?.path
+    console.log("avatarFilePath", avatarFilePath);
+    if (!avatarFilePath) {
+        throw new ApiError(400, "Avatar file required!!");
+    }
+    const avatar = await uploadOnCloudinary(avatarFilePath);
+    if (!avatar) {
+        throw new ApiError(400, "Failed to get url of avatar!!");
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(req.user._id, {
+        $set: {
+            avatar: avatar?.secure_url
+        }
+    },
+        { new: true }
+    ).select("avatar");
+    if (!updatedUser) {
+        throw new ApiError(500, "Avatar not updated!!");
+    }
+    res.status(201).json(
+        new ApiResponse(201, updatedUser, "Avatar changed successfully!")
+    )
+})
 
 
