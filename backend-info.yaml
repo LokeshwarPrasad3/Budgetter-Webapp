@@ -64,3 +64,9 @@ BACKEND:
 
 1. User Model: username, name, email, image
 2. ExpensesModel: user, expenses:[ date:[{ productName, category, price }] ]
+
+
+EMAIL FEATURES : 
+verify your email
+send password reset link
+send forgot password link

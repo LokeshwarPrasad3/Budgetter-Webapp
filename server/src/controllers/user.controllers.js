@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 import UserModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { sendMessageToUser } from "../utils/EmailSend.js";
 
 export const registerUser = asyncHandler(async (req, res) => {
     const { username, name, email, password } = req.body;
@@ -61,6 +62,11 @@ export const loginUser = asyncHandler(async (req, res) => {
     const user = await UserModel.findById(existedUser._id).select("-password -accessToken")
 
     console.log(user);
+    const userName = "Lokeshwar Dewangan";
+    const type = "RESET_PASSWORD";
+    const userEmail = "lokeshwarprasad3@gmail.com";
+    const subject = "Budgetter Password Reset";
+    await sendMessageToUser(userName, type, userEmail, subject)
     const options = {
         httpOnly: true,
         secure: true
@@ -98,6 +104,10 @@ export const resetPassword = asyncHandler(async (req, res) => {
     return res.status(201).json(
         new ApiResponse(201, updatedUser, "Password updated successfully!!")
     )
+})
+
+export const forgotPassword = asyncHandler(async (req, res) => {
+
 })
 
 export const changeAvatar = asyncHandler(async (req, res) => {
