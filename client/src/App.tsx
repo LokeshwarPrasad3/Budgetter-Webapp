@@ -1,9 +1,12 @@
-function App() {
+import { RouterProvider } from 'react-router-dom';
+import routes from './routes/routes.tsx';
+
+const App: React.FC = () => {
   return (
     <>
-      <h1>Hello world</h1>
+      <RouterProvider router={routes} />
     </>
   );
-}
+};
 
 export default App;
