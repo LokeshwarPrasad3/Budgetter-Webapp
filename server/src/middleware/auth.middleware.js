@@ -8,7 +8,7 @@ const verifyJwtToken = async (req, _, next) => {
         if (!token) {
             throw new ApiError(401, "UnAuthorized User!!");
         }
-        console.log(token)
+        // console.log("token is ", token)
 
         const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
         if (!decodedToken) {
