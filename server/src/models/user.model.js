@@ -31,10 +31,6 @@ const UserSchema = new Schema({
         type: String,
         required: [true, "Password is required"],
     },
-    expensesRecords: {
-        type: Schema.Types.ObjectId,
-        ref: "Expense"
-    },
     refreshToken: {
         type: String
     }
