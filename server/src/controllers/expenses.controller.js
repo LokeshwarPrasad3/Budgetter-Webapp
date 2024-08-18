@@ -23,9 +23,13 @@ export const saveTodayExpenses = asyncHandler(async (req, res) => {
         })
     } else {
         // update expense to push in products array
-        createdExpenses = await ExpenseModel.findOne({ user: userId, date: currentDate })
-        createdExpenses.products.concate(productsArray);
-        await createdExpenses.save();
+        createdExpenses = await ExpenseModel.updateOne({ user: userId, date: currentDate }, {
+            $addToSet: {
+                products: {
+                    $each: productsArray 
+                }
+            }
+        }, { new: true })
     }
     if (!createdExpenses) {
         throw new ApiError(500, "Something went wrong!!");
