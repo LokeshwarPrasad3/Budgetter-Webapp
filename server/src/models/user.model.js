@@ -31,7 +31,7 @@ const UserSchema = new Schema({
         type: String,
         required: [true, "Password is required"],
     },
-    refreshToken: {
+    accessToken: {
         type: String
     }
 }, {
@@ -54,16 +54,16 @@ UserSchema.methods.isPasswordMatch = async function (password) { // document dat
 }
 
 // method which generate token
-UserSchema.methods.generateRefreshToken = async function () {
+UserSchema.methods.generateAccessToken = async function () {
     return await jwt.sign(
         {
             _id: this._id,
             email: this.email,
             name: this.name
         },
-        process.env.REFRESH_SECRET_KEY,
+        process.env.ACCESS_TOKEN_SECRET_KEY,
         {
-            expiresIn: process.env.REFRESH_SECRET_EXPIRY
+            expiresIn: process.env.ACCESS_TOKEN_SECRET_EXPIRY
         }
     )
 }

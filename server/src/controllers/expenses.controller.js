@@ -4,12 +4,13 @@ import { getTodayDate } from "../utils/getCurrentDate.js";
 import ExpenseModel from "../models/expenses.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
-// 0. post expenses of current date
+// 1. post expenses of current date
 export const saveTodayExpenses = asyncHandler(async (req, res) => {
     // need userid , currentdate (default), productsArray[] = name, price, category
     const currentDate = getTodayDate();
-    const { userId, productsArray } = req.body;
-    if (!userId || !currentDate || !productsArray || productsArray?.length === 0) {
+    const { productsArray } = req.body;
+    const userId = req.user._id; // from middleware
+    if (!currentDate || !productsArray || productsArray?.length === 0) {
         throw new ApiError(400, "All Field required!!");
     }
 
@@ -26,7 +27,7 @@ export const saveTodayExpenses = asyncHandler(async (req, res) => {
         createdExpenses = await ExpenseModel.updateOne({ user: userId, date: currentDate }, {
             $addToSet: {
                 products: {
-                    $each: productsArray 
+                    $each: productsArray
                 }
             }
         }, { new: true })
@@ -40,14 +41,17 @@ export const saveTodayExpenses = asyncHandler(async (req, res) => {
     )
 })
 
-
-// 1. show expenses of current date
-const currentDateExpenses = asyncHandler(async (req, res) => {
-    // need current date and /?user=userId
-    const { user } = req.query;
+// 2. show today expenses always first
+export const showTodayExpenses = asyncHandler(async (req, res) => {
     const currentDate = getTodayDate();
-    // check that user exist ? from order
-    // if exist then show their all expense for current date
+    const todayExpenses = await ExpenseModel.findOne({ user: req.user._id, date: currentDate });
+    if (!todayExpenses) {
+        throw new ApiError(404, "No expenses found!!");
+    }
+    console.log(todayExpenses);
+    return res.status(200).json(
+        new ApiResponse(200, todayExpenses, "Today expenses found!!")
+    )
 })
 
 // 2. show particular date expenses

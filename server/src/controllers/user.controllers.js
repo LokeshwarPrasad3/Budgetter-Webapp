@@ -20,16 +20,23 @@ export const registerUser = asyncHandler(async (req, res) => {
     const user = await UserModel.create({
         username: username.toLowerCase(), name, email, password
     })
-    user.refreshToken = await user.generateRefreshToken();
+    user.accessToken = await user.generateAccessToken();
+    const accessToken = user.accessToken;
     await user.save({ validateBeforeSave: false });
-    const createdUser = await UserModel.findById(user._id).select("-password -refreshToken");
+    const createdUser = await UserModel.findById(user._id).select("-password -accessToken");
     if (!createdUser) {
         throw new ApiError(500, "Something went wrong during register user!!");
     }
     console.log(createdUser);
-    res.status(201).json(
-        new ApiResponse(201, createdUser, "User registered successfully!")
-    )
+    const options = {
+        httpOnly: true, // cannot access & modified by client javascript (document.cookie)
+        secure: true // only send to https:// clinet 
+    }
+    res.status(201)
+        .cookie("accessToken", accessToken, options)
+        .json(
+            new ApiResponse(201, createdUser, "User registered successfully!")
+        )
 })
 
 export const loginUser = asyncHandler(async (req, res) => {
@@ -43,18 +50,25 @@ export const loginUser = asyncHandler(async (req, res) => {
         throw new ApiError(400, "User does not Exist!!");
     }
     const isPasswordValid = await existedUser.isPasswordMatch(password);
-    existedUser.refreshToken = await existedUser.generateRefreshToken();
+    existedUser.accessToken = await existedUser.generateAccessToken();
+    const accessToken = existedUser.accessToken;
     await existedUser.save({ validateBeforeSave: false });
     if (!isPasswordValid) {
         throw new ApiError(400, "Invalid user credentials!!");
     }
     // Now User is valid
-    const user = await UserModel.findById(existedUser._id).select("-password -refreshToken")
+    const user = await UserModel.findById(existedUser._id).select("-password -accessToken")
 
     console.log(user);
-    res.status(200).json(
-        new ApiResponse(200, user, "Login Successfully!!")
-    )
+    const options = {
+        httpOnly: true,
+        secure: true
+    }
+    res.status(200)
+        .cookie("accessToken", accessToken, options)
+        .json(
+            new ApiResponse(200, user, "Login Successfully!!")
+        )
 })
 
 export const resetPassword = asyncHandler(async (req, res) => {
@@ -75,7 +89,7 @@ export const resetPassword = asyncHandler(async (req, res) => {
     // hash password, because of findByIdAndUpdate is not trigger pre("save") method 
     const hashPassword = await bcrypt.hash(newPassword, 10);
     console.log("new hashedpassword ", hashPassword);
-    const updatedUser = await UserModel.findByIdAndUpdate({ _id: existedUser?._id }, { $set: { password: hashPassword } }, { new: true }).select("-password -refreshToken");
+    const updatedUser = await UserModel.findByIdAndUpdate({ _id: existedUser?._id }, { $set: { password: hashPassword } }, { new: true }).select("-password -accessToken");
     if (!updatedUser) {
         throw new ApiError(500, "Something went wrong!!");
     }
