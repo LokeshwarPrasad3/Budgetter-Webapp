@@ -1,21 +1,19 @@
 // pages/auth/AuthLayout.tsx
 import AuthFooter from '@/components/auth/AuthFooter';
 import AuthHeader from '@/components/auth/AuthHeader';
-import LoginSection from '@/components/auth/LoginSection';
-import SignupSection from '@/components/auth/SignupSection';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
 const AuthLayout: React.FC = () => {
   return (
     <div
-      className="auth_layout_container text-slate-200 font-karla min-h-screen w-full"
+      className="auth_layout_container relative text-slate-200 font-karla min-h-screen h-full w-full"
       style={{
         background: `url("./assets/bg/bottom-left-bg.svg") bottom left / 300px auto no-repeat ,url("./assets/bg/full-bg.svg") center -300px / 1870px auto no-repeat`,
         backgroundColor: '#2C396A',
       }}
     >
-      <div className="auth_layout_container min-h-screen w-full max-w-full flex justify-between flex-col px-4 py-4 pb-0 md:py-5 lg:px-5 gap-4">
+      <div className="auth_layout_container h-full w-full max-w-full flex justify-normal sm:justify-between flex-col px-4 py-4 pb-0 md:py-5 lg:px-5 gap-8 sm:gap-28">
         {/* header section */}
         <AuthHeader />
 

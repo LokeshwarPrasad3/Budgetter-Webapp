@@ -6,9 +6,11 @@ import { Link } from 'react-router-dom';
 const LoginSection: React.FC = () => {
   return (
     <div className="w-full max-w-full p-8 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-semibold text-gray-800 text-center mb-2">Log In</h1>
+      <h1 className="text-3xl font-bold tracking-tighter text-gray-800 text-center mb-2">
+        Log In
+      </h1>
       <p className="text-gray-600 mb-6 text-center">
-        New to YNAB?{' '}
+        New to Budgetter?{' '}
         <Link to="/signup" className="text-blue-500 hover:underline">
           Sign up today.
         </Link>
@@ -47,7 +49,10 @@ const LoginSection: React.FC = () => {
               Keep me logged in
             </label>
           </div>
-          <Link to="/forgot-password" className="text-sm text-blue-500 hover:underline">
+          <Link
+            to="/forgot-password"
+            className="text-sm text-blue-500 hover:underline"
+          >
             Forgot password?
           </Link>
         </div>
@@ -59,9 +64,7 @@ const LoginSection: React.FC = () => {
           Log In
         </button>
 
-        <div className="my-2 text-center text-slate-500 font-bold">
-          Or 
-        </div>
+        <div className="my-2 text-center text-slate-500 font-bold">Or</div>
 
         <div className="flex justify-center flex-col gap-4">
           <button

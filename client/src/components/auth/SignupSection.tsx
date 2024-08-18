@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const SignupSection: React.FC = () => {
   return (
     <div className="w-full max-w-full p-8 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-semibold text-gray-800 text-center mb-2">
+      <h1 className="text-3xl font-bold tracking-tighter text-gray-800 text-center mb-2">
         Sign Up
       </h1>
       <p className="text-gray-600 mb-6 text-center">
