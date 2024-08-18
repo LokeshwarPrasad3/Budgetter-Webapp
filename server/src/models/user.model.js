@@ -33,6 +33,10 @@ const UserSchema = new Schema({
     },
     accessToken: {
         type: String
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true
@@ -66,6 +70,34 @@ UserSchema.methods.generateAccessToken = async function () {
             expiresIn: process.env.ACCESS_TOKEN_SECRET_EXPIRY
         }
     )
+}
+
+// method which generate token for reset-password
+UserSchema.methods.generateResetPasswordToken = async function () {
+    return await jwt.sign(
+        {
+            _id: this._id,
+        },
+        process.env.RESET_PASSWORD_TOKEN_SECRET,
+        {
+            expiresIn: process.env.RESET_PASSWORD_TOKEN_SECRET_EXPIRY
+        }
+    )
+
+}
+
+// method which generate token for reset-password
+UserSchema.methods.generateAccountVerificationToken = async function () {
+    return await jwt.sign(
+        {
+            _id: this._id,
+        },
+        process.env.ACCOUNT_VERIFICATION_TOKEN_SECRET,
+        {
+            expiresIn: process.env.ACCOUNT_VERIFICATION_TOKEN_SECRET_EXPIRY
+        }
+    )
+
 }
 
 const User = mongoose.model("User", UserSchema)

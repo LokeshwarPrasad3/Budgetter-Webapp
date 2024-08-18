@@ -5,6 +5,8 @@ import UserModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { sendMessageToUser } from "../utils/EmailSend.js";
+import jwt from "jsonwebtoken";
+import { clientURL } from "../utils/constants.js";
 
 export const registerUser = asyncHandler(async (req, res) => {
     const { username, name, email, password } = req.body;
@@ -30,6 +32,19 @@ export const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(500, "Something went wrong during register user!!");
     }
     console.log(createdUser);
+
+
+    // now sent mail to verified their gmail
+    const token = await createdUser.generateAccountVerificationToken();
+    const userName = createdUser.name;
+    const type = "VERIFY_ACCOUNT";
+    const userEmail = createdUser.email;
+    const subject = "Budgetter Account Verification";
+    const isSentGmail = await sendMessageToUser(userName, type, userEmail, subject, token)
+    if (!isSentGmail) {
+        console.log("failed to sent gmail!!");
+    }
+
     const options = {
         httpOnly: true, // cannot access & modified by client javascript (document.cookie)
         secure: true // only send to https:// clinet 
@@ -39,6 +54,30 @@ export const registerUser = asyncHandler(async (req, res) => {
         .json(
             new ApiResponse(201, createdUser, "User registered successfully!")
         )
+})
+
+// verify link clicked then this controller run
+export const validateAccountVerification = asyncHandler(async (req, res) => {
+    const token = req.query.token;
+    if (!token) {
+        throw new ApiError(400, "Token is required!!");
+    }
+    console.log(token)
+    const decodedToken = jwt.verify(token, process.env.ACCOUNT_VERIFICATION_TOKEN_SECRET)
+    if (!decodedToken) {
+        throw new ApiError(400, "Invalid token!!");
+    }
+    const user = await UserModel.findById(decodedToken._id)
+    if (!user) {
+        throw new ApiError(400, "User not found!!");
+    }
+    if (user.isVerified) {
+        throw new ApiError(400, "Account already verified!!");
+    }
+    user.isVerified = true;
+    await user.save({ validateBeforeSave: false });
+    console.log("user verified", user)
+    res.redirect(`${clientURL}/account-verified`);
 })
 
 export const loginUser = asyncHandler(async (req, res) => {
@@ -52,21 +91,18 @@ export const loginUser = asyncHandler(async (req, res) => {
         throw new ApiError(400, "User does not Exist!!");
     }
     const isPasswordValid = await existedUser.isPasswordMatch(password);
+
     existedUser.accessToken = await existedUser.generateAccessToken();
     const accessToken = existedUser.accessToken;
+
     await existedUser.save({ validateBeforeSave: false });
     if (!isPasswordValid) {
         throw new ApiError(400, "Invalid user credentials!!");
     }
     // Now User is valid
     const user = await UserModel.findById(existedUser._id).select("-password -accessToken")
-
     console.log(user);
-    const userName = "Lokeshwar Dewangan";
-    const type = "RESET_PASSWORD";
-    const userEmail = "lokeshwarprasad3@gmail.com";
-    const subject = "Budgetter Password Reset";
-    await sendMessageToUser(userName, type, userEmail, subject)
+
     const options = {
         httpOnly: true,
         secure: true
@@ -78,25 +114,68 @@ export const loginUser = asyncHandler(async (req, res) => {
         )
 })
 
+export const sentTokenToResetPassword = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+    const existedUser = await UserModel.findOne({ email });
+    if (!existedUser) {
+        throw new ApiError(404, "User not found");
+    }
+
+    // get token for reset-password
+    const token = await existedUser.generateResetPasswordToken();
+    const userName = existedUser.name;
+    const type = "RESET_PASSWORD";
+    const userEmail = existedUser.email;
+    const subject = "Budgetter Password Reset";
+    const isSentGmail = await sendMessageToUser(userName, type, userEmail, subject, token)
+    if (!isSentGmail) {
+        throw new ApiError(500, "Failed to send email");
+    }
+    return res.status(200).json(
+        new ApiResponse(200, "Reset link sent successfully!!")
+    )
+
+})
+
+// verify email link when clicked then validated token
+export const validateResetPasswordToken = asyncHandler(async (req, res) => {
+
+    const token = req.query.token; // ?token=jwttoken
+
+    // decode the token
+    const decodedToken = jwt.verify(token, process.env.RESET_PASSWORD_TOKEN_SECRET);
+    if (!decodedToken) {
+        throw new ApiError(400, "Invalid token");
+    }
+    console.log("token get successfully", token);
+
+    const user = await UserModel.findById(decodedToken._id).select("_id");
+    if (!user) {
+        throw new ApiError(404, "User not found!!");
+    }
+    console.log("user get successfully", user)
+
+    return res.status(201).json(
+        new ApiResponse(201, user, "Token verified successfully!!")
+    )
+
+})
+
+// after all entered password then lastly changed password
 export const resetPassword = asyncHandler(async (req, res) => {
-    const { email, prevPassword, newPassword } = req.body;
-    if (!email || !prevPassword || !newPassword) {
+    const { userId, newPassword } = req.body;
+    if (!userId || !newPassword) {
         throw new ApiError(400, "All Fields are required!!");
     }
 
-    const existedUser = await UserModel.findOne({ email });
+    const existedUser = await UserModel.findById(userId);
     if (!existedUser) {
         throw new ApiError(400, "Invalid Credentials!!");
     }
-    const isPasswordValid = await existedUser.isPasswordMatch(prevPassword);
-    if (!isPasswordValid) {
-        throw new Error(400, "Password is Incorrect!!");
-    }
-
     // hash password, because of findByIdAndUpdate is not trigger pre("save") method 
     const hashPassword = await bcrypt.hash(newPassword, 10);
     console.log("new hashedpassword ", hashPassword);
-    const updatedUser = await UserModel.findByIdAndUpdate({ _id: existedUser?._id }, { $set: { password: hashPassword } }, { new: true }).select("-password -accessToken");
+    const updatedUser = await UserModel.findByIdAndUpdate({ _id: existedUser?._id }, { $set: { password: hashPassword } }, { new: true }).select("");
     if (!updatedUser) {
         throw new ApiError(500, "Something went wrong!!");
     }
