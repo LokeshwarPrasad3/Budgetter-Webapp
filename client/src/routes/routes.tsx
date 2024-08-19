@@ -5,7 +5,7 @@ import ResetPassword from '@/components/auth/ResetPassword';
 import SignupSection from '@/components/auth/SignupSection';
 import Navbar from '@/components/navbar/Navbar';
 import AuthLayout from '@/pages/auth/AuthLayout';
-import PageLayout from '@/pages/PageLayout';
+import HomeLayout from '@/pages/Home/HomeLayout';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -22,9 +22,7 @@ const routes = createBrowserRouter(
         <Route path="/account-verified" element={<AccountVerified />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
-      <Route path="/dashboard" element={<PageLayout />}>
-        <Route path="/dashboard" element={<Navbar />} />
-      </Route>
+      <Route path="/home" element={<HomeLayout />} />
     </>
   )
 );
