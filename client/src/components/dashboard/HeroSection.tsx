@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
+
 const HeroSection = () => {
   return (
-    <div className="hero_section_container relative bg-[#CCEFF5] font-karla h-full px-4 py-4 pt-10 z-[-1] pb-10 sm:pt-20 sm:pb-4 w-full flex flex-col sm:flex-row justify-center items-center ">
+    <div className="hero_section_container relative bg-[#CCEFF5] font-karla h-full px-4 py-4 pt-10 pb-10 sm:pt-20 sm:pb-4 w-full flex flex-col sm:flex-row justify-center items-center ">
       <div className="hero_section_content flex flex-col sm:relative md:left-10 lg:left-16 gap-5 justify-center w-full max-w-full md:max-w-[33rem]">
         <h1 className="hero_section_title text-2xl sm:text-3xl sm:w-[110%] md:text-4xl font-bold ">
           Welcome to{' '}
@@ -13,12 +15,18 @@ const HeroSection = () => {
           <br /> A simple budgeting app to help you track your expenses
         </p>
         <div className="hero_buttons flex w-full gap-3">
-          <button className="hero_section_button bg-black py-1 px-3 rounded-sm text-white">
+          <Link
+            to="/login"
+            className="hero_section_button bg-slate-700 hover:bg-slate-600 py-1 px-3 rounded-sm text-white cursor-pointer"
+          >
             Get Started
-          </button>
-          <button className="hero_section_button bg-black py-1 px-3 rounded-sm text-white">
+          </Link>
+          <Link
+            to="/login"
+            className="hero_section_button bg-slate-700 hover:bg-slate-600 py-1 px-3 rounded-sm text-white cursor-pointer"
+          >
             About
-          </button>
+          </Link>
         </div>
       </div>
       <div className="flag_image sm:relative sm:top-[-2rem] md:right-10 lg:right-16 max-w-full w-full sm:max-w-[20rem] md:max-w-[26rem]">

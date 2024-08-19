@@ -1,8 +1,8 @@
 // pages/auth/AuthLayout.tsx
-import AuthFooter from '@/components/auth/AuthFooter';
 import AuthHeader from '@/components/auth/AuthHeader';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import Footer from '@/components/layout/Footer';
 
 const AuthLayout: React.FC = () => {
   return (
@@ -40,7 +40,7 @@ const AuthLayout: React.FC = () => {
         </div>
 
         {/* footer section */}
-        <AuthFooter />
+        <Footer noBg={true} />
       </div>
     </div>
   );

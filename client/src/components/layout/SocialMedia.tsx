@@ -1,8 +1,8 @@
 import React from 'react';
 
-const AuthFooter: React.FC = () => {
+const SocialMedia = () => {
   return (
-    <div className="auth_footer_container h-20 flex mt-3 flex-col justify-center items-center w-full p-4">
+    <div className="auth_footer_container h-20 flex mt-3 flex-col justify-center items-center w-full">
       <div className="flex space-x-6 mb-4">
         <a
           href="https://www.instagram.com/your-profile"
@@ -29,11 +29,8 @@ const AuthFooter: React.FC = () => {
           <i className="ri-twitter-fill text-xl text-white"></i>
         </a>
       </div>
-      <p className="text-center ">
-        © Copyright 2024 Budgetter. All rights reserved.
-      </p>
     </div>
   );
 };
 
-export default AuthFooter;
+export default SocialMedia;

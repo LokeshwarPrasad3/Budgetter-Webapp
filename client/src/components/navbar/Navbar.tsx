@@ -12,14 +12,14 @@ const Navbar: React.FC = () => {
       <nav className=" bg-[#CCEFF5] text-gray-800 relative h-20 font-karla">
         <div className="flex justify-between h-full items-center">
           {/* Logo */}
-          <div className="flex items-center pl-4 md:pl-8">
+          <Link to="/home" className="flex items-center pl-4 md:pl-8">
             <img className="h-8" src="/assets/logo/logo.png" alt="Budgetter" />
             <img
               className="h-7 pl-4 relative top-1 right-2"
               src="/assets/logo/logo_name.png"
               alt="Budgetter"
             />
-          </div>
+          </Link>
 
           {/* Navigation - Large Screens */}
           <div className="hidden md:flex items-center space-x-6 pr-8">
@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
               <Link
                 key={index}
                 to={`/${route}`}
-                className="text-lg transition-all ease-in duration-300 focus:outline-none focus:underline hover:underline font-medium"
+                className="text-base capitalize transition-all ease-in duration-300 focus:outline-none focus:underline hover:underline font-medium"
                 style={{ textUnderlineOffset: '8px' }}
               >
                 {name}
@@ -38,12 +38,12 @@ const Navbar: React.FC = () => {
       </nav>
 
       {/* Mobile Nav Icon */}
-      <div className="md:hidden block top-6 right-4 md:right-8 fixed z-50">
+      <div className="md:hidden block top-6 right-4 md:right-8 fixed z-[60]">
         <button
           aria-label="navigation"
           type="button"
           onClick={toggleMenu}
-          className="text-gray-800 transition-all ease-in duration-300 focus:outline-none hover:text-gray-600"
+          className="text-gray-800 transition-all ease-in duration-200 focus:outline-none hover:bg-gray-300 py-1 px-2 rounded-full"
         >
           <i className={`text-3xl ri-${!isOpen ? 'menu' : 'close'}-line`}></i>
         </button>
@@ -52,9 +52,9 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <>
-          <div className="bg_filter_effect md:hidden absolute inset-0 bg-[#ffffff50] backdrop-blur-sm "></div>
+          <div className="bg_filter_effect md:hidden absolute inset-0 z-50 bg-[#ffffff50] backdrop-blur-sm "></div>
           <div
-            className={` md:hidden absolute w-full max-w-[16rem] font-karla right-2 top-16 rounded-lg mt-2 py-4 text-center z-50 bg-white shadow-md text-black`}
+            className={` md:hidden fixed w-full max-w-[16rem] font-karla right-2 top-16 rounded-lg mt-2 py-4 text-center z-50 bg-white shadow-md text-black`}
           >
             <div className="flex flex-col justify-center">
               {navListArray.map(({ route, name }, index) => (
@@ -71,7 +71,7 @@ const Navbar: React.FC = () => {
               <div className="switch_theme flex py-3 pb-0 text-lg font-medium justify-between px-6">
                 <p>Switch theme</p>
                 {/* <i className="ri-sun-line text-2xl"></i> */}
-                <i className="ri-moon-line text-2xl"></i>
+                <i className="ri-moon-line text-2xl cursor-pointer"></i>
               </div>
             </div>
           </div>
