@@ -28,7 +28,7 @@ const FeatureCard: React.FC<FeatureCardType> = ({
           <i className={`${icon} text-2xl`}></i>
           <span className="text-xl font-bold">{title}</span>
         </div>
-        <p className="text-base px-3 font-medium">{description}</p>
+        <p className="text-base px-3 font-medium text-center">{description}</p>
       </div>
     </div>
   );
