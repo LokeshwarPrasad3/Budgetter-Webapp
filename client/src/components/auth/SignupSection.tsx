@@ -1,9 +1,15 @@
 // SignupSection.tsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const SignupSection: React.FC = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="w-full max-w-full p-8 bg-white shadow-lg rounded-lg">
       <h1 className="text-3xl font-bold tracking-tighter text-gray-800 text-center mb-2">
@@ -17,22 +23,44 @@ const SignupSection: React.FC = () => {
       </p>
 
       <form>
-        <div className="mb-3">
+        <div className="mb-3 relative">
+          <i className="ri-user-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+          <input
+            type="text"
+            id="name"
+            placeholder="Your Name"
+            className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+        </div>
+        <div className="mb-3 relative">
+          <i className="ri-mail-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
           <input
             type="email"
             id="email"
             placeholder="Email address"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
 
-        <div className="mb-4">
+        <div className="mb-4 relative">
+          <i className="ri-lock-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             id="password"
             placeholder="Password"
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="text-slate-900 font-medium mt-1 block w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute inset-y-0 right-0 flex items-center pr-3"
+          >
+            {showPassword ? (
+              <i className="ri-eye-off-line text-gray-500 h-5 w-5"></i>
+            ) : (
+              <i className="ri-eye-line text-gray-500 h-5 w-5"></i>
+            )}
+          </button>
         </div>
 
         <div className="flex items-center justify-between mb-6">
