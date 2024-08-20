@@ -3,7 +3,6 @@ import ForgotPasswordSection from '@/components/auth/ForgotPasswordSection';
 import LoginSection from '@/components/auth/LoginSection';
 import ResetPassword from '@/components/auth/ResetPassword';
 import SignupSection from '@/components/auth/SignupSection';
-import Navbar from '@/components/navbar/Navbar';
 import AuthLayout from '@/pages/auth/AuthLayout';
 import HomeLayout from '@/pages/Home/HomeLayout';
 import {

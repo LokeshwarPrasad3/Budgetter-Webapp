@@ -1,5 +1,5 @@
 import React from 'react';
-import FeatureCard from '../cards/featureCard';
+import FeatureCard from '../cards/FeatureCard';
 import { cardData } from '@/data/featurecard';
 
 const Features = () => {
