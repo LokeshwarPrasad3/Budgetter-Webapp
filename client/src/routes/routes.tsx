@@ -9,18 +9,23 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
+  Navigate,
 } from 'react-router-dom';
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<AuthLayout />}>
+      {/* Redirect from "/" to "/login" */}
+      <Route path="/" element={<Navigate to="/login" />} />
+
+      <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginSection />} />
         <Route path="/signup" element={<SignupSection />} />
         <Route path="/forgot-password" element={<ForgotPasswordSection />} />
         <Route path="/account-verified" element={<AccountVerified />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
+
       <Route path="/home" element={<HomeLayout />} />
     </>
   )
