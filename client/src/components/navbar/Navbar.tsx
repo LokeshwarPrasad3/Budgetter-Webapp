@@ -1,6 +1,9 @@
 import { navListArray } from '@/data/navList';
-import { MENU_EFFECT_VARIENT, MENU_ITEM_EFFECT_VARIENT } from '@/utils/framer/properties';
-import { motion } from 'framer-motion';
+import {
+  MENU_EFFECT_VARIENT,
+  MENU_ITEM_EFFECT_VARIENT,
+} from '@/utils/framer/properties';
+import { motion, AnimatePresence } from 'framer-motion';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -56,43 +59,45 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <>
-          <div className="bg_filter_effect md:hidden absolute inset-0 z-50 bg-[#ffffff50] backdrop-blur-sm "></div>
-          <motion.div
-            variants={MENU_EFFECT_VARIENT}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            className={` md:hidden fixed w-full max-w-[16rem] font-karla right-2 top-16 rounded-lg mt-2 py-4 text-center z-50 bg-white shadow-md text-black`}
-          >
-            <motion.div className="flex flex-col justify-center">
-              {navListArray.map(({ route, name }, index) => (
-                <MotionLink
-                  variants={MENU_ITEM_EFFECT_VARIENT}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  key={index}
-                  to={`/${route}`}
-                  className="block py-3 text-lg capitalize text-left pl-6 transition-all ease-in duration-300 focus:outline-none focus:underline hover:underline font-bold"
-                  style={{ textUnderlineOffset: '8px' }}
-                >
-                  {name}
-                </MotionLink>
-              ))}
-              <hr />
-              {/* <motion.div className="switch_theme flex py-3 pb-0 text-lg font-medium justify-between px-6">
-                <motion.div
-                  variants={MENU_ITEM_EFFECT_VARIENT}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                >
-                  Switch theme
+          <AnimatePresence>
+            <div className="bg_filter_effect md:hidden absolute inset-0 z-50 bg-[#ffffff50] backdrop-blur-sm "></div>
+            <motion.div
+              variants={MENU_EFFECT_VARIENT}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className={`menu_phone_container md:hidden fixed w-full max-w-[16rem] font-karla right-2 top-16 rounded-lg mt-2 py-4 text-center z-50 bg-white shadow-md text-black`}
+            >
+              <motion.div className="flex flex-col justify-center">
+                {navListArray.map(({ route, name }, index) => (
+                  <MotionLink
+                    variants={MENU_ITEM_EFFECT_VARIENT}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    key={index}
+                    to={`/${route}`}
+                    className="block py-3 text-base capitalize text-left pl-6 transition-all ease-in duration-300 focus:outline-none focus:underline hover:underline font-bold"
+                    style={{ textUnderlineOffset: '8px' }}
+                  >
+                    {name}
+                  </MotionLink>
+                ))}
+                <hr />
+                <motion.div className="switch_theme flex py-3 pb-0 text-base font-medium justify-between px-6">
+                  <motion.div
+                    variants={MENU_ITEM_EFFECT_VARIENT}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                  >
+                    Switch theme
+                  </motion.div>
+                  <i className="ri-moon-line text-2xl cursor-pointer"></i>
                 </motion.div>
-                <i className="ri-moon-line text-2xl cursor-pointer"></i>
-              </motion.div> */}
+              </motion.div>
             </motion.div>
-          </motion.div>
+          </AnimatePresence>
         </>
       )}
     </>

@@ -1,3 +1,21 @@
 * {
   font-family: 'Karla';
 }
+
+.menu_phone_container {
+  background: white;
+}
+.menu_phone_container::after {
+  border: none;
+  content: '';
+  position: absolute;
+  border-radius: 0.5rem;
+  inset: 0;
+  background: linear-gradient(45deg, #c85ed8, #a079f8);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  z-index: -1;
+  padding: 2px;
+}

@@ -13,12 +13,13 @@ const AuthLayout: React.FC = () => {
         backgroundColor: '#2C396A',
       }}
     >
-      <div className="auth_layout_container h-full w-full max-w-full flex justify-normal sm:justify-between flex-col px-4 py-4 pb-0 md:py-5 lg:px-5 gap-8 sm:gap-28">
+      {/*  */}
+      <div className="auth_layout_container h-full w-full max-w-full flex justify-normal sm:justify-between flex-col px-4 py-4 pb-0 md:py-5 lg:px-5 gap-8 sm:gap-10">
         {/* header section */}
         <AuthHeader />
 
         {/* main content section */}
-        <div className="auth_main_content_container flex flex-col md:flex-row justify-between lg:justify-center items-center gap-7 lg:gap-20">
+        <div className="auth_main_content_container flex flex-col md:flex-row justify-between lg:justify-center items-center gap-7 lg:gap-20 min-h-[30rem]">
           <div className="left_part w-full md:w-[50%] max-w-full md:max-w-[28rem] flex gap-2 md:gap-4 flex-col ">
             <img
               className="h-14 md:h-20 w-14 md:w-20 "

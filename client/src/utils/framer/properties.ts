@@ -7,23 +7,20 @@ export const MENU_EFFECT_VARIENT: Variants = {
     opacity: 1,
     scale: 1,
     transition: {
-      duration: 0.3,
-      ease: 'easeInOut',
-    },
+      duration: 0.3
+    }
   },
   exit: { opacity: 0, scale: 0 },
 };
 
 export const MENU_ITEM_EFFECT_VARIENT: Variants = {
-  initial: { opacity: 0, scale: 0, x: 20 },
+  initial: { opacity: 0, scale: 0 },
   animate: {
-    x: 0,
     opacity: 1,
     scale: 1,
     transition: {
-      duration: 0.3,
-      ease: 'easeInOut',
-    },
+      duration: 0.1
+    }
   },
-  exit: { opacity: 0, x: 20, scale: 0 },
+  exit: { opacity: 0, scale: 0 },
 };
