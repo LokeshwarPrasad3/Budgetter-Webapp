@@ -1,4 +1,6 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { CARDS_EFFECT_VARIENT } from '@/utils/framer/properties';
 
 type FeatureCardType = {
   title: string;
@@ -14,7 +16,12 @@ const FeatureCard: React.FC<FeatureCardType> = ({
   icon,
 }) => {
   return (
-    <div
+    <motion.div
+      variants={CARDS_EFFECT_VARIENT}
+      initial="initial"
+      whileInView="whileInView"
+      whileHover="whileHover"
+      whileTap="whileTap"
       className="feature_box rounded-sm border-2 border-[#19154A] flex flex-col items-center max-w-96 min-h-40 justify-center relative w-[96%]"
       style={{ background: `${bg}`, boxShadow: '3px 6px 0 0 #19154A' }}
     >
@@ -30,7 +37,7 @@ const FeatureCard: React.FC<FeatureCardType> = ({
         </div>
         <p className="text-base px-3 font-medium text-center">{description}</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
