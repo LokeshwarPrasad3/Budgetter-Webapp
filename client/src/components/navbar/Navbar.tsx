@@ -1,5 +1,6 @@
 import { navListArray } from '@/data/navList';
 import {
+  ANIMATE_WORDS_VARIENT,
   MENU_EFFECT_VARIENT,
   MENU_ITEM_EFFECT_VARIENT,
 } from '@/utils/framer/properties';
@@ -19,17 +20,28 @@ const Navbar: React.FC = () => {
       <nav className=" bg-[#CCEFF5] text-gray-800 relative h-20 font-karla">
         <div className="flex justify-between h-full items-center">
           {/* Logo */}
-          <Link to="/home" className="flex items-center pl-4 md:pl-8">
+          <MotionLink
+            variants={ANIMATE_WORDS_VARIENT}
+            initial="initial"
+            animate="animate"
+            to="/home"
+            className="flex items-center pl-4 md:pl-8"
+          >
             <img className="h-8" src="/assets/logo/logo.png" alt="Budgetter" />
             <img
               className="h-7 pl-4 relative top-1 right-2"
               src="/assets/logo/logo_name.png"
               alt="Budgetter"
             />
-          </Link>
+          </MotionLink>
 
           {/* Navigation - Large Screens */}
-          <div className="hidden md:flex items-center space-x-6 pr-8">
+          <motion.div
+            variants={ANIMATE_WORDS_VARIENT}
+            initial="initial"
+            animate="animate"
+            className="hidden md:flex items-center space-x-6 pr-8"
+          >
             {navListArray.map(({ route, name }, index) => (
               <Link
                 key={index}
@@ -40,7 +52,7 @@ const Navbar: React.FC = () => {
                 {name}
               </Link>
             ))}
-          </div>
+          </motion.div>
         </div>
       </nav>
 

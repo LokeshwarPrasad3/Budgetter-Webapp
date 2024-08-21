@@ -26,12 +26,13 @@ export const MENU_ITEM_EFFECT_VARIENT: Variants = {
 };
 // variant cards
 export const CARDS_EFFECT_VARIENT: Variants = {
-  initial: { opacity: 0, rotateY: -90 },
+  initial: { opacity: 0, rotateY: -90, y: 30 },
   whileInView: {
     opacity: 1,
     rotateY: 0,
+    y: 0,
     transition: {
-      duration: 0.3,
+      duration: 1,
     },
   },
   whileHover: {
@@ -44,6 +45,17 @@ export const CARDS_EFFECT_VARIENT: Variants = {
     scale: 0.9,
     transition: {
       duration: 0.3,
+    },
+  },
+};
+// basic fonts
+export const ANIMATE_WORDS_VARIENT: Variants = {
+  initial: { opacity: 0, y: 30 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1,
     },
   },
 };

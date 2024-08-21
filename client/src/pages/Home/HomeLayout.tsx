@@ -7,8 +7,13 @@ import Navbar from '@/components/navbar/Navbar';
 const HomeLayout = () => {
   return (
     <>
-      <Navbar />
-      <HeroSection />
+      <div
+        className="flex flex-col"
+        style={{ background: 'linear-gradient(to bottom, #CCEFF5, white)' }}
+      >
+        <Navbar />
+        <HeroSection />
+      </div>
       <Features />
       <ContactSection />
       <Footer noBg={false} />

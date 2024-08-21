@@ -1,8 +1,15 @@
+import { ANIMATE_WORDS_VARIENT } from '@/utils/framer/properties';
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const ContactSection: React.FC = () => {
   return (
-    <div className="w-full bg-[#F8F9FB] py-10">
+    <motion.div
+      variants={ANIMATE_WORDS_VARIENT}
+      initial="initial"
+      animate="animate"
+      className="w-full relative bg-[#F8F9FB] py-10"
+    >
       <div className="mx-auto w-full max-w-full md:max-w-[38rem] font-karla px-4 ">
         <div className="w-full max-w-full p-4 bg-[#F8F9FB] rounded-sm">
           <h1 className="text-3xl font-bold tracking-tighter text-gray-800 text-center mb-2">
@@ -86,7 +93,7 @@ const ContactSection: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
