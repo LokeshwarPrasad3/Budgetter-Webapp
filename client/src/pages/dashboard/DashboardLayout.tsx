@@ -5,7 +5,9 @@ const DashboardLayout = () => {
   return (
     <>
       <SideNavbar />
-      <TopHeader/>
+      <div className="dashboard_layout_container absolute top-0 right-0 flex flex-col">
+        <TopHeader />
+      </div>
     </>
   );
 };

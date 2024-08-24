@@ -21,8 +21,7 @@
 }
 
 
-/* for top  header */
-.topheader_container{
-  /* 208 */
+/* dashboard layout container */
+.dashboard_layout_container{
   width: calc(100% - 208px);
 }

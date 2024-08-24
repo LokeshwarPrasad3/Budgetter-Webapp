@@ -1,9 +1,28 @@
+import { useEffect, useState } from 'react';
+import { getTopHeaderName } from '../hooks/HeaderName';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 const TopHeader = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [currentHeaderName, setCurrentHeaderName] = useState('');
+
+  useEffect(() => {
+    const path = location.pathname;
+    const pathParts = path.split('/');
+    const pathName = pathParts[pathParts.length - 1];
+      console.log(pathName);
+      
+    const headerName = getTopHeaderName(pathName);
+    setCurrentHeaderName(headerName);
+  }, [navigate]);
+
   return (
-    <div className="topheader_container text-black bg-[#e0e0e4] w-full absolute top-0 right-0 h-16 flex items-center px-1">
-      <i className="ri-menu-line text-black font-bold mx-4 text-xl"></i>
+    <div className="topheader_container relative text-black bg-[#e0e0e4] w-full h-16 flex items-center px-1">
+      <i className="ri-menu-line cursor-pointer text-black font-bold mx-4 text-xl"></i>
       <div className="name text-lg">
-        <h2 className="font-bold ">Dashboard</h2>
+        <h2 className="font-bold ">{currentHeaderName}</h2>
       </div>
       <div className="notification absolute right-4">
         <button className="">
