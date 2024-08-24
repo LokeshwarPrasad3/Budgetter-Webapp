@@ -2,7 +2,7 @@
 import AuthHeader from '@/components/auth/AuthHeader';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Footer from '@/components/layout/Footer';
+import AuthFooter from '@/components/auth/AuthFooter';
 
 const AuthLayout: React.FC = () => {
   return (
@@ -41,7 +41,7 @@ const AuthLayout: React.FC = () => {
         </div>
 
         {/* footer section */}
-        <Footer noBg={true} />
+        <AuthFooter isFixed={false} />
       </div>
     </div>
   );

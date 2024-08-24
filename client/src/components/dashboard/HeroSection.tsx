@@ -58,7 +58,7 @@ const HeroSection = () => {
         variants={ANIMATE_WORDS_VARIENT}
         initial="initial"
         animate="animate"
-        className="flag_image sm:relative sm:top-[-2rem] md:right-10 lg:right-16 max-w-full w-full sm:max-w-[20rem] md:max-w-[26rem]"
+        className="flag_image sm:relative sm:top-[-2rem] md:right-10 min-h-[22.3rem] lg:right-16 max-w-full w-full sm:max-w-[20rem] md:max-w-[26rem]"
       >
         <img
           className="w-full hidden sm:block"
