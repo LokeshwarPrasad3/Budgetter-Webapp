@@ -18,30 +18,24 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav className=" bg-[#CCEFF5] text-gray-800 relative h-20 font-karla">
-        <div className="flex justify-between h-full items-center">
+        <motion.div
+          variants={ANIMATE_WORDS_VARIENT}
+          initial="initial"
+          animate="animate"
+          className="flex justify-between h-full items-center"
+        >
           {/* Logo */}
-          <MotionLink
-            variants={ANIMATE_WORDS_VARIENT}
-            initial="initial"
-            animate="animate"
-            to="/home"
-            className="flex items-center pl-4 md:pl-8"
-          >
+          <Link to="/home" className="flex items-center pl-4 md:pl-8">
             <img className="h-8" src="/assets/logo/logo.png" alt="Budgetter" />
             <img
               className="h-7 pl-4 relative top-1 right-2"
               src="/assets/logo/logo_name.png"
               alt="Budgetter"
             />
-          </MotionLink>
+          </Link>
 
           {/* Navigation - Large Screens */}
-          <motion.div
-            variants={ANIMATE_WORDS_VARIENT}
-            initial="initial"
-            animate="animate"
-            className="hidden md:flex items-center space-x-6 pr-8"
-          >
+          <div className="hidden md:flex items-center space-x-6 pr-8">
             {navListArray.map(({ route, name }, index) => (
               <Link
                 key={index}
@@ -52,8 +46,8 @@ const Navbar: React.FC = () => {
                 {name}
               </Link>
             ))}
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </nav>
 
       {/* Mobile Nav Icon */}
