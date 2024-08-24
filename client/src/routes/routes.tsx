@@ -4,6 +4,7 @@ import LoginSection from '@/components/auth/LoginSection';
 import ResetPassword from '@/components/auth/ResetPassword';
 import SignupSection from '@/components/auth/SignupSection';
 import AuthLayout from '@/pages/auth/AuthLayout';
+import DashboardLayout from '@/pages/dashboard/DashboardLayout';
 import HomeLayout from '@/pages/Home/HomeLayout';
 import {
   createBrowserRouter,
@@ -27,6 +28,7 @@ const routes = createBrowserRouter(
       </Route>
 
       <Route path="/home" element={<HomeLayout />} />
+      <Route path="/dashboard" element={<DashboardLayout />} />
     </>
   )
 );
