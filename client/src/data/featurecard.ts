@@ -25,6 +25,6 @@ export const cardData: cardDataType[] = [
     description:
       'Create budgets for different categories and track your progress in real-time.',
     icon: 'ri-money-cny-circle-line',
-    bg: '#FAE973',
+    bg: '#F7CEDC',
   },
 ];
