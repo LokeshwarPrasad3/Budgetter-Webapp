@@ -16,7 +16,7 @@ const HomeLayout = () => {
       </div>
       <Features />
       <ContactSection />
-      <Footer noBg={false} />
+      <Footer isFixed={false} />
     </>
   );
 };

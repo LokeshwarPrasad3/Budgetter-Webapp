@@ -41,7 +41,7 @@ const AuthLayout: React.FC = () => {
         </div>
 
         {/* footer section */}
-        <AuthFooter isFixed={false} />
+        <AuthFooter />
       </div>
     </div>
   );
