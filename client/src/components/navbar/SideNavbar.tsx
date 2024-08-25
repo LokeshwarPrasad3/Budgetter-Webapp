@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { userSidenavbarList } from '@/data/UserSideNavbarList';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeSideNavbar } from '@/features/sideNavbar/SideNavbarSlice';
+import { closeSideNavbar } from '../../features/sideNavbar/sideNavbarSlice';
 
 const SideNavbar = () => {
   const dispatch = useDispatch();
