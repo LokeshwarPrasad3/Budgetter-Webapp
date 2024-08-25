@@ -1,22 +1,23 @@
 import { Link } from 'react-router-dom';
 import { userSidenavbarList } from '@/data/UserSideNavbarList';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeSideNavbar } from '@/features/sideNavbar/SideNavbarSlice';
 
 const SideNavbar = () => {
+  const dispatch = useDispatch();
   const isSideNavbarOpen = useSelector(
     (state: any) => state.sideNavbar.isSideNavbarOpen
-  );
-
-  const windowWidth = useSelector(
-    (state: any) => state.windowWidth.windowWidth
   );
   const isMobile = useSelector((state: any) => state.windowWidth.isMobile);
 
   return (
     <div
-      className={`sidenavbar_container font-karla fixed top-0 left-0
-        ${isSideNavbarOpen ? 'w-52' : 'w-[72px]'} 
-         h-full bg-[#1b1a1d] flex flex-col px-3 py-5 gap-2 shadow-lg z-50`}
+      className={`sidenavbar_container font-karla fixed top-0
+        ${isSideNavbarOpen && !isMobile ? 'w-52 left-0' : ''} 
+        ${!isSideNavbarOpen && !isMobile ? 'w-[72px] left-0' : ''} 
+        ${!isSideNavbarOpen && isMobile ? 'w-0 left-[-210px]' : ''} 
+        ${isSideNavbarOpen && isMobile ? 'w-52 left-0' : ''} 
+         h-full bg-[#1b1a1d] flex flex-col px-3 py-5 gap-2 shadow-lg z-50 overflow-hidden`}
     >
       <div className="sidenavbar_heading_container py-5 pl-4 flex items-center relative">
         {/* 
@@ -32,6 +33,9 @@ const SideNavbar = () => {
         {isSideNavbarOpen && !isMobile && (
           <h1 className="text-gray-200 text-2xl font-bold">Budgetter</h1>
         )}
+        {isSideNavbarOpen && isMobile && (
+          <h1 className="text-gray-200 text-2xl font-bold">Budgetter</h1>
+        )}
       </div>
       {/* menu icons */}
       <div className="sidenavbar_menu_container flex flex-col gap-3">
@@ -39,11 +43,13 @@ const SideNavbar = () => {
           <Link
             key={index}
             to={`/${route}`}
+            onClick={() => dispatch(closeSideNavbar())}
             className="sidenavbar_menulink_container relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 hover:bg-[#289288] items-center"
           >
             <i className={`${icon} text-2xl text-white`}></i>
             <span
-              className={`text-base font-medium text-white absolute ${isSideNavbarOpen && !isMobile ? 'left-14' : 'left-20'} capitalize`}
+              className={`text-base font-medium text-white absolute left-16
+                 capitalize`}
             >
               {name}
             </span>
@@ -58,7 +64,8 @@ const SideNavbar = () => {
         >
           <i className="ri-logout-box-r-line text-2xl text-white"></i>
           <span
-            className={`text-base font-medium text-white absolute ${isSideNavbarOpen && !isMobile ? 'left-14' : 'left-20'}`}
+            className={`text-base font-medium text-white absolute left-16
+              capitalize`}
           >
             Logout
           </span>

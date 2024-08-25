@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   windowWidth: window.innerWidth,
-  isMobile: false,
+  isMobile: window.innerWidth <= 768,
 };
 
 const windowWidthSlice = createSlice({
@@ -10,19 +10,16 @@ const windowWidthSlice = createSlice({
   initialState,
   reducers: {
     setCurrentWindowWidth: (state, action) => {
-      console.log(action.payload);
+      console.log('current from redux ', action.payload);
       state.windowWidth = action.payload.windowWidth;
     },
-    getCurrentWindowWidth: (state) => {
-      state.windowWidth = state.windowWidth;
-    },
-    isMobile: (state) => {
-      state.isMobile = state.windowWidth <= 768;
+    setIsMobile: (state, action) => {
+      console.log('from set is mobile', action.payload);
+      state.isMobile = action.payload;
     },
   },
 });
 
-export const { getCurrentWindowWidth, setCurrentWindowWidth } =
-  windowWidthSlice.actions;
+export const { setCurrentWindowWidth, setIsMobile } = windowWidthSlice.actions;
 
 export default windowWidthSlice.reducer;
