@@ -13,6 +13,10 @@ import {
 import UserLayout from '@/pages/user/UserLayout';
 import HomeLayout from '@/pages/home/HomeLayout';
 import Dashboard from '@/pages/user/dashboard/Dashboard';
+import AddMoney from '@/pages/user/addMoney/AddMoney';
+import Reports from '@/pages/user/reports/Reports';
+import ShowExpenses from '@/pages/user/showExpenses/ShowExpenses';
+import AddExpenses from '@/pages/user/addExpenses/AddExpenses';
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +33,10 @@ const routes = createBrowserRouter(
       {/* protected routes */}
       <Route path="user" element={<UserLayout />}>
         <Route path="dashboard" element={<Dashboard />} />
+        <Route path="add-expenses" element={<AddExpenses />} />
+        <Route path="show-expenses" element={<ShowExpenses />} />
+        <Route path="reports" element={<Reports />} />
+        <Route path="add-money" element={<AddMoney />} />
       </Route>
       {/* home */}
       <Route path="/" element={<HomeLayout />} />

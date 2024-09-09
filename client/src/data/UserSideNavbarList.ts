@@ -26,8 +26,8 @@ export const userSidenavbarList: userSidenavbarListType[] = [
     icon: 'ri-folder-chart-line',
   },
   {
-    route: 'user/transactions',
-    name: 'transactions',
+    route: 'user/add-money',
+    name: 'Add Money',
     icon: 'ri-money-rupee-circle-line',
   },
 ];

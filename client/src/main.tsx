@@ -6,6 +6,7 @@ import 'remixicon/fonts/remixicon.css';
 import '../src/styles/global.css';
 import { store } from '@/app/store.ts';
 import { Provider } from 'react-redux';
+import 'react-tooltip/dist/react-tooltip.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

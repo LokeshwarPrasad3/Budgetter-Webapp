@@ -20,4 +20,8 @@ export const navListArray: navListType[] = [
     route: 'user/reports',
     name: 'reports',
   },
+  {
+    route: 'user/add-money',
+    name: 'Add Money',
+  },
 ];

@@ -3,6 +3,7 @@ import { userSidenavbarList } from '@/data/UserSideNavbarList';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeSideNavbar } from '../../features/sideNavbar/sideNavbarSlice';
 import LogoImage from '../../../public/assets/logo/logo.png';
+import { Tooltip } from 'react-tooltip';
 
 const SideNavbar = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,9 @@ const SideNavbar = () => {
         <div className="sidenavbar_menu_container flex flex-col gap-3">
           {userSidenavbarList.map(({ route, name, icon }, index) => (
             <Link
+              data-tooltip-id="navbarTooltip"
+              data-tooltip-content={name}
+              data-tooltip-place="right"
               key={index}
               to={`/${route}`}
               onClick={() => dispatch(closeSideNavbar())}
@@ -63,6 +67,9 @@ const SideNavbar = () => {
         {/* logout button */}
         <div className="menu_logout_container absolute bottom-5 left-3 right-3 flex flex-col gap-3  ">
           <Link
+            data-tooltip-id="navbarTooltip"
+            data-tooltip-content="Logout"
+            data-tooltip-place="right"
             to="/logout"
             className="logout_container relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 bg-slate-800 hover:bg-[#289288] items-center"
           >
@@ -79,6 +86,7 @@ const SideNavbar = () => {
           </Link>
         </div>
       </div>
+      <Tooltip className='ml-2' id="navbarTooltip" />
     </>
   );
 };
