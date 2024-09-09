@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { userSidenavbarList } from '@/data/UserSideNavbarList';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeSideNavbar } from '../../features/sideNavbar/sideNavbarSlice';
+import LogoImage from '../../../public/assets/logo/logo.png';
 
 const SideNavbar = () => {
   const dispatch = useDispatch();
@@ -20,16 +21,15 @@ const SideNavbar = () => {
         ${!isSideNavbarOpen && isMobile ? 'w-0 left-[-210px]' : ''} 
          h-full bg-[#1b1a1d] flex flex-col px-3 py-5 gap-2 shadow-lg z-50 overflow-hidden`}
       >
-        <div className="sidenavbar_heading_container py-5 pl-4 flex items-center relative">
+        <Link
+          to="/"
+          className="sidenavbar_heading_container py-5 pl-4 flex items-center relative"
+        >
           {/* 
         <img className="h-6" src="./assets/logo/logo_name.png" alt="logo" /> 
         */}
           {!isSideNavbarOpen && !isMobile && (
-            <img
-              className="h-8 relative right-1"
-              src="./assets/logo/logo.png"
-              alt="logo"
-            />
+            <img className="h-8 relative right-1" src={LogoImage} alt="logo" />
           )}
           {isSideNavbarOpen && !isMobile && (
             <h1 className="text-gray-200 text-2xl font-bold">Budgetter</h1>
@@ -37,7 +37,7 @@ const SideNavbar = () => {
           {isSideNavbarOpen && isMobile && (
             <h1 className="text-gray-200 text-2xl font-bold">Budgetter</h1>
           )}
-        </div>
+        </Link>
         {/* menu icons */}
         <div className="sidenavbar_menu_container flex flex-col gap-3">
           {userSidenavbarList.map(({ route, name, icon }, index) => (

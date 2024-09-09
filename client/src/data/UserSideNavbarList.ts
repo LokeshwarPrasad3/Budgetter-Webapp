@@ -6,27 +6,27 @@ type userSidenavbarListType = {
 
 export const userSidenavbarList: userSidenavbarListType[] = [
   {
-    route: 'dashboard',
+    route: 'user/dashboard',
     name: 'Dashboard',
     icon: 'ri-dashboard-line',
   },
   {
-    route: 'add-expenses',
+    route: 'user/add-expenses',
     name: 'Add Expenses',
     icon: 'ri-add-circle-line',
   },
   {
-    route: 'Show Expenses',
+    route: 'user/show-expenses',
     name: 'show-expenses',
     icon: 'ri-eye-line',
   },
   {
-    route: 'Graphs & Reports',
+    route: 'user/reports',
     name: 'reports',
     icon: 'ri-folder-chart-line',
   },
   {
-    route: 'Transactions',
+    route: 'user/transactions',
     name: 'transactions',
     icon: 'ri-money-rupee-circle-line',
   },

@@ -5,19 +5,19 @@ type navListType = {
 
 export const navListArray: navListType[] = [
   {
-    route: 'dashboard',
+    route: 'user/dashboard',
     name: 'Dashboard',
   },
   {
-    route: 'add-expenses',
+    route: 'user/add-expenses',
     name: 'Add Expenses',
   },
   {
-    route: 'Show Expenses',
+    route: 'user/show-expenses',
     name: 'show-expenses',
   },
   {
-    route: 'Graphs & Reports',
+    route: 'user/reports',
     name: 'reports',
   },
 ];

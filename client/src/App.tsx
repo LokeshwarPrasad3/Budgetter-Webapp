@@ -13,7 +13,6 @@ const App: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const handleResize = () => {
-      console.log('resize work');
       dispatch(setCurrentWindowWidth(window.innerWidth));
       dispatch(setIsMobile(window.innerWidth <= 768));
     };

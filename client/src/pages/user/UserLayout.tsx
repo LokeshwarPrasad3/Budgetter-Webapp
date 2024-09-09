@@ -1,8 +1,9 @@
 import SideNavbar from '@/components/navbar/SideNavbar';
 import TopHeader from '@/components/user/TopHeader';
 import { useSelector } from 'react-redux';
+import { Outlet } from 'react-router-dom';
 
-const DashboardLayout = () => {
+const UserLayout = () => {
   // get from reducer state
   const isSideNavbarOpen = useSelector(
     (state: any) => state.sideNavbar.isSideNavbarOpen
@@ -23,9 +24,10 @@ const DashboardLayout = () => {
         `}
       >
         <TopHeader />
+        <Outlet/>
       </div>
     </>
   );
 };
 
-export default DashboardLayout;
+export default UserLayout;

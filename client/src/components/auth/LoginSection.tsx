@@ -1,13 +1,17 @@
 // LoginSection.tsx
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginSection: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+  const navigate = useNavigate();
+  const handleUserLogin = () => {
+    navigate('/user/dashboard');
   };
 
   return (
@@ -78,6 +82,7 @@ const LoginSection: React.FC = () => {
 
         <button
           type="submit"
+          onClick={() => handleUserLogin()}
           className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           Log In

@@ -1,6 +1,6 @@
-import Features from '@/components/dashboard/Features';
-import HeroSection from '@/components/dashboard/HeroSection';
-import ContactSection from '@/components/layout/ContactSection';
+import Features from '@/components/home/Features';
+import HeroSection from '@/components/home/HeroSection';
+import ContactSection from '@/components/home/ContactSection';
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/navbar/Navbar';
 

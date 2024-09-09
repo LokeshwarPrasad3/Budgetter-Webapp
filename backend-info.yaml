@@ -24,41 +24,20 @@ TITLE: Budgetter
   - Turmeric powder
   - Cumin
   - Ghee
+  - Mosquito agarbatti
+  - Puja agarbatti
 
-4. health:
-  - Paracetamol
-  - Herbal supplements
-
-5. personal_care:
+4. personal_care ( clothing_and_accessories ):
   - Soap
   - Toothbrush
   - Skin cream/powder
   - Hair oil
   - Nail cutter
-
-6. transportation:
-  - Travel bus
-
-7. religious:
-  - Mosquito agarbatti
-  - Puja agarbatti
-
-8. stationery:
-  - Pen
-  - Copy
-
-9. electronics:
-  - Charger
-  - Earphone
-
-10. clothing_and_accessories:
   - Shirt
   - Pants
   - Skirt
 
-11. entertainment: []
-
-12. miscellaneous: []
+5. miscellaneous: [health(medicin) , education,  ]
 
 BACKEND:
 
