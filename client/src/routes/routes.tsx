@@ -8,6 +8,7 @@ import MainLayout from '@/pages/MainLayout';
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Navigate,
   Route,
 } from 'react-router-dom';
 import UserLayout from '@/pages/user/UserLayout';
@@ -40,6 +41,8 @@ const routes = createBrowserRouter(
       </Route>
       {/* home */}
       <Route path="/" element={<HomeLayout />} />
+      {/* logout page routes */}
+      <Route path="logout" element={< Navigate to="/login" />} />
     </Route>
   )
 );
