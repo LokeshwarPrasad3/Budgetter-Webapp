@@ -1,5 +1,5 @@
 import SideNavbar from '@/components/navbar/SideNavbar';
-import TopHeader from '@/components/user/TopHeader';
+import TopHeader from '@/components/header/TopHeader';
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
