@@ -10,11 +10,11 @@ const windowWidthSlice = createSlice({
   initialState,
   reducers: {
     setCurrentWindowWidth: (state, action) => {
-      console.log('current from redux ', action.payload);
+      // console.log('current from redux ', action.payload);
       state.windowWidth = action.payload.windowWidth;
     },
     setIsMobile: (state, action) => {
-      console.log('from set is mobile', action.payload);
+      // console.log('from set is mobile', action.payload);
       state.isMobile = action.payload;
     },
   },

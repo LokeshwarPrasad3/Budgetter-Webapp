@@ -17,14 +17,14 @@ const UserLayout = () => {
     <>
       <SideNavbar />
       <div
-        className={`dashboard_layout_container absolute top-0 right-0 flex flex-col
+        className={`dashboard_layout_container absolute top-0 right-0 flex flex-col bg-[#F6F7FB]
        ${isSideNavbarOpen && !isMobile && 'dashboard_layout_container_large_screen_open'} 
         ${!isSideNavbarOpen && !isMobile && 'dashboard_layout_container_large_screen_close'} 
         ${isMobile && 'dashboard_layout_container_small_screen_close'} 
         `}
       >
         <TopHeader />
-        <Outlet/>
+        <Outlet />
       </div>
     </>
   );
