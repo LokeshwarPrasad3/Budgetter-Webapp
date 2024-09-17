@@ -1,9 +1,12 @@
+import ExpenseHistoryDetailsTable from "@/components/user/showExpenses/ExpenseHistoryDetailsTable";
+import FilterShowExpenses from "@/components/user/showExpenses/FilterShowExpenses";
 
 const ShowExpenses = () => {
   return (
-    <div className="flex flex-col justify-center items-center">
-      <h1>Show Expenses Layout</h1>
-    </div>
+    <>
+      <FilterShowExpenses />
+      <ExpenseHistoryDetailsTable />
+    </>
   );
 }
 

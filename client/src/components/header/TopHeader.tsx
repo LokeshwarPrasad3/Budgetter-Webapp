@@ -49,7 +49,7 @@ const TopHeader = () => {
           </button>
         </div>
       </div>
-      <Tooltip id="header-tooltip" />
+      <Tooltip className='hidden md:block' id="header-tooltip" />
     </>
   );
 };

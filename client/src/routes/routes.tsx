@@ -36,7 +36,8 @@ const routes = createBrowserRouter(
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="add-expenses" element={<AddExpenses />} />
         <Route path="show-expenses" element={<ShowExpenses />} />
-        <Route path="reports" element={<Reports />} />
+        {/* <Route path="reports" element={<Reports />} /> */}
+        <Route path="reports" element={<Dashboard />} />
         <Route path="add-money" element={<AddMoney />} />
       </Route>
       {/* home */}

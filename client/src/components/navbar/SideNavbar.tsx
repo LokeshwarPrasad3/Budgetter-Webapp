@@ -15,7 +15,7 @@ const SideNavbar = () => {
   return (
     <>
       <div
-        className={`sidenavbar_container font-karla fixed top-0 transition-all duration-300 ease-in
+        className={`sidenavbar_container font-karla fixed top-0 
         ${isSideNavbarOpen && !isMobile ? 'w-52 left-0' : ''} 
         ${isSideNavbarOpen && isMobile ? 'w-52 left-0' : ''} 
         ${!isSideNavbarOpen && !isMobile ? 'w-[72px] left-0' : ''} 
@@ -86,7 +86,7 @@ const SideNavbar = () => {
           </Link>
         </div>
       </div>
-      <Tooltip className='ml-2 z-50' id="navbarTooltip" />
+      <Tooltip className='ml-2 z-50 hidden md:block' id="navbarTooltip" />
     </>
   );
 };
