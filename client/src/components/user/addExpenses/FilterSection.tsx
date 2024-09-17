@@ -35,11 +35,11 @@ const FilterSection = () => {
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Fruits</SelectLabel>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                  <SelectItem value="apple">Housing & Utilities</SelectItem>
+                  <SelectItem value="banana">Food</SelectItem>
+                  <SelectItem value="blueberry">Groceries</SelectItem>
+                  <SelectItem value="grapes">Personal Care</SelectItem>
+                  <SelectItem value="pineapple">Miscellaneous</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -49,9 +49,9 @@ const FilterSection = () => {
             <Input type="number" placeholder="Enter Price" />
           </div>
         </div>
-        <div className="action_buttons flex gap-4 justify-start items-center pb-2">
+        <div className="action_buttons flex gap-4 justify-start items-center py-2">
           <Button className="bg-green-500">
-            <CirclePlus className='h-5 w-5' /> &nbsp; Add New
+            <CirclePlus className="h-5 w-5" /> &nbsp; Add New
           </Button>
           <Button className="bg-blue-500">Save</Button>
         </div>

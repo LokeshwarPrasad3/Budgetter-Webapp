@@ -53,7 +53,7 @@ const SideNavbar = () => {
             >
               <i className={`${icon} text-2xl text-white`}></i>
               <span
-                className={`text-base font-medium text-white absolute transition-all duration-700 ease-in
+                className={`text-base font-medium text-white absolute 
               ${!isSideNavbarOpen && !isMobile && 'left-16'}
               ${isSideNavbarOpen && !isMobile && 'left-12'}
               ${isSideNavbarOpen && isMobile && 'left-12'}

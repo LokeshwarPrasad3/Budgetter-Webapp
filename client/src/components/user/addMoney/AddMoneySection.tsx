@@ -17,7 +17,7 @@ const AddMoneySection = () => {
             <Input type="text" placeholder="Enter Source" />
           </div>
         </div>
-        <div className="action_buttons flex gap-4 justify-start items-center pb-2">
+        <div className="action_buttons flex gap-4 justify-start flex-wrap items-center py-2">
           <Button variant={'outline'}>Cancel</Button>
           <Button className="bg-green-500">
             <CirclePlus className="h-5 w-5" /> &nbsp; Add Money

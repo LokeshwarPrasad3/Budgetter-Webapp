@@ -12,7 +12,7 @@ const FilterShowExpenses = () => {
             <DatePicker />
           </div>
         </div>
-        <div className="action_buttons flex gap-4 justify-start items-center pb-2">
+        <div className="action_buttons flex gap-4 justify-start items-center py-2">
           <Button className="bg-green-500">Show All</Button>
         </div>
       </div>
