@@ -5,7 +5,7 @@ import CategoryWiseLineChart from '@/components/user/dashbaord/charts/CategoryWi
 const Dashboard = () => {
   return (
     <>
-      <div className="dashboard_page_ flex flex-col justify-start items-start p-5 px-7 w-full gap-5">
+      <div className="dashboard_page_ flex flex-col justify-start items-start w-full gap-5">
         <div className="heading_dashboard_page flex justify-start items-start w-full">
           <h3 className="font-semibold text-base text-left">
             August Month Report 2024

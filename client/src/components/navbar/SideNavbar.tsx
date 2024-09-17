@@ -86,7 +86,7 @@ const SideNavbar = () => {
           </Link>
         </div>
       </div>
-      <Tooltip className='ml-2' id="navbarTooltip" />
+      <Tooltip className='ml-2 z-50' id="navbarTooltip" />
     </>
   );
 };

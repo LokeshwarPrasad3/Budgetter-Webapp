@@ -84,7 +84,7 @@ const CategoryWiseExpensesChart: React.FC = () => {
           className="h-52 w-52"
           style={{ maxWidth: '400px' }}
         ></div>
-        <div className="flex flex-col gap-2 justify-start items-start text-sm">
+        <div className="flex flex-wrap sm:flex-col gap-2 justify-center sm:justify-start items-center sm:items-start text-sm">
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 rounded-[2px] bg-[#A8905F]"></div>
             <span>Housing & Utilities</span>

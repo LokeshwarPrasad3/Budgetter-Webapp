@@ -21,7 +21,7 @@ const TopHeader = () => {
 
   return (
     <>
-      <div className="topheader_container relative text-black bg-[#F6F7FB] w-full h-16 flex items-center px-1">
+      <div className="topheader_container relative text-black bg-[#FFFEFE] shadow-sm w-full h-16 flex items-center px-1">
         <i
           onClick={() => dispatch(toggleSideNavbar())}
           className="ri-menu-line cursor-pointer text-black font-bold mx-4 text-xl"
@@ -35,7 +35,7 @@ const TopHeader = () => {
               data-tooltip-id="header-tooltip"
               data-tooltip-content="Profile"
               data-tooltip-place="bottom"
-              src="https://picsum.photos/200/200"
+              src="https://i.ibb.co/gT2rBMZ/F87mws-UXc-AAO40f.jpg"
               className="h-full w-full"
               alt="logo"
             />

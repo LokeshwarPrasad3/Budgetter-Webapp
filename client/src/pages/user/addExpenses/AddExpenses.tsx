@@ -1,10 +1,13 @@
+import ExpenseDetailsTable from '@/components/user/addExpenses/ExpenseDetailsTable';
+import FilterSection from '@/components/user/addExpenses/FilterSection';
 
 const AddExpenses = () => {
   return (
-    <div className="flex flex-col justify-center items-center">
-      <h1>Add Expenses Layout</h1>
-    </div>
+    <>
+      <FilterSection />
+      <ExpenseDetailsTable />
+    </>
   );
-}
+};
 
-export default AddExpenses
+export default AddExpenses;
