@@ -2,6 +2,7 @@ import { ApiError } from "../utils/ApiError.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import { getTodayDate } from "../utils/getCurrentDate.js";
 import ExpenseModel from "../models/expenses.model.js";
+import UserModel from "../models/user.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
 // 1. post expenses of current date
@@ -13,7 +14,9 @@ export const addTodayExpenses = asyncHandler(async (req, res) => {
     if (!currentDate || !productsArray || productsArray?.length === 0) {
         throw new ApiError(400, "All Field required!!");
     }
-
+    // calculate total expenses price
+    const totalExpenses = productsArray.reduce((total, item) => (total + item.price), 0)
+    console.log("Your total expenses ", totalExpenses)
     // is today expense push first time
     const firstExpensesOfToday = await ExpenseModel.findOne({ user: userId, date: currentDate }) // today date is default used
     let createdExpenses;
@@ -35,9 +38,15 @@ export const addTodayExpenses = asyncHandler(async (req, res) => {
     if (!createdExpenses) {
         throw new ApiError(500, "Something went wrong!!");
     }
+    // now minus from user poket money
+    const user = await UserModel.findOne({ _id: userId });
+    const newBalance = parseFloat(user.currentPocketMoney) - parseFloat(totalExpenses);
+    user.currentPocketMoney = newBalance.toString();
+    console.log("You remaining balance", user.currentPocketMoney)
+    await user.save();
     console.log(createdExpenses);
     return res.status(201).json(
-        new ApiResponse(201, createdExpenses, "Expenses created successfully!!")
+        new ApiResponse(201, createdExpenses, { currentPocketMoney: user.currentPocketMoney }, "Expenses created successfully!!")
     )
 })
 
@@ -66,6 +75,8 @@ export const addParticularDateExpenses = asyncHandler(async (req, res) => {
     if (!productsArray || productsArray?.length === 0) {
         throw new ApiError(400, "All Field required!!");
     }
+    const totalExpenses = productsArray.reduce((total, item) => (total + item.price), 0)
+    console.log("Your total expenses ", totalExpenses)
 
     // is that date push expenses first time
     const firstExpensesOfDate = await ExpenseModel.findOne({ user: userId, date }) // today date is default used
@@ -90,6 +101,12 @@ export const addParticularDateExpenses = asyncHandler(async (req, res) => {
         throw new ApiError(500, "Something went wrong!!");
     }
     console.log(createdExpenses);
+    // now minus from user poket money
+    const user = await UserModel.findOne({ _id: userId });
+    const newBalance = parseFloat(user.currentPocketMoney) - parseFloat(totalExpenses);
+    user.currentPocketMoney = newBalance.toString();
+    console.log("You remaining balance", user.currentPocketMoney)
+    await user.save();
     return res.status(201).json(
         new ApiResponse(201, createdExpenses, "Expenses created successfully!!")
     )

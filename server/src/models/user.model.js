@@ -27,6 +27,10 @@ const UserSchema = new Schema({
         type: String,
         default: "https://i.postimg.cc/cCWKmfzs/satoro-1.jpg",
     },
+    currentPocketMoney: {
+        type: String,
+        default: "0"
+    },
     password: {
         type: String,
         required: [true, "Password is required"],
@@ -44,7 +48,7 @@ const UserSchema = new Schema({
 
 // before save password must be encrypted using bcrypt.js
 UserSchema.pre("save", async function (next) {
-    console.log("is password modified? ", this.isModified("password"));
+    // console.log("is password modified? ", this.isModified("password"));
     // this refers to instance document
     if (!this.isModified("password")) { console.log("password not changed"); return next(); } // is there req to change password field of current document
     this.password = await bcrypt.hash(this.password, 10); // before save input password hashed and modified in password field and then save
