@@ -34,11 +34,13 @@ const FilterSection = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Fruits</SelectLabel>
+                  <SelectItem value="apple">Groceries</SelectItem>
                   <SelectItem value="apple">Housing & Utilities</SelectItem>
-                  <SelectItem value="banana">Food</SelectItem>
-                  <SelectItem value="blueberry">Groceries</SelectItem>
-                  <SelectItem value="grapes">Personal Care</SelectItem>
+                  <SelectItem value="banana">Medical </SelectItem>
+                  <SelectItem value="blueberry">Food</SelectItem>
+                  <SelectItem value="apple">Personal</SelectItem>
+                  <SelectItem value="grapes">Educational</SelectItem>
+                  <SelectItem value="pineapple">Transportation</SelectItem>
                   <SelectItem value="pineapple">Miscellaneous</SelectItem>
                 </SelectGroup>
               </SelectContent>
