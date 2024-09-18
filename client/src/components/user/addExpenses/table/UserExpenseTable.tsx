@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   createColumnHelper,
   flexRender,
@@ -134,7 +134,9 @@ const columns = [
 
 const UserExpenseTable: React.FC = () => {
   const [data, setData] = React.useState<Expense[]>(defaultData);
-  const rerender = React.useReducer(() => ({}), {})[1];
+  useEffect(() => {
+    setData(data);
+  }, []);
 
   const table = useReactTable({
     data,

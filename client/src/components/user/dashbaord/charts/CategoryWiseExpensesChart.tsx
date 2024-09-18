@@ -14,7 +14,7 @@ const CategoryWiseExpensesChart: React.FC = () => {
       root.setThemes([am5themes_Animated.new(root)]);
 
       // Remove amCharts logo
-      root._logo.dispose();
+      root._logo?.dispose();
 
       // Create the chart
       const chart = root.container.children.push(
@@ -47,7 +47,7 @@ const CategoryWiseExpensesChart: React.FC = () => {
         stroke: am5.color(0xffffff),
         strokeWidth: 2,
         cornerRadius: 5,
-      });
+      } as any);
 
       // Hide labels outside the chart (by showing only the value in the center label)
       series.labels.template.set('forceHidden', true);
