@@ -4,8 +4,11 @@ import { useMutation } from '@tanstack/react-query';
 import { registerUser, RegisterUserResponseType } from '@/services/auth';
 import { Button } from '../ui/button';
 import { Loader2 } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { setUser } from '@/features/user/user';
 
 const SignupSection: React.FC = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
@@ -21,6 +24,11 @@ const SignupSection: React.FC = () => {
     mutationFn: registerUser,
     onSuccess: (data: RegisterUserResponseType) => {
       console.log('User registered successfully:', data);
+      const { _id, username, name, email, avatar, currentPocketMoney } =
+        data.data;
+      dispatch(
+        setUser({ _id, username, name, email, avatar, currentPocketMoney })
+      );
     },
     onError: (error: Error) => {
       console.error('Registration error:', error);

@@ -2,6 +2,35 @@ import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+const PocketMoneyHistorySchema = new Schema({
+    date: {
+        type: String,
+        required: true,
+        default: () => {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = String(now.getFullYear()).slice(-2);
+            return `${day}-${month}-${year}`;
+        },
+    },
+    amount: {
+        type: String,
+        required: true,
+    },
+    source: {
+        type: String,
+        required: true
+    }
+}, {
+    timestamps: true
+})
+
+// validate array should be at least 1 length
+function arrayLimit(val) {
+    return val.length > 0;
+}
+
 const UserSchema = new Schema({
     username: {
         type: String,
@@ -26,6 +55,10 @@ const UserSchema = new Schema({
         // https://i.postimg.cc/3wZzNhHn/saotro-2.jpg
         type: String,
         default: "https://i.postimg.cc/cCWKmfzs/satoro-1.jpg",
+    },
+    PocketMoneyHistory: {
+        type: [PocketMoneyHistorySchema],
+        validate: [arrayLimit, "Must have at least 1 product"]
     },
     currentPocketMoney: {
         type: String,
