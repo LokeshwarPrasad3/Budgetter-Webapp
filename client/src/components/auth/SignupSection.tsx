@@ -1,13 +1,38 @@
-// SignupSection.tsx
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { registerUser, RegisterUserResponseType } from '@/services/auth';
+import { Button } from '../ui/button';
+import { Loader2 } from 'lucide-react';
 
 const SignupSection: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const { mutateAsync: registerUserMutate, isPending } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: (data: RegisterUserResponseType) => {
+      console.log('User registered successfully:', data);
+    },
+    onError: (error: Error) => {
+      console.error('Registration error:', error);
+    },
+  });
+
+  const handleUserRegistration = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (username.length < 5 || !name || !email || !password) {
+      console.log('All Fields are Required!!');
+      return;
+    }
+    registerUserMutate({ username, name, email, password });
   };
 
   return (
@@ -27,7 +52,7 @@ const SignupSection: React.FC = () => {
           <i className="ri-user-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
           <input
             type="text"
-            id="username"
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
             className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
@@ -36,7 +61,7 @@ const SignupSection: React.FC = () => {
           <i className="ri-user-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
           <input
             type="text"
-            id="name"
+            onChange={(e) => setName(e.target.value)}
             placeholder="Your Name"
             className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
@@ -45,7 +70,7 @@ const SignupSection: React.FC = () => {
           <i className="ri-mail-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
           <input
             type="email"
-            id="email"
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email address"
             className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
@@ -55,7 +80,8 @@ const SignupSection: React.FC = () => {
           <i className="ri-lock-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
           <input
             type={showPassword ? 'text' : 'password'}
-            id="password"
+            autoComplete="off"
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             className="text-slate-900 font-medium mt-1 block w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
@@ -72,28 +98,22 @@ const SignupSection: React.FC = () => {
           </button>
         </div>
 
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="keep-logged-in"
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-            />
-            <label
-              htmlFor="keep-logged-in"
-              className="ml-2 text-sm text-gray-600"
-            >
-              Keep me logged in
-            </label>
-          </div>
-        </div>
+        <div className="flex items-center justify-between mb-4"></div>
 
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        <Button
+          disabled={isPending}
+          onClick={handleUserRegistration}
+          className="w-full h-10 text-base px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none"
         >
-          Sign Up
-        </button>
+          {isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </>
+          ) : (
+            'Signup'
+          )}
+        </Button>
 
         <div className="my-2 text-center text-slate-500 font-bold">Or</div>
 

@@ -31,7 +31,6 @@ const LoginSection: React.FC = () => {
           <i className="ri-mail-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
           <input
             type="email"
-            id="email"
             placeholder="Email address"
             className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
@@ -41,7 +40,7 @@ const LoginSection: React.FC = () => {
           <i className="ri-lock-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
           <input
             type={showPassword ? 'text' : 'password'}
-            id="password"
+            autoComplete='off'
             placeholder="Password"
             className="text-slate-900 font-medium mt-1 block w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />

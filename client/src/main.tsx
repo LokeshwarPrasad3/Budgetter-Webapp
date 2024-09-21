@@ -7,11 +7,18 @@ import '../src/styles/global.css';
 import { store } from '@/app/store.ts';
 import { Provider } from 'react-redux';
 import 'react-tooltip/dist/react-tooltip.css';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <App />
+        <ReactQueryDevtools />
+      </Provider>
+    </QueryClientProvider>
   </StrictMode>
 );
