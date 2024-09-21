@@ -2,15 +2,37 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Button } from '../ui/button';
+import { useMutation } from '@tanstack/react-query';
+import { LoginUser } from '@/services/auth';
+import { Loader2 } from 'lucide-react';
 
 const LoginSection: React.FC = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  const navigate = useNavigate();
+
+  const { mutateAsync: loginUserMutate, isPending } = useMutation({
+    mutationFn: LoginUser,
+    onSuccess: (data) => {
+      console.log('Logged data', data);
+    },
+    onError: (error) => {
+      console.log('Error during login', error);
+    },
+  });
+
   const handleUserLogin = () => {
+    if (!email || !password) {
+      console.log('Please fill all fields!');
+      return;
+    }
+    loginUserMutate({ email, password });
     navigate('/user/dashboard');
   };
 
@@ -30,8 +52,8 @@ const LoginSection: React.FC = () => {
         <div className="mb-3 relative">
           <i className="ri-mail-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
           <input
+            onChange={(e) => setEmail(e.target.value)}
             type="email"
-            id="email"
             placeholder="Email address"
             className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
@@ -40,8 +62,9 @@ const LoginSection: React.FC = () => {
         <div className="mb-4 relative">
           <i className="ri-lock-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
           <input
+            onChange={(e) => setPassword(e.target.value)}
             type={showPassword ? 'text' : 'password'}
-            id="password"
+            autoComplete="off"
             placeholder="Password"
             className="text-slate-900 font-medium mt-1 block w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
@@ -67,7 +90,7 @@ const LoginSection: React.FC = () => {
             />
             <label
               htmlFor="keep-logged-in"
-              className="ml-2 text-sm text-gray-600"
+              className="ml-2 text-sm text-gray-600 select-none"
             >
               Keep me logged in
             </label>
@@ -80,13 +103,20 @@ const LoginSection: React.FC = () => {
           </Link>
         </div>
 
-        <button
-          type="submit"
+        <Button
+          disabled={isPending}
           onClick={() => handleUserLogin()}
-          className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="w-full h-10 text-base px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none"
         >
-          Log In
-        </button>
+          {isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </>
+          ) : (
+            'Login'
+          )}
+        </Button>
 
         <div className="my-2 text-center text-slate-500 font-bold">Or</div>
 

@@ -1,9 +1,15 @@
 // ForgotPasswordSection.tsx
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button } from '../ui/button';
 
 const ForgotPasswordSection: React.FC = () => {
+  const navigate = useNavigate();
+  const handlePasswordReset = () => {
+    navigate('/login');
+  };
+
   return (
     <div className="w-full max-w-full p-8 bg-white shadow-lg rounded-lg">
       <h1 className="text-3xl font-bold tracking-tighter text-gray-800 text-center mb-2">
@@ -24,12 +30,12 @@ const ForgotPasswordSection: React.FC = () => {
           />
         </div>
 
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        <Button
+          onClick={handlePasswordReset}
+          className="w-full h-10 text-base px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none"
         >
           Send Reset Link
-        </button>
+        </Button>
 
         <div className="my-2 text-center text-slate-500 font-bold">Or</div>
 
