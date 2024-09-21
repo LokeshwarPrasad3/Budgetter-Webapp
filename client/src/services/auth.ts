@@ -81,3 +81,28 @@ export const LoginUser = async (
   );
   return data;
 };
+
+// getting data by accesstoken
+interface userDetailsType {
+  statusCode: number;
+  data: {
+    _id: string;
+    username: string;
+    name: string;
+    email: string;
+    avatar: string;
+    currentPocketMoney: string;
+  };
+  message: string;
+  success: boolean;
+}
+export const getCurrentUser = async (): Promise<userDetailsType> => {
+  const config: AxiosRequestConfig = {
+    withCredentials: true,
+  };
+  const { data } = await axios.get<userDetailsType>(
+    'http://localhost:5000/api/user/get-user-data',
+    config
+  );
+  return data;
+};

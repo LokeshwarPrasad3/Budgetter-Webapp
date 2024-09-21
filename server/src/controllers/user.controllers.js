@@ -46,8 +46,8 @@ export const registerUser = asyncHandler(async (req, res) => {
     }
 
     const options = {
-        httpOnly: true, // cannot access & modified by client javascript (document.cookie)
-        secure: true // only send to https:// clinet 
+        httpOnly: false, // cannot access & modified by client javascript (document.cookie)
+        secure: false // only send to https:// clinet 
     }
     res.status(201)
         .cookie("accessToken", accessToken, options)
@@ -83,7 +83,7 @@ export const validateAccountVerification = asyncHandler(async (req, res) => {
 // get logged user data by cookies
 export const getLoggedUserData = asyncHandler(async (req, res) => {
     const user = req.user;
-    const userData = {
+    const data = {
         _id: user?._id,
         username: user?.username,
         name: user?.name,
@@ -92,7 +92,7 @@ export const getLoggedUserData = asyncHandler(async (req, res) => {
         currentPocketMoney: user?.currentPocketMoney,
     }
     res.status(200).json(
-        new ApiResponse(200, userData, "User Found Successfully!!")
+        new ApiResponse(200, data, "User Found Successfully!!")
     )
 })
 
@@ -120,8 +120,8 @@ export const loginUser = asyncHandler(async (req, res) => {
     console.log(user);
 
     const options = {
-        httpOnly: true,
-        secure: true
+        httpOnly: false,
+        secure: false
     }
     res.status(200)
         .cookie("accessToken", accessToken, options)
