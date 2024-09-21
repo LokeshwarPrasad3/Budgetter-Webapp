@@ -217,19 +217,24 @@ export const changeAvatar = asyncHandler(async (req, res) => {
 
 // add pocket money
 export const addUserPocketMoney = asyncHandler(async (req, res) => {
-    const { amount } = req.body;
-    if (!amount) {
-        throw new ApiError(400, "Invalid money!!");
+    const { date, amount, source } = req.body;
+    if (!date || !amount || !source) {
+        throw new ApiError(400, "Fill All Fields!!");
     }
     const user = req.user;
     // Add the new amount to the currentPocketMoney
     const newAmount = parseFloat(user.currentPocketMoney) + parseFloat(amount);
 
+    // add history track of added money
+    user.PocketMoneyHistory.push({
+        date, amount: newAmount.toString(), source
+    })
     // Update the user's currentPocketMoney
     user.currentPocketMoney = newAmount.toString();
+
     await user.save();
     res.status(201).json(
-        new ApiResponse(201, { currentPocketMoney: user.currentPocketMoney }, "Pocket money added successfully!")
+        new ApiResponse(201, { PocketMoneyHistory: user.PocketMoneyHistory, currentPocketMoney: user.currentPocketMoney }, "Pocket money added successfully!")
     )
 })
 

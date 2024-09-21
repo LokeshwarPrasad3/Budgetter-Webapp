@@ -65,52 +65,54 @@ export const showTodayExpenses = asyncHandler(async (req, res) => {
 
 // 3. add particular date expenses
 export const addParticularDateExpenses = asyncHandler(async (req, res) => {
-    // need userid , currentdate (default), productsArray[] = name, price, category
     const userId = req.user._id; // from middleware
-    const { date } = req.body; // must be formate of dd-mm-yy
-    if (date.split("-").length !== 3) {
-        throw new ApiError(400, "Date must be dd-mm-yy format");
+    const { pastDaysExpensesArray } = req.body; // must be format of dd-mm-yy
+    if (!Array.isArray(pastDaysExpensesArray) || pastDaysExpensesArray.length === 0) {
+        throw new ApiError(400, "Must Provide Data!!");
     }
-    const { productsArray } = req.body;
-    if (!productsArray || productsArray?.length === 0) {
-        throw new ApiError(400, "All Field required!!");
-    }
-    const totalExpenses = productsArray.reduce((total, item) => (total + item.price), 0)
-    console.log("Your total expenses ", totalExpenses)
+    const totalDaysExpenses = pastDaysExpensesArray.length;
 
-    // is that date push expenses first time
-    const firstExpensesOfDate = await ExpenseModel.findOne({ user: userId, date }) // today date is default used
-    let createdExpenses;
-    if (firstExpensesOfDate === null) {
-        createdExpenses = await ExpenseModel.create({
-            user: userId,
-            date,
-            products: productsArray
-        })
-    } else {
-        // update expense to push in products array
-        createdExpenses = await ExpenseModel.updateOne({ user: userId, date }, {
-            $addToSet: {
-                products: {
-                    $each: productsArray
-                }
+    const user = await UserModel.findById(userId);
+    let currentPocketMoney = parseFloat(user.currentPocketMoney);
+    const results = [];
+
+    for (const expenses of pastDaysExpensesArray) {
+        const { date, productsArray } = expenses;
+
+        if (Array.isArray(productsArray) && productsArray.length > 0) {
+            const totalExpenses = productsArray.reduce((total, item) => total + item.price, 0);
+            console.log("Your total expenses ", totalExpenses);
+
+            let createdExpenses;
+            const firstExpensesOfDate = await ExpenseModel.findOne({ user: userId, date });
+
+            if (!firstExpensesOfDate) {
+                createdExpenses = await ExpenseModel.create({
+                    user: userId,
+                    date,
+                    products: productsArray,
+                });
+            } else {
+                createdExpenses = await ExpenseModel.updateOne(
+                    { user: userId, date },
+                    { $addToSet: { products: { $each: productsArray } } },
+                    { new: true }
+                );
             }
-        }, { new: true })
+
+            if (!createdExpenses) {
+                throw new ApiError(500, "Something went wrong with expense creation!");
+            }
+            results.push(createdExpenses);
+            currentPocketMoney -= totalExpenses;
+        }
     }
-    if (!createdExpenses) {
-        throw new ApiError(500, "Something went wrong!!");
-    }
-    console.log(createdExpenses);
-    // now minus from user poket money
-    const user = await UserModel.findOne({ _id: userId });
-    const newBalance = parseFloat(user.currentPocketMoney) - parseFloat(totalExpenses);
-    user.currentPocketMoney = newBalance.toString();
-    console.log("You remaining balance", user.currentPocketMoney)
+
+    user.currentPocketMoney = currentPocketMoney.toString();
     await user.save();
-    return res.status(201).json(
-        new ApiResponse(201, createdExpenses, "Expenses created successfully!!")
-    )
-})
+
+    return res.status(201).json(new ApiResponse(201, null, `${totalDaysExpenses} Days Expenses created successfully!!`));
+});
 
 // 4. show particular date expenses
 export const showParticularDateExpenses = asyncHandler(async (req, res) => {

@@ -1,13 +1,14 @@
-// LoginSection.tsx
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { useMutation } from '@tanstack/react-query';
 import { LoginUser } from '@/services/auth';
 import { Loader2 } from 'lucide-react';
+import { setUser } from '@/features/user/user';
+import { useDispatch } from 'react-redux';
 
 const LoginSection: React.FC = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -21,6 +22,11 @@ const LoginSection: React.FC = () => {
     mutationFn: LoginUser,
     onSuccess: (data) => {
       console.log('Logged data', data);
+      const { _id, username, name, email, avatar, currentPocketMoney } =
+        data.data;
+      dispatch(
+        setUser({ _id, username, name, email, avatar, currentPocketMoney })
+      );
     },
     onError: (error) => {
       console.log('Error during login', error);
