@@ -32,6 +32,7 @@ export const registerUser = async (
     headers: {
       'Content-Type': 'application/json',
     },
+    withCredentials: true,
   };
 
   const { data } = await axios.post<RegisterUserResponseType>(
@@ -71,10 +72,36 @@ export const LoginUser = async (
     headers: {
       'Content-Type': 'application/json',
     },
+    withCredentials: true,
   };
   const { data } = await axios.post<LoginUserResponseType>(
     'http://localhost:5000/api/user/login',
     credentials,
+    config
+  );
+  return data;
+};
+
+// getting data by accesstoken
+interface userDetailsType {
+  statusCode: number;
+  data: {
+    _id: string;
+    username: string;
+    name: string;
+    email: string;
+    avatar: string;
+    currentPocketMoney: string;
+  };
+  message: string;
+  success: boolean;
+}
+export const getCurrentUser = async (): Promise<userDetailsType> => {
+  const config: AxiosRequestConfig = {
+    withCredentials: true,
+  };
+  const { data } = await axios.get<userDetailsType>(
+    'http://localhost:5000/api/user/get-user-data',
     config
   );
   return data;
