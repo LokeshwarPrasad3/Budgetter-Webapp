@@ -2,25 +2,25 @@ const SummarizeBoxes = () => {
   const summarizeBoxesContents = [
     {
       id: 1,
-      title: 'Opening Balance',
+      title: 'Total Expenses',
       value: '5000',
       bgClass: 'bg-[#4A90E2]',
     },
     {
       id: 2,
-      title: 'Total Balance',
+      title: 'Remain Balance',
       value: '1000',
       bgClass: 'bg-[#4CAF50]',
     },
     {
       id: 1,
-      title: 'Remain Balance',
+      title: 'Added Balance',
       value: '4000',
       bgClass: 'bg-[#FF9800]',
     },
     {
       id: 1,
-      title: 'Closing Balance',
+      title: 'Last Day Expense',
       value: '4000',
       bgClass: 'bg-[#FB899D]',
     },
