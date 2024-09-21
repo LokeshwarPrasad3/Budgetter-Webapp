@@ -32,6 +32,7 @@ export const registerUser = async (
     headers: {
       'Content-Type': 'application/json',
     },
+    withCredentials: true,
   };
 
   const { data } = await axios.post<RegisterUserResponseType>(
@@ -71,6 +72,7 @@ export const LoginUser = async (
     headers: {
       'Content-Type': 'application/json',
     },
+    withCredentials: true,
   };
   const { data } = await axios.post<LoginUserResponseType>(
     'http://localhost:5000/api/user/login',

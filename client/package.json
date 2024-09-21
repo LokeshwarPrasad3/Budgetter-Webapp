@@ -24,6 +24,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.3.28",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.441.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
