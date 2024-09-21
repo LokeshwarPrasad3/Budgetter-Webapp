@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { registerUser, RegisterUserResponseType } from '@/services/auth';
 import { Button } from '../ui/button';
 import { Loader2 } from 'lucide-react';
 
 const SignupSection: React.FC = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
@@ -33,6 +34,7 @@ const SignupSection: React.FC = () => {
       return;
     }
     registerUserMutate({ username, name, email, password });
+    navigate('/user/dashboard');
   };
 
   return (
