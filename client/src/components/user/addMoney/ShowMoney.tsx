@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 
 const ShowMoney = () => {
   return (
@@ -6,7 +7,9 @@ const ShowMoney = () => {
         <p className="text-lg text-white font-semibold text-center">
           Current Balance
         </p>
-        <p className="text-2xl text-white font-bold text-center">5000</p>
+        <p className="text-2xl text-white font-bold text-center">
+          {useSelector((state: any) => state.user.user.currentPocketMoney)}
+        </p>
       </div>
     </div>
   );

@@ -90,6 +90,7 @@ export const getLoggedUserData = asyncHandler(async (req, res) => {
         email: user?.email,
         avatar: user?.avatar,
         currentPocketMoney: user?.currentPocketMoney,
+        PocketMoneyHistory: user?.PocketMoneyHistory
     }
     res.status(200).json(
         new ApiResponse(200, data, "User Found Successfully!!")

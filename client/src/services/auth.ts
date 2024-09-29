@@ -61,6 +61,16 @@ export interface LoginUserResponseType {
     createdAt: string;
     updatedAt: string;
     __v: number;
+    PocketMoneyHistory: [
+      {
+        date: string;
+        amount: string;
+        source: string;
+        _id: string;
+        createdAt: string;
+        updatedAt: string;
+      },
+    ];
   };
   message: string;
   success: boolean;
@@ -92,6 +102,16 @@ interface userDetailsType {
     email: string;
     avatar: string;
     currentPocketMoney: string;
+    PocketMoneyHistory: [
+      {
+        date: string;
+        amount: string;
+        source: string;
+        _id: string;
+        createdAt: string;
+        updatedAt: string;
+      },
+    ];
   };
   message: string;
   success: boolean;
@@ -102,6 +122,47 @@ export const getCurrentUser = async (): Promise<userDetailsType> => {
   };
   const { data } = await axios.get<userDetailsType>(
     'http://localhost:5000/api/user/get-user-data',
+    config
+  );
+  return data;
+};
+
+// add your pocket money
+interface AddedPocketMoneyRes {
+  statusCode: number;
+  data: {
+    PocketMoneyHistory: [
+      {
+        date: string;
+        amount: string;
+        source: string;
+        _id: string;
+        createdAt: string;
+        updatedAt: string;
+      },
+    ];
+    currentPocketMoney: string;
+  };
+  message: string;
+  success: boolean;
+}
+interface AddPocketMoneyCredentialType {
+  date: string;
+  amount: string;
+  source: string;
+}
+export const AddUserPocketMoney = async (
+  credentials: AddPocketMoneyCredentialType
+): Promise<AddedPocketMoneyRes> => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true,
+  };
+  const { data } = await axios.post<AddedPocketMoneyRes>(
+    'http://localhost:5000/api/user/add-money',
+    credentials,
     config
   );
   return data;
