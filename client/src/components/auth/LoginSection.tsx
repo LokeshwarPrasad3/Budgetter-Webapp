@@ -22,10 +22,10 @@ const LoginSection: React.FC = () => {
     mutationFn: LoginUser,
     onSuccess: (data) => {
       console.log('Logged data', data);
-      const { _id, username, name, email, avatar, currentPocketMoney } =
+      const { _id, username, name, email, avatar, currentPocketMoney,PocketMoneyHistory } =
         data.data;
       dispatch(
-        setUser({ _id, username, name, email, avatar, currentPocketMoney })
+        setUser({ _id, username, name, email, avatar, currentPocketMoney,PocketMoneyHistory })
       );
     },
     onError: (error) => {
