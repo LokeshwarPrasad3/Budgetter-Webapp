@@ -123,7 +123,10 @@ export const showParticularDateExpenses = asyncHandler(async (req, res) => {
     }
     const particularDateExpenses = await ExpenseModel.findOne({ user: userId, date });
     if (!particularDateExpenses) {
-        throw new ApiError(404, "No expenses found!!");
+        res.status(200)
+            .json(
+                new ApiResponse(200, null, "No Expenses Found !!")
+            )
     }
     res.status(200)
         .json(

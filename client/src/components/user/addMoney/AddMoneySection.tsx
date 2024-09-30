@@ -27,14 +27,14 @@ const AddMoneySection = () => {
       alert('Please fill in all fields');
       return;
     }
-    setTimeout(() => {
-      const todayDate = getTodayDate();
-      AddUserMoneyMutate({
-        date: todayDate,
-        amount: pocketMoney,
-        source: moneySource,
-      });
-    }, 2000);
+    const todayDate = getTodayDate();
+    AddUserMoneyMutate({
+      date: todayDate,
+      amount: pocketMoney,
+      source: moneySource,
+    });
+    setPocketMoney("");
+    setMoneySource("");
   };
 
   return (
@@ -45,6 +45,7 @@ const AddMoneySection = () => {
           <div className="col-span-12 sm:col-span-6 w-full lg:col-span-3 input_section flex justify-start flex-col items-start gap-1">
             <p className="text-sm">Add Money</p>
             <Input
+              value={pocketMoney}
               onChange={(e) => setPocketMoney(e.target.value)}
               type="number"
               placeholder="Enter Money"
@@ -53,6 +54,7 @@ const AddMoneySection = () => {
           <div className="col-span-12 sm:col-span-6 w-full lg:col-span-3 input_section flex justify-start flex-col items-start gap-1">
             <p className="text-sm">Money Source</p>
             <Input
+              value={moneySource}
               onChange={(e) => setMoneySource(e.target.value)}
               type="text"
               placeholder="Enter Source"

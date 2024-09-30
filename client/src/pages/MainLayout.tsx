@@ -4,26 +4,16 @@ import { getCurrentUser } from '@/services/auth';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/features/user/user';
+import { getCookie } from '@/utils/cookies/cookies';
 
 const MainLayout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const getCookie = (name: string): string | undefined => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-
-    if (parts.length === 2) {
-      return parts.pop()?.split(';').shift();
-    }
-
-    return undefined;
-  };
-
   useEffect(() => {
     const accessToken = getCookie('accessToken');
     console.log(accessToken);
-    if (!accessToken) {
+    if (!accessToken || accessToken === undefined) {
       console.log('not found');
       navigate('/');
       return;
