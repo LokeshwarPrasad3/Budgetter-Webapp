@@ -4,7 +4,7 @@ import UserModel from "../models/user.model.js";
 
 const verifyJwtToken = async (req, _, next) => {
     try {
-        const token = req.cookies?.accessToken || req.header("Authorization").replace("Bearer ", "");
+        const token = req.cookies?.accessToken || (req.cookies?.accessToken && req.header("Authorization").replace("Bearer ", ""));
         if (!token) {
             throw new ApiError(401, "UnAuthorized User!!");
         }
@@ -22,7 +22,8 @@ const verifyJwtToken = async (req, _, next) => {
         next();
 
     } catch (error) {
-        throw new ApiError(401, "Invalid Access Token!!");
+        // throw new ApiError(401, "Invalid Access Token!!");
+        console.log(error);
     }
 }
 

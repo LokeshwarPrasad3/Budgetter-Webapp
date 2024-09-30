@@ -103,20 +103,23 @@ const columns = [
 
 const PocketMoneyDetails: React.FC = () => {
   const [data, setData] = React.useState<PocketMoneyType[]>([]);
-  const pocketMoneyTableData = useSelector(
-    (state: any) => state.user.user.PocketMoneyHistory
-  );
+  const pocketMoneyTableData = useSelector((state: any) => {
+    console.log('Redux State: ', state);
+    return state.user?.user?.PocketMoneyHistory;
+  });
 
-  const getCurrentPocketMoneyHistory = useCallback((): PocketMoneyType[] => {
-    return pocketMoneyTableData || [];
-  }, []);
+  // const getCurrentPocketMoneyHistory = useCallback((): PocketMoneyType[] => {
+  //   return pocketMoneyTableData || [];
+  // }, []);
 
   useEffect(() => {
-    const pocketMoneyTableData: PocketMoneyType[] =
-      getCurrentPocketMoneyHistory();
-    console.log('ths', pocketMoneyTableData);
-    setData(pocketMoneyTableData);
-  }, []);
+    if (pocketMoneyTableData) {
+      // const pocketMoneyData: PocketMoneyType[] = getCurrentPocketMoneyHistory();
+      // console.log('Pocket Money Data:', pocketMoneyData);
+      setData(pocketMoneyTableData);
+      console.log('Pocket Money Data:', pocketMoneyTableData);
+    }
+  }, [pocketMoneyTableData]);
 
   const table = useReactTable({
     data,
