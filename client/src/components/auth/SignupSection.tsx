@@ -25,10 +25,25 @@ const SignupSection: React.FC = () => {
     mutationFn: registerUser,
     onSuccess: (data: RegisterUserResponseType) => {
       // console.log('User registered successfully:', data);
-      const { _id, username, name, email, avatar, currentPocketMoney } =
-        data.data;
+      const {
+        _id,
+        username,
+        name,
+        email,
+        avatar,
+        currentPocketMoney,
+        PocketMoneyHistory,
+      } = data.data;
       dispatch(
-        setUser({ _id, username, name, email, avatar, currentPocketMoney })
+        setUser({
+          _id,
+          username,
+          name,
+          email,
+          avatar,
+          currentPocketMoney,
+          PocketMoneyHistory,
+        })
       );
       toast.success('Successfully Signup!!');
       navigate('/user/dashboard');

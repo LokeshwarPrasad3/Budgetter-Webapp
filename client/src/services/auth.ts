@@ -18,6 +18,7 @@ export interface RegisterUserResponseType {
     avatar: string;
     currentPocketMoney: string;
     isVerified: boolean;
+    PocketMoneyHistory: [];
     createdAt: string;
     updatedAt: string;
     __v: number;
