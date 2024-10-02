@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 import { Loader2 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/features/user/user';
+import toast from 'react-hot-toast';
 
 const SignupSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -29,9 +30,12 @@ const SignupSection: React.FC = () => {
       dispatch(
         setUser({ _id, username, name, email, avatar, currentPocketMoney })
       );
+      toast.success('Successfully Signup!!');
+      navigate('/user/dashboard');
     },
     onError: (error: Error) => {
       console.error('Registration error:', error);
+      toast.error('Oops! Something went wrong');
     },
   });
 
@@ -42,7 +46,6 @@ const SignupSection: React.FC = () => {
       return;
     }
     registerUserMutate({ username, name, email, password });
-    navigate('/user/dashboard');
   };
 
   return (
