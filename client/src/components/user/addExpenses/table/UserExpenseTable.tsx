@@ -5,7 +5,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { getTodayExpenses } from '@/services/expenses';
 import { setExpenses } from '@/features/user/user';
