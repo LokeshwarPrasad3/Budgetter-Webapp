@@ -26,11 +26,6 @@ const PocketMoneyHistorySchema = new Schema({
     timestamps: true
 })
 
-// validate array should be at least 1 length
-function arrayLimit(val) {
-    return val.length > 0;
-}
-
 const UserSchema = new Schema({
     username: {
         type: String,
@@ -58,7 +53,7 @@ const UserSchema = new Schema({
     },
     PocketMoneyHistory: {
         type: [PocketMoneyHistorySchema],
-        validate: [arrayLimit, "Must have at least 1 product"]
+        default: []
     },
     currentPocketMoney: {
         type: String,

@@ -6,6 +6,7 @@ import { LoginUser } from '@/services/auth';
 import { Loader2 } from 'lucide-react';
 import { setUser } from '@/features/user/user';
 import { useDispatch } from 'react-redux';
+import toast from 'react-hot-toast';
 
 const LoginSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -21,25 +22,44 @@ const LoginSection: React.FC = () => {
   const { mutateAsync: loginUserMutate, isPending } = useMutation({
     mutationFn: LoginUser,
     onSuccess: (data) => {
-      console.log('Logged data', data);
-      const { _id, username, name, email, avatar, currentPocketMoney,PocketMoneyHistory } =
-        data.data;
+      // console.log('Logged data', data);
+      const {
+        _id,
+        username,
+        name,
+        email,
+        avatar,
+        currentPocketMoney,
+        PocketMoneyHistory,
+      } = data.data;
       dispatch(
-        setUser({ _id, username, name, email, avatar, currentPocketMoney,PocketMoneyHistory })
+        setUser({
+          _id,
+          username,
+          name,
+          email,
+          avatar,
+          currentPocketMoney,
+          PocketMoneyHistory,
+        })
       );
+      toast.success('Successfully Logged in!!');
+      navigate('/user/dashboard');
     },
     onError: (error) => {
       console.log('Error during login', error);
+      toast.error('Oops! Something went wrong');
     },
   });
 
-  const handleUserLogin = () => {
+  const handleUserLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     if (!email || !password) {
       console.log('Please fill all fields!');
+      toast.error('All Fields Required!!');
       return;
     }
     loginUserMutate({ email, password });
-    navigate('/user/dashboard');
   };
 
   return (
@@ -111,7 +131,7 @@ const LoginSection: React.FC = () => {
 
         <Button
           disabled={isPending}
-          onClick={() => handleUserLogin()}
+          onClick={(e): void => handleUserLogin(e)}
           className="w-full h-10 text-base px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none"
         >
           {isPending ? (

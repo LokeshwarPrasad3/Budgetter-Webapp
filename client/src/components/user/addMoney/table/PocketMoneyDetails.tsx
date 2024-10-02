@@ -14,70 +14,6 @@ type PocketMoneyType = {
   source: string;
 };
 
-// Sample data
-// const defaultData: PocketMoneyType[] = [
-//   {
-//     sno: 1,
-//     date: '22-09-2024',
-//     money: '200',
-//     source: 'Salary',
-//   },
-//   {
-//     sno: 2,
-//     date: '22-09-2024',
-//     money: '200',
-//     source: 'Salary',
-//   },
-//   {
-//     sno: 3,
-//     date: '22-09-2024',
-//     money: '200',
-//     source: 'Salary',
-//   },
-//   {
-//     sno: 4,
-//     date: '22-09-2024',
-//     money: '200',
-//     source: 'Salary',
-//   },
-//   {
-//     sno: 5,
-//     date: '22-09-2024',
-//     money: '200',
-//     source: 'Salary',
-//   },
-//   {
-//     sno: 6,
-//     date: '22-09-2024',
-//     money: '200',
-//     source: 'Salary',
-//   },
-//   {
-//     sno: 7,
-//     date: '22-09-2024',
-//     money: '200',
-//     source: 'Salary',
-//   },
-//   {
-//     sno: 8,
-//     date: '22-09-2024',
-//     money: '200',
-//     source: 'Salary',
-//   },
-//   {
-//     sno: 9,
-//     date: '22-09-2024',
-//     money: '200',
-//     source: 'Salary',
-//   },
-//   {
-//     sno: 10,
-//     date: '22-09-2024',
-//     money: '200',
-//     source: 'Salary',
-//   },
-// ];
-
 // Create column helper
 const columnHelper = createColumnHelper<PocketMoneyType>();
 
@@ -104,21 +40,13 @@ const columns = [
 const PocketMoneyDetails: React.FC = () => {
   const [data, setData] = React.useState<PocketMoneyType[]>([]);
   const pocketMoneyTableData = useSelector((state: any) => {
-    console.log('Redux State: ', state);
-    return state.user?.user?.PocketMoneyHistory;
+    // console.log('here listen', state.user?.user.PocketMoneyHistory);
+    return state.user?.user.PocketMoneyHistory;
   });
 
-  // const getCurrentPocketMoneyHistory = useCallback((): PocketMoneyType[] => {
-  //   return pocketMoneyTableData || [];
-  // }, []);
-
   useEffect(() => {
-    if (pocketMoneyTableData) {
-      // const pocketMoneyData: PocketMoneyType[] = getCurrentPocketMoneyHistory();
-      // console.log('Pocket Money Data:', pocketMoneyData);
-      setData(pocketMoneyTableData);
-      console.log('Pocket Money Data:', pocketMoneyTableData);
-    }
+    console.log(data);
+    setData(pocketMoneyTableData);
   }, [pocketMoneyTableData]);
 
   const table = useReactTable({
@@ -129,7 +57,7 @@ const PocketMoneyDetails: React.FC = () => {
 
   return (
     <>
-      {data.length === 0 ? (
+      {data && data?.length === 0 ? (
         <div className="message_outer bg-[#ffffff] rounded-md w-full p-5 ">
           <div className="flex">Your Have Not Added Pocket Money</div>
         </div>
@@ -156,7 +84,7 @@ const PocketMoneyDetails: React.FC = () => {
               ))}
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {table.getRowModel().rows.map((row, index) => (
+              {table.getRowModel()?.rows.map((row, index) => (
                 <tr
                   key={row.id}
                   className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}

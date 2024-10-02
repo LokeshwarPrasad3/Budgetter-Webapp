@@ -57,9 +57,10 @@ export const showTodayExpenses = asyncHandler(async (req, res) => {
     if (!todayExpenses) {
         throw new ApiError(404, "No expenses found!!");
     }
+    const { products } = todayExpenses
     console.log(todayExpenses);
     return res.status(200).json(
-        new ApiResponse(200, todayExpenses, "Today expenses found!!")
+        new ApiResponse(200, products, "Today expenses found!!")
     )
 })
 

@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 import { Loader2 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/features/user/user';
+import toast from 'react-hot-toast';
 
 const SignupSection: React.FC = () => {
   const dispatch = useDispatch();
@@ -23,15 +24,18 @@ const SignupSection: React.FC = () => {
   const { mutateAsync: registerUserMutate, isPending } = useMutation({
     mutationFn: registerUser,
     onSuccess: (data: RegisterUserResponseType) => {
-      console.log('User registered successfully:', data);
+      // console.log('User registered successfully:', data);
       const { _id, username, name, email, avatar, currentPocketMoney } =
         data.data;
       dispatch(
         setUser({ _id, username, name, email, avatar, currentPocketMoney })
       );
+      toast.success('Successfully Signup!!');
+      navigate('/user/dashboard');
     },
     onError: (error: Error) => {
       console.error('Registration error:', error);
+      toast.error('Oops! Something went wrong');
     },
   });
 
@@ -39,10 +43,10 @@ const SignupSection: React.FC = () => {
     e.preventDefault();
     if (username.length < 5 || !name || !email || !password) {
       console.log('All Fields are Required!!');
+      toast.error('All Fields Required!!');
       return;
     }
     registerUserMutate({ username, name, email, password });
-    navigate('/user/dashboard');
   };
 
   return (
