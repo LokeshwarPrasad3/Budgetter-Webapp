@@ -12,7 +12,7 @@ const MainLayout = () => {
 
   useEffect(() => {
     const accessToken = getCookie('accessToken');
-    console.log(accessToken);
+    // console.log(accessToken);
     if (!accessToken || accessToken === undefined) {
       console.log('not found');
       return;

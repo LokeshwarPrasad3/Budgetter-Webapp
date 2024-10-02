@@ -13,7 +13,7 @@ import { CirclePlus, Loader2 } from 'lucide-react';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { formatDate } from '@/utils/date/date';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addExpenses } from '@/services/expenses';
 
 interface ExpensesCredentialsType {
@@ -29,6 +29,7 @@ interface ExpensesCredentialsType {
 }
 
 const FilterSection = () => {
+  const queryClient = useQueryClient();
   const [inputDate, setInputDate] = useState<Date | undefined>(new Date());
   const [expenseName, setExpenseName] = useState<string>('');
   const [expenseCategory, setExpenseCategory] = useState<string>('');
@@ -39,6 +40,10 @@ const FilterSection = () => {
     onSuccess: (data) => {
       console.log(data);
       toast.success('Expenses Added Successfully!!');
+      queryClient.invalidateQueries({ queryKey: ['todayExpense'] });
+      setExpenseCategory('');
+      setExpenseName('');
+      setPrice('');
     },
     onError: (error) => {
       console.log('Error on add expenses', error);
@@ -132,7 +137,7 @@ const FilterSection = () => {
         </div>
         <div className="action_buttons flex gap-4 justify-start items-center py-2">
           <Button onClick={handleAddNew} className="bg-green-500">
-            <CirclePlus className="h-5 w-5" /> &nbsp; Add New
+            <CirclePlus className="h-5 w-5" /> &nbsp; New
           </Button>
           <Button
             disabled={isPending}
@@ -145,7 +150,7 @@ const FilterSection = () => {
                 Please wait
               </>
             ) : (
-              'Save'
+              'Add Expense'
             )}
           </Button>
         </div>

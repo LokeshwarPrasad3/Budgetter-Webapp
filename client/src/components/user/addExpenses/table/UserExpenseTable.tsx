@@ -5,8 +5,10 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
+import { getTodayExpenses } from '@/services/expenses';
+import { setExpenses } from '@/features/user/user';
 
 type ExpensesTypes = {
   _id: string;
@@ -14,6 +16,7 @@ type ExpensesTypes = {
   price: number;
   category: string;
   createdAt: string;
+  updatedAt: string;
 };
 
 const columnHelper = createColumnHelper<ExpensesTypes>();
@@ -44,25 +47,20 @@ const columns = [
 ];
 
 const UserHistoryExpenseTable: React.FC = () => {
+  const dispatch = useDispatch();
   const [data, setData] = React.useState<ExpensesTypes[]>([]);
 
-  const expensesDetailArray = useSelector((state: any) => {
-    console.log('Redux State: ', state);
-    return state.user?.expenses;
+  const { data: todayExpensesData } = useQuery({
+    queryFn: getTodayExpenses,
+    queryKey: ['todayExpense'],
   });
 
-  // const getCurrentPocketMoneyHistory = useCallback((): ExpensesTypes[] => {
-  //   return expensesDetailArray || [];
-  // }, []);
-
   useEffect(() => {
-    if (expensesDetailArray) {
-      // const pocketMoneyData: ExpensesTypes[] = getCurrentPocketMoneyHistory();
-      // console.log('Pocket Money Data:', pocketMoneyData);
-      setData(expensesDetailArray);
-      console.log('Date Expenses:', expensesDetailArray);
+    if (todayExpensesData?.success) {
+      setData(todayExpensesData.data);
+      dispatch(setExpenses(todayExpensesData.data));
     }
-  }, [expensesDetailArray]);
+  }, [todayExpensesData]);
 
   const table = useReactTable({
     data,
@@ -99,7 +97,7 @@ const UserHistoryExpenseTable: React.FC = () => {
               ))}
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {table.getRowModel().rows.map((row, index) => (
+              {table.getRowModel()?.rows.map((row, index) => (
                 <tr
                   key={row.id}
                   className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}

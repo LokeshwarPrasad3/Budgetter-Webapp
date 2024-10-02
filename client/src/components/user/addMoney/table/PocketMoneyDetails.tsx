@@ -40,7 +40,7 @@ const columns = [
 const PocketMoneyDetails: React.FC = () => {
   const [data, setData] = React.useState<PocketMoneyType[]>([]);
   const pocketMoneyTableData = useSelector((state: any) => {
-    console.log('here listen', state.user?.user.PocketMoneyHistory);
+    // console.log('here listen', state.user?.user.PocketMoneyHistory);
     return state.user?.user.PocketMoneyHistory;
   });
 
@@ -57,7 +57,7 @@ const PocketMoneyDetails: React.FC = () => {
 
   return (
     <>
-      {data?.length === 0 ? (
+      {data && data?.length === 0 ? (
         <div className="message_outer bg-[#ffffff] rounded-md w-full p-5 ">
           <div className="flex">Your Have Not Added Pocket Money</div>
         </div>

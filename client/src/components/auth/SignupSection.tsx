@@ -24,7 +24,7 @@ const SignupSection: React.FC = () => {
   const { mutateAsync: registerUserMutate, isPending } = useMutation({
     mutationFn: registerUser,
     onSuccess: (data: RegisterUserResponseType) => {
-      console.log('User registered successfully:', data);
+      // console.log('User registered successfully:', data);
       const { _id, username, name, email, avatar, currentPocketMoney } =
         data.data;
       dispatch(
@@ -43,6 +43,7 @@ const SignupSection: React.FC = () => {
     e.preventDefault();
     if (username.length < 5 || !name || !email || !password) {
       console.log('All Fields are Required!!');
+      toast.error('All Fields Required!!');
       return;
     }
     registerUserMutate({ username, name, email, password });

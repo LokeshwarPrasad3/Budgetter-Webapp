@@ -22,7 +22,7 @@ const LoginSection: React.FC = () => {
   const { mutateAsync: loginUserMutate, isPending } = useMutation({
     mutationFn: LoginUser,
     onSuccess: (data) => {
-      console.log('Logged data', data);
+      // console.log('Logged data', data);
       const {
         _id,
         username,
@@ -56,6 +56,7 @@ const LoginSection: React.FC = () => {
     e.preventDefault();
     if (!email || !password) {
       console.log('Please fill all fields!');
+      toast.error('All Fields Required!!');
       return;
     }
     loginUserMutate({ email, password });

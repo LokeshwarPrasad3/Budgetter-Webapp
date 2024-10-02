@@ -42,13 +42,13 @@ export const getExpensesByDate = async (
 };
 
 // ADD EXPENSES OF DATE OR TODAY
-interface ExpensesResTypes {
+interface AddExpensesResTypes {
   statusCode: number;
   message: string;
   success: boolean;
 }
-interface ExpensesCredentialsType {
-  date: string; 
+interface AddExpensesCredentialsType {
+  date: string;
   pastDaysExpensesArray: {
     date: string;
     productsArray: {
@@ -60,17 +60,44 @@ interface ExpensesCredentialsType {
 }
 
 export const addExpenses = async (
-  credentials: ExpensesCredentialsType
-): Promise<ExpensesResTypes> => {
+  credentials: AddExpensesCredentialsType
+): Promise<AddExpensesResTypes> => {
   const config: AxiosRequestConfig = {
     headers: {
       'Content-Type': 'application/json',
     },
     withCredentials: true,
   };
-  const { data } = await axios.post<ExpensesResTypes>(
+  const { data } = await axios.post<AddExpensesResTypes>(
     'http://localhost:5000/api/user/add-past-date-expenses',
     credentials,
+    config
+  );
+  return data;
+};
+
+// SHOW TODAY EXPENSES
+interface TodayExpensesRes {
+  statusCode: number;
+  data: [
+    {
+      name: string;
+      price: number;
+      category: string;
+      _id: string;
+      createdAt: string;
+      updatedAt: string;
+    },
+  ];
+  message: string;
+  success: boolean;
+}
+export const getTodayExpenses = async (): Promise<TodayExpensesRes> => {
+  const config: AxiosRequestConfig = {
+    withCredentials: true,
+  };
+  const { data } = await axios.get<TodayExpensesRes>(
+    'http://localhost:5000/api/user/show-today-expenses',
     config
   );
   return data;
