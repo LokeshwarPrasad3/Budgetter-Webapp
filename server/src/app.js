@@ -3,6 +3,7 @@ const app = express();
 import cors from "cors"
 import cookieParser from "cookie-parser";
 import userRoutes from "./routes/user.routes.js"
+import userReportRoutes from "./routes/report.routes.js"
 
 app.use(cors({
     origin: "http://localhost:5173",
@@ -16,6 +17,7 @@ app.use(cookieParser());
 
 // Api EndPoints
 app.use("/api/user", userRoutes)
+app.use("/api/user/report", userReportRoutes)
 
 
 export { app }
