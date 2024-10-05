@@ -9,6 +9,7 @@ const initialState = {
     avatar: '',
     currentPocketMoney: '',
   },
+  expenses: [],
 };
 
 export const userSlice = createSlice({
@@ -18,9 +19,15 @@ export const userSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
+    setExpenses: (state, action) => {
+      console.log('from state', typeof action.payload);
+      console.log('from state', action.payload);
+      // const { projects } =
+      state.expenses = action.payload;
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, setExpenses } = userSlice.actions;
 
 export default userSlice.reducer;

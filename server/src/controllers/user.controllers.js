@@ -244,7 +244,7 @@ export const addUserPocketMoney = asyncHandler(async (req, res) => {
 
     // add history track of added money
     user.PocketMoneyHistory.push({
-        date, amount: newAmount.toString(), source
+        date, amount, source
     })
     // Update the user's currentPocketMoney
     user.currentPocketMoney = newAmount.toString();

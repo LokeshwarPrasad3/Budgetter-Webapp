@@ -5,138 +5,56 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { useSelector } from 'react-redux';
+import { getTodayDate } from '@/utils/date/date';
 
-type Expense = {
-  sno: number;
-  expenseName: string;
-  category: string;
+type ExpensesTypes = {
+  _id: string;
+  name: string;
   price: number;
-  balance: number;
-  message: string;
+  category: string;
+  createdAt: string;
 };
 
-// Sample data
-const defaultData: Expense[] = [
-  {
-    sno: 1,
-    expenseName: 'Groceries',
-    category: 'Food',
-    price: 50,
-    balance: 1000,
-    message: 'Weekly groceries',
-  },
-  {
-    sno: 2,
-    expenseName: 'Electricity Bill',
-    category: 'Utilities',
-    price: 75,
-    balance: 925,
-    message: 'Monthly electricity bill',
-  },
-  {
-    sno: 3,
-    expenseName: 'Internet Subscription',
-    category: 'Utilities',
-    price: 40,
-    balance: 885,
-    message: 'Monthly internet subscription',
-  },
-  {
-    sno: 4,
-    expenseName: 'Gym Membership',
-    category: 'Fitness',
-    price: 30,
-    balance: 855,
-    message: 'Monthly gym membership',
-  },
-  {
-    sno: 5,
-    expenseName: 'Dining Out',
-    category: 'Food',
-    price: 60,
-    balance: 795,
-    message: 'Dinner at restaurant',
-  },
-  {
-    sno: 6,
-    expenseName: 'Movies',
-    category: 'Entertainment',
-    price: 20,
-    balance: 775,
-    message: 'Movie tickets',
-  },
-  {
-    sno: 7,
-    expenseName: 'Books',
-    category: 'Education',
-    price: 45,
-    balance: 730,
-    message: 'New books',
-  },
-  {
-    sno: 8,
-    expenseName: 'Transportation',
-    category: 'Travel',
-    price: 25,
-    balance: 705,
-    message: 'Monthly bus pass',
-  },
-  {
-    sno: 9,
-    expenseName: 'Healthcare',
-    category: 'Medical',
-    price: 80,
-    balance: 625,
-    message: 'Doctor visit',
-  },
-  {
-    sno: 10,
-    expenseName: 'Gifts',
-    category: 'Miscellaneous',
-    price: 100,
-    balance: 525,
-    message: 'Birthday gifts',
-  },
-];
-
-// Create column helper
-const columnHelper = createColumnHelper<Expense>();
+const columnHelper = createColumnHelper<ExpensesTypes>();
 
 // Define columns
 const columns = [
-  columnHelper.accessor('sno', {
-    header: 'Sno',
+  columnHelper.accessor('_id', {
+    header: 'ID',
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('expenseName', {
-    header: 'Expense Name',
+  columnHelper.accessor('name', {
+    header: 'Name',
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor('price', {
+    header: 'Price',
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor('category', {
     header: 'Category',
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('price', {
-    header: 'Price',
-    cell: (info) => `$${info.getValue<number>().toFixed(2)}`,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor('balance', {
-    header: 'Balance',
-    cell: (info) => `$${info.getValue<number>().toFixed(2)}`,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor('message', {
-    header: 'Message',
+  columnHelper.accessor('createdAt', {
+    header: 'TIME',
+    cell: (info) => `${info.getValue<string>().split('T')[1]?.slice(0, 8)}`,
     footer: (info) => info.column.id,
   }),
 ];
 
 const UserHistoryExpenseTable: React.FC = () => {
-  const [data, setData] = React.useState<Expense[]>(defaultData);
-   useEffect(() => {
-     setData(data);
-   }, []);
+  const [data, setData] = React.useState<ExpensesTypes[]>([]);
+  const expensesDetailArray = useSelector((state: any) => {
+    return state.user?.expenses;
+  });
+
+  useEffect(() => {
+    if (expensesDetailArray) {
+      setData(expensesDetailArray);
+      // console.log('Date Expenses:', expensesDetailArray);
+    }
+  }, [expensesDetailArray]);
 
   const table = useReactTable({
     data,
@@ -145,46 +63,73 @@ const UserHistoryExpenseTable: React.FC = () => {
   });
 
   return (
-    <div className="overflow-x-auto w-full">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-100">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {table.getRowModel().rows.map((row, index) => (
-            <tr
-              key={row.id}
-              className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
-            >
-              {row.getVisibleCells().map((cell) => (
-                <td
-                  key={cell.id}
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className="message_outer bg-[#ffffff] rounded-md w-full px-0 py-5">
+        {data.length === 0 ? (
+          <div className="flex px-5">No Expenses Found</div>
+        ) : (
+          <div className="overflow-x-auto w-full">
+            <div className="flex px-5 pb-3">
+              {(() => {
+                const createdAt = data[0]?.createdAt;
+                if (!createdAt) return null;
+
+                const formattedDate = createdAt
+                  .split('T')[0]
+                  .split('-')
+                  .reverse()
+                  .join('-');
+
+                return formattedDate === getTodayDate()
+                  ? 'Your Today Expenses'
+                  : formattedDate;
+              })()}
+            </div>
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-100">
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <tr key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                      <th
+                        key={header.id}
+                        className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {table.getRowModel().rows.map((row, index) => (
+                  <tr
+                    key={row.id}
+                    className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <td
+                        key={cell.id}
+                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
