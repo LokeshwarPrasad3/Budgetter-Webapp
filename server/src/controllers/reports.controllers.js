@@ -12,6 +12,7 @@ export const TotalExpensesAndAddedMoneyOfMonth = asyncHandler(async (req, res) =
         console.log("month must be string");
         throw new ApiError(500, "Month should be string!!");
     }
+    // 1. Calculate Total Expenses Of Month
     const MonthExpenses = await ExpenseModel.find({
         user: userId,
         date: { $regex: `^\\d{2}-${month}-\\d{4}$` }
@@ -23,22 +24,23 @@ export const TotalExpensesAndAddedMoneyOfMonth = asyncHandler(async (req, res) =
 
         return accumulator + productTotal;
     }, 0);
-
-    console.log(totalExpenses);
-
     if (!MonthExpenses) {
         throw new ApiError(500, "Error during getting totel expenses!!");
     }
-
+    // 2. TOTAL ADDED MONDAY
     const PocketMoneyHistoryArray = user.PocketMoneyHistory;
     const totalAddedMoney = PocketMoneyHistoryArray.reduce((accumulator, currentArray) => {
         return accumulator + parseInt(currentArray.amount);
     }, 0);
 
-    console.log(totalAddedMoney);
+    // 3. last expenses total
+    const lastExpense = await ExpenseModel.findOne().sort({ _id: -1 });
+    const lastTotalExpenses = lastExpense.products.reduce((accumulator, currentArray) => {
+        return accumulator + parseInt(currentArray.price);
+    }, 0);
 
     return res.json(
-        new ApiResponse(200, { totalExpenses: totalExpenses, totalAddedMoney: totalAddedMoney }, "Successfully Calculated Expenses!!")
+        new ApiResponse(200, { totalExpenses: totalExpenses, totalAddedMoney: totalAddedMoney, lastTotalExpenses: lastTotalExpenses }, "Successfully Calculated Expenses!!")
     )
 
 })
