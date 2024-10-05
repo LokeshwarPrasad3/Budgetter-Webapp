@@ -5,6 +5,17 @@ interface TotalExpensesAndAddedMoneyInMonthResType {
   data: {
     totalExpenses: number;
     totalAddedMoney: number;
+    lastTotalExpenses: number;
+    categoryWiseExpensesData: {
+      GroceriesExpenses: number;
+      Housing_UtilitiesExpenses: number;
+      MedicalExpenses: number;
+      FoodExpenses: number;
+      PersonalExpenses: number;
+      EducationalExpenses: number;
+      TransportationExpenses: number;
+      MiscellaneousExpenses: number;
+    };
   };
   message: string;
   success: boolean;

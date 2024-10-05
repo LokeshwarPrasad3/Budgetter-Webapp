@@ -12,13 +12,16 @@ const Dashboard = () => {
   const [totalAddedMoneyOfMonth, setTotalAddedMoneyOfMonth] =
     useState<number>(0);
   const [lastTotalExpenses, setlastTotalExpenses] = useState<number>(0);
+  const [CategoryWiseData, setCategoryWiseData] = useState({});
 
   const { mutateAsync: getTotalExpensesAndAddedMoneyMutate } = useMutation({
     mutationFn: getTotalExpensesAndAddedMoneyInMonth,
     onSuccess: (data) => {
-      setTotalExpensesOfMonth(data?.data.totalExpenses)
+      setTotalExpensesOfMonth(data?.data.totalExpenses);
       setTotalAddedMoneyOfMonth(data?.data.totalAddedMoney);
       setlastTotalExpenses(data?.data.lastTotalExpenses);
+      setCategoryWiseData(data?.data.categoryWiseExpensesData);
+      console.log(data?.data.categoryWiseExpensesData);
     },
     onError: (error) => {
       console.log(error);
@@ -26,8 +29,9 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    const month = (new Date().getMonth() + 1).toString();
+    const month = (new Date().getMonth()).toString().padStart(2, '0');
     console.log(month);
+    console.log(typeof month);
     getTotalExpensesAndAddedMoneyMutate({ month });
   }, []);
 
@@ -55,7 +59,7 @@ const Dashboard = () => {
           lastTotalExpenses={lastTotalExpenses}
         />
         <div className="visual_graph_container flex justify-center flex-col xl:flex-row items-center w-full gap-y-10 md:gap-5">
-          <CategoryWiseExpensesChart />
+          <CategoryWiseExpensesChart CategoryWiseData={CategoryWiseData} />
           <CategoryWiseLineChart />
         </div>
       </div>

@@ -3,7 +3,62 @@ import * as am5 from '@amcharts/amcharts5';
 import * as am5percent from '@amcharts/amcharts5/percent';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 
-const CategoryWiseExpensesChart: React.FC = () => {
+interface CategoryWiseDataPropTypes {
+  CategoryWiseData: {
+    GroceriesExpenses: number;
+    Housing_UtilitiesExpenses: number;
+    MedicalExpenses: number;
+    FoodExpenses: number;
+    PersonalExpenses: number;
+    EducationalExpenses: number;
+    TransportationExpenses: number;
+    MiscellaneousExpenses: number;
+  };
+}
+
+interface ChartData {
+  category: string;
+  value: number;
+  color: am5.Color; // amCharts color format
+}
+
+const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
+  CategoryWiseData,
+}) => {
+  const {
+    GroceriesExpenses,
+    Housing_UtilitiesExpenses,
+    MedicalExpenses,
+    FoodExpenses,
+    PersonalExpenses,
+    EducationalExpenses,
+    TransportationExpenses,
+    MiscellaneousExpenses,
+  } = CategoryWiseData;
+
+  const categoryData = [
+    { label: 'Groceries', value: GroceriesExpenses, color: '#FF6347' },
+    {
+      label: 'Housing & Utilities',
+      value: Housing_UtilitiesExpenses,
+      color: '#FFA500',
+    },
+    { label: 'Medical', value: MedicalExpenses, color: '#4682B4' },
+    { label: 'Food', value: FoodExpenses, color: '#6A5ACD' },
+    { label: 'Personal', value: PersonalExpenses, color: '#32CD32 ' },
+    { label: 'Educational', value: EducationalExpenses, color: '#FFD700 ' },
+    {
+      label: 'Transportation',
+      value: TransportationExpenses,
+      color: '#FF1493 ',
+    },
+    {
+      label: 'Miscellaneous',
+      value: MiscellaneousExpenses,
+      color: '#8A2BE2 ',
+    },
+  ];
+
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,21 +88,73 @@ const CategoryWiseExpensesChart: React.FC = () => {
         })
       );
 
-      series.data.setAll([
-        { category: 'Housing & Utilities', value: 20, color: '#8A4FFF' },
-        { category: 'Food', value: 20, color: '#5E5CE6' },
-        { category: 'Groceries', value: 20, color: '#4A90E2' },
-        { category: 'Personal Care', value: 20, color: '#50E3C2' },
-        { category: 'Miscellaneous', value: 20, color: '#B8E986' },
-      ]);
+      series.set(
+        'colors',
+        am5.ColorSet.new(root, {
+          colors: [
+            am5.color(0xff6347), 
+            am5.color(0xffa500), 
+            am5.color(0x4682b4), 
+            am5.color(0x6a5acd), 
+            am5.color(0x32cd32), 
+            am5.color(0xffd700), 
+            am5.color(0xff1493), 
+            am5.color(0x8a2be2), 
+          ],
+        })
+      );
 
-      // Apply color to slices
+      // Set data for series with type safety
+      const chartData: ChartData[] = [
+        {
+          category: 'Groceries',
+          value: GroceriesExpenses,
+          color: am5.color(0xff6347),
+        },
+        {
+          category: 'Housing & Utilities',
+          value: Housing_UtilitiesExpenses,
+          color: am5.color(0xffa500),
+        },
+        {
+          category: 'Medical',
+          value: MedicalExpenses,
+          color: am5.color(0x4682b4),
+        }, 
+        { category: 'Food', value: FoodExpenses, color: am5.color(0x6a5acd) }, // Orange
+        {
+          category: 'Personal',
+          value: PersonalExpenses,
+          color: am5.color(0x32cd32),
+        },
+        {
+          category: 'Educational',
+          value: EducationalExpenses,
+          color: am5.color(0xffd700),
+        },
+        {
+          category: 'Transportation',
+          value: TransportationExpenses,
+          color: am5.color(0xff1493),
+        },
+        {
+          category: 'Miscellaneous',
+          value: MiscellaneousExpenses,
+          color: am5.color(0x8a2be2),
+        },
+      ];
+
+      series.data.setAll(chartData);
+
+      // Apply color to slices using fillField
       series.slices.template.setAll({
-        fillField: 'color',
         stroke: am5.color(0xffffff),
         strokeWidth: 2,
         cornerRadius: 5,
-      } as any);
+      });
+
+      // Enable animations for the slices
+      series.appear(1000, 100);
 
       // Hide labels outside the chart (by showing only the value in the center label)
       series.labels.template.set('forceHidden', true);
@@ -71,7 +178,13 @@ const CategoryWiseExpensesChart: React.FC = () => {
         root.dispose();
       };
     }
-  }, []);
+  }, [
+    Housing_UtilitiesExpenses,
+    FoodExpenses,
+    GroceriesExpenses,
+    PersonalExpenses,
+    MiscellaneousExpenses,
+  ]);
 
   return (
     <div className="flex items-center p-0 py-4 md:p-4 bg-white rounded-lg shadow-sm flex-col max-w-full w-full">
@@ -85,26 +198,19 @@ const CategoryWiseExpensesChart: React.FC = () => {
           style={{ maxWidth: '400px' }}
         ></div>
         <div className="flex flex-wrap sm:flex-col gap-2 justify-center sm:justify-start items-center sm:items-start text-sm">
-          <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 rounded-[2px] bg-[#A8905F]"></div>
-            <span>Housing & Utilities</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 rounded-[2px] bg-[#FFA500]"></div>
-            <span>Food</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 rounded-[2px] bg-[#FF6F61]"></div>
-            <span>Groceries</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 rounded-[2px] bg-[#FFB7C5]"></div>
-            <span>Personal Care</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 rounded-[2px] bg-[#4682B4]"></div>
-            <span>Miscellaneous</span>
-          </div>
+          {categoryData.map(({ label, value, color }) => (
+            <>
+              {value !== 0 && (
+                <div key={label} className="flex items-center space-x-2">
+                  <div
+                    className="w-4 h-4 rounded-[2px]"
+                    style={{ backgroundColor: color }}
+                  ></div>
+                  <span>{label}</span>
+                </div>
+              )}
+            </>
+          ))}
         </div>
       </div>
     </div>

@@ -17,13 +17,61 @@ export const TotalExpensesAndAddedMoneyOfMonth = asyncHandler(async (req, res) =
         user: userId,
         date: { $regex: `^\\d{2}-${month}-\\d{4}$` }
     });
+    // Groceries , Housing & Utilities, Medical ,
+    // Food , Personal , Educational , Transportation
+    // Miscellaneous
+    let GroceriesExpenses = 0,
+        Housing_UtilitiesExpenses = 0,
+        MedicalExpenses = 0,
+        FoodExpenses = 0,
+        PersonalExpenses = 0,
+        EducationalExpenses = 0,
+        TransportationExpenses = 0,
+        MiscellaneousExpenses = 0;
     const totalExpenses = MonthExpenses.reduce((accumulator, currentArray) => {
         const productTotal = currentArray.products.reduce((innerAccu, product) => {
+            if (product.category === 'Groceries') { GroceriesExpenses += product.price }
+            else if (product.category === 'Housing & Utilities') { Housing_UtilitiesExpenses += product.price }
+            else if (product.category === 'Medical') { MedicalExpenses += product.price }
+            else if (product.category === 'Food') { FoodExpenses += product.price }
+            else if (product.category === 'Personal') { PersonalExpenses += product.price }
+            else if (product.category === 'Educational') { EducationalExpenses += product.price }
+            else if (product.category === 'Transportation') { TransportationExpenses += product.price }
+            else if (product.category === 'Miscellaneous') { MiscellaneousExpenses += product.price }
             return innerAccu + product.price;
         }, 0);
 
         return accumulator + productTotal;
     }, 0);
+    const categoryWiseExpensesData = {
+        GroceriesExpenses,
+        Housing_UtilitiesExpenses,
+        MedicalExpenses,
+        FoodExpenses,
+        PersonalExpenses,
+        EducationalExpenses,
+        TransportationExpenses,
+        MiscellaneousExpenses,
+    }
+    // console.log(
+    //     "all expenses",
+    //     "GroceriesExpenses",
+    //     GroceriesExpenses,
+    //     "Housing_UtilitiesExpenses",
+    //     Housing_UtilitiesExpenses,
+    //     "MedicalExpenses",
+    //     MedicalExpenses,
+    //     "FoodExpenses",
+    //     FoodExpenses,
+    //     "PersonalExpenses",
+    //     PersonalExpenses,
+    //     "EducationalExpenses",
+    //     EducationalExpenses,
+    //     "TransportationExpenses",
+    //     TransportationExpenses,
+    //     "MiscellaneousExpenses",
+    //     MiscellaneousExpenses,
+    // )
     if (!MonthExpenses) {
         throw new ApiError(500, "Error during getting totel expenses!!");
     }
@@ -40,7 +88,7 @@ export const TotalExpensesAndAddedMoneyOfMonth = asyncHandler(async (req, res) =
     }, 0);
 
     return res.json(
-        new ApiResponse(200, { totalExpenses: totalExpenses, totalAddedMoney: totalAddedMoney, lastTotalExpenses: lastTotalExpenses }, "Successfully Calculated Expenses!!")
+        new ApiResponse(200, { totalExpenses: totalExpenses, totalAddedMoney: totalAddedMoney, lastTotalExpenses: lastTotalExpenses, categoryWiseExpensesData }, "Successfully Calculated Expenses!!")
     )
 
 })
