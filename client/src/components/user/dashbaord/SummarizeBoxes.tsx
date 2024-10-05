@@ -1,27 +1,39 @@
-const SummarizeBoxes = () => {
+import { useSelector } from 'react-redux';
+
+interface PropType {
+  totalExpensesOfMonth: number;
+  totalAddedMoneyOfMonth: number;
+  lastTotalExpenses: number;
+}
+
+const SummarizeBoxes: React.FC<PropType> = ({
+  totalExpensesOfMonth,
+  totalAddedMoneyOfMonth,
+  lastTotalExpenses,
+}) => {
   const summarizeBoxesContents = [
     {
       id: 1,
       title: 'Total Expenses',
-      value: '5000',
+      value: totalExpensesOfMonth,
       bgClass: 'bg-[#4A90E2]',
     },
     {
       id: 2,
       title: 'Remain Balance',
-      value: '1000',
+      value: useSelector((state: any) => state.user.user.currentPocketMoney),
       bgClass: 'bg-[#4CAF50]',
     },
     {
       id: 1,
       title: 'Added Balance',
-      value: '4000',
+      value: totalAddedMoneyOfMonth,
       bgClass: 'bg-[#FF9800]',
     },
     {
       id: 1,
       title: 'Last Day Expense',
-      value: '4000',
+      value: lastTotalExpenses,
       bgClass: 'bg-[#FB899D]',
     },
   ];
@@ -35,7 +47,9 @@ const SummarizeBoxes = () => {
             key={index}
             className={`flex flex-col max-w-full md:max-w-[14rem] w-full flex-wrap justify-center items-center gap-0 rounded-[10px] p-3 ${bgClass}`}
           >
-            <p className="text-lg text-white font-semibold text-center">{title}</p>
+            <p className="text-lg text-white font-semibold text-center">
+              {title}
+            </p>
             <p className="text-2xl text-white font-bold text-center">{value}</p>
           </div>
         ))}

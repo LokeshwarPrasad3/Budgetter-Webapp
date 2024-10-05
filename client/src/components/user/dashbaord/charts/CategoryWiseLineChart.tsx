@@ -142,7 +142,7 @@ const CategoryWiseLineChart: React.FC = () => {
     <>
       <div className="flex items-center p-0 py-5 md:p-4 bg-white rounded-lg shadow-sm flex-col max-w-full w-full">
         <h2 className="text-lg text-left font-semibold mb-4">
-          Weekly Expenses
+          Monthly Expenses
         </h2>
         <div className="chart_element_container flex justify-center items-center w-full h-full">
           <div

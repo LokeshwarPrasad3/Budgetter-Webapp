@@ -1,10 +1,51 @@
 import SummarizeBoxes from '@/components/user/dashbaord/SummarizeBoxes';
 import CategoryWiseExpensesChart from '@/components/user/dashbaord/charts/CategoryWiseExpensesChart';
 import CategoryWiseLineChart from '@/components/user/dashbaord/charts/CategoryWiseLineChart';
+import { getTotalExpensesAndAddedMoneyInMonth } from '@/services/reports';
+import { getMonthInString } from '@/utils/date/date';
+import { useMutation } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 const Dashboard = () => {
   const user = useSelector((state: any) => state.user.user);
+  const [totalExpensesOfMonth, setTotalExpensesOfMonth] = useState<number>(0);
+  const [totalAddedMoneyOfMonth, setTotalAddedMoneyOfMonth] =
+    useState<number>(0);
+  const [lastTotalExpenses, setlastTotalExpenses] = useState<number>(0);
+  interface expenseCategoriesTypes {
+    GroceriesExpenses: number;
+    Housing_UtilitiesExpenses: number;
+    MedicalExpenses: number;
+    FoodExpenses: number;
+    PersonalExpenses: number;
+    EducationalExpenses: number;
+    TransportationExpenses: number;
+    MiscellaneousExpenses: number;
+  }
+  const [CategoryWiseData, setCategoryWiseData] =
+    useState<expenseCategoriesTypes>();
+
+  const { mutateAsync: getTotalExpensesAndAddedMoneyMutate } = useMutation({
+    mutationFn: getTotalExpensesAndAddedMoneyInMonth,
+    onSuccess: (data) => {
+      setTotalExpensesOfMonth(data?.data.totalExpenses);
+      setTotalAddedMoneyOfMonth(data?.data.totalAddedMoney);
+      setlastTotalExpenses(data?.data.lastTotalExpenses);
+      setCategoryWiseData(data?.data.categoryWiseExpensesData);
+      console.log(data?.data.categoryWiseExpensesData);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  useEffect(() => {
+    const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+    console.log(month);
+    console.log(typeof month);
+    getTotalExpensesAndAddedMoneyMutate({ month });
+  }, []);
 
   return (
     <>
@@ -15,18 +56,31 @@ const Dashboard = () => {
               <>
                 {' '}
                 <span className="font-bold text-orange-800">
-                  Welcome! {user.name} 
+                  Welcome! {user.name}
                 </span>
               </>
             )}{' '}
           </h3>
         </div>
         <div className="summarize_box_container flex flex-col justify-start items-start gap-4 bg-[#FFFEFE] rounded-md w-full p-4 px-5 shadow-sm">
-          <h4 className="text-base font-semibold">Your August Month Report</h4>
+          <h4 className="text-base font-semibold">
+            Your{' '}
+            {getMonthInString(
+              (new Date().getMonth() + 1).toString().padStart(2, '0')
+            )}{' '}
+            Month Report
+          </h4>
         </div>
-        <SummarizeBoxes />
+        <SummarizeBoxes
+          totalExpensesOfMonth={totalExpensesOfMonth}
+          totalAddedMoneyOfMonth={totalAddedMoneyOfMonth}
+          lastTotalExpenses={lastTotalExpenses}
+        />
         <div className="visual_graph_container flex justify-center flex-col xl:flex-row items-center w-full gap-y-10 md:gap-5">
-          <CategoryWiseExpensesChart />
+          <CategoryWiseExpensesChart
+            totalExpensesOfMonth={totalExpensesOfMonth}
+            CategoryWiseData={CategoryWiseData}
+          />
           <CategoryWiseLineChart />
         </div>
       </div>

@@ -1,8 +1,15 @@
 import { ANIMATE_WORDS_VARIENT } from '@/utils/framer/properties';
 import React from 'react';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
+import { Button } from '../ui/button';
 
 const ContactSection: React.FC = () => {
+  const handleSendMessage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    toast.success('Feature is Pending!!');
+  };
+
   return (
     <motion.div
       variants={ANIMATE_WORDS_VARIENT}
@@ -50,12 +57,13 @@ const ContactSection: React.FC = () => {
               ></textarea>
             </div>
 
-            <button
+            <Button
+              onClick={handleSendMessage}
               type="submit"
-              className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="w-full h-8 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none"
             >
               Send Message
-            </button>
+            </Button>
           </form>
 
           <div className="my-8 text-center text-gray-500">

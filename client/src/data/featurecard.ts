@@ -14,7 +14,7 @@ export const cardData: cardDataType[] = [
     bg: '#fae973',
   },
   {
-    title: 'Weekly Insights',
+    title: 'Monthly Insights',
     description:
       'Get a visual summary of your weekly spending, highlighting the most significant expenses.',
     icon: 'ri-calendar-check-line',

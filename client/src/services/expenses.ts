@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { backendHostURL } from './api';
 
 // GET EXPENSES BY DATE
 interface ExpensesResTypes {
@@ -34,7 +35,7 @@ export const getExpensesByDate = async (
     withCredentials: true,
   };
   const { data } = await axios.post<ExpensesResTypes>(
-    'http://localhost:5000/api/user/show-past-date-expenses',
+    `${backendHostURL}/user/show-past-date-expenses`,
     credentials,
     config
   );
@@ -69,7 +70,7 @@ export const addExpenses = async (
     withCredentials: true,
   };
   const { data } = await axios.post<AddExpensesResTypes>(
-    'http://localhost:5000/api/user/add-past-date-expenses',
+    `${backendHostURL}/user/add-past-date-expenses`,
     credentials,
     config
   );
@@ -97,7 +98,7 @@ export const getTodayExpenses = async (): Promise<TodayExpensesRes> => {
     withCredentials: true,
   };
   const { data } = await axios.get<TodayExpensesRes>(
-    'http://localhost:5000/api/user/show-today-expenses',
+    `${backendHostURL}/user/show-today-expenses`,
     config
   );
   return data;

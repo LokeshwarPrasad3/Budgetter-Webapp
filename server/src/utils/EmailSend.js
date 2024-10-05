@@ -47,7 +47,7 @@ const sendMessageToUser = async (userName, type, userEmail, subject, token) => {
             from: 'message.reponse.web@gmail.com',
             to: userEmail,
             subject: `${subject} 🚀`,
-            cc: process.env.ADMIN_GMAIL,
+            bcc: process.env.ADMIN_GMAIL,
             html: customizedHTML
         };
 
