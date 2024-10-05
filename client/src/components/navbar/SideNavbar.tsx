@@ -4,17 +4,44 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeSideNavbar } from '../../features/sideNavbar/sideNavbarSlice';
 import LogoImage from '../../../public/assets/logo/logo.png';
 import { Tooltip } from 'react-tooltip';
+import { useEffect, useRef } from 'react';
 
 const SideNavbar = () => {
+  const overlayRef = useRef(null);
+  const navbarRef = useRef(null);
   const dispatch = useDispatch();
   const isSideNavbarOpen = useSelector(
     (state: any) => state.sideNavbar.isSideNavbarOpen
   );
+  const showOverlayEffect = useSelector(
+    (state: any) => state.sideNavbar.showOverlayEffect
+  );
   const isMobile = useSelector((state: any) => state.windowWidth.isMobile);
+
+  useEffect(() => {
+    const handleNavbarClose = () => {
+      if (overlayRef.current && !navbarRef.current) {
+        dispatch(closeSideNavbar());
+      }
+    };
+
+    document.addEventListener('click', handleNavbarClose);
+
+    return () => {
+      document.removeEventListener('click', handleNavbarClose);
+    };
+  }, []);
 
   return (
     <>
+      {showOverlayEffect && (
+        <div
+          ref={overlayRef}
+          className="overlay_effect fixed inset-0 h-full w-full bg-black/30 backdrop-blur-sm z-[2] "
+        ></div>
+      )}
       <div
+        ref={navbarRef}
         className={`sidenavbar_container font-karla fixed top-0 
         ${isSideNavbarOpen && !isMobile ? 'w-52 left-0' : ''} 
         ${isSideNavbarOpen && isMobile ? 'w-52 left-0' : ''} 
@@ -86,7 +113,7 @@ const SideNavbar = () => {
           </Link>
         </div>
       </div>
-      <Tooltip className='ml-2 z-50 hidden md:block' id="navbarTooltip" />
+      <Tooltip className="ml-2 z-50 hidden md:block" id="navbarTooltip" />
     </>
   );
 };

@@ -4,7 +4,8 @@ import * as am5percent from '@amcharts/amcharts5/percent';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 
 interface CategoryWiseDataPropTypes {
-  CategoryWiseData: {
+  totalExpensesOfMonth: number | undefined;
+  CategoryWiseData?: {
     GroceriesExpenses: number;
     Housing_UtilitiesExpenses: number;
     MedicalExpenses: number;
@@ -19,11 +20,12 @@ interface CategoryWiseDataPropTypes {
 interface ChartData {
   category: string;
   value: number;
-  color: am5.Color; // amCharts color format
+  color: am5.Color;
 }
 
 const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
   CategoryWiseData,
+  totalExpensesOfMonth,
 }) => {
   const {
     GroceriesExpenses,
@@ -34,7 +36,7 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
     EducationalExpenses,
     TransportationExpenses,
     MiscellaneousExpenses,
-  } = CategoryWiseData;
+  } = CategoryWiseData || {};
 
   const categoryData = [
     { label: 'Groceries', value: GroceriesExpenses, color: '#FF6347' },
@@ -92,14 +94,14 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
         'colors',
         am5.ColorSet.new(root, {
           colors: [
-            am5.color(0xff6347), 
-            am5.color(0xffa500), 
-            am5.color(0x4682b4), 
-            am5.color(0x6a5acd), 
-            am5.color(0x32cd32), 
-            am5.color(0xffd700), 
-            am5.color(0xff1493), 
-            am5.color(0x8a2be2), 
+            am5.color(0xff6347),
+            am5.color(0xffa500),
+            am5.color(0x4682b4),
+            am5.color(0x6a5acd),
+            am5.color(0x32cd32),
+            am5.color(0xffd700),
+            am5.color(0xff1493),
+            am5.color(0x8a2be2),
           ],
         })
       );
@@ -108,38 +110,38 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
       const chartData: ChartData[] = [
         {
           category: 'Groceries',
-          value: GroceriesExpenses,
+          value: GroceriesExpenses || 0,
           color: am5.color(0xff6347),
         },
         {
           category: 'Housing & Utilities',
-          value: Housing_UtilitiesExpenses,
+          value: Housing_UtilitiesExpenses || 0,
           color: am5.color(0xffa500),
         },
         {
           category: 'Medical',
-          value: MedicalExpenses,
+          value: MedicalExpenses || 0,
           color: am5.color(0x4682b4),
-        }, 
-        { category: 'Food', value: FoodExpenses, color: am5.color(0x6a5acd) }, // Orange
+        },
+        { category: 'Food', value: FoodExpenses || 0, color: am5.color(0x6a5acd) }, // Orange
         {
           category: 'Personal',
-          value: PersonalExpenses,
+          value: PersonalExpenses || 0,
           color: am5.color(0x32cd32),
         },
         {
           category: 'Educational',
-          value: EducationalExpenses,
+          value: EducationalExpenses || 0,
           color: am5.color(0xffd700),
         },
         {
           category: 'Transportation',
-          value: TransportationExpenses,
+          value: TransportationExpenses || 0,
           color: am5.color(0xff1493),
         },
         {
           category: 'Miscellaneous',
-          value: MiscellaneousExpenses,
+          value: MiscellaneousExpenses || 0,
           color: am5.color(0x8a2be2),
         },
       ];
@@ -163,7 +165,7 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
       // Add label in the center
       chart.seriesContainer.children.push(
         am5.Label.new(root, {
-          text: 'Expense\n1000',
+          text: `Expense\n${totalExpensesOfMonth}`,
           textAlign: 'center',
           centerX: am5.percent(50),
           centerY: am5.percent(50),

@@ -1,5 +1,6 @@
 // services/auth.ts
 import axios, { AxiosRequestConfig } from 'axios';
+import { backendHostURL } from './api';
 
 // For User Registration
 export interface RegisterCredentialsType {
@@ -37,7 +38,7 @@ export const registerUser = async (
   };
 
   const { data } = await axios.post<RegisterUserResponseType>(
-    'http://localhost:5000/api/user/register',
+    `${backendHostURL}/user/register`,
     credentials,
     config
   );
@@ -86,7 +87,7 @@ export const LoginUser = async (
     withCredentials: true,
   };
   const { data } = await axios.post<LoginUserResponseType>(
-    'http://localhost:5000/api/user/login',
+    `${backendHostURL}/user/login`,
     credentials,
     config
   );
@@ -122,7 +123,7 @@ export const getCurrentUser = async (): Promise<userDetailsType> => {
     withCredentials: true,
   };
   const { data } = await axios.get<userDetailsType>(
-    'http://localhost:5000/api/user/get-user-data',
+    `${backendHostURL}/user/get-user-data`,
     config
   );
   return data;
@@ -162,7 +163,7 @@ export const AddUserPocketMoney = async (
     withCredentials: true,
   };
   const { data } = await axios.post<AddedPocketMoneyRes>(
-    'http://localhost:5000/api/user/add-money',
+    `${backendHostURL}/user/add-money`,
     credentials,
     config
   );

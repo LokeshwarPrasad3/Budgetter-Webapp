@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { backendHostURL } from './api';
 
 interface TotalExpensesAndAddedMoneyInMonthResType {
   statusCode: number;
@@ -31,7 +32,7 @@ export const getTotalExpensesAndAddedMoneyInMonth = async (
     withCredentials: true,
   };
   const { data } = await axios.post<TotalExpensesAndAddedMoneyInMonthResType>(
-    'http://localhost:5000/api/user/report/total-expenses-and-added-money-in-month',
+    `${backendHostURL}/user/report/total-expenses-and-added-money-in-month`,
     credential,
     config
   );
