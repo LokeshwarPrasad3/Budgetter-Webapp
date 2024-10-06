@@ -83,9 +83,12 @@ export const TotalExpensesAndAddedMoneyOfMonth = asyncHandler(async (req, res) =
 
     // 3. last expenses total
     const lastExpense = await ExpenseModel.findOne().sort({ _id: -1 });
-    const lastTotalExpenses = lastExpense.products.reduce((accumulator, currentArray) => {
-        return accumulator + parseInt(currentArray.price);
-    }, 0);
+    let lastTotalExpenses = 0;
+    if (lastExpense) {
+        lastTotalExpenses = lastExpense.products?.reduce((accumulator, currentArray) => {
+            return accumulator + parseInt(currentArray.price);
+        }, 0);
+    }
 
     return res.json(
         new ApiResponse(200, { totalExpenses: totalExpenses, totalAddedMoney: totalAddedMoney, lastTotalExpenses: lastTotalExpenses, categoryWiseExpensesData }, "Successfully Calculated Expenses!!")

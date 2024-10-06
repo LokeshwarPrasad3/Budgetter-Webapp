@@ -20,7 +20,8 @@ const SideNavbar = () => {
 
   useEffect(() => {
     const handleNavbarClose = () => {
-      if (overlayRef.current && !navbarRef.current) {
+      if (overlayRef.current && !navbarRef.current && window.innerWidth < 768) {
+        console.log("document clicked");
         dispatch(closeSideNavbar());
       }
     };
@@ -37,7 +38,7 @@ const SideNavbar = () => {
       {showOverlayEffect && (
         <div
           ref={overlayRef}
-          className="overlay_effect fixed inset-0 h-full w-full bg-black/30 backdrop-blur-sm z-[2] "
+          className={`overlay_effect fixed md:static inset-0 h-full w-full bg-black/30 backdrop-blur-sm z-[2] `}
         ></div>
       )}
       <div
