@@ -46,8 +46,8 @@ export const registerUser = asyncHandler(async (req, res) => {
     }
 
     const options = {
-        httpOnly: false, // cannot access & modified by client javascript (document.cookie)
-        secure: false // only send to https:// clinet 
+        httpOnly: true, // cannot access & modified by client javascript (document.cookie)
+        secure: true // only send to https:// clinet 
     }
     res.status(201)
         .cookie("accessToken", accessToken, options)
