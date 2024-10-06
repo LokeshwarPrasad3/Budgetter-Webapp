@@ -5,16 +5,26 @@ import cookieParser from "cookie-parser";
 import userRoutes from "./routes/user.routes.js"
 import userReportRoutes from "./routes/report.routes.js"
 
-// const originURL = "http://localhost:5173";
-const originURL = 'https://mybudgetter.netlify.app';
+const allowedOrigins = [
+    'https://mybudgetter.netlify.app', // Original Netlify URL
+    'https://67029ff2fc8f7e00089c9b8e--mybudgetter.netlify.app', // New production Netlify URL
+    'http://localhost:5173', // Local
+];
 
 app.use(cors({
-    origin: originURL,
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps, curl requests)
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, origin);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
-}))
+}));
 
 app.options('*', cors({
-    origin: originURL,
+    origin: allowedOrigins,
     credentials: true,
 }));
 
