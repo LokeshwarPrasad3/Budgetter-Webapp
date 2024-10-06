@@ -12,7 +12,7 @@ import {
   Route,
 } from 'react-router-dom';
 import UserLayout from '@/pages/user/UserLayout';
-import HomeLayout from '@/pages/home/HomeLayout';
+import HomePage from '@/pages/home/HomePage';
 import Dashboard from '@/pages/user/dashboard/Dashboard';
 import AddMoney from '@/pages/user/addMoney/AddMoney';
 // import Reports from '@/pages/user/reports/Reports';
@@ -41,9 +41,9 @@ const routes = createBrowserRouter(
         <Route path="add-money" element={<AddMoney />} />
       </Route>
       {/* home */}
-      <Route path="/" element={<HomeLayout />} />
+      <Route path="/" element={<HomePage />} />
       {/* logout page routes */}
-      <Route path="logout" element={< Navigate to="/login" />} />
+      <Route path="logout" element={<Navigate to="/login" />} />
     </Route>
   )
 );

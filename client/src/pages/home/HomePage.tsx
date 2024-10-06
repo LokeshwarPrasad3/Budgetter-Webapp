@@ -4,7 +4,7 @@ import ContactSection from '@/components/home/ContactSection';
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/navbar/Navbar';
 
-const HomeLayout = () => {
+const HomePage = () => {
   return (
     <>
       <div
@@ -21,4 +21,4 @@ const HomeLayout = () => {
   );
 };
 
-export default HomeLayout;
+export default HomePage;
