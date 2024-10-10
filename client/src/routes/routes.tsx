@@ -18,6 +18,7 @@ import AddMoney from '@/pages/user/addMoney/AddMoney';
 // import Reports from '@/pages/user/reports/Reports';
 import ShowExpenses from '@/pages/user/showExpenses/ShowExpenses';
 import AddExpenses from '@/pages/user/addExpenses/AddExpenses';
+import ProfilePage from '@/pages/user/Profile/ProfilePage';
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +34,7 @@ const routes = createBrowserRouter(
 
       {/* protected routes */}
       <Route path="user" element={<UserLayout />}>
+        <Route path="profile" element={<ProfilePage />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="add-expenses" element={<AddExpenses />} />
         <Route path="show-expenses" element={<ShowExpenses />} />

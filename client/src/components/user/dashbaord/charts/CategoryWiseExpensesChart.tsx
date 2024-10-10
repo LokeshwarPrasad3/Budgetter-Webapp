@@ -201,9 +201,9 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
         ></div>
         <div className="flex flex-wrap sm:flex-col gap-2 justify-center sm:justify-start items-center sm:items-start text-sm">
           {categoryData.map(({ label, value, color }) => (
-            <>
+            <React.Fragment key={label}>
               {value !== 0 && (
-                <div key={label} className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2">
                   <div
                     className="w-4 h-4 rounded-[2px]"
                     style={{ backgroundColor: color }}
@@ -211,7 +211,7 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
                   <span>{label}</span>
                 </div>
               )}
-            </>
+            </React.Fragment>
           ))}
         </div>
       </div>

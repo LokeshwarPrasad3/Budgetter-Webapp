@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { toggleSideNavbar } from '../../features/sideNavbar/sideNavbarSlice';
 import { useDispatch } from 'react-redux';
 import {Tooltip} from "react-tooltip"
+import { Link } from 'react-router-dom';
 
 const TopHeader = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const TopHeader = () => {
 
   return (
     <>
-      <div className="topheader_container sticky top-0 text-black bg-[#FFFEFE] shadow-sm w-full h-16 flex items-center px-1">
+      <div className="topheader_container sticky top-0 text-black bg-[#FFFEFE] z-40 shadow-sm w-full h-16 flex items-center px-1">
         <i
           onClick={() => dispatch(toggleSideNavbar())}
           className="ri-menu-line cursor-pointer text-black font-bold mx-4 text-xl"
@@ -30,7 +31,7 @@ const TopHeader = () => {
           <h2 className="font-bold ">{currentHeaderName}</h2>
         </div>
         <div className="notification_and_profile_ absolute right-4 sm:right-6 flex justify-center items-center gap-4">
-          <div className="profile_container h-8 w-8 rounded-full border border-pink-500 overflow-hidden">
+          <Link to="/user/profile" className="profile_container cursor-pointer h-8 w-8 rounded-full border border-pink-500 overflow-hidden">
             <img
               data-tooltip-id="header-tooltip"
               data-tooltip-content="Profile"
@@ -39,7 +40,7 @@ const TopHeader = () => {
               className="h-full w-full"
               alt="logo"
             />
-          </div>
+          </Link>
           <button className="">
             <i
               data-tooltip-id="header-tooltip"

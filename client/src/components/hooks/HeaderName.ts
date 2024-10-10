@@ -10,6 +10,8 @@ export const getTopHeaderName = (pathName: string): string => {
       return 'Report & Visualization';
     case 'add-money':
       return 'Add Pocket Money';
+    case 'profile':
+      return 'Profile';
     default:
       return 'Oops! Wrong Page';
   }
