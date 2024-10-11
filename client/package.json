@@ -38,7 +38,8 @@
     "remixicon": "^4.3.0",
     "remixicon-react": "^1.0.0",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "universal-cookie": "^7.2.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

@@ -1,6 +1,8 @@
 // services/auth.ts
 import axios, { AxiosRequestConfig } from 'axios';
 import { backendHostURL } from './api';
+import Cookies from 'universal-cookie';
+const cookie = new Cookies();
 
 // For User Registration
 export interface RegisterCredentialsType {
@@ -167,5 +169,26 @@ export const AddUserPocketMoney = async (
     credentials,
     config
   );
+  return data;
+};
+
+// User Logout
+interface UserLogoutRes {
+  statusCode: number;
+  data: null;
+  message: string;
+  success: boolean;
+}
+export const UserLogout = async (): Promise<UserLogoutRes> => {
+  const config: AxiosRequestConfig = {
+    withCredentials: true,
+  };
+  const { data } = await axios.get<UserLogoutRes>(
+    `${backendHostURL}/user/logout`,
+    config
+  );
+  const token = cookie.get("accessToken");
+  console.log("cookies is", token)
+  cookie.remove('accessToken');
   return data;
 };
