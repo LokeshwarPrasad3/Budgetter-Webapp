@@ -22,6 +22,7 @@ export interface RegisterUserResponseType {
     currentPocketMoney: string;
     isVerified: boolean;
     PocketMoneyHistory: [];
+    accessToken: string;
     createdAt: string;
     updatedAt: string;
     __v: number;
@@ -62,6 +63,7 @@ export interface LoginUserResponseType {
     avatar: string;
     currentPocketMoney: string;
     isVerified: boolean;
+    accessToken: string;
     createdAt: string;
     updatedAt: string;
     __v: number;
@@ -106,6 +108,7 @@ interface userDetailsType {
     email: string;
     avatar: string;
     currentPocketMoney: string;
+    accessToken: string;
     PocketMoneyHistory: [
       {
         date: string;
@@ -180,6 +183,16 @@ interface UserLogoutRes {
   success: boolean;
 }
 export const UserLogout = async (): Promise<UserLogoutRes> => {
+  const token = cookie.get('accessToken');
+  if (!token) {
+    return {
+      statusCode: 401, 
+      data: null,
+      message: 'No token provided, logout failed.',
+      success: false,
+    };
+  }
+  cookie.remove('accessToken');
   const config: AxiosRequestConfig = {
     withCredentials: true,
   };
@@ -187,8 +200,6 @@ export const UserLogout = async (): Promise<UserLogoutRes> => {
     `${backendHostURL}/user/logout`,
     config
   );
-  const token = cookie.get("accessToken");
-  console.log("cookies is", token)
-  cookie.remove('accessToken');
+  console.log('cookies is', token);
   return data;
 };
