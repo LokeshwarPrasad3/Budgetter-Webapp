@@ -49,7 +49,7 @@ export const registerUser = asyncHandler(async (req, res) => {
         secure: true // only send to https:// clinet 
     }
     res.status(201)
-        .cookie("accessToken", accessToken, options)
+        // .cookie("accessToken", accessToken, options)
         .json(
             new ApiResponse(201, createdUser, "User registered successfully!")
         )
@@ -124,7 +124,7 @@ export const loginUser = asyncHandler(async (req, res) => {
         secure: false
     }
     res.status(200)
-        .cookie("accessToken", accessToken, options)
+        // .cookie("accessToken", accessToken, options)
         .json(
             new ApiResponse(200, user, "Login Successfully!!")
         )

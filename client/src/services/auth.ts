@@ -2,6 +2,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { backendHostURL } from './api';
 import Cookies from 'universal-cookie';
+import { getCurrentAccessToken } from '@/utils/cookie/CookiesInfo';
 const cookie = new Cookies();
 
 // For User Registration
@@ -36,8 +37,8 @@ export const registerUser = async (
   const config: AxiosRequestConfig = {
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
     },
-    withCredentials: true,
   };
 
   const { data } = await axios.post<RegisterUserResponseType>(
@@ -87,8 +88,8 @@ export const LoginUser = async (
   const config: AxiosRequestConfig = {
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
     },
-    withCredentials: true,
   };
   const { data } = await axios.post<LoginUserResponseType>(
     `${backendHostURL}/user/login`,
@@ -125,7 +126,9 @@ interface userDetailsType {
 }
 export const getCurrentUser = async (): Promise<userDetailsType> => {
   const config: AxiosRequestConfig = {
-    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
+    },
   };
   const { data } = await axios.get<userDetailsType>(
     `${backendHostURL}/user/get-user-data`,
@@ -164,8 +167,8 @@ export const AddUserPocketMoney = async (
   const config: AxiosRequestConfig = {
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
     },
-    withCredentials: true,
   };
   const { data } = await axios.post<AddedPocketMoneyRes>(
     `${backendHostURL}/user/add-money`,
@@ -186,7 +189,7 @@ export const UserLogout = async (): Promise<UserLogoutRes> => {
   const token = cookie.get('accessToken');
   if (!token) {
     return {
-      statusCode: 401, 
+      statusCode: 401,
       data: null,
       message: 'No token provided, logout failed.',
       success: false,
@@ -194,7 +197,9 @@ export const UserLogout = async (): Promise<UserLogoutRes> => {
   }
   cookie.remove('accessToken');
   const config: AxiosRequestConfig = {
-    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
+    },
   };
   const { data } = await axios.get<UserLogoutRes>(
     `${backendHostURL}/user/logout`,

@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { backendHostURL } from './api';
+import { getCurrentAccessToken } from '@/utils/cookie/CookiesInfo';
 
 // GET EXPENSES BY DATE
 interface ExpensesResTypes {
@@ -31,8 +32,8 @@ export const getExpensesByDate = async (
   const config: AxiosRequestConfig = {
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
     },
-    withCredentials: true,
   };
   const { data } = await axios.post<ExpensesResTypes>(
     `${backendHostURL}/user/show-past-date-expenses`,
@@ -66,8 +67,8 @@ export const addExpenses = async (
   const config: AxiosRequestConfig = {
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
     },
-    withCredentials: true,
   };
   const { data } = await axios.post<AddExpensesResTypes>(
     `${backendHostURL}/user/add-past-date-expenses`,
@@ -95,7 +96,9 @@ interface TodayExpensesRes {
 }
 export const getTodayExpenses = async (): Promise<TodayExpensesRes> => {
   const config: AxiosRequestConfig = {
-    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
+    },
   };
   const { data } = await axios.get<TodayExpensesRes>(
     `${backendHostURL}/user/show-today-expenses`,

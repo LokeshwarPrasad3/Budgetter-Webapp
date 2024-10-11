@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { backendHostURL } from './api';
+import { getCurrentAccessToken } from '@/utils/cookie/CookiesInfo';
 
 interface TotalExpensesAndAddedMoneyInMonthResType {
   statusCode: number;
@@ -29,7 +30,9 @@ export const getTotalExpensesAndAddedMoneyInMonth = async (
   credential: TotalExpensesAndAddedMoneyInMonthCredentialType
 ): Promise<TotalExpensesAndAddedMoneyInMonthResType> => {
   const config: AxiosRequestConfig = {
-    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
+    },
   };
   const { data } = await axios.post<TotalExpensesAndAddedMoneyInMonthResType>(
     `${backendHostURL}/user/report/total-expenses-and-added-money-in-month`,
