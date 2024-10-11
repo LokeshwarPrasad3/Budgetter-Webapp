@@ -1,12 +1,17 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { userSidenavbarList } from '@/data/UserSideNavbarList';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeSideNavbar } from '../../features/sideNavbar/sideNavbarSlice';
 import LogoImage from '../../../public/assets/logo/logo.png';
 import { Tooltip } from 'react-tooltip';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { UserLogout } from '@/services/auth';
+import { Loader2 } from 'lucide-react';
+import { Button } from '../ui/button';
 
 const SideNavbar = () => {
+  const navigate = useNavigate();
   const overlayRef = useRef(null);
   const navbarRef = useRef(null);
   const dispatch = useDispatch();
@@ -21,7 +26,7 @@ const SideNavbar = () => {
   useEffect(() => {
     const handleNavbarClose = () => {
       if (overlayRef.current && !navbarRef.current && window.innerWidth < 768) {
-        console.log("document clicked");
+        console.log('document clicked');
         dispatch(closeSideNavbar());
       }
     };
@@ -32,6 +37,23 @@ const SideNavbar = () => {
       document.removeEventListener('click', handleNavbarClose);
     };
   }, []);
+
+  const { mutateAsync: userLogoutMutate, isPending } = useMutation({
+    mutationFn: UserLogout,
+    onSuccess: (data) => {
+      console.log(data);
+      navigate('/');
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const handleUserLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log('clicked');
+    e.preventDefault();
+    userLogoutMutate();
+  };
 
   return (
     <>
@@ -94,12 +116,12 @@ const SideNavbar = () => {
         </div>
         {/* logout button */}
         <div className="menu_logout_container absolute bottom-5 left-3 right-3 flex flex-col gap-3  ">
-          <Link
+          <Button
             data-tooltip-id="navbarTooltip"
             data-tooltip-content="Logout"
             data-tooltip-place="right"
-            to="/logout"
-            className="logout_container relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 bg-slate-800 hover:bg-[#289288] items-center"
+            className="logout_container h-12 relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 bg-slate-800 hover:bg-[#289288] items-center"
+            onClick={handleUserLogout}
           >
             <i className="ri-logout-box-r-line text-2xl text-white"></i>
             <span
@@ -109,9 +131,15 @@ const SideNavbar = () => {
               ${isSideNavbarOpen && isMobile && 'left-12'}
               capitalize whitespace-nowrap`}
             >
-              Logout
+              {isPending ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                </>
+              ) : (
+                'Logout'
+              )}
             </span>
-          </Link>
+          </Button>
         </div>
       </div>
       <Tooltip className="ml-2 z-50 hidden md:block" id="navbarTooltip" />

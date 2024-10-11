@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerUser, loginUser, resetPassword, changeAvatar, validateResetPasswordToken, validateAccountVerification, addUserPocketMoney, getLoggedUserData } from "../controllers/user.controllers.js";
+import { registerUser, loginUser, resetPassword, changeAvatar, validateResetPasswordToken, validateAccountVerification, addUserPocketMoney, getLoggedUserData, logoutUser } from "../controllers/user.controllers.js";
 import { showParticularDateExpenses, addTodayExpenses, addParticularDateExpenses, showTodayExpenses, showAllDateExpenses } from "../controllers/expenses.controller.js";
 import verifyJwtToken from "../middleware/auth.middleware.js";
 import { upload } from "../middleware/multer.middleware.js"
@@ -32,5 +32,8 @@ router.route("/show-all-date-expenses").get(verifyJwtToken, showAllDateExpenses)
 
 // add money
 router.route("/add-money").post(verifyJwtToken, addUserPocketMoney)
+
+// logout
+router.route("/logout").get(verifyJwtToken, logoutUser)
 
 export default router;

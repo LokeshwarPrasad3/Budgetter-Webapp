@@ -1,6 +1,8 @@
 // services/auth.ts
 import axios, { AxiosRequestConfig } from 'axios';
 import { backendHostURL } from './api';
+import Cookies from 'universal-cookie';
+const cookie = new Cookies();
 
 // For User Registration
 export interface RegisterCredentialsType {
@@ -20,6 +22,7 @@ export interface RegisterUserResponseType {
     currentPocketMoney: string;
     isVerified: boolean;
     PocketMoneyHistory: [];
+    accessToken: string;
     createdAt: string;
     updatedAt: string;
     __v: number;
@@ -60,6 +63,7 @@ export interface LoginUserResponseType {
     avatar: string;
     currentPocketMoney: string;
     isVerified: boolean;
+    accessToken: string;
     createdAt: string;
     updatedAt: string;
     __v: number;
@@ -104,6 +108,7 @@ interface userDetailsType {
     email: string;
     avatar: string;
     currentPocketMoney: string;
+    accessToken: string;
     PocketMoneyHistory: [
       {
         date: string;
@@ -167,5 +172,34 @@ export const AddUserPocketMoney = async (
     credentials,
     config
   );
+  return data;
+};
+
+// User Logout
+interface UserLogoutRes {
+  statusCode: number;
+  data: null;
+  message: string;
+  success: boolean;
+}
+export const UserLogout = async (): Promise<UserLogoutRes> => {
+  const token = cookie.get('accessToken');
+  if (!token) {
+    return {
+      statusCode: 401, 
+      data: null,
+      message: 'No token provided, logout failed.',
+      success: false,
+    };
+  }
+  cookie.remove('accessToken');
+  const config: AxiosRequestConfig = {
+    withCredentials: true,
+  };
+  const { data } = await axios.get<UserLogoutRes>(
+    `${backendHostURL}/user/logout`,
+    config
+  );
+  console.log('cookies is', token);
   return data;
 };

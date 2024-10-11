@@ -4,14 +4,15 @@ import { getCurrentUser } from '@/services/auth';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/features/user/user';
-import { getCookie } from '@/utils/cookies/cookies';
 import { Toaster } from 'react-hot-toast';
+import Cookies from 'universal-cookie';
 
 const MainLayout = () => {
+  const cookie = new Cookies();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const accessToken = getCookie('accessToken');
+    const accessToken = cookie.get('accessToken');
     // console.log(accessToken);
     if (!accessToken || accessToken === undefined) {
       console.log('not found');

@@ -7,8 +7,10 @@ import { Loader2 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/features/user/user';
 import toast from 'react-hot-toast';
+import Cookies from "universal-cookie";
 
 const SignupSection: React.FC = () => {
+  const cookie = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -33,6 +35,7 @@ const SignupSection: React.FC = () => {
         avatar,
         currentPocketMoney,
         PocketMoneyHistory,
+        accessToken
       } = data.data;
       dispatch(
         setUser({
@@ -46,6 +49,7 @@ const SignupSection: React.FC = () => {
         })
       );
       toast.success('Successfully Signup!!');
+      cookie.set('accessToken', accessToken);
       navigate('/user/dashboard');
     },
     onError: (error: Error) => {

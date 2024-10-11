@@ -27,12 +27,11 @@ export const registerUser = asyncHandler(async (req, res) => {
     user.accessToken = await user.generateAccessToken();
     const accessToken = user.accessToken;
     await user.save({ validateBeforeSave: false });
-    const createdUser = await UserModel.findById(user._id).select("-password -accessToken");
+    const createdUser = await UserModel.findById(user._id).select("-password");
     if (!createdUser) {
         throw new ApiError(500, "Something went wrong during register user!!");
     }
     console.log(createdUser);
-
 
     // now sent mail to verified their gmail
     const token = await createdUser.generateAccountVerificationToken();
@@ -117,7 +116,7 @@ export const loginUser = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Invalid user credentials!!");
     }
     // Now User is valid
-    const user = await UserModel.findById(existedUser._id).select("-password -accessToken")
+    const user = await UserModel.findById(existedUser._id).select("-password")
     console.log(user);
 
     const options = {
@@ -255,3 +254,16 @@ export const addUserPocketMoney = asyncHandler(async (req, res) => {
     )
 })
 
+// logout functionality 
+export const logoutUser = asyncHandler(async (req, res) => {
+    const user = req.user;
+    if (!user) {
+        throw new ApiError("User not exist, not logout");
+        return;
+    }
+    user.accessToken = undefined;
+    user.save();
+    return res.status(200).json(
+        new ApiResponse(200, null, "Successfully Logout")
+    )
+})

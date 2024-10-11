@@ -21,6 +21,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 const ProfilePage: React.FC = () => {
   const [isPasswordCollapsibleOpen, setIsPasswordCollapsibleOpen] =
@@ -31,7 +32,9 @@ const ProfilePage: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [profession, setProfession] = useState<string>('');
-  const [profileImage, setProfileImage] = useState<string>('https://i.ibb.co/cDvPNm5/360-F-864477167-q-Srg-Ao5j-QHc-PYacblj-ZXu-FPVHy-Q9-QOln.webp');
+  const [profileImage, setProfileImage] = useState<string>(
+    'https://i.ibb.co/cDvPNm5/360-F-864477167-q-Srg-Ao5j-QHc-PYacblj-ZXu-FPVHy-Q9-QOln.webp'
+  );
   // const [dob, setDOB] = useState<Date>(new Date());
   const [facebookURL, setFacebookURL] = useState<string>('');
   const [instagramURL, setInstagramURL] = useState<string>('');
@@ -54,6 +57,11 @@ const ProfilePage: React.FC = () => {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleSaveChanges = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    toast.success('Feature is Pending!!');
   };
 
   return (
@@ -225,7 +233,7 @@ const ProfilePage: React.FC = () => {
         </div>
 
         {/* Save Button */}
-        <Button className="w-full">
+        <Button onClick={handleSaveChanges} className="w-full">
           <Save className="mr-2 h-4 w-4" />
           Save Changes
         </Button>
