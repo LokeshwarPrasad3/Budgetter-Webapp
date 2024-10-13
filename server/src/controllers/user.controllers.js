@@ -11,7 +11,7 @@ import { clientURL } from "../utils/constants.js";
 export const registerUser = asyncHandler(async (req, res) => {
     const { username, name, email, password } = req.body;
     if (!username.length > 5 || !name || !email || !password) {
-        throw new ApiError(400, "All Fields are required!!");
+        throw new ApiError(400, `${name} - Your All Fields Required!!`);
     }
 
     // check if user already exist
@@ -19,7 +19,7 @@ export const registerUser = asyncHandler(async (req, res) => {
         $or: [{ username }, { email }]
     })
     if (existedUser) {
-        throw new ApiError(400, "User Already Exist!!");
+        throw new ApiError(400, `${username} - User Already Exist!!`);
     }
     const user = await UserModel.create({
         username: username.toLowerCase(), name, email, password
@@ -29,9 +29,9 @@ export const registerUser = asyncHandler(async (req, res) => {
     await user.save({ validateBeforeSave: false });
     const createdUser = await UserModel.findById(user._id).select("-password");
     if (!createdUser) {
-        throw new ApiError(500, "Something went wrong during register user!!");
+        throw new ApiError(500, `${username} - unable to register user!!`);
     }
-    console.log(createdUser);
+    console.log(`${createdUser.name} - Your Account Successfully created!!`);
 
     // now sent mail to verified their gmail
     const token = await createdUser.generateAccountVerificationToken();
@@ -41,7 +41,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     const subject = "Budgetter Account Verification";
     const isSentGmail = await sendMessageToUser(userName, type, userEmail, subject, token)
     if (!isSentGmail) {
-        console.log("failed to sent gmail!!");
+        console.log(`Failed to sent email to - ${userEmail}`);
     }
 
     const options = {
@@ -55,7 +55,7 @@ export const registerUser = asyncHandler(async (req, res) => {
         )
 })
 
-// verify link clicked then this controller run
+// -pending verify link clicked then this controller run
 export const validateAccountVerification = asyncHandler(async (req, res) => {
     const token = req.query.token;
     if (!token) {
@@ -82,6 +82,7 @@ export const validateAccountVerification = asyncHandler(async (req, res) => {
 // get logged user data by cookies
 export const getLoggedUserData = asyncHandler(async (req, res) => {
     const user = req.user;
+    // console.log(`User Validated - ${user?.username}`)
     const data = {
         _id: user?._id,
         username: user?.username,
@@ -99,25 +100,25 @@ export const getLoggedUserData = asyncHandler(async (req, res) => {
 export const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
-        throw new ApiError(400, "All Fields are required!!");
+        throw new ApiError(400, `${email} - Your All Fields Required!!`);
     }
     // check if user already exist
     const existedUser = await UserModel.findOne({ email });
     if (!existedUser) {
-        throw new ApiError(400, "User does not Exist!!");
+        throw new ApiError(400, `${email} - User does not Exist!!`);
     }
     const isPasswordValid = await existedUser.isPasswordMatch(password);
-
+    if (!isPasswordValid) {
+        throw new ApiError(400, `${email} - Your credentials are invalid!!`);
+    }
     existedUser.accessToken = await existedUser.generateAccessToken();
     const accessToken = existedUser.accessToken;
-
     await existedUser.save({ validateBeforeSave: false });
-    if (!isPasswordValid) {
-        throw new ApiError(400, "Invalid user credentials!!");
-    }
+
     // Now User is valid
     const user = await UserModel.findById(existedUser._id).select("-password")
-    console.log(user);
+    // console.log(user);
+    console.log(`${user.name} - Your Account Loggedin successfully!!`);
 
     const options = {
         httpOnly: false,
@@ -247,6 +248,7 @@ export const addUserPocketMoney = asyncHandler(async (req, res) => {
     })
     // Update the user's currentPocketMoney
     user.currentPocketMoney = newAmount.toString();
+    console.log(`${user.name} Your ${amount} Money is Added Total is ${newAmount}!!`)
 
     await user.save();
     res.status(201).json(
@@ -263,6 +265,7 @@ export const logoutUser = asyncHandler(async (req, res) => {
     }
     user.accessToken = undefined;
     user.save();
+    console.log(`${user?.username} Your Account has successfully Logout!!`);
     return res.status(200).json(
         new ApiResponse(200, null, "Successfully Logout")
     )

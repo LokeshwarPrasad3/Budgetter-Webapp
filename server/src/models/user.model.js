@@ -79,9 +79,13 @@ const UserSchema = new Schema({
 UserSchema.pre("save", async function (next) {
     // console.log("is password modified? ", this.isModified("password"));
     // this refers to instance document
-    if (!this.isModified("password")) { console.log("password not changed"); return next(); } // is there req to change password field of current document
+    if (!this.isModified("password"))
+    {
+        // console.log("password not changed");
+        return next();
+    } // is there req to change password field of current document
     this.password = await bcrypt.hash(this.password, 10); // before save input password hashed and modified in password field and then save
-    console.log("password changed");
+    // console.log("password changed");
     next();
 })
 

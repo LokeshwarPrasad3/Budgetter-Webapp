@@ -16,7 +16,7 @@ const sendMessageToUser = async (userName, type, userEmail, subject, token) => {
         const htmlContent = fs.readFileSync(resetPasswordTemplatePath, 'utf-8');
         // replace placeholder with actual data
         const resetLink = `${serverURL}/api/user/reset-password/validate/?token=${token}`;
-        console.log(resetLink);
+        // console.log(resetLink);
         customizedHTML = htmlContent.replace('{link}', resetLink).replace('{userName}', userName);
     }
     else if (type === "VERIFY_ACCOUNT") {
@@ -24,7 +24,7 @@ const sendMessageToUser = async (userName, type, userEmail, subject, token) => {
         const htmlContent = fs.readFileSync(accountVerificationTemplatePath, 'utf-8');
         // replace placeholder with actual data
         const resetLink = `${serverURL}/api/user/account-verification/?token=${token}`;
-        console.log(resetLink);
+        // console.log(resetLink);
         customizedHTML = htmlContent.replace('{link}', resetLink).replace('{userName}', userName);
     }
     else {
@@ -53,11 +53,11 @@ const sendMessageToUser = async (userName, type, userEmail, subject, token) => {
 
         // Send email
         let info = await transporter.sendMail(mailOptions);
-        console.log('Email sent: ' + info.response);
-        console.log('Email sent successfully!', userEmail);
+        // console.log('Email sent: ' + info.response);
+        console.log('Email sent successfully! to - ', userEmail);
         return true;
     } catch (error) {
-        console.error('Error sending email:', error);
+        console.error(`Error during sending email to - ${userEmail}`, error);
         throw error
     }
 }

@@ -26,7 +26,7 @@ const MainLayout = () => {
   });
 
   useEffect(() => {
-    if (data?.success) {
+    if (data?.data) {
       console.log('user', data);
       const {
         _id,

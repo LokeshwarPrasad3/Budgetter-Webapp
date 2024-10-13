@@ -120,11 +120,20 @@ interface userDetailsType {
         updatedAt: string;
       },
     ];
-  };
+  } | null;
   message: string;
   success: boolean;
 }
 export const getCurrentUser = async (): Promise<userDetailsType> => {
+  const token = cookie.get('accessToken');
+  if (!token) {
+    return {
+      statusCode: 404,
+      data: null,
+      message: 'Access token is missing. Please log in.',
+      success: false,
+    };
+  }
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: `Bearer ${getCurrentAccessToken()}`,
@@ -186,7 +195,7 @@ interface UserLogoutRes {
   success: boolean;
 }
 export const UserLogout = async (): Promise<UserLogoutRes> => {
-  const token = cookie.get('accessToken');
+  const token = getCurrentAccessToken();
   if (!token) {
     return {
       statusCode: 401,
@@ -195,7 +204,6 @@ export const UserLogout = async (): Promise<UserLogoutRes> => {
       success: false,
     };
   }
-  cookie.remove('accessToken');
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: `Bearer ${getCurrentAccessToken()}`,
@@ -205,6 +213,6 @@ export const UserLogout = async (): Promise<UserLogoutRes> => {
     `${backendHostURL}/user/logout`,
     config
   );
-  console.log('cookies is', token);
+  cookie.remove('accessToken');
   return data;
 };

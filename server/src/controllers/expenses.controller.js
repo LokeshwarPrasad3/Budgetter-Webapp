@@ -16,7 +16,7 @@ export const addTodayExpenses = asyncHandler(async (req, res) => {
     }
     // calculate total expenses price
     const totalExpenses = productsArray.reduce((total, item) => (total + item.price), 0)
-    console.log("Your total expenses ", totalExpenses)
+    console.log(`${req.user.username} Your total expenses `, totalExpenses)
     // is today expense push first time
     const firstExpensesOfToday = await ExpenseModel.findOne({ user: userId, date: currentDate }) // today date is default used
     let createdExpenses;
@@ -42,7 +42,7 @@ export const addTodayExpenses = asyncHandler(async (req, res) => {
     const user = await UserModel.findOne({ _id: userId });
     const newBalance = parseFloat(user.currentPocketMoney) - parseFloat(totalExpenses);
     user.currentPocketMoney = newBalance.toString();
-    console.log("You remaining balance", user.currentPocketMoney)
+    console.log(`${req.user.username} Your remaining balance `, user.currentPocketMoney)
     await user.save();
     console.log(createdExpenses);
     return res.status(201).json(
@@ -76,13 +76,14 @@ export const addParticularDateExpenses = asyncHandler(async (req, res) => {
     const user = await UserModel.findById(userId);
     let currentPocketMoney = parseFloat(user.currentPocketMoney);
     const results = [];
+    let totalExpenses = 0;
 
     for (const expenses of pastDaysExpensesArray) {
         const { date, productsArray } = expenses;
 
         if (Array.isArray(productsArray) && productsArray.length > 0) {
-            const totalExpenses = productsArray.reduce((total, item) => total + item.price, 0);
-            console.log("Your total expenses ", totalExpenses);
+            totalExpenses = productsArray.reduce((total, item) => total + item.price, 0);
+            // console.log(`${req.user.username} Your total expenses `, totalExpenses);
 
             let createdExpenses;
             const firstExpensesOfDate = await ExpenseModel.findOne({ user: userId, date });
@@ -111,6 +112,7 @@ export const addParticularDateExpenses = asyncHandler(async (req, res) => {
 
     user.currentPocketMoney = currentPocketMoney.toString();
     await user.save();
+    console.log(`${req.user.name} - Your ${totalExpenses} Expenses Added, current Pocket Money ${user.currentPocketMoney} `)
 
     return res.status(201).json(new ApiResponse(201, null, `${totalDaysExpenses} Days Expenses created successfully!!`));
 });
