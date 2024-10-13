@@ -10,7 +10,6 @@ export const navigateToLandingPage = (): string => {
 };
 
 export const navigateToUserPage = (): string => {
-  console.log('this is called');
   const path = location.pathname;
   if (path.includes('/user/')) {
     return path;

@@ -8,7 +8,7 @@ const ShowMoney = () => {
           Current Balance
         </p>
         <p className="text-2xl text-white font-bold text-center">
-          {useSelector((state: any) => state.user.user.currentPocketMoney)}
+          {useSelector((state: any) => state.user.user.currentPocketMoney) | 0}
         </p>
       </div>
     </div>

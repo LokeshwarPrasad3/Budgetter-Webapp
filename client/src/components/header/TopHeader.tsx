@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { getTopHeaderName } from '../hooks/HeaderName';
 import { useLocation } from 'react-router-dom';
 import { toggleSideNavbar } from '../../features/sideNavbar/sideNavbarSlice';
-import { useDispatch } from 'react-redux';
-import {Tooltip} from "react-tooltip"
+import { useDispatch, useSelector } from 'react-redux';
+import { Tooltip } from 'react-tooltip';
 import { Link } from 'react-router-dom';
 
 const TopHeader = () => {
@@ -31,12 +31,15 @@ const TopHeader = () => {
           <h2 className="font-bold ">{currentHeaderName}</h2>
         </div>
         <div className="notification_and_profile_ absolute right-4 sm:right-6 flex justify-center items-center gap-4">
-          <Link to="/user/profile" className="profile_container cursor-pointer h-8 w-8 rounded-full border border-pink-500 overflow-hidden">
+          <Link
+            to="/user/profile"
+            className="profile_container cursor-pointer h-8 w-8 rounded-full border border-pink-500 overflow-hidden"
+          >
             <img
               data-tooltip-id="header-tooltip"
               data-tooltip-content="Profile"
               data-tooltip-place="bottom"
-              src="https://i.ibb.co/gT2rBMZ/F87mws-UXc-AAO40f.jpg"
+              src={useSelector((state: any) => state.user.user.avatar)}
               className="h-full w-full"
               alt="logo"
             />
@@ -50,7 +53,7 @@ const TopHeader = () => {
           </button>
         </div>
       </div>
-      <Tooltip className='hidden md:block' id="header-tooltip" />
+      <Tooltip className="hidden md:block" id="header-tooltip" />
     </>
   );
 };

@@ -8,7 +8,7 @@ const verifyJwtToken = async (req, _, next) => {
         if (!token) {
             throw new ApiError(401, "UnAuthorized User!!");
         }
-        // console.log("token is ", token)
+        // console.log(token)
 
         const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
         if (!decodedToken) {
@@ -16,7 +16,7 @@ const verifyJwtToken = async (req, _, next) => {
         }
         const user = await UserModel.findById(decodedToken?._id).select("-password -accessToken");
         if (!user) {
-            throw new ApiError(401, "User not found by Access Token")
+            throw new ApiError(401, "User not found by Access Token");
         }
         req.user = user;
         next();
