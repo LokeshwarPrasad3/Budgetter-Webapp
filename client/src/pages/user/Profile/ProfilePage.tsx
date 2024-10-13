@@ -10,6 +10,7 @@ import {
   Facebook,
   Save,
   IndianRupee,
+  Loader2,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -20,10 +21,14 @@ import {
 } from '@/components/ui/collapsible';
 import { Label } from '@/components/ui/label';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import { useMutation } from '@tanstack/react-query';
+import { changeUserAvatar } from '@/services/auth';
+import { setUser } from '@/features/user/user';
 
 const ProfilePage: React.FC = () => {
+  const dispatch = useDispatch();
   const [isPasswordCollapsibleOpen, setIsPasswordCollapsibleOpen] =
     useState<boolean>(false);
 
@@ -48,6 +53,22 @@ const ProfilePage: React.FC = () => {
     setProfileImage(avatar);
   }, [user]);
 
+  // Mutate Function for Avatar Change
+  const { mutateAsync: changeAvatarMutate, isPending } = useMutation({
+    mutationFn: changeUserAvatar,
+    onSuccess: (data) => {
+      console.log('avatar change data ', data);
+      dispatch(
+        setUser({...user, avatar:data.data.avatar})
+      );
+      toast.success("Avatar Changed Successfully!!");
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error("Something went wrong!!");
+    },
+  });
+
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -56,6 +77,11 @@ const ProfilePage: React.FC = () => {
         setProfileImage(reader.result as string);
       };
       reader.readAsDataURL(file);
+      console.log('file is ', file);
+      // Prepare a formdata
+      const formData = new FormData();
+      formData.append('avatar', file);
+      changeAvatarMutate(formData);
     }
   };
 
@@ -67,17 +93,27 @@ const ProfilePage: React.FC = () => {
   return (
     <div className="add_expense_container flex flex-col items-center gap-4 bg-[#FFFEFE] rounded-md max-w-4xl w-full px-4 py-5 sm:p-7 shadow-sm">
       <div className="flex flex-col items-center space-y-4">
-        <Avatar className="w-24 h-24 sm:w-32 sm:h-32">
+        <Avatar className="w-24 h-24 sm:w-32 sm:h-32 shadow-sm">
           <AvatarImage src={profileImage} alt="Profile" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback>{name?.slice(0, 2).toUpperCase()}</AvatarFallback>
         </Avatar>
         <Button
           variant="outline"
           size="sm"
+          disabled={isPending}
           className="w-40 bg-transparent hover:bg-[##f1f5f9] relative overflow-hidden"
         >
-          <Camera className="mr-2 h-4 w-4 cursor-pointer" />
-          <span className="cursor-pointer">Change Image</span>
+          {isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please Wait
+            </>
+          ) : (
+            <>
+              <Camera className="mr-2 h-4 w-4 cursor-pointer" />
+              <span className="cursor-pointer">Change Image</span>
+            </>
+          )}
           <Input
             type="file"
             className="absolute inset-0 opacity-0 cursor-pointer"

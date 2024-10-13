@@ -21,7 +21,7 @@ const SummarizeBoxes: React.FC<PropType> = ({
     {
       id: 2,
       title: 'Remain Balance',
-      value: useSelector((state: any) => state.user.user.currentPocketMoney),
+      value: useSelector((state: any) => state.user.user.currentPocketMoney) | 0,
       bgClass: 'bg-[#4CAF50]',
     },
     {

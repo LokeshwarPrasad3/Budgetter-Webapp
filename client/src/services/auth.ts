@@ -216,3 +216,28 @@ export const UserLogout = async (): Promise<UserLogoutRes> => {
   cookie.remove('accessToken');
   return data;
 };
+
+// change avatar
+interface ChangeAvatarRes {
+  statusCode: number;
+  data: {
+    avatar: string;
+  };
+  message: string;
+  success: boolean;
+}
+export const changeUserAvatar = async (
+  formData: FormData
+): Promise<ChangeAvatarRes> => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
+    },
+  };
+  const { data } = await axios.post<ChangeAvatarRes>(
+    'http://localhost:5000/api/user/change-avatar',
+    formData,
+    config
+  );
+  return data;
+};
