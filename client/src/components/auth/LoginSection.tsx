@@ -33,7 +33,7 @@ const LoginSection: React.FC = () => {
         avatar,
         currentPocketMoney,
         PocketMoneyHistory,
-        accessToken
+        accessToken,
       } = data.data;
       dispatch(
         setUser({
@@ -47,7 +47,12 @@ const LoginSection: React.FC = () => {
         })
       );
       toast.success('Successfully Logged in!!');
-      cookie.set('accessToken', accessToken);
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 7);
+      cookie.set('accessToken', accessToken, {
+        path: '/',
+        expires: expirationDate,
+      });
       navigate('/user/dashboard');
     },
     onError: (error) => {

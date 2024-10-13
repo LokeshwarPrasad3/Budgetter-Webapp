@@ -1,13 +1,18 @@
 import { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { getCurrentUser } from '@/services/auth';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/features/user/user';
 import { Toaster } from 'react-hot-toast';
 import Cookies from 'universal-cookie';
+import {
+  navigateToLandingPage,
+  navigateToUserPage,
+} from '@/utils/navigate/NavigateRightPath';
 
 const MainLayout = () => {
+  const navigate = useNavigate();
   const cookie = new Cookies();
   const dispatch = useDispatch();
 
@@ -16,6 +21,7 @@ const MainLayout = () => {
     // console.log(accessToken);
     if (!accessToken || accessToken === undefined) {
       console.log('not found');
+      navigate(navigateToLandingPage());
       return;
     }
   }, []);
@@ -48,6 +54,7 @@ const MainLayout = () => {
           PocketMoneyHistory,
         })
       );
+      navigate(navigateToUserPage());
     }
   }, [data]);
 

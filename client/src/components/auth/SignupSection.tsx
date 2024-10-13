@@ -49,7 +49,12 @@ const SignupSection: React.FC = () => {
         })
       );
       toast.success('Successfully Signup!!');
-      cookie.set('accessToken', accessToken);
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 7);
+      cookie.set('accessToken', accessToken, {
+        path: '/',
+        expires: expirationDate,
+      });
       navigate('/user/dashboard');
     },
     onError: (error: Error) => {
