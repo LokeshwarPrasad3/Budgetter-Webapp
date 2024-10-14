@@ -22,7 +22,7 @@ const TopHeader = () => {
 
   return (
     <>
-      <div className="topheader_container sticky top-0 text-black bg-[#FFFEFE] z-40 shadow-sm w-full h-16 flex items-center px-1">
+      <div className="topheader_container sticky top-0 text-black bg-[#FFFEFE] z-10 shadow-sm w-full h-16 flex items-center px-1">
         <i
           onClick={() => dispatch(toggleSideNavbar())}
           className="ri-menu-line cursor-pointer text-black font-bold mx-4 text-xl"

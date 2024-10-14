@@ -12,8 +12,8 @@ import { Button } from '../ui/button';
 
 const SideNavbar = () => {
   const navigate = useNavigate();
-  const overlayRef = useRef(null);
-  const navbarRef = useRef(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const navbarRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const isSideNavbarOpen = useSelector(
     (state: any) => state.sideNavbar.isSideNavbarOpen
@@ -24,12 +24,18 @@ const SideNavbar = () => {
   const isMobile = useSelector((state: any) => state.windowWidth.isMobile);
 
   useEffect(() => {
-    const handleNavbarClose = () => {
-      if (overlayRef.current && !navbarRef.current && window.innerWidth < 768) {
-        console.log('document clicked');
-        dispatch(closeSideNavbar());
-      }
-    };
+    const handleNavbarClose = (event: MouseEvent) => {
+      const target = event.target as Node;
+     if (
+       overlayRef.current &&
+       overlayRef.current.contains(target) &&
+       navbarRef.current &&
+       !navbarRef.current.contains(target) &&
+       window.innerWidth < 768
+     ) {
+       dispatch(closeSideNavbar());
+     }
+   };
 
     document.addEventListener('click', handleNavbarClose);
 
@@ -60,7 +66,7 @@ const SideNavbar = () => {
       {showOverlayEffect && (
         <div
           ref={overlayRef}
-          className={`overlay_effect fixed md:static inset-0 h-full w-full bg-black/30 backdrop-blur-sm z-[2] `}
+          className={`overlay_effect fixed md:static inset-0 h-full w-full bg-black/30 backdrop-blur-sm z-[11] `}
         ></div>
       )}
       <div
