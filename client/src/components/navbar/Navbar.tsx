@@ -51,7 +51,7 @@ const Navbar: React.FC = () => {
       </nav>
 
       {/* Mobile Nav Icon */}
-      <div className="md:hidden block top-6 right-4 md:right-8 fixed z-[60]">
+      <div className="md:hidden block top-6 right-4 md:right-8 fixed z-[50]">
         <button
           aria-label="navigation"
           type="button"

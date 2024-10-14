@@ -23,8 +23,10 @@ const MainLayout = () => {
       console.log('not found');
       navigate(navigateToLandingPage());
       return;
+    } else {
+      navigate(navigateToUserPage());
     }
-  }, []);
+  }, [location.pathname]);
 
   const { data } = useQuery({
     queryFn: () => getCurrentUser(),

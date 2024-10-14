@@ -13,8 +13,8 @@ export const navigateToUserPage = (): string => {
   const path = location.pathname;
   if (path.includes('/user/')) {
     return path;
-  } else {
+  } else if (path.includes('/login') || path.includes('/signup')) {
     return '/user/dashboard';
   }
+  return path;
 };
-

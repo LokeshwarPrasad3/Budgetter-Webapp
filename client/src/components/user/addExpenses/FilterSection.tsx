@@ -41,6 +41,7 @@ const FilterSection = () => {
       console.log(data);
       toast.success('Expenses Added Successfully!!');
       queryClient.invalidateQueries({ queryKey: ['todayExpense'] });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
       setExpenseCategory('');
       setExpenseName('');
       setPrice('');
