@@ -213,7 +213,6 @@ export const UserLogout = async (): Promise<UserLogoutRes> => {
     `${backendHostURL}/user/logout`,
     config
   );
-  cookie.remove('accessToken');
   return data;
 };
 
@@ -237,6 +236,59 @@ export const changeUserAvatar = async (
   const { data } = await axios.post<ChangeAvatarRes>(
     `${backendHostURL}/user/change-avatar`,
     formData,
+    config
+  );
+  return data;
+};
+
+// Send reset link for forgot account
+interface SendResetLinkResType {
+  statusCode: number;
+  data: string;
+  message: string;
+  success: boolean;
+}
+interface SendResetLinkCredType {
+  email: string;
+}
+export const SendResetLinkToUserEmail = async (
+  credentials: SendResetLinkCredType
+): Promise<SendResetLinkResType> => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axios.post<SendResetLinkResType>(
+    `${backendHostURL}/user/send-reset-link`,
+    credentials,
+    config
+  );
+  return data;
+};
+
+// Get User by their ID
+interface GetUserByIdType {
+  statusCode: number;
+  data: string;
+  message: string;
+  success: boolean;
+}
+interface GetUserByIdCredType {
+  id: string;
+  newPassword: string;
+}
+export const GetUserDetailsById = async (
+  credentials: GetUserByIdCredType
+): Promise<GetUserByIdType> => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axios.post<GetUserByIdType>(
+    `${backendHostURL}/user/get-user-by-id`,
+    credentials,
     config
   );
   return data;

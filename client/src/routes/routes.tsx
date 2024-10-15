@@ -29,7 +29,7 @@ const routes = createBrowserRouter(
         <Route path="signup" element={<SignupSection />} />
         <Route path="forgot-password" element={<ForgotPasswordSection />} />
         <Route path="account-verified" element={<AccountVerified />} />
-        <Route path="reset-password" element={<ResetPassword />} />
+        <Route path="reset-password/*" element={<ResetPassword />} />
       </Route>
 
       {/* protected routes */}

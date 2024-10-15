@@ -1,13 +1,36 @@
 // ForgotPasswordSection.tsx
 
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
+import { useMutation } from '@tanstack/react-query';
+import { SendResetLinkToUserEmail } from '@/services/auth';
+import { Loader2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const ForgotPasswordSection: React.FC = () => {
-  const navigate = useNavigate();
-  const handlePasswordReset = () => {
-    navigate('/login');
+  const [email, setEmail] = useState('');
+
+  const { mutateAsync: sendResetLinkMutate, isPending } = useMutation({
+    mutationFn: SendResetLinkToUserEmail,
+    onSuccess: (data) => {
+      console.log(data);
+      toast.success('Successfully Link Sent!!');
+      setEmail('');
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error('Email does not exist!!');
+    },
+  });
+
+  const handlePasswordReset = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (!email) {
+      toast.error('Please Enter Valid Email!!');
+      return;
+    }
+    sendResetLinkMutate({ email });
   };
 
   return (
@@ -23,6 +46,8 @@ const ForgotPasswordSection: React.FC = () => {
       <form>
         <div className="mb-3">
           <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             type="email"
             id="email"
             placeholder="Email address"
@@ -31,10 +56,18 @@ const ForgotPasswordSection: React.FC = () => {
         </div>
 
         <Button
+          disabled={isPending}
           onClick={handlePasswordReset}
           className="w-full h-10 text-base px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none"
         >
-          Send Reset Link
+          {isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </>
+          ) : (
+            'Send Reset Link'
+          )}
         </Button>
 
         <div className="my-2 text-center text-slate-500 font-bold">Or</div>

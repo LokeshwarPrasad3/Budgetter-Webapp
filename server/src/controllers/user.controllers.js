@@ -97,6 +97,31 @@ export const getLoggedUserData = asyncHandler(async (req, res) => {
     )
 })
 
+// working-now  Find user by their ID
+export const getUserByUserId = asyncHandler(async (req, res) => {
+    const { id, newPassword } = req.body;
+    // get new password also
+    if (!id) {
+        throw new ApiError(400, "ID is required!!");
+    }
+    // check if user already exist
+    const existedUser = await UserModel.findById({ _id:id });
+    if (!existedUser) {
+        throw new ApiError(400, `${id} - User does not Exist!!`);
+    }
+    console.log("user found", existedUser);
+    // 1. make hash of new password
+    // 2. remove older password hash
+    // 3. add new password hash to db
+    // give response of successfully
+
+    res.status(200)
+        // .cookie("accessToken", accessToken, options)
+        .json(
+            new ApiResponse(200, existedUser, "Reset Successfully!!")
+        )
+})
+
 export const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -158,6 +183,7 @@ export const sentTokenToResetPassword = asyncHandler(async (req, res) => {
 export const validateResetPasswordToken = asyncHandler(async (req, res) => {
 
     const token = req.query.token; // ?token=jwttoken
+    console.log(token);
 
     // decode the token
     const decodedToken = jwt.verify(token, process.env.RESET_PASSWORD_TOKEN_SECRET);
@@ -165,16 +191,16 @@ export const validateResetPasswordToken = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Invalid token");
     }
     console.log("token get successfully", token);
-
+    const frontendURL = process.env.FRONTEND_URL;
     const user = await UserModel.findById(decodedToken._id).select("_id");
     if (!user) {
         throw new ApiError(404, "User not found!!");
     }
     console.log("user get successfully", user)
-
-    return res.status(201).json(
-        new ApiResponse(201, user, "Token verified successfully!!")
-    )
+    res.redirect(`${frontendURL}/reset-password/${user._id}`)
+    // return res.status(201).json(
+    //     new ApiResponse(201, user, "Token verified successfully!!")
+    // )
 
 })
 
