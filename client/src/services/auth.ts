@@ -235,7 +235,7 @@ export const changeUserAvatar = async (
     },
   };
   const { data } = await axios.post<ChangeAvatarRes>(
-    'http://localhost:5000/api/user/change-avatar',
+    `${backendHostURL}/user/change-avatar`,
     formData,
     config
   );

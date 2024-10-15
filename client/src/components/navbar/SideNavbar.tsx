@@ -9,6 +9,7 @@ import { useMutation } from '@tanstack/react-query';
 import { UserLogout } from '@/services/auth';
 import { Loader2 } from 'lucide-react';
 import { Button } from '../ui/button';
+import { getActiveRouteLink } from '@/utils/utility';
 
 const SideNavbar = () => {
   const navigate = useNavigate();
@@ -105,7 +106,7 @@ const SideNavbar = () => {
               key={index}
               to={`/${route}`}
               onClick={() => dispatch(closeSideNavbar())}
-              className="sidenavbar_menulink_container relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 hover:bg-[#289288] items-center"
+              className={`sidenavbar_menulink_container relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 ${getActiveRouteLink()===route?"bg-[#289288]":""} hover:bg-[#289288] items-center`}
             >
               <i className={`${icon} text-2xl text-white`}></i>
               <span
