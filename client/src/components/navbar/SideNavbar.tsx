@@ -10,8 +10,10 @@ import { UserLogout } from '@/services/auth';
 import { Loader2 } from 'lucide-react';
 import { Button } from '../ui/button';
 import { getActiveRouteLink } from '@/utils/utility';
+import Cookies from 'universal-cookie';
 
 const SideNavbar = () => {
+  const cookie = new Cookies();
   const navigate = useNavigate();
   const overlayRef = useRef<HTMLDivElement>(null);
   const navbarRef = useRef<HTMLDivElement>(null);
@@ -49,6 +51,7 @@ const SideNavbar = () => {
     mutationFn: UserLogout,
     onSuccess: (data) => {
       console.log(data);
+      cookie.remove("accessToken");
       navigate('/');
     },
     onError: (error) => {

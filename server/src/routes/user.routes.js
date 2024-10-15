@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerUser, loginUser, resetPassword, changeAvatar, validateResetPasswordToken, validateAccountVerification, addUserPocketMoney, getLoggedUserData, logoutUser } from "../controllers/user.controllers.js";
+import { registerUser, loginUser, resetPassword, changeAvatar, validateResetPasswordToken, validateAccountVerification, addUserPocketMoney, getLoggedUserData, logoutUser, sentTokenToResetPassword, getUserByUserId } from "../controllers/user.controllers.js";
 import { showParticularDateExpenses, addTodayExpenses, addParticularDateExpenses, showTodayExpenses, showAllDateExpenses } from "../controllers/expenses.controller.js";
 import verifyJwtToken from "../middleware/auth.middleware.js";
 import { upload } from "../middleware/multer.middleware.js"
@@ -15,9 +15,11 @@ router.route("/get-user-data").get(verifyJwtToken, getLoggedUserData)
 // account verification sent by gmail
 router.route("/account-verification").get(validateAccountVerification);
 
-// authentication routes
-router.route("/reset-password").patch(resetPassword);
+// Reset Link send throw email
+router.route("/send-reset-link").post(sentTokenToResetPassword);
+router.route("/get-user-by-id").post(getUserByUserId);
 router.route("/reset-password/validate").get(validateResetPasswordToken);
+router.route("/reset-password").patch(resetPassword);
 
 // for current day
 router.route("/add-today-expenses").post(verifyJwtToken, addTodayExpenses)
