@@ -164,7 +164,17 @@ export const sentTokenToResetPassword = asyncHandler(async (req, res) => {
     }
 
     // get token for reset-password
-    const token = await existedUser.generateResetPasswordToken();
+    // const token = await existedUser.generateResetPasswordToken();
+    // Generate token by RESET_PASSWORD_TOKEN_SECRET
+    const token = jwt.sign(
+        { _id: existedUser._id },
+        process.env.RESET_PASSWORD_TOKEN_SECRET,
+        {
+        expiresIn: process.env.RESET_PASSWORD_TOKEN_SECRET_EXPIRY,
+        },
+    );
+    console.log('token created', token);
+    console.log(existedUser);
     const userName = existedUser.name;
     const type = "RESET_PASSWORD";
     const userEmail = existedUser.email;
@@ -181,7 +191,6 @@ export const sentTokenToResetPassword = asyncHandler(async (req, res) => {
 
 // verify email link when clicked then validated token
 export const validateResetPasswordToken = asyncHandler(async (req, res) => {
-
     const token = req.query.token; // ?token=jwttoken
     console.log(token);
 
@@ -190,14 +199,14 @@ export const validateResetPasswordToken = asyncHandler(async (req, res) => {
     if (!decodedToken) {
         throw new ApiError(400, "Invalid token");
     }
-    console.log("token get successfully", token);
+    console.log("token decoded successfully", decodedToken);
     const frontendURL = process.env.FRONTEND_URL;
-    const user = await UserModel.findById(decodedToken._id).select("_id");
+    const user = await UserModel.findById(decodedToken?._id).select("_id");
     if (!user) {
         throw new ApiError(404, "User not found!!");
     }
-    console.log("user get successfully", user)
-    res.redirect(`${frontendURL}/reset-password/${user._id}`)
+    console.log("user id get successfully", user._id)
+    res.redirect(`${frontendURL}/reset-password/${user?._id}`)
     // return res.status(201).json(
     //     new ApiResponse(201, user, "Token verified successfully!!")
     // )

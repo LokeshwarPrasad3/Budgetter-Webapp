@@ -51,7 +51,7 @@ const SideNavbar = () => {
     mutationFn: UserLogout,
     onSuccess: (data) => {
       console.log(data);
-      cookie.remove("accessToken");
+      cookie.remove("accessToken", { path: '/' });
       navigate('/');
     },
     onError: (error) => {
