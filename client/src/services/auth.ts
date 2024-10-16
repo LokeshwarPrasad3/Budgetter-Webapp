@@ -110,6 +110,7 @@ interface userDetailsType {
     avatar: string;
     currentPocketMoney: string;
     accessToken: string;
+    isVerified: boolean;
     PocketMoneyHistory: [
       {
         date: string;
@@ -268,26 +269,27 @@ export const SendResetLinkToUserEmail = async (
 };
 
 // Get User by their ID
-interface GetUserByIdType {
+interface ResetPasswordResType {
   statusCode: number;
-  data: string;
+  data: null;
   message: string;
   success: boolean;
 }
-interface GetUserByIdCredType {
-  id: string;
+interface ResetPasswordCredType {
+  userId: string;
   newPassword: string;
 }
-export const GetUserDetailsById = async (
-  credentials: GetUserByIdCredType
-): Promise<GetUserByIdType> => {
+export const ResetUserPassword = async (
+  credentials: ResetPasswordCredType
+): Promise<ResetPasswordResType> => {
   const config: AxiosRequestConfig = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
-  const { data } = await axios.post<GetUserByIdType>(
-    `${backendHostURL}/user/get-user-by-id`,
+  console.log(credentials);
+  const { data } = await axios.patch<ResetPasswordResType>(
+    `${backendHostURL}/user/reset-password`,
     credentials,
     config
   );

@@ -5,11 +5,24 @@ import { toggleSideNavbar } from '../../features/sideNavbar/sideNavbarSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'react-tooltip';
 import { Link } from 'react-router-dom';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { BellDot } from 'lucide-react';
 
 const TopHeader = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [currentHeaderName, setCurrentHeaderName] = useState('');
+  const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(
+    useSelector((state: any) => !state.user?.user?.isVerified)
+  );
+
+  const handlePopoverClose = (open: boolean) => {
+    setIsPopoverOpen(open);
+  };
 
   useEffect(() => {
     const path = location.pathname;
@@ -44,13 +57,35 @@ const TopHeader = () => {
               alt="logo"
             />
           </Link>
-          <button className="">
-            <i
-              data-tooltip-id="header-tooltip"
-              data-tooltip-content="Notification"
-              className="ri-notification-line text-black text-xl font-bold"
-            ></i>
-          </button>
+          <Popover onOpenChange={handlePopoverClose} open={isPopoverOpen}>
+            <PopoverTrigger asChild>
+              <button className="">
+                <BellDot
+                  data-tooltip-id="header-tooltip"
+                  data-tooltip-content="Notification"
+                  className="focus:outline-none text-red-700"
+                />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-2 px-3 mr-2">
+              <div className="content_container">
+                <p
+                  className="cursor-pointer"
+                  onClick={() => handlePopoverClose(false)}
+                >
+                  {useSelector((state: any) =>
+                    state.user?.user?.isVerified === true ? (
+                      'No Notification 😊'
+                    ) : (
+                      <span className="text-red-700 font-medium">
+                        Your Account is not Verified , Please Check Your Email.
+                      </span>
+                    )
+                  )}
+                </p>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
       <Tooltip className="hidden md:block" id="header-tooltip" />

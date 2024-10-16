@@ -15,7 +15,7 @@ const ForgotPasswordSection: React.FC = () => {
     mutationFn: SendResetLinkToUserEmail,
     onSuccess: (data) => {
       console.log(data);
-      toast.success('Successfully Link Sent!!');
+      toast.success('Reset Link Sent, Please Check Email!!');
       setEmail('');
     },
     onError: (error) => {
@@ -35,7 +35,7 @@ const ForgotPasswordSection: React.FC = () => {
 
   return (
     <div className="w-full max-w-full p-8 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-bold tracking-tighter text-gray-800 text-center mb-2">
+      <h1 className="text-2xl font-bold tracking-tighter text-gray-800 text-center mb-2">
         Forgot Password
       </h1>
       <p className="text-gray-600 mb-6 text-center">
