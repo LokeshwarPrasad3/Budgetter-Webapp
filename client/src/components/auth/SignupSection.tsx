@@ -7,7 +7,7 @@ import { Loader2 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/features/user/user';
 import toast from 'react-hot-toast';
-import Cookies from "universal-cookie";
+import Cookies from 'universal-cookie';
 
 const SignupSection: React.FC = () => {
   const cookie = new Cookies();
@@ -35,7 +35,8 @@ const SignupSection: React.FC = () => {
         avatar,
         currentPocketMoney,
         PocketMoneyHistory,
-        accessToken
+        accessToken,
+        isVerified,
       } = data.data;
       dispatch(
         setUser({
@@ -46,6 +47,7 @@ const SignupSection: React.FC = () => {
           avatar,
           currentPocketMoney,
           PocketMoneyHistory,
+          isVerified,
         })
       );
       toast.success('Successfully Signup!!');
@@ -75,7 +77,7 @@ const SignupSection: React.FC = () => {
 
   return (
     <div className="w-full max-w-full p-8 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-bold tracking-tighter text-gray-800 text-center mb-2">
+      <h1 className="text-2xl font-bold tracking-tighter text-gray-800 text-center mb-2">
         Sign Up
       </h1>
       <p className="text-gray-600 mb-6 text-center">
@@ -156,12 +158,13 @@ const SignupSection: React.FC = () => {
         <div className="my-2 text-center text-slate-500 font-bold">Or</div>
 
         <div className="flex justify-center flex-col gap-4">
-          <button
+          <Button
+            onClick={() => toast.success('Feature is pending!!')}
             type="button"
             className="w-full py-2 px-4 bg-gray-200 text-gray-800 font-semibold rounded-md shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
           >
             Continue with Google
-          </button>
+          </Button>
         </div>
       </form>
     </div>

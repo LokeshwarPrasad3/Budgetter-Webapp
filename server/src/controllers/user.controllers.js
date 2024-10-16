@@ -6,7 +6,6 @@ import bcrypt from "bcrypt";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { sendMessageToUser } from "../utils/EmailSend.js";
 import jwt from "jsonwebtoken";
-import { clientURL } from "../utils/constants.js";
 
 export const registerUser = asyncHandler(async (req, res) => {
     const { username, name, email, password } = req.body;
@@ -34,7 +33,14 @@ export const registerUser = asyncHandler(async (req, res) => {
     console.log(`${createdUser.name} - Your Account Successfully created!!`);
 
     // now sent mail to verified their gmail
-    const token = await createdUser.generateAccountVerificationToken();
+    // const token = await createdUser.generateAccountVerificationToken();
+    const token = jwt.sign(
+        { _id: createdUser._id },
+        process.env.ACCOUNT_VERIFICATION_TOKEN_SECRET,
+        {
+            expiresIn: process.env.ACCOUNT_VERIFICATION_TOKEN_SECRET_EXPIRY,
+        },
+    );
     const userName = createdUser.name;
     const type = "VERIFY_ACCOUNT";
     const userEmail = createdUser.email;
@@ -71,12 +77,15 @@ export const validateAccountVerification = asyncHandler(async (req, res) => {
         throw new ApiError(400, "User not found!!");
     }
     if (user.isVerified) {
-        throw new ApiError(400, "Account already verified!!");
+        // throw new ApiError(400, "User not found!!");
+        console.log(user.name, "Account already verified!!");
+        return;
     }
+    const frontendURL = process.env.FRONTEND_URL;
     user.isVerified = true;
     await user.save({ validateBeforeSave: false });
-    console.log("user verified", user)
-    res.redirect(`${clientURL}/account-verified`);
+    console.log("User verified - ", user.name)
+    res.redirect(`${frontendURL}/account-verified`);
 })
 
 // get logged user data by cookies
@@ -89,37 +98,13 @@ export const getLoggedUserData = asyncHandler(async (req, res) => {
         name: user?.name,
         email: user?.email,
         avatar: user?.avatar,
+        isVerified: user?.isVerified,
         currentPocketMoney: user?.currentPocketMoney,
         PocketMoneyHistory: user?.PocketMoneyHistory
     }
     res.status(200).json(
         new ApiResponse(200, data, "User Found Successfully!!")
     )
-})
-
-// working-now  Find user by their ID
-export const getUserByUserId = asyncHandler(async (req, res) => {
-    const { id, newPassword } = req.body;
-    // get new password also
-    if (!id) {
-        throw new ApiError(400, "ID is required!!");
-    }
-    // check if user already exist
-    const existedUser = await UserModel.findById({ _id:id });
-    if (!existedUser) {
-        throw new ApiError(400, `${id} - User does not Exist!!`);
-    }
-    console.log("user found", existedUser);
-    // 1. make hash of new password
-    // 2. remove older password hash
-    // 3. add new password hash to db
-    // give response of successfully
-
-    res.status(200)
-        // .cookie("accessToken", accessToken, options)
-        .json(
-            new ApiResponse(200, existedUser, "Reset Successfully!!")
-        )
 })
 
 export const loginUser = asyncHandler(async (req, res) => {
@@ -227,13 +212,13 @@ export const resetPassword = asyncHandler(async (req, res) => {
     // hash password, because of findByIdAndUpdate is not trigger pre("save") method 
     const hashPassword = await bcrypt.hash(newPassword, 10);
     console.log("new hashedpassword ", hashPassword);
-    const updatedUser = await UserModel.findByIdAndUpdate({ _id: existedUser?._id }, { $set: { password: hashPassword } }, { new: true }).select("");
+    const updatedUser = await UserModel.findByIdAndUpdate({ _id: existedUser?._id }, { $set: { password: hashPassword } }, { new: true });
     if (!updatedUser) {
         throw new ApiError(500, "Something went wrong!!");
     }
     console.log(updatedUser);
     return res.status(201).json(
-        new ApiResponse(201, updatedUser, "Password updated successfully!!")
+        new ApiResponse(201, null, "Password updated successfully!!")
     )
 })
 

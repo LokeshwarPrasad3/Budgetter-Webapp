@@ -1,31 +1,28 @@
-import { GetUserDetailsById } from '@/services/auth';
+import { ResetUserPassword } from '@/services/auth';
 import { useMutation } from '@tanstack/react-query';
-import { Loader2 } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { Loader2, Eye, EyeOff } from 'lucide-react'; // Import visibility icons
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { useNavigate, Link } from 'react-router-dom';
 
 const ResetPassword: React.FC = () => {
-  const [id, setId] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [newCPassword, setNewCPassword] = useState("");
+  const navigate = useNavigate();
+  const [newPassword, setNewPassword] = useState('');
+  const [newCPassword, setNewCPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // Toggle for password visibility
+  const [showCPassword, setShowCPassword] = useState(false); // Toggle for confirm password visibility
 
-    useEffect(() => {
-      const ID = location.pathname?.split('/')[2];
-      setId(ID);
-    }, [location.pathname]);
-
-  // GetUserDetailsById
   const { mutateAsync: changeUserPasswordMutate, isPending } = useMutation({
-    mutationFn: GetUserDetailsById,
+    mutationFn: ResetUserPassword,
     onSuccess: (data) => {
-      console.log(data);
-      toast.success('Successfully Link Sent!!');
+      toast.success('Password Changed Successfully!!');
       setNewPassword('');
       setNewCPassword('');
+      navigate("/login");
     },
     onError: (error) => {
-      console.log(error);
       toast.error('Email does not exist!!');
     },
   });
@@ -33,16 +30,20 @@ const ResetPassword: React.FC = () => {
   const handleResetPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (newPassword !== newCPassword) {
-      // make onchange password match features
-      toast.error("Password Must be Match!!");
+      toast.error('Passwords must match!');
       return;
     }
-    changeUserPasswordMutate({id, newPassword})
-  }
+    const ID = location.pathname?.split('/')[2];
+    if (!ID) {
+      toast.error('Something went wrong!');
+      return;
+    }
+    changeUserPasswordMutate({ userId: ID, newPassword });
+  };
 
   return (
     <div className="w-full max-w-full p-8 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-bold tracking-tighter text-gray-800 text-center mb-2">
+      <h1 className="text-2xl font-bold tracking-tighter text-gray-800 text-center mb-2">
         Reset Your Password
       </h1>
       <p className="text-gray-600 mb-6 text-center">
@@ -50,30 +51,45 @@ const ResetPassword: React.FC = () => {
       </p>
 
       <form>
+        {/* New Password Input */}
         <div className="mb-3 relative">
-          <input
+          <Input
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            type="password"
+            type={showPassword ? 'text' : 'password'} // Toggle input type
             id="password"
             placeholder="New Password"
             className="text-slate-900 font-medium mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
-          <i className="ri-lock-password-line absolute right-3 top-2 text-gray-500"></i>
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-2 text-gray-500"
+          >
+            {!showPassword ? <EyeOff className='h-4 w-4' /> : <Eye className='w-4 h-4' />}
+          </button>
         </div>
 
+        {/* Confirm Password Input */}
         <div className="mb-4 relative">
-          <input
+          <Input
             value={newCPassword}
             onChange={(e) => setNewCPassword(e.target.value)}
-            type="password"
+            type={showCPassword ? 'text' : 'password'} // Toggle input type
             id="confirm-password"
             placeholder="Confirm Password"
             className="text-slate-900 font-medium mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
-          <i className="ri-lock-password-line absolute right-3 top-2 text-gray-500"></i>
+          <button
+            type="button"
+            onClick={() => setShowCPassword(!showCPassword)}
+            className="absolute right-3 top-2 text-gray-500"
+          >
+            {!showCPassword ? <EyeOff className='h-4 w-4' /> : <Eye className='w-4 h-4' />}
+          </button>
         </div>
 
+        {/* Submit Button */}
         <Button
           disabled={isPending}
           type="submit"
@@ -90,15 +106,15 @@ const ResetPassword: React.FC = () => {
           )}
         </Button>
 
+        {/* Back to Login */}
         <div className="my-2 text-center text-slate-500 font-bold">Or</div>
-
         <div className="flex justify-center flex-col gap-4">
-          <a
-            href="/login"
+          <Link
+            to="/login"
             className="w-full py-2 px-4 bg-gray-200 text-gray-800 font-semibold rounded-md shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 text-center"
           >
             Back to Login
-          </a>
+          </Link>
         </div>
       </form>
     </div>

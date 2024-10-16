@@ -20,7 +20,6 @@ const MainLayout = () => {
     const accessToken = cookie.get('accessToken');
     // console.log(accessToken);
     if (!accessToken || accessToken === undefined) {
-      console.log('not found');
       navigate(navigateToLandingPage());
       return;
     } else {
@@ -44,6 +43,7 @@ const MainLayout = () => {
         avatar,
         currentPocketMoney,
         PocketMoneyHistory,
+        isVerified,
       } = data.data;
       dispatch(
         setUser({
@@ -54,6 +54,7 @@ const MainLayout = () => {
           avatar,
           currentPocketMoney,
           PocketMoneyHistory,
+          isVerified,
         })
       );
       navigate(navigateToUserPage());
