@@ -18,11 +18,13 @@ const ResetPassword: React.FC = () => {
     mutationFn: ResetUserPassword,
     onSuccess: (data) => {
       toast.success('Password Changed Successfully!!');
+      console.log(data);
       setNewPassword('');
       setNewCPassword('');
       navigate("/login");
     },
     onError: (error) => {
+      console.log(error);
       toast.error('Email does not exist!!');
     },
   });
