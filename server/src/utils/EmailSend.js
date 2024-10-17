@@ -1,14 +1,13 @@
 import nodemailer from "nodemailer";
 import path from "path";
 import fs from "fs";
-import jwt from "jsonwebtoken"
 import { fileURLToPath } from 'url';
-import { serverURL } from "./constants.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const sendMessageToUser = async (userName, type, userEmail, subject, token) => {
+    const serverURL = process.env.SERVER_URL;
 
     let customizedHTML;
     if (type === "RESET_PASSWORD") {
