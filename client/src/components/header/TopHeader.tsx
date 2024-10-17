@@ -10,11 +10,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { BellDot } from 'lucide-react';
+import { Bell } from 'lucide-react';
 
 const TopHeader = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  type Notification = {
+    value: string;
+  };
+
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [currentHeaderName, setCurrentHeaderName] = useState('');
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(
     useSelector((state: any) => !state.user?.user?.isVerified)
@@ -32,6 +37,16 @@ const TopHeader = () => {
     const headerName = getTopHeaderName(pathName);
     setCurrentHeaderName(headerName);
   }, [location.pathname]);
+
+  const isUserVerified = useSelector(
+    (state: any) => state.user?.user?.isVerified
+  );
+
+  useEffect(() => {
+    setNotifications([
+      { value: 'Your Account is not Verified, Please Check Your Email.' },
+    ]);
+  }, [isUserVerified]);
 
   return (
     <>
@@ -59,12 +74,17 @@ const TopHeader = () => {
           </Link>
           <Popover onOpenChange={handlePopoverClose} open={isPopoverOpen}>
             <PopoverTrigger asChild>
-              <button className="">
-                <BellDot
+              <button className="relative">
+                <Bell
                   data-tooltip-id="header-tooltip"
                   data-tooltip-content="Notification"
                   className="focus:outline-none text-red-700"
                 />
+                {notifications.length !== 0 && (
+                  <span className="absolute -top-1 right-0 inline-flex items-center justify-center w-3 h-3 text-[10px] font-bold leading-none text-white bg-red-600 rounded-full">
+                    {notifications.length}
+                  </span>
+                )}
               </button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-2 px-3 mr-2">
@@ -73,14 +93,16 @@ const TopHeader = () => {
                   className="cursor-pointer"
                   onClick={() => handlePopoverClose(false)}
                 >
-                  {useSelector((state: any) =>
-                    state.user?.user?.isVerified === true ? (
-                      'No Notification 😊'
-                    ) : (
-                      <span className="text-red-700 font-medium">
-                        Your Account is not Verified , Please Check Your Email.
-                      </span>
-                    )
+                  {notifications.length === 0 ? (
+                    ' No Notification 😊'
+                  ) : (
+                    <>
+                      {notifications.map(({ value }, index) => (
+                        <span key={index} className="text-red-700 font-medium">
+                          {value}
+                        </span>
+                      ))}
+                    </>
                   )}
                 </p>
               </div>

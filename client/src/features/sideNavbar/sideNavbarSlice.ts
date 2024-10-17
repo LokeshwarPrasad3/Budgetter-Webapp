@@ -6,8 +6,8 @@ interface initialStateType {
 }
 
 const initialState: initialStateType = {
-  isSideNavbarOpen: true,
-  showOverlayEffect: true,
+  isSideNavbarOpen: window.innerWidth < 768 ? false : true,
+  showOverlayEffect: window.innerWidth < 768 ? false : true,
 };
 
 const sideNavbarSlice = createSlice({

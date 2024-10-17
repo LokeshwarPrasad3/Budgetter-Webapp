@@ -109,7 +109,7 @@ const SideNavbar = () => {
               key={index}
               to={`/${route}`}
               onClick={() => dispatch(closeSideNavbar())}
-              className={`sidenavbar_menulink_container relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 ${getActiveRouteLink()===route?"bg-[#289288]":""} hover:bg-[#289288] items-center`}
+              className={`sidenavbar_menulink_container relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 ${getActiveRouteLink() === route ? 'bg-[#289288]' : ''} hover:bg-[#25635d] items-center`}
             >
               <i className={`${icon} text-2xl text-white`}></i>
               <span
@@ -130,7 +130,7 @@ const SideNavbar = () => {
             data-tooltip-id="navbarTooltip"
             data-tooltip-content="Logout"
             data-tooltip-place="right"
-            className="logout_container h-12 relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 bg-slate-800 hover:bg-[#289288] items-center"
+            className="logout_container h-12 relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 bg-slate-800 hover:bg-[#2e7a73] items-center"
             onClick={handleUserLogout}
           >
             <i className="ri-logout-box-r-line text-2xl text-white"></i>
