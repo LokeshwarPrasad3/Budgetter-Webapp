@@ -2,6 +2,8 @@ import SideNavbar from '@/components/navbar/SideNavbar';
 import TopHeader from '@/components/header/TopHeader';
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
+import DashboardLoader from './Loader/DashboardLoader';
+import TopHeaderLoader from './Loader/TopHeaderLoader';
 
 const UserLayout = () => {
   // get from reducer state
@@ -13,6 +15,8 @@ const UserLayout = () => {
   // );
   const isMobile = useSelector((state: any) => state.windowWidth.isMobile);
 
+  const user = useSelector((state: any) => state.user?.user);
+
   return (
     <>
       <SideNavbar />
@@ -23,9 +27,9 @@ const UserLayout = () => {
         ${isMobile && 'dashboard_layout_container_small_screen_close'} 
         `}
       >
-        <TopHeader />
+        {user?._id ? <TopHeader /> : <TopHeaderLoader />}
         <div className="flex flex-col gap-5 justify-start items-center px-6 py-5">
-          <Outlet />
+          {user?._id ? <Outlet /> : <DashboardLoader />}
         </div>
       </div>
     </>
