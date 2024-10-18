@@ -295,3 +295,23 @@ export const ResetUserPassword = async (
   );
   return data;
 };
+
+// Get User account verified or not
+interface UserAccountVerifiedResType {
+  statusCode: number;
+  data: boolean;
+  message: string;
+  success: boolean;
+}
+export const CheckUserAccountVerified = async (): Promise<UserAccountVerifiedResType> => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
+    },
+  };
+  const { data } = await axios.get<UserAccountVerifiedResType>(
+    `${backendHostURL}/user/is-user-verified`,
+    config
+  );
+  return data;
+};

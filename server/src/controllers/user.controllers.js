@@ -61,7 +61,7 @@ export const registerUser = asyncHandler(async (req, res) => {
         )
 })
 
-// -pending verify link clicked then this controller run
+// verify link clicked then this controller run
 export const validateAccountVerification = asyncHandler(async (req, res) => {
     const token = req.query.token;
     if (!token) {
@@ -86,6 +86,16 @@ export const validateAccountVerification = asyncHandler(async (req, res) => {
     await user.save({ validateBeforeSave: false });
     console.log("User verified - ", user.name)
     res.redirect(`${frontendURL}/account-verified`);
+})
+
+export const checkUserVerified = asyncHandler(async (req, res) => {
+    const user = req.user;
+    if (!user) {
+        throw new ApiError(401, "User not authenticated!!");
+    }
+    res.status(200).json(
+        new ApiResponse(200, user.isVerified, "User verified successfully!!")
+    )
 })
 
 // get logged user data by cookies

@@ -8,6 +8,7 @@ const initialState = {
     email: '',
     avatar: '',
     currentPocketMoney: '',
+    isVerified: false,
   },
   expenses: [],
 };
@@ -25,9 +26,12 @@ export const userSlice = createSlice({
       // const { projects } =
       state.expenses = action.payload;
     },
+    setUserVerified : (state, action) =>{
+      state.user.isVerified = action.payload;
+    }
   },
 });
 
-export const { setUser, setExpenses } = userSlice.actions;
+export const { setUser, setExpenses, setUserVerified } = userSlice.actions;
 
 export default userSlice.reducer;

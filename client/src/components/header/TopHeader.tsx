@@ -11,6 +11,9 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Bell } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { CheckUserAccountVerified } from '@/services/auth';
+import { setUserVerified } from '@/features/user/user';
 
 const TopHeader: React.FC = () => {
   const dispatch = useDispatch();
@@ -21,6 +24,13 @@ const TopHeader: React.FC = () => {
 
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [currentHeaderName, setCurrentHeaderName] = useState<string>('');
+
+  // get user verified or not
+  const { data } = useQuery({
+    queryFn: () => CheckUserAccountVerified(),
+    queryKey: ['checkUserAccountVerified'],
+  });
+
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(
     useSelector((state: any) => !state.user?.user?.isVerified)
   );
@@ -28,6 +38,10 @@ const TopHeader: React.FC = () => {
   const handlePopoverClose = (open: boolean) => {
     setIsPopoverOpen(open);
   };
+
+  const isUserVerified = useSelector(
+    (state: any) => state.user?.user?.isVerified
+  );
 
   useEffect(() => {
     const path = location.pathname;
@@ -38,14 +52,19 @@ const TopHeader: React.FC = () => {
     setCurrentHeaderName(headerName);
   }, [location.pathname]);
 
-  const isUserVerified = useSelector(
-    (state: any) => state.user?.user?.isVerified
-  );
+  useEffect(() => {
+    if (data?.data) {
+      setNotifications([]);
+      dispatch(setUserVerified(true));
+    }
+  }, [data, dispatch]);
 
   useEffect(() => {
-    setNotifications([
-      { value: 'Your Account is not Verified, Please Check Your Email.' },
-    ]);
+    if(!isUserVerified){
+      setNotifications([
+        { value: 'Your Account is not Verified, Please Check Your Email.' },
+      ]);
+    }
   }, [isUserVerified]);
 
   return (
