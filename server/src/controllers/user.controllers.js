@@ -118,12 +118,16 @@ export const getLoggedUserData = asyncHandler(async (req, res) => {
 })
 
 export const loginUser = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-        throw new ApiError(400, `${email} - Your All Fields Required!!`);
+    const {username, email, password } = req.body;
+    if (( !username && !email) || !password) {
+        const identifier = email || username;
+        throw new ApiError(400, `${identifier} - Your All Fields Required!!`);
     }
+    console.log(username, email, password);
     // check if user already exist
-    const existedUser = await UserModel.findOne({ email });
+    const existedUser = await UserModel.findOne({ 
+        $or : [{email}, {username}] 
+    });
     if (!existedUser) {
         throw new ApiError(400, `${email} - User does not Exist!!`);
     }

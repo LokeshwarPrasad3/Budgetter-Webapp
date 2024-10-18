@@ -51,6 +51,7 @@ export const registerUser = async (
 
 // For User Login
 export interface LoginCredentialsType {
+  username: string;
   email: string;
   password: string;
 }
