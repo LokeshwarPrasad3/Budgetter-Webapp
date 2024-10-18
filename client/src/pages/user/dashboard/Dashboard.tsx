@@ -4,10 +4,10 @@ import CategoryWiseLineChart from '@/components/user/dashbaord/charts/CategoryWi
 import { getTotalExpensesAndAddedMoneyInMonth } from '@/services/reports';
 import { getMonthInString } from '@/utils/date/date';
 import { useMutation } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-const Dashboard = () => {
+const Dashboard: React.FC = () => {
   const user = useSelector((state: any) => state.user.user);
   const [totalExpensesOfMonth, setTotalExpensesOfMonth] = useState<number>(0);
   const [totalAddedMoneyOfMonth, setTotalAddedMoneyOfMonth] =

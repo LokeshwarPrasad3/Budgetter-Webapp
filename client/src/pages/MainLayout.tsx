@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { getCurrentUser } from '@/services/auth';
 import { useQuery } from '@tanstack/react-query';
@@ -11,7 +11,7 @@ import {
   navigateToUserPage,
 } from '@/utils/navigate/NavigateRightPath';
 
-const MainLayout = () => {
+const MainLayout: React.FC = () => {
   const navigate = useNavigate();
   const cookie = new Cookies();
   const dispatch = useDispatch();

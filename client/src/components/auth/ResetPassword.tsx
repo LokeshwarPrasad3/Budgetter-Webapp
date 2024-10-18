@@ -9,10 +9,10 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const ResetPassword: React.FC = () => {
   const navigate = useNavigate();
-  const [newPassword, setNewPassword] = useState('');
-  const [newCPassword, setNewCPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // Toggle for password visibility
-  const [showCPassword, setShowCPassword] = useState(false); // Toggle for confirm password visibility
+  const [newPassword, setNewPassword] = useState<string>('');
+  const [newCPassword, setNewCPassword] = useState<string>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false); // Toggle for password visibility
+  const [showCPassword, setShowCPassword] = useState<boolean>(false); // Toggle for confirm password visibility
 
   const { mutateAsync: changeUserPasswordMutate, isPending } = useMutation({
     mutationFn: ResetUserPassword,

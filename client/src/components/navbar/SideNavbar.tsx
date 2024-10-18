@@ -12,7 +12,7 @@ import { Button } from '../ui/button';
 import { getActiveRouteLink } from '@/utils/utility';
 import Cookies from 'universal-cookie';
 
-const SideNavbar = () => {
+const SideNavbar: React.FC = () => {
   const cookie = new Cookies();
   const navigate = useNavigate();
   const overlayRef = useRef<HTMLDivElement>(null);

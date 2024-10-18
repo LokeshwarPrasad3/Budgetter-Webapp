@@ -13,9 +13,9 @@ const LoginSection: React.FC = () => {
   const cookie = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

@@ -4,8 +4,9 @@ import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import DashboardLoader from './Loader/DashboardLoader';
 import TopHeaderLoader from './Loader/TopHeaderLoader';
+import React from 'react';
 
-const UserLayout = () => {
+const UserLayout: React.FC = () => {
   // get from reducer state
   const isSideNavbarOpen = useSelector(
     (state: any) => state.sideNavbar.isSideNavbarOpen

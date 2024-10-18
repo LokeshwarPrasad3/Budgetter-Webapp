@@ -9,7 +9,7 @@ import { Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const ForgotPasswordSection: React.FC = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState<string>('');
 
   const { mutateAsync: sendResetLinkMutate, isPending } = useMutation({
     mutationFn: SendResetLinkToUserEmail,

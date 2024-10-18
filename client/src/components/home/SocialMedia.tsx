@@ -1,5 +1,6 @@
+import React from "react";
 
-const SocialMedia = () => {
+const SocialMedia: React.FC = () => {
   return (
     <div className="auth_footer_container h-20 flex mt-3 flex-col justify-center items-center w-full">
       <div className="flex space-x-6 mb-4">

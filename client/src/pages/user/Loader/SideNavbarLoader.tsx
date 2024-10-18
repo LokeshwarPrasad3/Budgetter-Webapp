@@ -1,5 +1,6 @@
+import React from "react";
 
-const SideNavbarLoader = () => {
+const SideNavbarLoader: React.FC = () => {
   return (
     <>
       <div className="sidenavbar_container animate-pulse bg-slate-300 font-karla fixed top-0 h-full flex flex-col w-52 left-0 px-3 py-5 gap-2 shadow-lg">

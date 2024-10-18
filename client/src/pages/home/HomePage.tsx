@@ -3,8 +3,9 @@ import HeroSection from '@/components/home/HeroSection';
 import ContactSection from '@/components/home/ContactSection';
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/navbar/Navbar';
+import React from 'react';
 
-const HomePage = () => {
+const HomePage:  React.FC = () => {
   return (
     <>
       <div
