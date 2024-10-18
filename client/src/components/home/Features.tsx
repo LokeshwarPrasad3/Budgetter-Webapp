@@ -4,7 +4,7 @@ import { cardData } from '@/data/featurecard';
 import { ANIMATE_WORDS_VARIENT } from '@/utils/framer/properties';
 import { motion } from 'framer-motion';
 
-const Features = () => {
+const Features: React.FC = () => {
   return (
     <>
       <div className="features_container flex font-karla gap-12 max-w-full flex-col w-full justify-center items-center my-10">

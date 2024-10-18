@@ -1,4 +1,6 @@
-const DashboardLoader = () => {
+import React from "react";
+
+const DashboardLoader: React.FC = () => {
   return (
     <>
       <div className="dashboard_page_ animate-pulse flex flex-col justify-start items-start w-full gap-7">

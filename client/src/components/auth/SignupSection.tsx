@@ -13,11 +13,11 @@ const SignupSection: React.FC = () => {
   const cookie = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [username, setUsername] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

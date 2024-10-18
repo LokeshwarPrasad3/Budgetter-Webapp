@@ -1,5 +1,6 @@
+import React from "react";
 
-const TopHeaderLoader = () => {
+const TopHeaderLoader:  React.FC = () => {
   return (
     <>
       <div className="topheader_container animate-pulse bg-slate-300 sticky ml-0.5 top-0 text-black z-10 shadow-sm w-full h-16 flex items-center px-5">

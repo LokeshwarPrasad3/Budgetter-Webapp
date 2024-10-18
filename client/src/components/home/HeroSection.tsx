@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ANIMATE_WORDS_VARIENT } from '@/utils/framer/properties';
+import React from 'react';
 
-const HeroSection = () => {
+const HeroSection: React.FC = () => {
   const MotionLink = motion(Link);
 
   return (

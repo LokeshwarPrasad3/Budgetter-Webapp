@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getTopHeaderName } from '../hooks/HeaderName';
 import { useLocation } from 'react-router-dom';
 import { toggleSideNavbar } from '../../features/sideNavbar/sideNavbarSlice';
@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/popover';
 import { Bell } from 'lucide-react';
 
-const TopHeader = () => {
+const TopHeader: React.FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   type Notification = {
@@ -20,7 +20,7 @@ const TopHeader = () => {
   };
 
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [currentHeaderName, setCurrentHeaderName] = useState('');
+  const [currentHeaderName, setCurrentHeaderName] = useState<string>('');
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(
     useSelector((state: any) => !state.user?.user?.isVerified)
   );

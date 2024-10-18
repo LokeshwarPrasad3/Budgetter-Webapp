@@ -1,6 +1,7 @@
 import FilterShowExpenses from '@/components/user/showExpenses/FilterShowExpenses';
+import React from 'react';
 
-const ShowExpenses = () => {
+const ShowExpenses:  React.FC = () => {
   return (
     <>
       <FilterShowExpenses />
