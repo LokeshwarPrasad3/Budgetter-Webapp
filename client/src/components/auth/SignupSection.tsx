@@ -50,7 +50,7 @@ const SignupSection: React.FC = () => {
           isVerified,
         })
       );
-      toast.success('Successfully Signup!!');
+      // toast.success('Successfully Signup!!');
       const expirationDate = new Date();
       expirationDate.setDate(expirationDate.getDate() + 7);
       cookie.set('accessToken', accessToken, {
@@ -72,7 +72,11 @@ const SignupSection: React.FC = () => {
       toast.error('All Fields Required!!');
       return;
     }
-    registerUserMutate({ username, name, email, password });
+     toast.promise(registerUserMutate({ username, name, email, password }), {
+       loading: 'Processing, Sending Verification Email..',
+       success: <b>Successfully Account Created!!</b>,
+       error: <b>Something went wrong!!</b>,
+     });
   };
 
   return (

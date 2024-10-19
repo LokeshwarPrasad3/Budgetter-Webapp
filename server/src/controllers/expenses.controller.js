@@ -140,7 +140,7 @@ export const showParticularDateExpenses = asyncHandler(async (req, res) => {
 // 3. show all expenses
 export const showAllDateExpenses = asyncHandler(async (req, res) => {
     const userId = req.user._id; // from middleware
-    const AllDateExpenses = await ExpenseModel.find({ user: userId });
+    const AllDateExpenses = await ExpenseModel.find({ user: userId }).sort({ date: -1 });
     if (!AllDateExpenses) {
         throw new ApiError(404, "No expenses found!!");
     }

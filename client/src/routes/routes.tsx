@@ -19,6 +19,8 @@ import AddMoney from '@/pages/user/addMoney/AddMoney';
 import ShowExpenses from '@/pages/user/showExpenses/ShowExpenses';
 import AddExpenses from '@/pages/user/addExpenses/AddExpenses';
 import ProfilePage from '@/pages/user/Profile/ProfilePage';
+import AccountAlreadyVerified from '@/components/auth/AccountAlreadyVerified';
+import Reports from '@/pages/user/reports/Reports';
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +31,7 @@ const routes = createBrowserRouter(
         <Route path="signup" element={<SignupSection />} />
         <Route path="forgot-password" element={<ForgotPasswordSection />} />
         <Route path="account-verified" element={<AccountVerified />} />
+        <Route path="account-already-verified" element={<AccountAlreadyVerified />} />
         <Route path="reset-password/*" element={<ResetPassword />} />
       </Route>
 
@@ -38,7 +41,7 @@ const routes = createBrowserRouter(
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="add-expenses" element={<AddExpenses />} />
         <Route path="show-expenses" element={<ShowExpenses />} />
-        {/* <Route path="reports" element={<Reports />} /> */}
+        <Route path="reports" element={<Reports />} />
         <Route path="reports" element={<Dashboard />} />
         <Route path="add-money" element={<AddMoney />} />
       </Route>

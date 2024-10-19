@@ -1,9 +1,10 @@
-import React from "react";
+import AllExpensesTable from '@/components/user/reports/table/AllExpensesTable';
+import React from 'react';
 
 const Reports: React.FC = () => {
   return (
-    <div className="flex flex-col justify-center items-center">
-      <h1>Reports Graphs Layout</h1>
+    <div className="dashboard_page_ flex flex-col justify-start items-start w-full gap-5">
+      <AllExpensesTable />
     </div>
   );
 };

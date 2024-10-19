@@ -31,6 +31,7 @@ export const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(500, `${username} - unable to register user!!`);
     }
     console.log(`${createdUser.name} - Your Account Successfully created!!`);
+    console.log("Sending Email for Verification....");
 
     // now sent mail to verified their gmail
     // const token = await createdUser.generateAccountVerificationToken();
@@ -76,12 +77,13 @@ export const validateAccountVerification = asyncHandler(async (req, res) => {
     if (!user) {
         throw new ApiError(400, "User not found!!");
     }
+    const frontendURL = process.env.FRONTEND_URL;
     if (user.isVerified) {
         // throw new ApiError(400, "User not found!!");
         console.log(user.name, "Account already verified!!");
+        res.redirect(`${frontendURL}/account-already-verified`);
         return;
     }
-    const frontendURL = process.env.FRONTEND_URL;
     user.isVerified = true;
     await user.save({ validateBeforeSave: false });
     console.log("User verified - ", user.name)
@@ -118,12 +120,16 @@ export const getLoggedUserData = asyncHandler(async (req, res) => {
 })
 
 export const loginUser = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-        throw new ApiError(400, `${email} - Your All Fields Required!!`);
+    const {username, email, password } = req.body;
+    if (( !username && !email) || !password) {
+        const identifier = email || username;
+        throw new ApiError(400, `${identifier} - Your All Fields Required!!`);
     }
+    console.log(username, email, password);
     // check if user already exist
-    const existedUser = await UserModel.findOne({ email });
+    const existedUser = await UserModel.findOne({ 
+        $or : [{email}, {username}] 
+    });
     if (!existedUser) {
         throw new ApiError(400, `${email} - User does not Exist!!`);
     }

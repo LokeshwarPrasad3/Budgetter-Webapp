@@ -106,3 +106,39 @@ export const getTodayExpenses = async (): Promise<TodayExpensesRes> => {
   );
   return data;
 };
+
+// SHOW-ALL EXPENSES
+interface AllExpensesRes {
+  statusCode: number;
+  data: [
+    {
+      _id: string;
+      user: string;
+      date: string;
+      products: [
+        {
+          name: string;
+          price: number;
+          category: string;
+          _id: string;
+          createdAt: string;
+          updatedAt: string;
+        },
+      ];
+    },
+  ];
+  message: string;
+  success: boolean;
+}
+export const getUserAllExpenses = async (): Promise<AllExpensesRes> => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
+    },
+  };
+  const { data } = await axios.get<AllExpensesRes>(
+    `${backendHostURL}/user/show-all-date-expenses`,
+    config
+  );
+  return data;
+};
