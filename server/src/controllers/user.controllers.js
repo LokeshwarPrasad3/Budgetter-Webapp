@@ -31,6 +31,7 @@ export const registerUser = asyncHandler(async (req, res) => {
         throw new ApiError(500, `${username} - unable to register user!!`);
     }
     console.log(`${createdUser.name} - Your Account Successfully created!!`);
+    console.log("Sending Email for Verification....");
 
     // now sent mail to verified their gmail
     // const token = await createdUser.generateAccountVerificationToken();
@@ -76,12 +77,13 @@ export const validateAccountVerification = asyncHandler(async (req, res) => {
     if (!user) {
         throw new ApiError(400, "User not found!!");
     }
+    const frontendURL = process.env.FRONTEND_URL;
     if (user.isVerified) {
         // throw new ApiError(400, "User not found!!");
         console.log(user.name, "Account already verified!!");
+        res.redirect(`${frontendURL}/account-already-verified`);
         return;
     }
-    const frontendURL = process.env.FRONTEND_URL;
     user.isVerified = true;
     await user.save({ validateBeforeSave: false });
     console.log("User verified - ", user.name)
