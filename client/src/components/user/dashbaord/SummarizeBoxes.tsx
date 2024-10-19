@@ -32,7 +32,7 @@ const SummarizeBoxes: React.FC<PropType> = ({
     },
     {
       id: 1,
-      title: 'Last Day Expense',
+      title: 'Last Expenses',
       value: lastTotalExpenses,
       bgClass: 'bg-[#FB899D]',
     },

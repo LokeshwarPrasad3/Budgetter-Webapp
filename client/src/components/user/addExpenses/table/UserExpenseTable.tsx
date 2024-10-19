@@ -41,7 +41,7 @@ const columns = [
   }),
   columnHelper.accessor('createdAt', {
     header: 'TIME',
-    cell: (info) => `${info.getValue<string>().split('T')[1]?.slice(0, 8)}`,
+    cell: (info) => new Date(info.getValue<string>()).toLocaleString().split(',')[1],
     footer: (info) => info.column.id,
   }),
 ];
