@@ -19,8 +19,10 @@ const columnHelper = createColumnHelper<PocketMoneyType>();
 
 // Define columns
 const columns = [
-  columnHelper.accessor('_id', {
-    header: 'ID',
+  columnHelper.display({
+    id: 'index',
+    header: '#',
+    cell: (info) => info.row.index + 1,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor('date', {

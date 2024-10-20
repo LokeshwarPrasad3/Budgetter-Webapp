@@ -17,6 +17,7 @@ export const TotalExpensesAndAddedMoneyOfMonth = asyncHandler(async (req, res) =
         user: userId,
         date: { $regex: `^\\d{2}-${month}-\\d{4}$` }
     });
+    // console.log(MonthExpenses)
     // Groceries , Housing & Utilities, Medical ,
     // Food , Personal , Educational , Transportation
     // Miscellaneous
@@ -78,7 +79,7 @@ export const TotalExpensesAndAddedMoneyOfMonth = asyncHandler(async (req, res) =
     // 2. TOTAL ADDED MONDAY
     const PocketMoneyHistoryArray = user.PocketMoneyHistory;
     const totalAddedMoney = PocketMoneyHistoryArray.reduce((accumulator, currentArray) => {
-        return accumulator + parseInt(currentArray.amount);
+        return accumulator + parseInt(currentArray.date.split("-")[1] === month ? currentArray.amount : "0");
     }, 0);
 
     // 3. last expenses total

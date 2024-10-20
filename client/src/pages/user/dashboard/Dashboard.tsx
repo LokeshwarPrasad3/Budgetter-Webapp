@@ -64,11 +64,7 @@ const Dashboard: React.FC = () => {
         </div>
         <div className="summarize_box_container flex flex-col justify-start items-start gap-4 bg-[#FFFEFE] rounded-md w-full p-4 px-5 shadow-sm">
           <h4 className="text-base font-semibold">
-            Your{' '}
-            {getMonthInString(
-              (new Date().getMonth() + 1).toString().padStart(2, '0')
-            )}{' '}
-            Month Report
+            Your Current Month Report
           </h4>
         </div>
         <SummarizeBoxes

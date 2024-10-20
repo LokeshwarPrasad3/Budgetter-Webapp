@@ -23,8 +23,14 @@ const columnHelper = createColumnHelper<ExpensesTypes>();
 
 // Define columns
 const columns = [
-  columnHelper.accessor('_id', {
-    header: 'ID',
+  // columnHelper.accessor('_id', {
+  //   header: 'ID',
+  //   footer: (info) => info.column.id,
+  // }),
+  columnHelper.display({
+    id: 'index',
+    header: '#',
+    cell: (info) => info.row.index + 1,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor('name', {
@@ -41,7 +47,8 @@ const columns = [
   }),
   columnHelper.accessor('createdAt', {
     header: 'TIME',
-    cell: (info) => new Date(info.getValue<string>()).toLocaleString().split(',')[1],
+    cell: (info) =>
+      new Date(info.getValue<string>()).toLocaleString().split(',')[1],
     footer: (info) => info.column.id,
   }),
 ];
