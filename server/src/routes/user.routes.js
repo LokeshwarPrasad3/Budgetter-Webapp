@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { registerUser, loginUser, resetPassword, changeAvatar, validateResetPasswordToken, validateAccountVerification, addUserPocketMoney, getLoggedUserData, logoutUser, sentTokenToResetPassword, checkUserVerified } from "../controllers/user.controllers.js";
-import { showParticularDateExpenses, addTodayExpenses, addParticularDateExpenses, showTodayExpenses, showAllDateExpenses } from "../controllers/expenses.controller.js";
+import { showParticularDateExpenses, addTodayExpenses, addParticularDateExpenses, showTodayExpenses, showAllDateExpenses, showRangeWiseDateExpenses } from "../controllers/expenses.controller.js";
 import verifyJwtToken from "../middleware/auth.middleware.js";
 import { upload } from "../middleware/multer.middleware.js"
 const router = Router();
@@ -28,6 +28,7 @@ router.route("/show-today-expenses").get(verifyJwtToken, showTodayExpenses)
 // for past day
 router.route("/add-past-date-expenses").post(verifyJwtToken, addParticularDateExpenses)
 router.route("/show-past-date-expenses").post(verifyJwtToken, showParticularDateExpenses)
+router.route("/show-range-wise-date-expenses").post(verifyJwtToken, showRangeWiseDateExpenses)
 
 // all expenses of user
 router.route("/show-all-date-expenses").get(verifyJwtToken, showAllDateExpenses);

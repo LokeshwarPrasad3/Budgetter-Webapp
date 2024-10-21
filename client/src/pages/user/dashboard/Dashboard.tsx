@@ -1,13 +1,16 @@
 import SummarizeBoxes from '@/components/user/dashbaord/SummarizeBoxes';
 import CategoryWiseExpensesChart from '@/components/user/dashbaord/charts/CategoryWiseExpensesChart';
 import CategoryWiseLineChart from '@/components/user/dashbaord/charts/CategoryWiseLineChart';
+import { setExpenses } from '@/features/user/user';
+import { getTodayExpenses } from '@/services/expenses';
 import { getTotalExpensesAndAddedMoneyInMonth } from '@/services/reports';
 import { getMonthInString } from '@/utils/date/date';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Dashboard: React.FC = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state: any) => state.user.user);
   const [totalExpensesOfMonth, setTotalExpensesOfMonth] = useState<number>(0);
   const [totalAddedMoneyOfMonth, setTotalAddedMoneyOfMonth] =
@@ -46,6 +49,17 @@ const Dashboard: React.FC = () => {
     console.log(typeof month);
     getTotalExpensesAndAddedMoneyMutate({ month });
   }, []);
+
+  const { data: todayExpensesData } = useQuery({
+    queryFn: getTodayExpenses,
+    queryKey: ['todayExpense'],
+  });
+
+  useEffect(() => {
+    if (todayExpensesData?.success) {
+      dispatch(setExpenses(todayExpensesData.data));
+    }
+  }, [todayExpensesData, dispatch]);
 
   return (
     <>

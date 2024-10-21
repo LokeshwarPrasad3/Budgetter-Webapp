@@ -5,7 +5,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { getTodayExpenses } from '@/services/expenses';
 import { setExpenses } from '@/features/user/user';
@@ -54,20 +54,17 @@ const columns = [
 ];
 
 const UserHistoryExpenseTable: React.FC = () => {
-  const dispatch = useDispatch();
   const [data, setData] = React.useState<ExpensesTypes[]>([]);
-
-  const { data: todayExpensesData } = useQuery({
-    queryFn: getTodayExpenses,
-    queryKey: ['todayExpense'],
+  const expensesDetailArray = useSelector((state: any) => {
+    return state.user?.expenses;
   });
 
   useEffect(() => {
-    if (todayExpensesData?.success) {
-      setData(todayExpensesData.data);
-      dispatch(setExpenses(todayExpensesData.data));
+    if (expensesDetailArray) {
+      setData(expensesDetailArray);
+      // console.log('Date Expenses:', expensesDetailArray);
     }
-  }, [todayExpensesData]);
+  }, [expensesDetailArray]);
 
   const table = useReactTable({
     data,

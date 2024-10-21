@@ -142,3 +142,50 @@ export const getUserAllExpenses = async (): Promise<AllExpensesRes> => {
   );
   return data;
 };
+
+// SHOW-RANGE-DATE EXPENSES
+interface RangeDateExpensesRes {
+  statusCode: number;
+  data: [
+    {
+      _id: string;
+      user: string;
+      date: string;
+      products: [
+        {
+          name: string;
+          price: number;
+          category: string;
+          _id: string;
+          createdAt: string;
+          updatedAt: string;
+        },
+      ];
+    },
+  ];
+  message: string;
+  success: boolean;
+}
+interface RangeDateExpensesCredType {
+  startDay: number;
+  endDay: number;
+  startMonth: string;
+  endMonth: string;
+  startYear: string;
+  endYear: string;
+}
+export const getRangeWiseDateExpenses = async (
+  credentials: RangeDateExpensesCredType
+): Promise<RangeDateExpensesRes> => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
+    },
+  };
+  const { data } = await axios.post<RangeDateExpensesRes>(
+    `${backendHostURL}/user/show-range-wise-date-expenses`,
+    credentials,
+    config
+  );
+  return data;
+};
