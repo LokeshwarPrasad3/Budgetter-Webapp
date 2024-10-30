@@ -55,6 +55,7 @@ const FilterSection = () => {
 
   const handleAddExpenses = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    console.log(inputDate, expenseName, expenseCategory, price);
     if (!inputDate || !expenseName || !expenseCategory || !price) {
       toast.error('Input Not be Empty!!');
       return;
@@ -101,6 +102,7 @@ const FilterSection = () => {
           <div className="col-span-12 sm:col-span-6 w-full lg:col-span-3 input_section flex justify-start flex-col items-start gap-1">
             <p className="text-sm">Name of Expense</p>
             <Input
+              value={expenseName}
               onChange={(e) => setExpenseName(e.target.value)}
               type="text"
               placeholder="Enter Expense"
@@ -108,7 +110,10 @@ const FilterSection = () => {
           </div>
           <div className="col-span-12 sm:col-span-6 w-full lg:col-span-3 input_section flex justify-start flex-col items-start gap-1">
             <p className="text-sm">Expenses Category</p>
-            <Select onValueChange={(value) => setExpenseCategory(value)}>
+            <Select
+              value={expenseCategory}
+              onValueChange={(value) => setExpenseCategory(value)}
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Choose Category" />
               </SelectTrigger>
@@ -131,6 +136,7 @@ const FilterSection = () => {
           <div className="col-span-12 sm:col-span-6 w-full lg:col-span-3 input_section flex justify-start flex-col items-start gap-1">
             <p className="text-sm">Expense Price</p>
             <Input
+              value={price}
               onChange={(e) => setPrice(e.target.value)}
               type="number"
               placeholder="Enter Price"
