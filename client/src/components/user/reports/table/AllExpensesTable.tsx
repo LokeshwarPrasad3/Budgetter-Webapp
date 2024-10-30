@@ -177,9 +177,8 @@ const AllExpensesTable: React.FC = () => {
         </div>
       </div>
       {isLoading && (
-        <div className="loading_effects text-semibold px-5 pb-5">
-          🔴 <span className="font-bold">Loading......</span>
-        </div>
+        //add loader effect here//
+        <div className="loader"></div>
       )}
       {isError && (
         <div className="loading_effects text-semibold px-5 pb-5">
