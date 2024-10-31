@@ -76,6 +76,7 @@ const columns = [
 
 const AllExpensesTable: React.FC = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
+  const [hasLoaded, setHasLoaded] = useState<boolean>(false);
   const handlePopoverClose = (open: boolean) => {
     setIsPopoverOpen(open);
   };
@@ -124,6 +125,12 @@ const AllExpensesTable: React.FC = () => {
       setData(flattenedData);
     }
   }, [allExpensesArray]);
+
+  useEffect(() => {
+    if(!isLoading) {
+      setHasLoaded(true);
+    }
+  }, [isLoading]);
 
   const table = useReactTable({
     data,
@@ -186,7 +193,12 @@ const AllExpensesTable: React.FC = () => {
           <span className="font-bold">Oops! Something Went Wrong 😊</span>
         </div>
       )}
-      {data.length === 0 ? (
+      {isLoading && !hasLoaded ? (
+        <div className="loading_effects text-semibold px-5 pb-5">
+           <div className="loader"></div>
+        </div>
+      )
+      : hasLoaded && data.length === 0 ? (
         <div className="message_outer bg-[#ffffff] rounded-md w-full p-5 ">
           <div className="flex">No Expenses Found</div>
         </div>
