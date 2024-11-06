@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as am5 from '@amcharts/amcharts5';
 import * as am5percent from '@amcharts/amcharts5/percent';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
+import DonutChartLoader from './Loader/DonutChartLoader';
 
 interface CategoryWiseDataPropTypes {
   totalExpensesOfMonth: number | undefined;
@@ -15,6 +16,7 @@ interface CategoryWiseDataPropTypes {
     TransportationExpenses: number;
     MiscellaneousExpenses: number;
   };
+  isPending: boolean;
 }
 
 interface ChartData {
@@ -26,6 +28,7 @@ interface ChartData {
 const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
   CategoryWiseData,
   totalExpensesOfMonth,
+  isPending,
 }) => {
   const {
     GroceriesExpenses,
@@ -123,7 +126,11 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
           value: MedicalExpenses || 0,
           color: am5.color(0x4682b4),
         },
-        { category: 'Food', value: FoodExpenses || 0, color: am5.color(0x6a5acd) }, // Orange
+        {
+          category: 'Food',
+          value: FoodExpenses || 0,
+          color: am5.color(0x6a5acd),
+        }, // Orange
         {
           category: 'Personal',
           value: PersonalExpenses || 0,
@@ -193,7 +200,8 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
       <h2 className="text-lg md:text-left text-center font-semibold mb-4">
         Category wise Expenses Visualization
       </h2>
-      <div className="chart_element_container flex flex-col sm:flex-row justify-center items-center w-full">
+      {isPending && <DonutChartLoader />}
+      <div className={`chart_element_container ${isPending?'hidden':'flex'} flex-col sm:flex-row justify-center items-center w-full`}>
         <div
           ref={chartRef}
           className="h-52 w-52"

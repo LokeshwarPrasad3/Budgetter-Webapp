@@ -183,11 +183,11 @@ const AllExpensesTable: React.FC = () => {
           </Select>
         </div>
       </div>
-      {isLoading && (
+      {/* {isLoading && (
         <div className="loading_effects text-semibold px-5 pb-5">
           🔴 <span className="font-bold">Loading......</span>
         </div>
-      )}
+      )} */}
       {isError && (
         <div className="loading_effects text-semibold px-5 pb-5">
           <span className="font-bold">Oops! Something Went Wrong 😊</span>

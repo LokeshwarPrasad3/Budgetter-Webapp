@@ -4,12 +4,14 @@ interface PropType {
   totalExpensesOfMonth: number;
   totalAddedMoneyOfMonth: number;
   lastTotalExpenses: number;
+  isPending: boolean;
 }
 
 const SummarizeBoxes: React.FC<PropType> = ({
   totalExpensesOfMonth,
   totalAddedMoneyOfMonth,
   lastTotalExpenses,
+  isPending,
 }) => {
   const summarizeBoxesContents = [
     {
@@ -21,7 +23,8 @@ const SummarizeBoxes: React.FC<PropType> = ({
     {
       id: 2,
       title: 'Remain Balance',
-      value: useSelector((state: any) => state.user.user.currentPocketMoney) | 0,
+      value:
+        useSelector((state: any) => state.user.user.currentPocketMoney) | 0,
       bgClass: 'bg-[#4CAF50]',
     },
     {
@@ -50,7 +53,13 @@ const SummarizeBoxes: React.FC<PropType> = ({
             <p className="text-lg text-white font-semibold text-center">
               {title}
             </p>
-            <p className="text-2xl text-white font-bold text-center">{value}</p>
+            {isPending && title !== 'Remain Balance' ? (
+              <p className="text-2xl text-white font-bold text-center animate-pulse rounded-md bg-slate-500 h-7 mt-1 w-2/5 "></p>
+            ) : (
+              <p className="text-2xl text-white font-bold text-center">
+                {value}
+              </p>
+            )}
           </div>
         ))}
       </div>
