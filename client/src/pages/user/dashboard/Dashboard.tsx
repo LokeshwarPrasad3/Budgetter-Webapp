@@ -26,7 +26,7 @@ const Dashboard: React.FC = () => {
   const [CategoryWiseData, setCategoryWiseData] =
     useState<expenseCategoriesTypes>();
 
-  const { mutateAsync: getTotalExpensesAndAddedMoneyMutate } = useMutation({
+  const { mutateAsync: getTotalExpensesAndAddedMoneyMutate, isPending } = useMutation({
     mutationFn: getTotalExpensesAndAddedMoneyInMonth,
     onSuccess: (data) => {
       setTotalExpensesOfMonth(data?.data.totalExpenses);
@@ -63,19 +63,19 @@ const Dashboard: React.FC = () => {
           </h3>
         </div>
         <div className="summarize_box_container flex flex-col justify-start items-start gap-4 bg-[#FFFEFE] rounded-md w-full p-4 px-5 shadow-sm">
-          <h4 className="text-base font-semibold">
-            Your Current Month Report
-          </h4>
+          <h4 className="text-base font-semibold">Your Current Month Report</h4>
         </div>
         <SummarizeBoxes
           totalExpensesOfMonth={totalExpensesOfMonth}
           totalAddedMoneyOfMonth={totalAddedMoneyOfMonth}
           lastTotalExpenses={lastTotalExpenses}
+          isPending={isPending}
         />
         <div className="visual_graph_container flex justify-center flex-col xl:flex-row items-center w-full gap-y-10 md:gap-5">
           <CategoryWiseExpensesChart
             totalExpensesOfMonth={totalExpensesOfMonth}
             CategoryWiseData={CategoryWiseData}
+            isPending={isPending}
           />
           <CategoryWiseLineChart />
         </div>
