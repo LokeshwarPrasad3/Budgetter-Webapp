@@ -112,7 +112,11 @@ export const getLoggedUserData = asyncHandler(async (req, res) => {
         avatar: user?.avatar,
         isVerified: user?.isVerified,
         currentPocketMoney: user?.currentPocketMoney,
-        PocketMoneyHistory: user?.PocketMoneyHistory
+        PocketMoneyHistory: user?.PocketMoneyHistory,
+        profession: user?.profession,
+        dob: user?.dateOfBirth,
+        instagramLink: user?.instagramLink,
+        facebookLink: user?.facebookLink,
     }
     res.status(200).json(
         new ApiResponse(200, data, "User Found Successfully!!")
@@ -291,6 +295,56 @@ export const addUserPocketMoney = asyncHandler(async (req, res) => {
         new ApiResponse(201, { PocketMoneyHistory: user.PocketMoneyHistory, currentPocketMoney: user.currentPocketMoney }, "Pocket money added successfully!")
     )
 })
+
+// change user details
+export const changeUserCredentials = asyncHandler(async (req, res) => {
+    const { name, dob, currentPassword, newPassword, instagramLink, facebookLink, profession } = req.body;
+
+    // If all fields are empty, throw an error
+    if (!name && !dob && !currentPassword && !newPassword && !instagramLink && !facebookLink && !profession) {
+        throw new ApiError(401, "At least one field must be provided to update.");
+    }
+
+    const user = req.user;
+    const userId = user._id;
+    let updatedFields = {}; // Store fields to update
+
+    // Conditionally add fields to update
+    if (name) updatedFields.name = name;
+    if (dob) updatedFields.dateOfBirth = dob;
+    if (instagramLink) updatedFields.instagramLink = instagramLink;
+    if (facebookLink) updatedFields.facebookLink = facebookLink;
+    if (profession) updatedFields.profession = profession;
+
+    // Handle password update
+    if (currentPassword !== "" && newPassword !== "") {
+        if (!user.password) {
+            throw new ApiError(500, "User password not found in database.");
+        }
+        const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+        if (!isPasswordValid) {
+            throw new ApiError(401, "Current password is incorrect.");
+        }
+        // Hash and update new password if current password is valid
+        updatedFields.password = await bcrypt.hash(newPassword, 10);
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+        userId,
+        { $set: updatedFields },
+        { new: true }
+    );
+
+    if (!updatedUser) {
+        throw new ApiError(404, "User not found");
+    }
+    console.log(`${req.user.name} details updated successfully!`);
+    // Send response with null data
+    res.status(200).json(
+        new ApiResponse(200, null, "User credentials updated successfully!")
+    );
+});
+
 
 // logout functionality 
 export const logoutUser = asyncHandler(async (req, res) => {

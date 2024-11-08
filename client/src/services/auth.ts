@@ -22,6 +22,10 @@ export interface RegisterUserResponseType {
     avatar: string;
     currentPocketMoney: string;
     isVerified: boolean;
+    profession: string;
+    dob: string;
+    instagramLink: string;
+    facebookLink: string;
     PocketMoneyHistory: [];
     accessToken: string;
     createdAt: string;
@@ -64,6 +68,10 @@ export interface LoginUserResponseType {
     email: string;
     avatar: string;
     currentPocketMoney: string;
+        profession: string;
+    dob: string;
+    instagramLink: string;
+    facebookLink: string;
     isVerified: boolean;
     accessToken: string;
     createdAt: string;
@@ -110,6 +118,10 @@ interface userDetailsType {
     email: string;
     avatar: string;
     currentPocketMoney: string;
+        profession: string;
+    dob: string;
+    instagramLink: string;
+    facebookLink: string;
     accessToken: string;
     isVerified: boolean;
     PocketMoneyHistory: [
@@ -312,6 +324,38 @@ export const CheckUserAccountVerified = async (): Promise<UserAccountVerifiedRes
   };
   const { data } = await axios.get<UserAccountVerifiedResType>(
     `${backendHostURL}/user/is-user-verified`,
+    config
+  );
+  return data;
+}; 
+
+// Change User Details
+interface UpdateUserDetailsRes {
+  statusCode: number;
+  data: string ;
+  message: string;
+  success: boolean;
+}
+interface UpdateUserDetailsCredType {
+  name: string;
+  dob: string;
+  currentPassword: string;
+  newPassword: string;
+  instagramLink: string;
+  facebookLink: string;
+  profession: string;
+}
+export const updatedUserDetails = async (
+  credentials: UpdateUserDetailsCredType
+): Promise<UpdateUserDetailsRes> => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
+    },
+  };
+  const { data } = await axios.patch<UpdateUserDetailsRes>(
+    `${backendHostURL}/user/change-user-details`,
+    credentials,
     config
   );
   return data;

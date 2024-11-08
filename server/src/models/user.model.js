@@ -51,6 +51,26 @@ const UserSchema = new Schema({
         type: String,
         default: "https://i.postimg.cc/cCWKmfzs/satoro-1.jpg",
     },
+    dateOfBirth: {
+        type: String,
+        default: "",
+        required: false,
+    },
+    profession: {
+        type: String,
+        default: "",
+        required: false,
+    },
+    instagramLink: {
+        type: String,
+        default: "",
+        required: false,
+    },
+    facebookLink: {
+        type: String,
+        default: "",
+        required: false,
+    },
     PocketMoneyHistory: {
         type: [PocketMoneyHistorySchema],
         default: []
