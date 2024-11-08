@@ -23,11 +23,12 @@ import { Label } from '@/components/ui/label';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-import { useMutation } from '@tanstack/react-query';
-import { changeUserAvatar } from '@/services/auth';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { changeUserAvatar, updatedUserDetails } from '@/services/auth';
 import { setUser } from '@/features/user/user';
 
 const ProfilePage: React.FC = () => {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const [isPasswordCollapsibleOpen, setIsPasswordCollapsibleOpen] =
     useState<boolean>(false);
@@ -36,21 +37,47 @@ const ProfilePage: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
+  const [dob, setDOB] = useState<string>('');
   const [profession, setProfession] = useState<string>('');
   const [profileImage, setProfileImage] = useState<string>(
     'https://i.ibb.co/cDvPNm5/360-F-864477167-q-Srg-Ao5j-QHc-PYacblj-ZXu-FPVHy-Q9-QOln.webp'
   );
   // const [dob, setDOB] = useState<Date>(new Date());
-  const [facebookURL, setFacebookURL] = useState<string>('');
-  const [instagramURL, setInstagramURL] = useState<string>('');
+  const [facebookLink, setFacebookLink] = useState<string>('');
+  const [instagramLink, setInstagramLink] = useState<string>('');
+  const [currentPassword, setCurrentPassword] = useState<string>('');
+  const [newPassword, setNewPassword] = useState<string>('');
   const user = useSelector((state: any) => state.user.user);
 
   useEffect(() => {
-    const { name, username, email, avatar } = user;
+    const {
+      name,
+      username,
+      email,
+      avatar,
+      profession,
+      dob,
+      instagramLink,
+      facebookLink,
+    } = user;
     setName(name);
     setUsername(username);
     setEmail(email);
     setProfileImage(avatar);
+    setProfession(profession);
+    setDOB(dob);
+    setInstagramLink(instagramLink);
+    setFacebookLink(facebookLink);
+    console.log(
+      name,
+      username,
+      email,
+      avatar,
+      profession,
+      dob,
+      instagramLink,
+      facebookLink
+    );
   }, [user]);
 
   // Mutate Function for Avatar Change
@@ -58,14 +85,12 @@ const ProfilePage: React.FC = () => {
     mutationFn: changeUserAvatar,
     onSuccess: (data) => {
       console.log('avatar change data ', data);
-      dispatch(
-        setUser({...user, avatar:data.data.avatar})
-      );
-      toast.success("Avatar Changed Successfully!!");
+      dispatch(setUser({ ...user, avatar: data.data.avatar }));
+      toast.success('Avatar Changed Successfully!!');
     },
     onError: (error) => {
       console.log(error);
-      toast.error("Something went wrong!!");
+      toast.error('Something went wrong!!');
     },
   });
 
@@ -85,9 +110,49 @@ const ProfilePage: React.FC = () => {
     }
   };
 
+  // Change user details
+  const { mutateAsync: updateUserDetailsMutate, isPending: isUserUpdating } =
+    useMutation({
+      mutationFn: updatedUserDetails,
+      onSuccess: (data) => {
+        // console.log('user updated data ', data);
+        toast.success('User Details Updated Successfully!!');
+        queryClient.invalidateQueries({ queryKey: ['user'] });
+        setCurrentPassword('');
+        setNewPassword('');
+      },
+      onError: (error) => {
+        console.log(error);
+        toast.error('Something went wrong!!');
+      },
+    });
+
   const handleSaveChanges = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    toast.success('Feature is Pending!!');
+    // const [day, month, year] = dob.split('-');
+    // const dobDate = `${year}-${month}-${day}`;
+    // console.log(name, dobDate, instagramLink, facebookLink, profession, currentPassword, newPassword);
+    if (name.length < 6) {
+      toast.error('Name must be at least 6 length!!');
+      return;
+    }
+    // currentPassword, newPassword must be same
+    if (
+      (currentPassword === '' && newPassword !== '') ||
+      (currentPassword !== '' && newPassword === '')
+    ) {
+      toast.error('Provide both password fields!!');
+      return;
+    }
+    updateUserDetailsMutate({
+      name,
+      dob,
+      instagramLink,
+      facebookLink,
+      profession,
+      currentPassword,
+      newPassword,
+    });
   };
 
   return (
@@ -128,7 +193,7 @@ const ProfilePage: React.FC = () => {
           {/* Username */}
           <div className="space-y-2 w-full">
             <Label htmlFor="username">Username</Label>
-            <div className="relative">
+            {/* <div className="relative">
               <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
                 onChange={(e) => setUsername(e.target.value)}
@@ -138,6 +203,10 @@ const ProfilePage: React.FC = () => {
                 className="pl-10 w-full"
                 value={username}
               />
+            </div> */}
+            <div className="flex items-center h-9 cursor-not-allowed space-x-2 bg-gray-100 p-2 rounded">
+              <User className="text-gray-400 h-4 w-4" />
+              <span className="text-sm">{username}</span>
             </div>
           </div>
 
@@ -160,7 +229,7 @@ const ProfilePage: React.FC = () => {
           {/* Email */}
           <div className="space-y-2 w-full">
             <Label htmlFor="email">Email</Label>
-            <div className="relative">
+            {/* <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
                 onChange={(e) => setEmail(e.target.value)}
@@ -170,6 +239,10 @@ const ProfilePage: React.FC = () => {
                 className="pl-10 w-full"
                 value={email}
               />
+            </div> */}
+            <div className="flex items-center cursor-not-allowed h-9 space-x-2 bg-gray-100 p-2 rounded">
+              <Mail className="text-gray-400 h-4 w-4" />
+              <span className="text-sm">{email}</span>
             </div>
           </div>
 
@@ -198,8 +271,8 @@ const ProfilePage: React.FC = () => {
                 id="dateOfBirth"
                 type="date"
                 className="pl-10 w-full"
-                // onChange={(e) => setDOB(e.target.value)}
-                // value={dob}
+                onChange={(e) => setDOB(e.target.value)}
+                value={dob}
               />
             </div>
           </div>
@@ -207,7 +280,7 @@ const ProfilePage: React.FC = () => {
           {/* Current Pocket Money */}
           <div className="space-y-2 w-full">
             <Label>Current Pocket Money</Label>
-            <div className="flex items-center space-x-2 bg-gray-100 p-2 rounded">
+            <div className="flex items-center space-x-2 cursor-not-allowed h-9 bg-gray-100 p-2 rounded">
               <IndianRupee className="text-gray-400 h-4 w-4" />
               <span>{user?.currentPocketMoney || 0}</span>
             </div>
@@ -227,8 +300,18 @@ const ProfilePage: React.FC = () => {
           </CollapsibleTrigger>
           <CollapsibleContent className="space-y-2 mt-2">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input type="password" placeholder="Current Password" />
-              <Input type="password" placeholder="New Password" />
+              <Input
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                type="password"
+                placeholder="Current Password"
+              />
+              <Input
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                type="password"
+                placeholder="New Password"
+              />
             </div>
           </CollapsibleContent>
         </Collapsible>
@@ -245,8 +328,8 @@ const ProfilePage: React.FC = () => {
                 type="text"
                 placeholder="Instagram"
                 className="pl-10 w-full"
-                onChange={(e) => setInstagramURL(e.target.value)}
-                value={instagramURL}
+                onChange={(e) => setInstagramLink(e.target.value)}
+                value={instagramLink}
               />
             </div>
           </div>
@@ -261,17 +344,32 @@ const ProfilePage: React.FC = () => {
                 type="text"
                 placeholder="Facebook"
                 className="pl-10 w-full"
-                onChange={(e) => setFacebookURL(e.target.value)}
-                value={facebookURL}
+                onChange={(e) => setFacebookLink(e.target.value)}
+                value={facebookLink}
               />
             </div>
           </div>
         </div>
 
         {/* Save Button */}
-        <Button onClick={handleSaveChanges} className="w-full">
-          <Save className="mr-2 h-4 w-4" />
-          Save Changes
+        <Button
+          disabled={isUserUpdating}
+          onClick={handleSaveChanges}
+          className="w-full"
+        >
+          {isUserUpdating ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </>
+          ) : (
+            <>
+              <Save
+                className={`mr-2 h-4 w-4 ${isUserUpdating ? 'cursor-not-allowed' : 'cursor-pointer'} `}
+              />
+              Save Changes
+            </>
+          )}
         </Button>
       </div>
     </div>

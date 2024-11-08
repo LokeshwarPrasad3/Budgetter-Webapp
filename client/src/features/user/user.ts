@@ -9,6 +9,10 @@ const initialState = {
     avatar: '',
     currentPocketMoney: '',
     isVerified: false,
+    profession: '',
+    dob: '',
+    instagramLink: '',
+    facebookLink: '',
   },
   expenses: [],
 };

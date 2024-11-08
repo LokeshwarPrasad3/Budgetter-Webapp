@@ -37,6 +37,10 @@ const SignupSection: React.FC = () => {
         PocketMoneyHistory,
         accessToken,
         isVerified,
+        profession,
+        dob,
+        instagramLink,
+        facebookLink,
       } = data.data;
       dispatch(
         setUser({
@@ -48,6 +52,10 @@ const SignupSection: React.FC = () => {
           currentPocketMoney,
           PocketMoneyHistory,
           isVerified,
+          profession,
+          dob,
+          instagramLink,
+          facebookLink,
         })
       );
       // toast.success('Successfully Signup!!');

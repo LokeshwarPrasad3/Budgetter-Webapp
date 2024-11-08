@@ -34,7 +34,7 @@ const MainLayout: React.FC = () => {
 
   useEffect(() => {
     if (data?.data) {
-      console.log('user', data);
+      // console.log('user', data);
       const {
         _id,
         username,
@@ -44,6 +44,10 @@ const MainLayout: React.FC = () => {
         currentPocketMoney,
         PocketMoneyHistory,
         isVerified,
+        profession,
+        dob,
+        instagramLink,
+        facebookLink,
       } = data.data;
       dispatch(
         setUser({
@@ -55,6 +59,10 @@ const MainLayout: React.FC = () => {
           currentPocketMoney,
           PocketMoneyHistory,
           isVerified,
+          profession,
+          dob,
+          instagramLink,
+          facebookLink,
         })
       );
       navigate(navigateToUserPage());
