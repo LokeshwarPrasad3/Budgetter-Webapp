@@ -115,7 +115,7 @@ const ProfilePage: React.FC = () => {
     useMutation({
       mutationFn: updatedUserDetails,
       onSuccess: (data) => {
-        // console.log('user updated data ', data);
+        console.log('User Updated Successfully', data);
         toast.success('User Details Updated Successfully!!');
         queryClient.invalidateQueries({ queryKey: ['user'] });
         setCurrentPassword('');
