@@ -195,6 +195,8 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
     MiscellaneousExpenses,
   ]);
 
+  const total = categoryData.reduce((acc, { value }) => acc + (value ?? 0), 0);
+
   return (
     <div className="flex items-center p-0 py-4 md:p-4 bg-white rounded-lg shadow-sm flex-col max-w-full w-full">
       <h2 className="text-lg md:text-left text-center font-semibold mb-4">
@@ -213,9 +215,9 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
               {value !== 0 && (
                 <div className="flex items-center space-x-2">
                   <div
-                    className="w-4 h-4 rounded-[2px]"
+                    className="w-8 h-8 rounded-[2px] flex items-center justify-center text-white font-semibold text-sm"
                     style={{ backgroundColor: color }}
-                  ></div>
+                  >{`${(((value ?? 0) / total) * 100).toFixed(0)}%`}</div>
                   <span>{label}</span>
                 </div>
               )}
