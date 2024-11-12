@@ -215,10 +215,10 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
               {value !== 0 && (
                 <div className="flex items-center space-x-2">
                   <div
-                    className="w-4 h-4 rounded-[2px]"
+                    className="w-8 h-8 rounded-[2px] flex items-center justify-center text-white font-semibold text-sm"
                     style={{ backgroundColor: color }}
-                  ></div>
-                  <span>{`${label}: ${((value ?? 0) / total * 100).toFixed(1)}%`}</span>
+                  >{`${(((value ?? 0) / total) * 100).toFixed(0)}%`}</div>
+                  <span>{label}</span>
                 </div>
               )}
             </React.Fragment>
