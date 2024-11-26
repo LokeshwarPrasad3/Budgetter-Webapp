@@ -100,7 +100,10 @@ const SideNavbar: React.FC = () => {
           )}
         </Link>
         {/* menu icons */}
-        <div className="sidenavbar_menu_container flex flex-col gap-3">
+        <div
+          id="sidebar_section"
+          className="sidenavbar_menu_container flex flex-col gap-3"
+        >
           {userSidenavbarList.map(({ route, name, icon }, index) => (
             <Link
               data-tooltip-id="navbarTooltip"
@@ -125,7 +128,10 @@ const SideNavbar: React.FC = () => {
           ))}
         </div>
         {/* logout button */}
-        <div className="menu_logout_container absolute bottom-5 left-3 right-3 flex flex-col gap-3  ">
+        <div
+          id="logout_section"
+          className="menu_logout_container absolute bottom-5 left-3 right-3 flex flex-col gap-3  "
+        >
           <Button
             data-tooltip-id="navbarTooltip"
             data-tooltip-content="Logout"
