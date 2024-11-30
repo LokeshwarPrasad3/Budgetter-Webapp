@@ -8,18 +8,14 @@ import { setUser } from '@/features/user/user';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import Cookies from 'universal-cookie';
+import { useFormik } from 'formik';
+import { loginSchema } from '@/schemas';
 
 const LoginSection: React.FC = () => {
   const cookie = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
 
   const { mutateAsync: loginUserMutate, isPending } = useMutation({
     mutationFn: LoginUser,
@@ -57,9 +53,8 @@ const LoginSection: React.FC = () => {
         })
       );
       console.log(data);
-      toast.success('Successfully Logged in!!');
       const expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 7);
+      expirationDate.setDate(expirationDate.getDate() + 3);
       cookie.set('accessToken', accessToken, {
         path: '/',
         expires: expirationDate,
@@ -68,21 +63,30 @@ const LoginSection: React.FC = () => {
     },
     onError: (error) => {
       console.log('Error during login', error);
-      toast.error('Oops! Something went wrong');
     },
   });
 
-  const handleUserLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (!email || !password) {
-      console.log('Please fill all fields!');
-      toast.error('All Fields Required!!');
-      return;
-    }
-    console.log(email, password);
-    // differentiate username or email entered by user
-    loginUserMutate({ username:email, email, password });
-  };
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        emailOrUsername: '',
+        password: '',
+      },
+      validationSchema: loginSchema,
+      onSubmit: (value) => {
+        // console.log('🚀 ~ value:', value);
+        const [email, username, password] = [
+          value.emailOrUsername,
+          value.emailOrUsername,
+          value.password,
+        ];
+        toast.promise(loginUserMutate({ username, email, password }), {
+          loading: 'Logging to Your Account......',
+          success: <span>Successfully Logged In !!</span>,
+          error: <span>Invalid Credentials, Please try again !!</span>,
+        });
+      },
+    });
 
   return (
     <div className="w-full max-w-full p-8 bg-white shadow-lg rounded-lg">
@@ -96,29 +100,44 @@ const LoginSection: React.FC = () => {
         </Link>
       </p>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3 relative">
-          <i className="ri-mail-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+          <i className="ri-mail-line absolute left-3 top-[7px] text-gray-500"></i>
           <input
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.emailOrUsername}
+            type="text"
+            name="emailOrUsername"
             placeholder="Username or Email"
-            className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            required={false}
+            className="text-slate-900 font-medium mt-1 block w-full px-9 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
+          {errors.emailOrUsername && touched.emailOrUsername ? (
+            <span className="text-red-500 text-sm ml-1">
+              {errors.emailOrUsername}
+            </span>
+          ) : null}
         </div>
 
         <div className="mb-4 relative">
-          <i className="ri-lock-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+          <i className="ri-lock-line absolute left-3 top-1.5 text-gray-500"></i>
           <input
-            onChange={(e) => setPassword(e.target.value)}
             type={showPassword ? 'text' : 'password'}
+            name="password"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password}
             autoComplete="off"
             placeholder="Password"
-            className="text-slate-900 font-medium mt-1 block w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="text-slate-900 font-medium mt-1 block w-full pl-9 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
+          {errors.password && touched.password ? (
+            <span className="text-red-500 text-sm ml-1">{errors.password}</span>
+          ) : null}
           <button
             type="button"
-            onClick={togglePasswordVisibility}
+            onClick={() => setShowPassword(!showPassword)}
             className="absolute inset-y-0 right-0 flex items-center pr-3"
           >
             {showPassword ? (
@@ -153,7 +172,6 @@ const LoginSection: React.FC = () => {
 
         <Button
           disabled={isPending}
-          onClick={(e): void => handleUserLogin(e)}
           className="w-full h-10 text-base px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none"
         >
           {isPending ? (

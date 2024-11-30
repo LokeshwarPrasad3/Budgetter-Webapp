@@ -29,16 +29,16 @@ const SideNavbar: React.FC = () => {
   useEffect(() => {
     const handleNavbarClose = (event: MouseEvent) => {
       const target = event.target as Node;
-     if (
-       overlayRef.current &&
-       overlayRef.current.contains(target) &&
-       navbarRef.current &&
-       !navbarRef.current.contains(target) &&
-       window.innerWidth < 768
-     ) {
-       dispatch(closeSideNavbar());
-     }
-   };
+      if (
+        overlayRef.current &&
+        overlayRef.current.contains(target) &&
+        navbarRef.current &&
+        !navbarRef.current.contains(target) &&
+        window.innerWidth < 768
+      ) {
+        dispatch(closeSideNavbar());
+      }
+    };
 
     document.addEventListener('click', handleNavbarClose);
 
@@ -51,7 +51,7 @@ const SideNavbar: React.FC = () => {
     mutationFn: UserLogout,
     onSuccess: (data) => {
       console.log(data);
-      cookie.remove("accessToken", { path: '/' });
+      cookie.remove('accessToken', { path: '/' });
       navigate('/');
     },
     onError: (error) => {
