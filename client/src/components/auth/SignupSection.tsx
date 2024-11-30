@@ -8,20 +8,14 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '@/features/user/user';
 import toast from 'react-hot-toast';
 import Cookies from 'universal-cookie';
+import { useFormik } from 'formik';
+import { signupSchema } from '@/schemas';
 
 const SignupSection: React.FC = () => {
   const cookie = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [username, setUsername] = useState<string>('');
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
 
   const { mutateAsync: registerUserMutate, isPending } = useMutation({
     mutationFn: registerUser,
@@ -60,7 +54,7 @@ const SignupSection: React.FC = () => {
       );
       // toast.success('Successfully Signup!!');
       const expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 7);
+      expirationDate.setDate(expirationDate.getDate() + 3);
       cookie.set('accessToken', accessToken, {
         path: '/',
         expires: expirationDate,
@@ -73,19 +67,30 @@ const SignupSection: React.FC = () => {
     },
   });
 
-  const handleUserRegistration = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (username.length < 5 || !name || !email || !password) {
-      console.log('All Fields are Required!!');
-      toast.error('All Fields Required!!');
-      return;
-    }
-     toast.promise(registerUserMutate({ username, name, email, password }), {
-       loading: 'Processing, Sending Verification Email..',
-       success: <b>Successfully Account Created!!</b>,
-       error: <b>Something went wrong!!</b>,
-     });
-  };
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        username: '',
+        name: '',
+        email: '',
+        password: '',
+      },
+      validationSchema: signupSchema,
+      onSubmit: (value) => {
+        // console.log('🚀 ~ value:', value);
+        const [username, name, email, password] = [
+          value.username,
+          value.name,
+          value.email,
+          value.password,
+        ];
+        toast.promise(registerUserMutate({ username, name, email, password }), {
+          loading: 'Processing, Sending Verification Email..',
+          success: <span>Successfully Account Created!!</span>,
+          error: <span>Something went wrong!!</span>,
+        });
+      },
+    });
 
   return (
     <div className="w-full max-w-full p-8 bg-white shadow-lg rounded-lg">
@@ -99,48 +104,72 @@ const SignupSection: React.FC = () => {
         </Link>
       </p>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3 relative">
-          <i className="ri-user-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+          <i className="ri-user-line absolute left-3 top-[7px] text-gray-500"></i>
           <input
             type="text"
-            onChange={(e) => setUsername(e.target.value)}
+            name="username"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.username}
             placeholder="Username"
             className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
+          {errors.username && touched.username ? (
+            <span className="text-red-500 text-sm ml-1">{errors.username}</span>
+          ) : null}
         </div>
         <div className="mb-3 relative">
-          <i className="ri-user-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+          <i className="ri-user-line absolute left-3 top-[7px] text-gray-500"></i>
           <input
             type="text"
-            onChange={(e) => setName(e.target.value)}
+            name="name"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.name}
             placeholder="Your Name"
             className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
+          {errors.name && touched.name ? (
+            <span className="text-red-500 text-sm ml-1">{errors.name}</span>
+          ) : null}
         </div>
         <div className="mb-3 relative">
-          <i className="ri-mail-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+          <i className="ri-mail-line absolute left-3 top-[7px] text-gray-500"></i>
           <input
             type="email"
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.email}
             placeholder="Email address"
             className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
+          {errors.email && touched.email ? (
+            <span className="text-red-500 text-sm ml-1">{errors.email}</span>
+          ) : null}
         </div>
 
         <div className="mb-4 relative">
-          <i className="ri-lock-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+          <i className="ri-lock-line absolute left-3 top-[7px] text-gray-500"></i>
           <input
             type={showPassword ? 'text' : 'password'}
             autoComplete="off"
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.password}
             placeholder="Password"
             className="text-slate-900 font-medium mt-1 block w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
+          {errors.password && touched.password ? (
+            <span className="text-red-500 text-sm ml-1">{errors.password}</span>
+          ) : null}
           <button
             type="button"
-            onClick={togglePasswordVisibility}
-            className="absolute inset-y-0 right-0 flex items-center pr-3"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-0 top-[7px] flex items-center pr-3"
           >
             {showPassword ? (
               <i className="ri-eye-off-line text-gray-500 h-5 w-5"></i>
@@ -154,8 +183,7 @@ const SignupSection: React.FC = () => {
 
         <Button
           disabled={isPending}
-          onClick={handleUserRegistration}
-          className="w-full h-10 text-base px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none"
+          className={`w-full h-10 text-base px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none ${isPending ? 'cursor-not-allowed' : 'cursor-pointer'} `}
         >
           {isPending ? (
             <>

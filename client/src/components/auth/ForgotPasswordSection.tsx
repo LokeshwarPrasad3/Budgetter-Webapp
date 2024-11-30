@@ -7,31 +7,35 @@ import { useMutation } from '@tanstack/react-query';
 import { SendResetLinkToUserEmail } from '@/services/auth';
 import { Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useFormik } from 'formik';
+import { forgotPasswordSchema } from '@/schemas';
 
 const ForgotPasswordSection: React.FC = () => {
-  const [email, setEmail] = useState<string>('');
-
   const { mutateAsync: sendResetLinkMutate, isPending } = useMutation({
     mutationFn: SendResetLinkToUserEmail,
     onSuccess: (data) => {
       console.log(data);
-      toast.success('Reset Link Sent, Please Check Email!!');
-      setEmail('');
     },
     onError: (error) => {
       console.log(error);
-      toast.error('Email does not exist!!');
     },
   });
 
-  const handlePasswordReset = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (!email) {
-      toast.error('Please Enter Valid Email!!');
-      return;
-    }
-    sendResetLinkMutate({ email });
-  };
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        email: '',
+      },
+      validationSchema: forgotPasswordSchema,
+      onSubmit: (value, action) => {
+        toast.promise(sendResetLinkMutate({ email: value.email }), {
+          loading: 'Processing, Sending Verification Email..',
+          success: <span>Reset Link Sent, Please Check Email !!</span>,
+          error: <span>Email does not exist!!!</span>,
+        });
+        action.resetForm();
+      },
+    });
 
   return (
     <div className="w-full max-w-full p-8 bg-white shadow-lg rounded-lg">
@@ -43,21 +47,25 @@ const ForgotPasswordSection: React.FC = () => {
         password.
       </p>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             type="email"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            name="email"
+            value={values.email}
             id="email"
             placeholder="Email address"
             className="text-slate-900 font-medium mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
+          {errors.email && touched.email ? (
+            <span className="text-red-500 text-sm ml-1">{errors.email}</span>
+          ) : null}
         </div>
 
         <Button
           disabled={isPending}
-          onClick={handlePasswordReset}
           className="w-full h-10 text-base px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none"
         >
           {isPending ? (

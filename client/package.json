@@ -26,6 +26,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
+    "formik": "^2.4.6",
     "framer-motion": "^11.3.28",
     "lucide-react": "^0.441.0",
     "react": "^18.3.1",
@@ -40,7 +41,8 @@
     "remixicon-react": "^1.0.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "universal-cookie": "^7.2.1"
+    "universal-cookie": "^7.2.1",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

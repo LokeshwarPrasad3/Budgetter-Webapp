@@ -15,8 +15,10 @@ const sideNavbarSlice = createSlice({
   initialState,
   reducers: {
     closeSideNavbar: (state) => {
-      state.showOverlayEffect = false;
-      state.isSideNavbarOpen = false;
+      if (window.innerWidth < 768) {
+        state.showOverlayEffect = false;
+        state.isSideNavbarOpen = false;
+      }
     },
     openSideNavbar: (state) => {
       state.showOverlayEffect = true;
