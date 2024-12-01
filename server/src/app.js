@@ -4,6 +4,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser";
 import userRoutes from "./routes/user.routes.js"
 import userReportRoutes from "./routes/report.routes.js"
+import compression from "compression";
 
 const allowedOrigins = [
     'https://mybudgetter.netlify.app', // Original Netlify URL
@@ -28,7 +29,7 @@ app.options('*', cors({
     credentials: true,
 }));
 
-
+app.use(compression());
 app.use(express.json({ limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
