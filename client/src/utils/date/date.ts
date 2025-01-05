@@ -67,10 +67,32 @@ export function getPreviousMonthsName(previousMonths: number): string[] {
   const result: string[] = [];
   for (let i = 0; i <= previousMonths; i++) {
     const monthIndex = (currentMonth - i + 12) % 12; // Handle negative index
-    result.push(monthNames[monthIndex]);
+    result.unshift(monthNames[monthIndex]);
   }
   return result;
 }
+
+// get all months name
+export const monthsNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+// get years 
+export const prevYearsName = [
+  "2024",
+  "2025",
+]
 
 
 // Get last 7 days dates
