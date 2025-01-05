@@ -2,6 +2,8 @@ import asyncHandler from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import UserModel from "../models/user.model.js";
+import ExpenseModel from "../models/expenses.model.js";
+import deletedUser from "../models/deletedUser.model.js";
 import bcrypt from "bcrypt";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { sendMessageToUser } from "../utils/EmailSend.js";
@@ -124,15 +126,15 @@ export const getLoggedUserData = asyncHandler(async (req, res) => {
 })
 
 export const loginUser = asyncHandler(async (req, res) => {
-    const {username, email, password } = req.body;
-    if (( !username && !email) || !password) {
+    const { username, email, password } = req.body;
+    if ((!username && !email) || !password) {
         const identifier = email || username;
         throw new ApiError(400, `${identifier} - Your All Fields Required!!`);
     }
     console.log(username, email, password);
     // check if user already exist
-    const existedUser = await UserModel.findOne({ 
-        $or : [{email}, {username}] 
+    const existedUser = await UserModel.findOne({
+        $or: [{ email }, { username }]
     });
     if (!existedUser) {
         throw new ApiError(400, `${email} - User does not Exist!!`);
@@ -175,7 +177,7 @@ export const sentTokenToResetPassword = asyncHandler(async (req, res) => {
         { _id: existedUser._id },
         process.env.RESET_PASSWORD_TOKEN_SECRET,
         {
-        expiresIn: process.env.RESET_PASSWORD_TOKEN_SECRET_EXPIRY,
+            expiresIn: process.env.RESET_PASSWORD_TOKEN_SECRET_EXPIRY,
         },
     );
     console.log('token created', token);
@@ -342,6 +344,60 @@ export const changeUserCredentials = asyncHandler(async (req, res) => {
     // Send response with null data
     res.status(200).json(
         new ApiResponse(200, null, "User credentials updated successfully!")
+    );
+});
+
+export const deleteUserAccount = asyncHandler(async (req, res) => {
+    // 1. Get current logged-in user and re-entered password
+    const user = req.user;
+    const userId = req.user._id;
+    const { password } = req.body;
+
+    // 2. Password validation
+    const isPasswordMatch = await user?.isPasswordMatch(password);
+    if (!isPasswordMatch) {
+        console.log("Password is invalid");
+        throw new ApiError(404, "Invalid Password");
+    }
+    console.log("Password validation successfully!");
+
+    // 3. Make backup of user data
+    const { name, username, email, avatar, currentPocketMoney } = user;
+    const deleteUserDetails = {
+        name,
+        username,
+        email,
+        avatar,
+        currentPocketMoney,
+    };
+
+    // 4. Remove all expenses of that user
+    await ExpenseModel.deleteMany({ user: userId });
+    console.log(name, "All Expenses are deleted");
+
+    // 5. Remove that user
+    const removeUser = await UserModel.deleteOne({ _id: userId });
+    // console.log("User removed:", removeUser);
+
+    // 6. Add that user to deletedUserModal collections to keep track of deleted user
+    await deletedUser.create(deleteUserDetails);
+    console.log(name, "User account deleted successfully");
+
+    // 7. Send email acknowledgment
+    const userName = username;
+    const type = "DELETE_ACCOUNT";
+    const userEmail = email;  // Should use the actual email from user
+    const subject = "Budgetter - Account Deletion Confirmation";
+    const token = "";
+    const isSentGmail = await sendMessageToUser(userName, type, userEmail, subject, token);
+    if (!isSentGmail) {
+        console.log(`Failed to send email to - ${userEmail}`);
+        throw new ApiError(500, "Failed to send account deletion confirmation email.");
+    }
+
+    // 8. Give response to user and logout
+    res.status(200).json(
+        new ApiResponse(200, null, "User Account Deleted Successfully")
     );
 });
 

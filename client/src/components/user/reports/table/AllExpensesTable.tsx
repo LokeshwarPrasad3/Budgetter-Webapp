@@ -129,8 +129,9 @@ const AllExpensesTable: React.FC = () => {
 
   //1️⃣ get selected months filter data
   const getSelectedMonthExpenses = () => {
-    console.log(filterMonthValue, 'filteredm onth');
+    // console.log(filterMonthValue, 'filteredm onth');
     const flattenedData = flattenExpenses(allExpensesArray);
+    console.log('filtermonth', filterMonthValue);
     if (filterMonthValue === 'all') {
       return flattenedData;
     }
@@ -152,30 +153,43 @@ const AllExpensesTable: React.FC = () => {
   };
   // 2️⃣ handle filtered month data
   const handleFilterMonthExpenses = (monthName: string) => {
-    const monthInNumber = getMonthInNumber(monthName);
-    setFilterMonthValue(monthInNumber);
     // get selecte year filter data
     const getFilteredYearExpenses: any = getSelectedYearExpenses();
+    // console.log("all years data", getFilteredYearExpenses)
+    // if month is all then return as it is
+    if (monthName === "all") {
+      setFilterMonthValue("all");
+      setData(getFilteredYearExpenses);
+      return;
+    }
+    // if not all then calculate month number
+    const monthInNumber = getMonthInNumber(monthName);
+    setFilterMonthValue(monthInNumber);
     // filter selected month from year filtered data
     const filteredFinalMonthExpense = getFilteredYearExpenses?.filter(
       (dayExpenses: any) => dayExpenses.date?.slice(3, 5) === monthInNumber
     );
-    console.log(filteredFinalMonthExpense);
+    // console.log(filteredFinalMonthExpense);
     setData(filteredFinalMonthExpense);
   };
 
   // 2️⃣ handle filtered year data
   const handleFilterYearExpenses = (year: string) => {
-    console.log(year, filterYearValue);
+    console.log("real selected value",year, filterYearValue);
     setFilterYearValue(year);
     // get month data filter
     // get selecte year filter data
     const getFilteredMonthExpenses: any = getSelectedMonthExpenses();
+    console.log("all month data", getFilteredMonthExpenses)
     // filter selected month from year filtered data
+    if (year === 'all') {
+      setData(getFilteredMonthExpenses);
+      return;
+    }
     const filteredFinalYearExpense = getFilteredMonthExpenses?.filter(
       (dayExpenses: any) => dayExpenses.date?.slice(6) === year
     );
-    console.log(filteredFinalYearExpense);
+    // console.log(filteredFinalYearExpense);
     setData(filteredFinalYearExpense);
   };
 
