@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerUser, loginUser, resetPassword, changeAvatar, validateResetPasswordToken, validateAccountVerification, addUserPocketMoney, getLoggedUserData, logoutUser, sentTokenToResetPassword, checkUserVerified, changeUserCredentials } from "../controllers/user.controllers.js";
+import { registerUser, loginUser, resetPassword, changeAvatar, validateResetPasswordToken, validateAccountVerification, addUserPocketMoney, getLoggedUserData, logoutUser, sentTokenToResetPassword, checkUserVerified, changeUserCredentials, deleteUserAccount } from "../controllers/user.controllers.js";
 import { showParticularDateExpenses, addTodayExpenses, addParticularDateExpenses, showTodayExpenses, showAllDateExpenses } from "../controllers/expenses.controller.js";
 import verifyJwtToken from "../middleware/auth.middleware.js";
 import { upload } from "../middleware/multer.middleware.js"
@@ -36,6 +36,9 @@ router.route("/show-all-date-expenses").get(verifyJwtToken, showAllDateExpenses)
 
 // add money
 router.route("/add-money").post(verifyJwtToken, addUserPocketMoney)
+
+// delete user account feature
+router.route("/delete-account").post(verifyJwtToken, deleteUserAccount)
 
 // logout
 router.route("/logout").get(verifyJwtToken, logoutUser)

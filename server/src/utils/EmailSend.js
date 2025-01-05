@@ -26,6 +26,12 @@ const sendMessageToUser = async (userName, type, userEmail, subject, token) => {
         // console.log(resetLink);
         customizedHTML = htmlContent.replace('{link}', resetLink).replace('{userName}', userName);
     }
+    else if (type === "DELETE_ACCOUNT") {
+        const deleteAccountTemplatePath = path.join(__dirname, '../../public/email-template/account-delete.html')
+        const htmlContent = fs.readFileSync(deleteAccountTemplatePath, 'utf-8');
+        // replace placeholder with actual data
+        customizedHTML = htmlContent.replace('{userName}', userName);
+    }
     else {
         console.log("invalid requrest");
         return;
