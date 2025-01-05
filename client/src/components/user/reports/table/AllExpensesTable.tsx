@@ -22,9 +22,10 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import {
-  getPreviousMonthsName,
   getMonthInNumber,
   getLast7Days,
+  monthsNames,
+  prevYearsName,
 } from '@/utils/date/date';
 import { ListFilter } from 'lucide-react';
 import { setAllExpenses } from '@/features/expenses/expenses';
@@ -82,6 +83,8 @@ const columns = [
 const AllExpensesTable: React.FC = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
   const [hasLoaded, setHasLoaded] = useState<boolean>(false);
+  const [filterMonthValue, setFilterMonthValue] = useState<string>('all');
+  const [filterYearValue, setFilterYearValue] = useState<string>('2025');
   const handlePopoverClose = (open: boolean) => {
     setIsPopoverOpen(open);
   };
@@ -124,23 +127,56 @@ const AllExpensesTable: React.FC = () => {
     );
   };
 
-  // get filtered month
-  const handleFilterMonthExpenses = (monthName: string) => {
-    // console.log(monthName)
+  //1️⃣ get selected months filter data
+  const getSelectedMonthExpenses = () => {
+    console.log(filterMonthValue, 'filteredm onth');
     const flattenedData = flattenExpenses(allExpensesArray);
-    if (monthName === 'all') {
-      setData(flattenedData);
-      return;
+    if (filterMonthValue === 'all') {
+      return flattenedData;
     }
-    const monthInNumber = getMonthInNumber(monthName);
-    const currentYear = new Date().getFullYear();
-    // filter data which have month name
     const filteredMonthExpenseData = flattenedData?.filter(
-      (dayExpenses) =>
-        dayExpenses.date?.slice(3) === `${monthInNumber}-${currentYear}`
+      (dayExpenses) => dayExpenses.date?.slice(3, 5) === filterMonthValue
     );
-    // console.log(filteredMonthExpenseData);
-    setData(filteredMonthExpenseData);
+    return filteredMonthExpenseData;
+  };
+  //1️⃣ get selected year filter data
+  const getSelectedYearExpenses = () => {
+    const flattenedData = flattenExpenses(allExpensesArray);
+    if (filterYearValue === 'all') {
+      return flattenedData;
+    }
+    const filteredYearExpenseData = flattenedData?.filter(
+      (dayExpenses) => dayExpenses.date?.slice(6) === filterYearValue
+    );
+    return filteredYearExpenseData;
+  };
+  // 2️⃣ handle filtered month data
+  const handleFilterMonthExpenses = (monthName: string) => {
+    const monthInNumber = getMonthInNumber(monthName);
+    setFilterMonthValue(monthInNumber);
+    // get selecte year filter data
+    const getFilteredYearExpenses: any = getSelectedYearExpenses();
+    // filter selected month from year filtered data
+    const filteredFinalMonthExpense = getFilteredYearExpenses?.filter(
+      (dayExpenses: any) => dayExpenses.date?.slice(3, 5) === monthInNumber
+    );
+    console.log(filteredFinalMonthExpense);
+    setData(filteredFinalMonthExpense);
+  };
+
+  // 2️⃣ handle filtered year data
+  const handleFilterYearExpenses = (year: string) => {
+    console.log(year, filterYearValue);
+    setFilterYearValue(year);
+    // get month data filter
+    // get selecte year filter data
+    const getFilteredMonthExpenses: any = getSelectedMonthExpenses();
+    // filter selected month from year filtered data
+    const filteredFinalYearExpense = getFilteredMonthExpenses?.filter(
+      (dayExpenses: any) => dayExpenses.date?.slice(6) === year
+    );
+    console.log(filteredFinalYearExpense);
+    setData(filteredFinalYearExpense);
   };
 
   // Filter last 7 days expenses
@@ -161,15 +197,19 @@ const AllExpensesTable: React.FC = () => {
   // Show caetgories all expenses
   const handleShowAllCategoryWiseExpenses = (open: boolean) => {
     setIsPopoverOpen(open);
-    toast.error("Feature is pending");
-  }
+    toast.error('Feature is pending');
+  };
 
   // If the data is available in the Redux store, flatten and set it
   useEffect(() => {
     if (allExpensesArray) {
-      // console.log(allExpensesArray); // need to filter and then set data flatten array
-      const flattenedData = flattenExpenses(allExpensesArray);
-      setData(flattenedData);
+      // get selecte year filter data
+      const getFilteredMonthExpenses: any = getSelectedMonthExpenses();
+      // filter selected month from year filtered data
+      const filteredFinalYearExpense = getFilteredMonthExpenses?.filter(
+        (dayExpenses: any) => dayExpenses.date?.slice(6) === filterYearValue
+      );
+      setData(filteredFinalYearExpense);
     }
   }, [allExpensesArray]);
 
@@ -220,16 +260,33 @@ const AllExpensesTable: React.FC = () => {
               </div>
             </PopoverContent>
           </Popover>
+          {/* month */}
           <Select onValueChange={handleFilterMonthExpenses}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="All Expenses" />
+              <SelectValue placeholder="All Month" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Expenses</SelectItem>
+              <SelectItem value="all">All Month </SelectItem>
               <SelectGroup>
-                {getPreviousMonthsName(5).map((monthName) => (
+                {monthsNames.map((monthName) => (
                   <SelectItem key={monthName} value={monthName}>
                     {monthName}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          {/* year */}
+          <Select onValueChange={handleFilterYearExpenses}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder={filterYearValue} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Year</SelectItem>
+              <SelectGroup>
+                {prevYearsName.map((year) => (
+                  <SelectItem key={year} value={year}>
+                    {year}
                   </SelectItem>
                 ))}
               </SelectGroup>
