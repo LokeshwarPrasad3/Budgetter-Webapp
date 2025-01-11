@@ -416,3 +416,14 @@ export const logoutUser = asyncHandler(async (req, res) => {
         new ApiResponse(200, null, "Successfully Logout")
     )
 })
+
+
+export const getAllAppUsersData = asyncHandler(async (req, res) => {
+    const AllUsers = await UserModel.find();
+    if (!AllUsers) {
+        throw new ApiError("Users empty");
+    }
+    return res.status(200).json(
+        new ApiResponse(200, AllUsers, "All Users Found")
+    )
+})
