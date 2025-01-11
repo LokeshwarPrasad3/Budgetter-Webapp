@@ -14,7 +14,7 @@ const ForgotPasswordSection: React.FC = () => {
   const { mutateAsync: sendResetLinkMutate, isPending } = useMutation({
     mutationFn: SendResetLinkToUserEmail,
     onSuccess: (data) => {
-      console.log(data);
+      console.log(data?.message);
     },
     onError: (error) => {
       console.log(error);

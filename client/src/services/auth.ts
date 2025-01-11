@@ -300,7 +300,7 @@ export const ResetUserPassword = async (
       'Content-Type': 'application/json',
     },
   };
-  console.log(credentials);
+  // console.log(credentials);
   const { data } = await axios.patch<ResetPasswordResType>(
     `${backendHostURL}/user/reset-password`,
     credentials,

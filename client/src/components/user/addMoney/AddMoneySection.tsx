@@ -14,7 +14,7 @@ const AddMoneySection = () => {
   const { mutateAsync: AddUserMoneyMutate, isPending } = useMutation({
     mutationFn: AddUserPocketMoney,
     onSuccess: (data) => {
-      console.log('Added pocket Money data', data);
+      console.log(data?.message);
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     onError: (err) => {

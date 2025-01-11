@@ -32,7 +32,7 @@ const Dashboard: React.FC = () => {
       setTotalAddedMoneyOfMonth(data?.data.totalAddedMoney);
       setlastTotalExpenses(data?.data.lastTotalExpenses);
       setCategoryWiseData(data?.data.categoryWiseExpensesData);
-      console.log(data?.data.categoryWiseExpensesData);
+      // console.log(data?.data.categoryWiseExpensesData);
     },
     onError: (error) => {
       console.log(error);
@@ -41,8 +41,8 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
-    console.log(month);
-    console.log(typeof month);
+    // console.log(month);
+    // console.log(typeof month);
     getTotalExpensesAndAddedMoneyMutate({ month });
   }, []);
 

@@ -10,40 +10,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Bell, Locate } from 'lucide-react';
+import { Bell, Play } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { CheckUserAccountVerified } from '@/services/auth';
 import { setUserVerified } from '@/features/user/user';
-import Joyride from "react-joyride";
+import UserTourGuide from '../layout/UserTourGuide';
 
 const TopHeader: React.FC = () => {
-
-  const steps = [
-    {
-      target: '#start_tour_guide',
-      content: 'Welcome to User Tour Guide',
-    },
-    {
-      target: '#profile_section',
-      content: 'This is Profile section you can edit details',
-    },
-    {
-      target: '#notification_section',
-      content: 'View Your notificatios from here',
-    },
-    {
-      target: '#menu_toggle_button_section',
-      content: 'Toggle sidebar from here',
-    },
-    {
-      target: '#sidebar_section',
-      content: 'Your all Navigation menu',
-    },
-    {
-      target: '#logout_section',
-      content: 'Logout to your account from here',
-    },
-  ];
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -53,6 +26,8 @@ const TopHeader: React.FC = () => {
 
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [currentHeaderName, setCurrentHeaderName] = useState<string>('');
+  // for triggering user tour guide
+  const [isTourTriggered, setIsTourTriggered] = useState<boolean>(false);
 
   // get user verified or not
   const { data } = useQuery({
@@ -108,8 +83,16 @@ const TopHeader: React.FC = () => {
           <h2 className="font-bold ">{currentHeaderName}</h2>
         </div>
         <div className="notification_and_profile_ absolute right-4 sm:right-6 flex justify-center items-center gap-4">
-          <div id="start_tour_guide">
-            <Locate className="cursor-pointer" />
+          <div
+            id="start_tour_guide"
+            className="flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10"
+          >
+            <Play
+              data-tooltip-id="header-tooltip"
+              data-tooltip-content="Start Tour"
+              onClick={() => setIsTourTriggered(true)}
+              className="cursor-pointer h-5 w-5 text-slate-700"
+            />
           </div>
           <Link
             id="profile_section"
@@ -127,14 +110,18 @@ const TopHeader: React.FC = () => {
           </Link>
           <Popover onOpenChange={handlePopoverClose} open={isPopoverOpen}>
             <PopoverTrigger asChild>
-              <button id="notification_section" className="relative">
+              <button
+                id="notification_section"
+                className="relative notification_icon flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10"
+              >
                 <Bell
                   data-tooltip-id="header-tooltip"
                   data-tooltip-content="Notification"
-                  className="focus:outline-none text-red-700"
+                  data-tooltip-place="bottom"
+                  className="focus:outline-none focus:ring-0 focus:ring-offset-0 text-red-700"
                 />
                 {notifications.length !== 0 && (
-                  <span className="absolute -top-1 right-0 inline-flex items-center justify-center w-3 h-3 text-[10px] font-bold leading-none text-white bg-red-600 rounded-full">
+                  <span className="absolute flex justify-center items-center -top-1 -right-0 h-4 w-4 rounded-full bg-[#DC4EA2] text-white text-xs">
                     {notifications.length}
                   </span>
                 )}
@@ -164,7 +151,10 @@ const TopHeader: React.FC = () => {
         </div>
       </div>
       <Tooltip className="hidden md:block" id="header-tooltip" />
-      <Joyride steps={steps} continuous={true} />
+      <UserTourGuide
+        isTourTriggered={isTourTriggered}
+        setIsTourTriggered={setIsTourTriggered}
+      />
     </>
   );
 };

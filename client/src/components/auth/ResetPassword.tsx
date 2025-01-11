@@ -17,7 +17,7 @@ const ResetPassword: React.FC = () => {
   const { mutateAsync: changeUserPasswordMutate, isPending } = useMutation({
     mutationFn: ResetUserPassword,
     onSuccess: (data) => {
-      console.log(data);
+      console.log(data?.message);
       navigate('/login');
     },
     onError: (error) => {

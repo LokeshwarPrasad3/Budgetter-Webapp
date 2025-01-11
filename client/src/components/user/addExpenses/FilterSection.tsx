@@ -38,7 +38,7 @@ const FilterSection = () => {
   const { mutateAsync: addExpensesMutate, isPending } = useMutation({
     mutationFn: addExpenses,
     onSuccess: (data) => {
-      console.log(data);
+      console.log(data?.message);
       toast.success('Expenses Added Successfully!!');
       queryClient.invalidateQueries({ queryKey: ['todayExpense'] });
       queryClient.invalidateQueries({ queryKey: ['user'] });
@@ -55,12 +55,12 @@ const FilterSection = () => {
 
   const handleAddExpenses = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(inputDate, expenseName, expenseCategory, price);
+    // console.log(inputDate, expenseName, expenseCategory, price);
     if (!inputDate || !expenseName || !expenseCategory || !price) {
       toast.error('Input Not be Empty!!');
       return;
     }
-    console.log(inputDate, expenseCategory, expenseName, price);
+    // console.log(inputDate, expenseCategory, expenseName, price);
     const formattedDate: string = formatDate(inputDate);
     console.log(formatDate(inputDate));
     const pastDaysExpensesArray: ExpensesCredentialsType['pastDaysExpensesArray'] =
