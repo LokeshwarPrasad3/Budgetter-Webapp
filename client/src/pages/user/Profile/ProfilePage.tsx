@@ -11,6 +11,7 @@ import {
   Save,
   IndianRupee,
   Loader2,
+  Settings2,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -26,11 +27,14 @@ import toast from 'react-hot-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { changeUserAvatar, updatedUserDetails } from '@/services/auth';
 import { setUser } from '@/features/user/user';
+import DeleteAccountDialog from './DeleteAccountDIalog';
 
 const ProfilePage: React.FC = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const [isPasswordCollapsibleOpen, setIsPasswordCollapsibleOpen] =
+    useState<boolean>(false);
+  const [isAdvanceOptionOpen, setIsAdvanceOptionOpen] =
     useState<boolean>(false);
 
   // Assuming you have the user data in your redux store
@@ -156,44 +160,72 @@ const ProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="add_expense_container flex flex-col items-center gap-4 bg-[#FFFEFE] rounded-md max-w-4xl w-full px-4 py-5 sm:p-7 shadow-sm">
-      <div className="flex flex-col items-center space-y-4">
-        <Avatar className="w-24 h-24 sm:w-32 sm:h-32 shadow-sm">
-          <AvatarImage src={profileImage} alt="Profile" />
-          <AvatarFallback>{name?.slice(0, 2).toUpperCase()}</AvatarFallback>
-        </Avatar>
-        <Button
-          variant="outline"
-          size="sm"
-          disabled={isPending}
-          className="w-40 bg-transparent hover:bg-[##f1f5f9] relative overflow-hidden"
-        >
-          {isPending ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Please Wait
-            </>
-          ) : (
-            <>
-              <Camera className="mr-2 h-4 w-4 cursor-pointer" />
-              <span className="cursor-pointer">Change Image</span>
-            </>
-          )}
-          <Input
-            type="file"
-            className="absolute inset-0 opacity-0 cursor-pointer"
-            onChange={handleImageChange}
-            accept="image/*"
-          />
-        </Button>
+    <div className="profile_page_ page_height_without_header flex flex-col justify-start items-start w-full gap-4 h-full">
+      <div className="heading_dashboard_page flex justify-start items-start w-full">
+        <h3 className="font-semibold text-lg text-left">
+          <span className="font-bold text-orange-800">Welcome! {name}</span>
+        </h3>
       </div>
+      <div className="profile_content_container grid grid-cols-12 col-span-12 gap-4 rounded-md max-w-full w-full h-full">
+        <div className="col-span-12 lg:col-span-4 bg-[#FFFEFE] rounded-lg p-6 lg:p-7 h-full flex flex-col justify-between items-center space-y-4 shadow-sm">
+          <div className="basic_user_profile_details flex flex-col items-center space-y-4 shadow-sm">
+            <Avatar className="w-24 h-24 sm:w-32 sm:h-32 shadow-sm">
+              <AvatarImage src={profileImage} alt="Profile" />
+              <AvatarFallback>{name?.slice(0, 2).toUpperCase()}</AvatarFallback>
+            </Avatar>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={isPending}
+              className="w-40 bg-transparent hover:bg-[##f1f5f9] relative overflow-hidden"
+            >
+              {isPending ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please Wait
+                </>
+              ) : (
+                <>
+                  <Camera className="mr-2 h-4 w-4 cursor-pointer" />
+                  <span className="cursor-pointer">Change Image</span>
+                </>
+              )}
+              <Input
+                type="file"
+                className="absolute inset-0 opacity-0 cursor-pointer"
+                onChange={handleImageChange}
+                accept="image/*"
+              />
+            </Button>
+          </div>
 
-      <div className="space-y-6 flex flex-col w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-          {/* Username */}
-          <div className="space-y-2 w-full">
-            <Label htmlFor="username">Username</Label>
-            {/* <div className="relative">
+          <div className="advance_option_container">
+            {/* delete account */}
+            <Collapsible
+              open={isAdvanceOptionOpen}
+              onOpenChange={setIsAdvanceOptionOpen}
+            >
+              <CollapsibleTrigger asChild>
+                <Button variant="outline" className="w-full">
+                  <Settings2 className="mr-2 h-4 w-4" />
+                  Advance Options
+                </Button>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="space-y-2 mt-4">
+                <div className="grid grid-cols-1 gap-4">
+                  <DeleteAccountDialog />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
+        </div>
+
+        <div className="col-span-12 lg:col-span-8 bg-[#FFFEFE] rounded-lg p-6 lg:p-7 lg:pb-10 h-full space-y-6 flex flex-col w-full shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+            {/* Username */}
+            <div className="space-y-2 w-full">
+              <Label htmlFor="username">Username</Label>
+              {/* <div className="relative">
               <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
                 onChange={(e) => setUsername(e.target.value)}
@@ -204,32 +236,32 @@ const ProfilePage: React.FC = () => {
                 value={username}
               />
             </div> */}
-            <div className="flex items-center h-9 cursor-not-allowed space-x-2 bg-gray-100 p-2 rounded">
-              <User className="text-gray-400 h-4 w-4" />
-              <span className="text-sm">{username}</span>
+              <div className="flex items-center h-9 cursor-not-allowed space-x-2 bg-gray-100 p-2 rounded">
+                <User className="text-gray-400 h-4 w-4" />
+                <span className="text-sm">{username}</span>
+              </div>
             </div>
-          </div>
 
-          {/* Full Name */}
-          <div className="space-y-2 w-full">
-            <Label htmlFor="fullName">Full Name</Label>
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                onChange={(e) => setName(e.target.value)}
-                id="fullName"
-                type="text"
-                placeholder="Full Name"
-                className="pl-10 w-full"
-                value={name}
-              />
+            {/* Full Name */}
+            <div className="space-y-2 w-full">
+              <Label htmlFor="fullName">Full Name</Label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  onChange={(e) => setName(e.target.value)}
+                  id="fullName"
+                  type="text"
+                  placeholder="Full Name"
+                  className="pl-10 w-full"
+                  value={name}
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Email */}
-          <div className="space-y-2 w-full">
-            <Label htmlFor="email">Email</Label>
-            {/* <div className="relative">
+            {/* Email */}
+            <div className="space-y-2 w-full">
+              <Label htmlFor="email">Email</Label>
+              {/* <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
                 onChange={(e) => setEmail(e.target.value)}
@@ -240,137 +272,140 @@ const ProfilePage: React.FC = () => {
                 value={email}
               />
             </div> */}
-            <div className="flex items-center cursor-not-allowed h-9 space-x-2 bg-gray-100 p-2 rounded">
-              <Mail className="text-gray-400 h-4 w-4" />
-              <span className="text-sm">{email}</span>
+              <div className="flex items-center cursor-not-allowed h-9 space-x-2 bg-gray-100 p-2 rounded">
+                <Mail className="text-gray-400 h-4 w-4" />
+                <span className="text-sm">{email}</span>
+              </div>
+            </div>
+
+            {/* Profession */}
+            <div className="space-y-2 w-full">
+              <Label htmlFor="profession">Profession</Label>
+              <div className="relative">
+                <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  id="profession"
+                  type="text"
+                  placeholder="Profession"
+                  className="pl-10 w-full"
+                  onChange={(e) => setProfession(e.target.value)}
+                  value={profession}
+                />
+              </div>
+            </div>
+
+            {/* Date of Birth */}
+            <div className="space-y-2 w-full">
+              <Label htmlFor="dateOfBirth">Date of Birth</Label>
+              <div className="relative">
+                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  id="dateOfBirth"
+                  type="date"
+                  className="pl-10 w-full"
+                  onChange={(e) => setDOB(e.target.value)}
+                  value={dob}
+                />
+              </div>
+            </div>
+
+            {/* Current Pocket Money */}
+            <div className="space-y-2 w-full">
+              <Label>Current Pocket Money</Label>
+              <div className="flex items-center space-x-2 cursor-not-allowed h-9 bg-gray-100 p-2 rounded">
+                <IndianRupee className="text-gray-400 h-4 w-4" />
+                <span>{user?.currentPocketMoney || 0}</span>
+              </div>
             </div>
           </div>
 
-          {/* Profession */}
-          <div className="space-y-2 w-full">
-            <Label htmlFor="profession">Profession</Label>
-            <div className="relative">
-              <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                id="profession"
-                type="text"
-                placeholder="Profession"
-                className="pl-10 w-full"
-                onChange={(e) => setProfession(e.target.value)}
-                value={profession}
-              />
+          {/* Social Links */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Instagram */}
+            <div className="space-y-2 w-full">
+              <Label htmlFor="instagramProfile">Instagram</Label>
+              <div className="relative">
+                <Instagram className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  id="instagramProfile"
+                  type="text"
+                  placeholder="Instagram"
+                  className="pl-10 w-full"
+                  onChange={(e) => setInstagramLink(e.target.value)}
+                  value={instagramLink}
+                />
+              </div>
+            </div>
+
+            {/* Facebook */}
+            <div className="space-y-2 w-full">
+              <Label htmlFor="facebookProfile">Facebook</Label>
+              <div className="relative">
+                <Facebook className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  id="facebookProfile"
+                  type="text"
+                  placeholder="Facebook"
+                  className="pl-10 w-full"
+                  onChange={(e) => setFacebookLink(e.target.value)}
+                  value={facebookLink}
+                />
+              </div>
             </div>
           </div>
 
-          {/* Date of Birth */}
-          <div className="space-y-2 w-full">
-            <Label htmlFor="dateOfBirth">Date of Birth</Label>
-            <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                id="dateOfBirth"
-                type="date"
-                className="pl-10 w-full"
-                onChange={(e) => setDOB(e.target.value)}
-                value={dob}
-              />
-            </div>
-          </div>
+          {/* Change Password */}
+          <Collapsible
+            open={isPasswordCollapsibleOpen}
+            onOpenChange={setIsPasswordCollapsibleOpen}
+          >
+            <CollapsibleTrigger asChild>
+              <Button variant="outline" className="w-full">
+                <Lock className="mr-2 h-4 w-4" />
+                Change Password
+              </Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="space-y-2 mt-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Input
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  type="password"
+                  placeholder="Current Password"
+                />
+                <Input
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  type="password"
+                  placeholder="New Password"
+                />
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
 
-          {/* Current Pocket Money */}
-          <div className="space-y-2 w-full">
-            <Label>Current Pocket Money</Label>
-            <div className="flex items-center space-x-2 cursor-not-allowed h-9 bg-gray-100 p-2 rounded">
-              <IndianRupee className="text-gray-400 h-4 w-4" />
-              <span>{user?.currentPocketMoney || 0}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Change Password */}
-        <Collapsible
-          open={isPasswordCollapsibleOpen}
-          onOpenChange={setIsPasswordCollapsibleOpen}
-        >
-          <CollapsibleTrigger asChild>
-            <Button variant="outline" className="w-full">
-              <Lock className="mr-2 h-4 w-4" />
-              Change Password
+          {/* Save Button */}
+          <div className="button-container flex w-full justify-end items-end">
+            <Button
+              disabled={isUserUpdating}
+              onClick={handleSaveChanges}
+              className="w-36 mt-2 bg-[#289288] hover:bg-[#289288]/90"
+            >
+              {isUserUpdating ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </>
+              ) : (
+                <>
+                  <Save
+                    className={`mr-2 h-4 w-4 ${isUserUpdating ? 'cursor-not-allowed' : 'cursor-pointer'} `}
+                  />
+                  Save Changes
+                </>
+              )}
             </Button>
-          </CollapsibleTrigger>
-          <CollapsibleContent className="space-y-2 mt-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                type="password"
-                placeholder="Current Password"
-              />
-              <Input
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                type="password"
-                placeholder="New Password"
-              />
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-
-        {/* Social Links */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Instagram */}
-          <div className="space-y-2 w-full">
-            <Label htmlFor="instagramProfile">Instagram</Label>
-            <div className="relative">
-              <Instagram className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                id="instagramProfile"
-                type="text"
-                placeholder="Instagram"
-                className="pl-10 w-full"
-                onChange={(e) => setInstagramLink(e.target.value)}
-                value={instagramLink}
-              />
-            </div>
-          </div>
-
-          {/* Facebook */}
-          <div className="space-y-2 w-full">
-            <Label htmlFor="facebookProfile">Facebook</Label>
-            <div className="relative">
-              <Facebook className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                id="facebookProfile"
-                type="text"
-                placeholder="Facebook"
-                className="pl-10 w-full"
-                onChange={(e) => setFacebookLink(e.target.value)}
-                value={facebookLink}
-              />
-            </div>
           </div>
         </div>
-
-        {/* Save Button */}
-        <Button
-          disabled={isUserUpdating}
-          onClick={handleSaveChanges}
-          className="w-full"
-        >
-          {isUserUpdating ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Please wait
-            </>
-          ) : (
-            <>
-              <Save
-                className={`mr-2 h-4 w-4 ${isUserUpdating ? 'cursor-not-allowed' : 'cursor-pointer'} `}
-              />
-              Save Changes
-            </>
-          )}
-        </Button>
       </div>
     </div>
   );

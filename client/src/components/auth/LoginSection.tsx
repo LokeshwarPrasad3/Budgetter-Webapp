@@ -138,7 +138,7 @@ const LoginSection: React.FC = () => {
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute inset-y-0 right-0 flex items-center pr-3"
+            className="absolute right-0 top-1.5 flex items-center pr-3"
           >
             {showPassword ? (
               <i className="ri-eye-off-line text-gray-500 h-5 w-5"></i>

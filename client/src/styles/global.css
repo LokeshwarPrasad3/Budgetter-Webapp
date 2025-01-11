@@ -88,3 +88,7 @@ body {
   border-radius: 50%;
   position: relative;
 }
+
+.page_height_without_header{
+  height: calc(100vh - 110px);
+}

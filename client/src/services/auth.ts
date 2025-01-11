@@ -68,7 +68,7 @@ export interface LoginUserResponseType {
     email: string;
     avatar: string;
     currentPocketMoney: string;
-        profession: string;
+    profession: string;
     dob: string;
     instagramLink: string;
     facebookLink: string;
@@ -118,7 +118,7 @@ interface userDetailsType {
     email: string;
     avatar: string;
     currentPocketMoney: string;
-        profession: string;
+    profession: string;
     dob: string;
     instagramLink: string;
     facebookLink: string;
@@ -316,23 +316,24 @@ interface UserAccountVerifiedResType {
   message: string;
   success: boolean;
 }
-export const CheckUserAccountVerified = async (): Promise<UserAccountVerifiedResType> => {
-  const config: AxiosRequestConfig = {
-    headers: {
-      Authorization: `Bearer ${getCurrentAccessToken()}`,
-    },
+export const CheckUserAccountVerified =
+  async (): Promise<UserAccountVerifiedResType> => {
+    const config: AxiosRequestConfig = {
+      headers: {
+        Authorization: `Bearer ${getCurrentAccessToken()}`,
+      },
+    };
+    const { data } = await axios.get<UserAccountVerifiedResType>(
+      `${backendHostURL}/user/is-user-verified`,
+      config
+    );
+    return data;
   };
-  const { data } = await axios.get<UserAccountVerifiedResType>(
-    `${backendHostURL}/user/is-user-verified`,
-    config
-  );
-  return data;
-}; 
 
 // Change User Details
 interface UpdateUserDetailsRes {
   statusCode: number;
-  data: string ;
+  data: string;
   message: string;
   success: boolean;
 }
@@ -356,6 +357,30 @@ export const updatedUserDetails = async (
   const { data } = await axios.patch<UpdateUserDetailsRes>(
     `${backendHostURL}/user/change-user-details`,
     credentials,
+    config
+  );
+  return data;
+};
+
+// Delete User account res
+interface DeleteUserRes {
+  statusCode: number;
+  data: null;
+  message: string;
+  success: boolean;
+}
+interface DeleteUserCredType {
+  password: string;
+}
+export const deleteUserAccount = async (credentials: DeleteUserCredType) => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
+    },
+    data: credentials,
+  };
+  const { data } = await axios.delete<DeleteUserRes>(
+    `${backendHostURL}/user/delete-account`,
     config
   );
   return data;
