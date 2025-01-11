@@ -68,23 +68,23 @@ const ProfilePage: React.FC = () => {
     setDOB(dob);
     setInstagramLink(instagramLink);
     setFacebookLink(facebookLink);
-    console.log(
-      name,
-      username,
-      email,
-      avatar,
-      profession,
-      dob,
-      instagramLink,
-      facebookLink
-    );
+    // console.log(
+    //   name,
+    //   username,
+    //   email,
+    //   avatar,
+    //   profession,
+    //   dob,
+    //   instagramLink,
+    //   facebookLink
+    // );
   }, [user]);
 
   // Mutate Function for Avatar Change
   const { mutateAsync: changeAvatarMutate, isPending } = useMutation({
     mutationFn: changeUserAvatar,
     onSuccess: (data) => {
-      console.log('avatar change data ', data);
+      console.log('avatar changed ', data.message);
       dispatch(setUser({ ...user, avatar: data.data.avatar }));
       toast.success('Avatar Changed Successfully!!');
     },
@@ -102,7 +102,7 @@ const ProfilePage: React.FC = () => {
         setProfileImage(reader.result as string);
       };
       reader.readAsDataURL(file);
-      console.log('file is ', file);
+      // console.log('file is ', file);
       // Prepare a formdata
       const formData = new FormData();
       formData.append('avatar', file);
@@ -115,7 +115,7 @@ const ProfilePage: React.FC = () => {
     useMutation({
       mutationFn: updatedUserDetails,
       onSuccess: (data) => {
-        console.log('User Updated Successfully', data);
+        console.log('User Updated Successfully', data.message);
         toast.success('User Details Updated Successfully!!');
         queryClient.invalidateQueries({ queryKey: ['user'] });
         setCurrentPassword('');

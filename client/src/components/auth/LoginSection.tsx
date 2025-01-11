@@ -52,7 +52,7 @@ const LoginSection: React.FC = () => {
           facebookLink,
         })
       );
-      console.log(data);
+      console.log(data?.message);
       const expirationDate = new Date();
       expirationDate.setDate(expirationDate.getDate() + 3);
       cookie.set('accessToken', accessToken, {

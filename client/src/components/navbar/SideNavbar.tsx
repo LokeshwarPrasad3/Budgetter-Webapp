@@ -50,7 +50,7 @@ const SideNavbar: React.FC = () => {
   const { mutateAsync: userLogoutMutate, isPending } = useMutation({
     mutationFn: UserLogout,
     onSuccess: (data) => {
-      console.log(data);
+      console.log(data?.message);
       cookie.remove('accessToken', { path: '/' });
       navigate('/');
     },
@@ -60,7 +60,6 @@ const SideNavbar: React.FC = () => {
   });
 
   const handleUserLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('clicked');
     e.preventDefault();
     userLogoutMutate();
   };

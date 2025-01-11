@@ -25,8 +25,8 @@ export const userSlice = createSlice({
       state.user = action.payload;
     },
     setExpenses: (state, action) => {
-      console.log('from state', typeof action.payload);
-      console.log('from state', action.payload);
+      // console.log('from state', typeof action.payload);
+      // console.log('from state', action.payload);
       // const { projects } =
       state.expenses = action.payload;
     },
