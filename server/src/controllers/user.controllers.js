@@ -427,3 +427,85 @@ export const getAllAppUsersData = asyncHandler(async (req, res) => {
         new ApiResponse(200, AllUsers, "All Users Found")
     )
 })
+
+
+// Add Lent Money of any person
+export const AddLentMoney = asyncHandler(async (req, res) => {
+    const user = req.user;
+    const { personName, price, date } = req.body;
+    if (!personName || !price || !date) {
+        throw new ApiError(400, "Lent Money Fiels are empty");
+    }
+    const regex = /^([0-2][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
+    if (!regex.test(date)) {
+        throw new ApiError(400, "Invalid date format. Please use dd-mm-yyyy.");
+    }
+    // push that object to LentMoneyHistory array
+    user.LentMoneyHistory.push({
+        personName, price, date
+    })
+
+    // need to minus pocket money
+    const newPocketMoney = parseFloat(user.currentPocketMoney) - parseFloat(price);
+    user.currentPocketMoney = newPocketMoney.toString();
+
+    const TotalLentMoney = user.LentMoneyHistory.reduce((total, lent) => total + parseFloat(lent.price), 0)
+    await user.save();
+    res.status(201).json(
+        new ApiResponse(201, { TotalLentMoney, currentPocketMoney: newPocketMoney }, "Lent money successfully!")
+    )
+})
+
+// if money is received then add that money to currentPocket money
+export const receivedLentMoney = asyncHandler(async (req, res) => {
+    const user = req.user;
+    const { lentMoneyId } = req.body;
+
+    if (!lentMoneyId) {
+        throw new ApiError(400, "Lent Money Id cannot be empty");
+    }
+
+    // Find price of the Lent Money
+    const lentMoneyObject = await UserModel.findOne(
+        { _id: user._id },
+        { LentMoneyHistory: { $elemMatch: { _id: lentMoneyId } } }
+    );
+
+    if (!lentMoneyObject || lentMoneyObject.LentMoneyHistory.length === 0) {
+        throw new ApiError(400, "Lent Money record not found");
+    }
+
+    const price = lentMoneyObject.LentMoneyHistory[0].price;
+
+    // Delete the lent data from the history
+    const result = await UserModel.updateOne(
+        { _id: user._id, "LentMoneyHistory._id": lentMoneyId },
+        {
+            $pull: {
+                LentMoneyHistory: { _id: lentMoneyId }
+            }
+        }
+    );
+
+    if (result.modifiedCount === 0) {
+        throw new ApiError("Lent money record not found");
+    }
+
+    // Add the price to the current pocket money
+    const newPocketMoney = parseFloat(user.currentPocketMoney) + parseFloat(price);
+    user.currentPocketMoney = newPocketMoney.toString();
+    await user.save();
+
+    res.status(201).json(
+        new ApiResponse(201, { currentPocketMoney: newPocketMoney }, "Lent Deleted and money added successfully!")
+    );
+});
+
+// return all lent money of user
+export const getAllLentMoneyHistory = asyncHandler(async (req, res) => {
+    const user = req.user;
+    res.status(200).json(
+        new ApiResponse(200, { LentMoneyHistory: user.LentMoneyHistory }, "All Lent Money Found Successfully")
+    )
+})
+

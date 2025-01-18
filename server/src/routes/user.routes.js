@@ -46,4 +46,9 @@ router.route("/logout").get(verifyJwtToken, logoutUser)
 // get all users list
 router.route("/get-all-users").get(getAllAppUsersData);
 
+// Lent Money to some person API routes
+router.route("/add-lent-money").post(verifyJwtToken, AddLentMoney);
+router.route("/get-all-lent-money").get(verifyJwtToken, getAllLentMoneyHistory);
+router.route("/received-lent-money").post(verifyJwtToken, receivedLentMoney);
+
 export default router;
