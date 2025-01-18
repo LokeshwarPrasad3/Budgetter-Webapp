@@ -37,6 +37,7 @@ const routes = createBrowserRouter(
 
       {/* protected routes */}
       <Route path="user" element={<UserLayout />}>
+        <Route index element={<Navigate to="profile" replace />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="add-expenses" element={<AddExpenses />} />
