@@ -26,6 +26,23 @@ const PocketMoneyHistorySchema = new Schema({
     timestamps: true
 })
 
+const LentMoneyHistorySchema = new Schema({
+    personName: {
+        type: String,
+        required: true,
+    },
+    price: {
+        type: String,
+        required: true,
+    },
+    date: {
+        type: String,
+        required: true,
+    }
+}, {
+    timestamps: true
+})
+
 const UserSchema = new Schema({
     username: {
         type: String,
@@ -33,8 +50,11 @@ const UserSchema = new Schema({
         unique: true,
         trim: true,
         index: true,
-    }
-    ,
+    },
+    LentMoneyHistory: {
+        type: [LentMoneyHistorySchema],
+        default: []
+    },
     name: {
         type: String,
         required: true,
@@ -73,6 +93,10 @@ const UserSchema = new Schema({
     },
     PocketMoneyHistory: {
         type: [PocketMoneyHistorySchema],
+        default: []
+    },
+    LentMoneyHistory: {
+        type: [LentMoneyHistorySchema],
         default: []
     },
     currentPocketMoney: {
