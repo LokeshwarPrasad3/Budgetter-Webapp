@@ -30,4 +30,9 @@ export const userSidenavbarList: userSidenavbarListType[] = [
     name: 'Add Money',
     icon: 'ri-money-rupee-circle-line',
   },
+  {
+    route: 'user/add-lent-money',
+    name: 'Add Lent Money',
+    icon: 'ri-copper-coin-line',
+  },
 ];

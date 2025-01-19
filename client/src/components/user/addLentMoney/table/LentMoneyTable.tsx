@@ -5,51 +5,87 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { useQuery } from '@tanstack/react-query';
+import { getUserAllLentMoney } from '@/services/lentmoney';
+import ReceivedLentMoneyDialog from '../actions/ReceivedLentMoneyDialog';
 import { useSelector } from 'react-redux';
 
-type PocketMoneyType = {
+type LentMoneyTypes = {
   _id: string;
+  personName: string;
+  price: string;
   date: string;
-  amount: string;
-  source: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
-// Create column helper
-const columnHelper = createColumnHelper<PocketMoneyType>();
+const columnHelper = createColumnHelper<LentMoneyTypes>();
 
 // Define columns
 const columns = [
+  // columnHelper.accessor('_id', {
+  //   header: 'ID',
+  //   footer: (info) => info.column.id,
+  // }),
   columnHelper.display({
     id: 'index',
     header: '#',
     cell: (info) => info.row.index + 1,
     footer: (info) => info.column.id,
   }),
+  columnHelper.accessor('personName', {
+    header: 'Person Name',
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor('price', {
+    header: 'Price',
+    footer: (info) => info.column.id,
+  }),
   columnHelper.accessor('date', {
     header: 'Date',
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('amount', {
-    header: 'Amount',
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor('source', {
-    header: 'Source',
-    footer: (info) => info.column.id,
+  columnHelper.display({
+    id: 'action',
+    header: 'Action',
+    cell: (info) => {
+      const rowData = info.row.original;
+      return (
+        <ReceivedLentMoneyDialog
+          lentMoneyId={rowData._id}
+          personName={rowData.personName}
+        />
+      );
+    },
   }),
 ];
 
-const PocketMoneyDetails: React.FC = () => {
-  const [data, setData] = React.useState<PocketMoneyType[]>([]);
-  const pocketMoneyTableData = useSelector((state: any) => {
+const LentMoneyTable: React.FC = () => {
+  const [data, setData] = React.useState<LentMoneyTypes[]>([]);
+  const LentMoneyHistoryTableData = useSelector((state: any) => {
     // console.log('here listen', state.user?.user.PocketMoneyHistory);
-    return state.user?.user.PocketMoneyHistory;
+    return state.user?.user.LentMoneyHistory;
   });
 
+  //   const { data: allLentMoneyData } = useQuery({
+  //     queryFn: getUserAllLentMoney,
+  //     queryKey: ['all-lent-money-records'],
+  //   });
+  //   useEffect(() => {
+  //     if (allLentMoneyData?.success) {
+  //       console.log(
+  //         'all lent money data',
+  //         allLentMoneyData?.data?.LentMoneyHistory
+  //       );
+
+  //       setData(allLentMoneyData.data.LentMoneyHistory);
+  //     }
+  //   }, [allLentMoneyData]);
+  
   useEffect(() => {
-    console.log(data);
-    setData(pocketMoneyTableData);
-  }, [pocketMoneyTableData]);
+    console.log(LentMoneyHistoryTableData);
+    setData(LentMoneyHistoryTableData);
+  }, [LentMoneyHistoryTableData]);
 
   const table = useReactTable({
     data,
@@ -59,9 +95,9 @@ const PocketMoneyDetails: React.FC = () => {
 
   return (
     <>
-      {data && data?.length === 0 ? (
+      {data?.length === 0 ? (
         <div className="message_outer bg-[#ffffff] rounded-md w-full p-5 ">
-          <div className="flex">Your Have Not Added Pocket Money</div>
+          <div className="flex">No Records Found</div>
         </div>
       ) : (
         <div className="overflow-x-auto w-full">
@@ -112,4 +148,4 @@ const PocketMoneyDetails: React.FC = () => {
   );
 };
 
-export default PocketMoneyDetails;
+export default LentMoneyTable;

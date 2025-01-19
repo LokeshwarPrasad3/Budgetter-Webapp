@@ -157,8 +157,8 @@ const AllExpensesTable: React.FC = () => {
     const getFilteredYearExpenses: any = getSelectedYearExpenses();
     // console.log("all years data", getFilteredYearExpenses)
     // if month is all then return as it is
-    if (monthName === "all") {
-      setFilterMonthValue("all");
+    if (monthName === 'all') {
+      setFilterMonthValue('all');
       setData(getFilteredYearExpenses);
       return;
     }
@@ -175,12 +175,12 @@ const AllExpensesTable: React.FC = () => {
 
   // 2️⃣ handle filtered year data
   const handleFilterYearExpenses = (year: string) => {
-    console.log("real selected value",year, filterYearValue);
+    console.log('real selected value', year, filterYearValue);
     setFilterYearValue(year);
     // get month data filter
     // get selecte year filter data
     const getFilteredMonthExpenses: any = getSelectedMonthExpenses();
-    console.log("all month data", getFilteredMonthExpenses)
+    console.log('all month data', getFilteredMonthExpenses);
     // filter selected month from year filtered data
     if (year === 'all') {
       setData(getFilteredMonthExpenses);
@@ -329,7 +329,7 @@ const AllExpensesTable: React.FC = () => {
       ) : (
         <div className="overflow-x-auto w-full">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-100">
+            <thead className="bg-white">
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
