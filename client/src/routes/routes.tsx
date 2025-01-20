@@ -21,6 +21,7 @@ import AddExpenses from '@/pages/user/addExpenses/AddExpenses';
 import ProfilePage from '@/pages/user/Profile/ProfilePage';
 import AccountAlreadyVerified from '@/components/auth/AccountAlreadyVerified';
 import Reports from '@/pages/user/reports/Reports';
+import AddLentMoney from '@/pages/user/addLentMoney/AddLentMoney.';
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -45,6 +46,7 @@ const routes = createBrowserRouter(
         <Route path="reports" element={<Reports />} />
         <Route path="reports" element={<Dashboard />} />
         <Route path="add-money" element={<AddMoney />} />
+        <Route path="add-lent-money" element={<AddLentMoney />} />
       </Route>
       {/* home */}
       <Route path="/" element={<HomePage />} />

@@ -8,6 +8,7 @@ interface TotalExpensesAndAddedMoneyInMonthResType {
     totalExpenses: number;
     totalAddedMoney: number;
     lastTotalExpenses: number;
+    totalLentMoney: number;
     categoryWiseExpensesData: {
       GroceriesExpenses: number;
       Housing_UtilitiesExpenses: number;

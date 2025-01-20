@@ -27,6 +27,7 @@ export interface RegisterUserResponseType {
     instagramLink: string;
     facebookLink: string;
     PocketMoneyHistory: [];
+    LentMoneyHistory: [];
     accessToken: string;
     createdAt: string;
     updatedAt: string;
@@ -87,6 +88,16 @@ export interface LoginUserResponseType {
         updatedAt: string;
       },
     ];
+    LentMoneyHistory: [
+      {
+        _id: string;
+        personName: string;
+        price: string;
+        date: string;
+        createdAt: string;
+        updatedAt: string;
+      },
+    ];
   };
   message: string;
   success: boolean;
@@ -130,6 +141,16 @@ interface userDetailsType {
         amount: string;
         source: string;
         _id: string;
+        createdAt: string;
+        updatedAt: string;
+      },
+    ];
+    LentMoneyHistory: [
+      {
+        _id: string;
+        personName: string;
+        price: string;
+        date: string;
         createdAt: string;
         updatedAt: string;
       },

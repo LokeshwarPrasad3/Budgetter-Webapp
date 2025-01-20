@@ -115,6 +115,7 @@ export const getLoggedUserData = asyncHandler(async (req, res) => {
         isVerified: user?.isVerified,
         currentPocketMoney: user?.currentPocketMoney,
         PocketMoneyHistory: user?.PocketMoneyHistory,
+        LentMoneyHistory: user?.LentMoneyHistory,
         profession: user?.profession,
         dob: user?.dateOfBirth,
         instagramLink: user?.instagramLink,

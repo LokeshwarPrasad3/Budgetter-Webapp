@@ -84,7 +84,7 @@ const UserHistoryExpenseTable: React.FC = () => {
       ) : (
         <div className="overflow-x-auto w-full">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-100">
+            <thead className="bg-white">
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (

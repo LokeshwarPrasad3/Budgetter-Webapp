@@ -91,8 +91,14 @@ export const TotalExpensesAndAddedMoneyOfMonth = asyncHandler(async (req, res) =
         }, 0);
     }
 
+    // 4. total lent money
+    const LentMoneyHistoryArray = user.LentMoneyHistory;
+    const totalLentMoney = LentMoneyHistoryArray.reduce((accumulator, currentArray) => {
+        return accumulator + parseInt(currentArray.date.split("-")[1] === month ? currentArray.price : "0");
+    }, 0);
+
     return res.json(
-        new ApiResponse(200, { totalExpenses: totalExpenses, totalAddedMoney: totalAddedMoney, lastTotalExpenses: lastTotalExpenses, categoryWiseExpensesData }, "Successfully Calculated Expenses!!")
+        new ApiResponse(200, { totalExpenses: totalExpenses, totalAddedMoney: totalAddedMoney, totalLentMoney: totalLentMoney, lastTotalExpenses: lastTotalExpenses, categoryWiseExpensesData }, "Successfully Calculated Expenses!!")
     )
 
 })
