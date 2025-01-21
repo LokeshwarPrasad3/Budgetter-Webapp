@@ -12,6 +12,7 @@ const Dashboard: React.FC = () => {
   const [totalAddedMoneyOfMonth, setTotalAddedMoneyOfMonth] =
     useState<number>(0);
   const [lastTotalExpenses, setlastTotalExpenses] = useState<number>(0);
+  const [totalLentMoney, setTotalLentMoney] = useState<number>(0);
   interface expenseCategoriesTypes {
     GroceriesExpenses: number;
     Housing_UtilitiesExpenses: number;
@@ -31,6 +32,7 @@ const Dashboard: React.FC = () => {
       setTotalExpensesOfMonth(data?.data.totalExpenses);
       setTotalAddedMoneyOfMonth(data?.data.totalAddedMoney);
       setlastTotalExpenses(data?.data.lastTotalExpenses);
+      setTotalLentMoney(data?.data.totalLentMoney);
       setCategoryWiseData(data?.data.categoryWiseExpensesData);
       // console.log(data?.data.categoryWiseExpensesData);
     },
@@ -68,6 +70,7 @@ const Dashboard: React.FC = () => {
           totalExpensesOfMonth={totalExpensesOfMonth}
           totalAddedMoneyOfMonth={totalAddedMoneyOfMonth}
           lastTotalExpenses={lastTotalExpenses}
+          totalLentMoney={totalLentMoney}
           isPending={isPending}
         />
         <div className="visual_graph_container flex justify-center flex-col xl:flex-row items-center w-full gap-y-10 md:gap-5">

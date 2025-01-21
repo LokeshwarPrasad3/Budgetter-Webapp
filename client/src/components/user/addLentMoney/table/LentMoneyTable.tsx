@@ -5,8 +5,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useQuery } from '@tanstack/react-query';
-import { getUserAllLentMoney } from '@/services/lentmoney';
 import ReceivedLentMoneyDialog from '../actions/ReceivedLentMoneyDialog';
 import { useSelector } from 'react-redux';
 
@@ -67,21 +65,6 @@ const LentMoneyTable: React.FC = () => {
     return state.user?.user.LentMoneyHistory;
   });
 
-  //   const { data: allLentMoneyData } = useQuery({
-  //     queryFn: getUserAllLentMoney,
-  //     queryKey: ['all-lent-money-records'],
-  //   });
-  //   useEffect(() => {
-  //     if (allLentMoneyData?.success) {
-  //       console.log(
-  //         'all lent money data',
-  //         allLentMoneyData?.data?.LentMoneyHistory
-  //       );
-
-  //       setData(allLentMoneyData.data.LentMoneyHistory);
-  //     }
-  //   }, [allLentMoneyData]);
-  
   useEffect(() => {
     console.log(LentMoneyHistoryTableData);
     setData(LentMoneyHistoryTableData);

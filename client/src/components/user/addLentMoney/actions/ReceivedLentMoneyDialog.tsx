@@ -32,6 +32,7 @@ const ReceivedLentMoneyDialog: React.FC<ReceivedLentMoneyDialogPropType> = ({
       console.log(data);
       queryClient.invalidateQueries({ queryKey: ['user'] });
       toast.success('Lent Record Deleted Successfully');
+      setIsOpen(false);
     },
     onError: (err) => {
       console.log('Error during delete account', err);

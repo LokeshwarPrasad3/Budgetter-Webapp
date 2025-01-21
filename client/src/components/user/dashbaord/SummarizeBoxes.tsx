@@ -4,6 +4,7 @@ interface PropType {
   totalExpensesOfMonth: number;
   totalAddedMoneyOfMonth: number;
   lastTotalExpenses: number;
+  totalLentMoney: number;
   isPending: boolean;
 }
 
@@ -11,6 +12,7 @@ const SummarizeBoxes: React.FC<PropType> = ({
   totalExpensesOfMonth,
   totalAddedMoneyOfMonth,
   lastTotalExpenses,
+  totalLentMoney,
   isPending,
 }) => {
   const summarizeBoxesContents = [
@@ -28,13 +30,19 @@ const SummarizeBoxes: React.FC<PropType> = ({
       bgClass: 'bg-[#4CAF50]',
     },
     {
-      id: 1,
+      id: 3,
       title: 'Added Balance',
       value: totalAddedMoneyOfMonth,
       bgClass: 'bg-[#FF9800]',
     },
     {
-      id: 1,
+      id: 4,
+      title: 'Lent Money',
+      value: totalLentMoney,
+      bgClass: 'bg-[#00BCD4]',
+    },
+    {
+      id: 5,
       title: 'Last Expenses',
       value: lastTotalExpenses,
       bgClass: 'bg-[#FB899D]',
@@ -45,7 +53,7 @@ const SummarizeBoxes: React.FC<PropType> = ({
     <div className="summarize_box_container flex flex-col justify-start items-start gap-4 bg-[#FFFEFE] rounded-md w-full p-4 px-5 shadow-sm">
       <h4 className="text-base font-semibold">Summaries Information</h4>
       <div className="summary_boxes_outer flex justify-start lg:justify-start flex-wrap items-center gap-7 w-full">
-        {summarizeBoxesContents.map(({ title, value, bgClass }, index) => (
+        {summarizeBoxesContents.slice(0,4).map(({ title, value, bgClass }, index) => (
           <div
             key={index}
             className={`flex flex-col max-w-full md:max-w-[14rem] w-full flex-wrap justify-center items-center gap-0 rounded-[10px] p-3 ${bgClass}`}

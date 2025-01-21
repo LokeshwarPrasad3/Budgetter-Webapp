@@ -1,4 +1,3 @@
-
 import { DatePicker } from '@/components/ui/DatePicker';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -39,6 +38,10 @@ const AddLentSection = () => {
   const handleAddLentMoney = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     // console.log(inputDate, personName, price);
+    if (parseInt(price) < 0) {
+      toast.error('Money not be negative!!');
+      return;
+    }
     if (!inputDate || !personName || !price) {
       toast.error('Input Not be Empty!!');
       return;
