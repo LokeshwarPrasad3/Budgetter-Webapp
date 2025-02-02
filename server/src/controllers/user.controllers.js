@@ -420,7 +420,7 @@ export const logoutUser = asyncHandler(async (req, res) => {
 
 
 export const getAllAppUsersData = asyncHandler(async (req, res) => {
-    const AllUsers = await UserModel.find();
+    const AllUsers = await UserModel.find().select("-password -accessToken");
     if (!AllUsers) {
         throw new ApiError("Users empty");
     }

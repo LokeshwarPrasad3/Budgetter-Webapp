@@ -92,3 +92,10 @@ body {
 .page_height_without_header{
   height: calc(100vh - 110px);
 }
+
+.user_profiles{
+  background: linear-gradient(253deg,#5c61f2 11.51%,#7366ff00 82.07%);
+}
+.word_break{
+  word-break: break-word;
+}

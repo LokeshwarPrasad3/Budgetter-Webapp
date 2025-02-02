@@ -1,19 +1,23 @@
 export const getTopHeaderName = (pathName: string): string => {
   switch (pathName) {
-    case 'dashboard':
+    // for user routes
+    case '/user/dashboard':
       return 'Dashboard';
-    case 'add-expenses':
+    case '/user/add-expenses':
       return 'Add Expenses';
-    case 'show-expenses':
+    case '/user/show-expenses':
       return 'Show Expenses';
-    case 'reports':
+    case '/user/reports':
       return 'Report & Visualization';
-    case 'add-money':
+    case '/user/add-money':
       return 'Add Pocket Money';
-    case 'add-lent-money':
+    case '/user/add-lent-money':
       return 'Add Lent Money';
-    case 'profile':
+    case '/user/profile':
       return 'Profile';
+    // for admin private routes
+    case '/admin/users':
+      return 'App Users';
     default:
       return 'Oops! Wrong Page';
   }
