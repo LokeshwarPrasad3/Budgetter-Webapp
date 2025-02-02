@@ -49,10 +49,10 @@ const TopHeader: React.FC = () => {
 
   useEffect(() => {
     const path = location.pathname;
-    const pathParts = path.split('/');
-    const pathName = pathParts[pathParts.length - 1];
+    // const pathParts = path.split('/');
+    // const pathName = pathParts[pathParts.length - 1];
 
-    const headerName = getTopHeaderName(pathName);
+    const headerName = getTopHeaderName(path);
     setCurrentHeaderName(headerName);
   }, [location.pathname]);
 
@@ -73,7 +73,7 @@ const TopHeader: React.FC = () => {
 
   return (
     <>
-      <div className="topheader_container sticky top-0 text-black bg-[#FFFEFE] z-0 shadow-sm w-full min-h-16 flex h-full items-center px-1">
+      <div className="topheader_container sticky top-0 text-black bg-[#FFFEFE] z-40 shadow-sm w-full min-h-16 flex h-full items-center px-1">
         <i
           id="menu_toggle_button_section"
           onClick={() => dispatch(toggleSideNavbar())}

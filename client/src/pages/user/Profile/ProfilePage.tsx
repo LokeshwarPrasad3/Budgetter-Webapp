@@ -28,6 +28,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { changeUserAvatar, updatedUserDetails } from '@/services/auth';
 import { setUser } from '@/features/user/user';
 import DeleteAccountDialog from './DeleteAccountDIalog';
+import SpinWheel from '@/components/layout/SpinWheel';
 
 const ProfilePage: React.FC = () => {
   const queryClient = useQueryClient();
@@ -198,7 +199,7 @@ const ProfilePage: React.FC = () => {
               />
             </Button>
           </div>
-
+          <SpinWheel/>
           <div className="advance_option_container">
             {/* delete account */}
             <Collapsible

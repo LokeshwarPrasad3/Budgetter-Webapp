@@ -44,7 +44,7 @@ router.route("/delete-account").delete(verifyJwtToken, deleteUserAccount)
 router.route("/logout").get(verifyJwtToken, logoutUser)
 
 // get all users list
-router.route("/get-all-users").get(getAllAppUsersData);
+router.route("/get-all-users").get(verifyJwtToken, getAllAppUsersData);
 
 // Lent Money to some person API routes
 router.route("/add-lent-money").post(verifyJwtToken, AddLentMoney);

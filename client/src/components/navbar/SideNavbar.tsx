@@ -1,5 +1,4 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { userSidenavbarList } from '@/data/UserSideNavbarList';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeSideNavbar } from '../../features/sideNavbar/sideNavbarSlice';
 import LogoImage from '../../../public/assets/logo/logo.png';
@@ -12,7 +11,16 @@ import { Button } from '../ui/button';
 import { getActiveRouteLink } from '@/utils/utility';
 import Cookies from 'universal-cookie';
 
-const SideNavbar: React.FC = () => {
+interface SideNavbarPropType {
+  route: string;
+  name: string;
+  icon: string;
+}
+interface SideNavbarProps {
+  userSidenavbarList: SideNavbarPropType[];
+}
+
+const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
   const cookie = new Cookies();
   const navigate = useNavigate();
   const overlayRef = useRef<HTMLDivElement>(null);

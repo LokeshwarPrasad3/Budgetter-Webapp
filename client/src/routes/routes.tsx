@@ -22,6 +22,8 @@ import ProfilePage from '@/pages/user/Profile/ProfilePage';
 import AccountAlreadyVerified from '@/components/auth/AccountAlreadyVerified';
 import Reports from '@/pages/user/reports/Reports';
 import AddLentMoney from '@/pages/user/addLentMoney/AddLentMoney.';
+import AdminLayout from '@/pages/admin/AdminLayout';
+import AppUsersCards from '@/components/admin/UserDetails/AppUsersCards';
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -48,6 +50,12 @@ const routes = createBrowserRouter(
         <Route path="add-money" element={<AddMoney />} />
         <Route path="add-lent-money" element={<AddLentMoney />} />
       </Route>
+
+      {/* for admin private routes */}
+      <Route path="admin" element={<AdminLayout />}>
+        <Route path="users" element={<AppUsersCards />} />
+      </Route>
+        
       {/* home */}
       <Route path="/" element={<HomePage />} />
       {/* logout page routes */}
