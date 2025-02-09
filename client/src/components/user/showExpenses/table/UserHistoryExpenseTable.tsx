@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-table';
 import { useSelector } from 'react-redux';
 import { getTodayDate } from '@/utils/date/date';
+import PDFExportComponent from '../../PDFExportComponent';
 
 type ExpensesTypes = {
   _id: string;
@@ -64,6 +65,30 @@ const UserHistoryExpenseTable: React.FC = () => {
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+    const sampleExpenses = [
+      {
+        sno: 1,
+        expense_name: 'Groceries',
+        price: '$50',
+        category: 'Food',
+        time: '2023-10-01',
+      },
+      {
+        sno: 2,
+        expense_name: 'Internet Bill',
+        price: '$60',
+        category: 'Utilities',
+        time: '2023-10-05',
+      },
+      {
+        sno: 3,
+        expense_name: 'Movie Tickets',
+        price: '$30',
+        category: 'Entertainment',
+        time: '2023-10-10',
+      },
+    ];
 
   return (
     <>
@@ -132,6 +157,16 @@ const UserHistoryExpenseTable: React.FC = () => {
           </div>
         )}
       </div>
+      <PDFExportComponent
+        userDetails={{
+          name: 'John Doe',
+          currentPocketMoney: '$500',
+          DOB: '1990-01-01',
+          email: 'john.doe@example.com',
+          profession: 'Software Engineer',
+        }}
+        expenses={sampleExpenses}
+      />
     </>
   );
 };
