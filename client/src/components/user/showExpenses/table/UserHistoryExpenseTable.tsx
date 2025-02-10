@@ -66,30 +66,6 @@ const UserHistoryExpenseTable: React.FC = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-    const sampleExpenses = [
-      {
-        sno: 1,
-        expense_name: 'Groceries',
-        price: '$50',
-        category: 'Food',
-        time: '2023-10-01',
-      },
-      {
-        sno: 2,
-        expense_name: 'Internet Bill',
-        price: '$60',
-        category: 'Utilities',
-        time: '2023-10-05',
-      },
-      {
-        sno: 3,
-        expense_name: 'Movie Tickets',
-        price: '$30',
-        category: 'Entertainment',
-        time: '2023-10-10',
-      },
-    ];
-
   return (
     <>
       <div className="message_outer bg-[#ffffff] rounded-md w-full px-0 py-5">
@@ -97,21 +73,27 @@ const UserHistoryExpenseTable: React.FC = () => {
           <div className="flex px-5">No Expenses Found</div>
         ) : (
           <div className="overflow-x-auto w-full">
-            <div className="flex px-5 pb-3">
-              {(() => {
-                const createdAt = data[0]?.createdAt;
-                if (!createdAt) return null;
+            <div className="flex px-5 pb-3 justify-between w-full gap-3 items-center">
+              <span>
+                {(() => {
+                  const createdAt = data[0]?.createdAt;
+                  if (!createdAt) return null;
 
-                const formattedDate = createdAt
-                  .split('T')[0]
-                  .split('-')
-                  .reverse()
-                  .join('-');
+                  const formattedDate = createdAt
+                    .split('T')[0]
+                    .split('-')
+                    .reverse()
+                    .join('-');
 
-                return formattedDate === getTodayDate()
-                  ? 'Your Today Expenses'
-                  : formattedDate;
-              })()}
+                  return formattedDate === getTodayDate()
+                    ? 'Your Today Expenses'
+                    : formattedDate;
+                })()}
+              </span>
+              <PDFExportComponent
+                createdAt={data[0]?.createdAt}
+                expenses={expensesDetailArray}
+              />
             </div>
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-white">
@@ -157,16 +139,6 @@ const UserHistoryExpenseTable: React.FC = () => {
           </div>
         )}
       </div>
-      <PDFExportComponent
-        userDetails={{
-          name: 'John Doe',
-          currentPocketMoney: '$500',
-          DOB: '1990-01-01',
-          email: 'john.doe@example.com',
-          profession: 'Software Engineer',
-        }}
-        expenses={sampleExpenses}
-      />
     </>
   );
 };
