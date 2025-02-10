@@ -38,7 +38,7 @@ const IndividualUserDetails = ({ user }: { user: User }) => {
           Full Details
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="max-h-dvh overflow-y-auto">
         <SheetHeader>
           <SheetTitle className="text-left">User Details</SheetTitle>
         </SheetHeader>
@@ -81,7 +81,7 @@ const IndividualUserDetails = ({ user }: { user: User }) => {
             <div>
               <p className="text-gray-500">Current Pocket Money</p>
               <p className="text-lg font-semibold">
-                ${user?.currentPocketMoney || 'NA'}
+                ₹{user?.currentPocketMoney || 'NA'}
               </p>
             </div>
 
@@ -120,14 +120,16 @@ const IndividualUserDetails = ({ user }: { user: User }) => {
 
           {/* History */}
           <div className="border-t pt-4">
-            <p className="text-gray-500 mb-2">Transaction History</p>
-            {user?.LentMoneyHistory.length > 0 ? (
+            <p className="text-gray-500 mb-2">PocketMoney History</p>
+            {user?.PocketMoneyHistory.length > 0 ? (
               <div className="space-y-2">
-                {user?.LentMoneyHistory.map((index) => (
-                  <div key={index} className="border p-2 rounded">
-                    Transaction {index + 1}
-                  </div>
-                ))}
+                {user?.PocketMoneyHistory?.map(
+                  ({ date, amount, source }, index) => (
+                    <div key={index} className="border p-2 rounded">
+                      {date} - {source} - (₹{amount})
+                    </div>
+                  )
+                )}
               </div>
             ) : (
               <p>No transaction history</p>
@@ -138,11 +140,15 @@ const IndividualUserDetails = ({ user }: { user: User }) => {
           <div className="border-t pt-4 text-sm text-gray-500">
             <p>
               Member since:{' '}
-              {new Date(user?.createdAt).toLocaleDateString() || 'NA'}
+              {user?.createdAt
+                ? new Date(user.createdAt).toLocaleDateString('en-GB')
+                : 'NA'}
             </p>
             <p>
               Last updated:{' '}
-              {new Date(user?.updatedAt).toLocaleDateString() || 'NA'}
+              {user?.updatedAt
+                ? new Date(user.updatedAt).toLocaleDateString('en-GB')
+                : 'NA'}
             </p>
           </div>
         </div>

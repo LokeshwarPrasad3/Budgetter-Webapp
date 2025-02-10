@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react';
 import { adminSidenavbarList } from '@/data/AdminSidebarList';
+const adminPassword = import.meta.env.VITE_BUDGETTER_ADMIN_PASSWORD; 
 
 const AdminLayout: React.FC = () => {
   // get from reducer state
@@ -22,7 +23,6 @@ const AdminLayout: React.FC = () => {
   useEffect(() => {
     if (hasPrompted.current) return; // Prevent re-executing the prompt if it's already done
 
-    const adminPassword = 'LokeshwarAdmin@123'; // Set this to the correct password or fetch from a secure source
     const password = prompt('Admin Password ???');
 
     const isAuthenticated = password === adminPassword;

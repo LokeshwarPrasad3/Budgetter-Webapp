@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-table';
 import { useSelector } from 'react-redux';
 import { getTodayDate } from '@/utils/date/date';
+import PDFExportComponent from '../../PDFExportComponent';
 
 type ExpensesTypes = {
   _id: string;
@@ -72,21 +73,27 @@ const UserHistoryExpenseTable: React.FC = () => {
           <div className="flex px-5">No Expenses Found</div>
         ) : (
           <div className="overflow-x-auto w-full">
-            <div className="flex px-5 pb-3">
-              {(() => {
-                const createdAt = data[0]?.createdAt;
-                if (!createdAt) return null;
+            <div className="flex px-5 pb-3 justify-between w-full gap-3 items-center">
+              <span>
+                {(() => {
+                  const createdAt = data[0]?.createdAt;
+                  if (!createdAt) return null;
 
-                const formattedDate = createdAt
-                  .split('T')[0]
-                  .split('-')
-                  .reverse()
-                  .join('-');
+                  const formattedDate = createdAt
+                    .split('T')[0]
+                    .split('-')
+                    .reverse()
+                    .join('-');
 
-                return formattedDate === getTodayDate()
-                  ? 'Your Today Expenses'
-                  : formattedDate;
-              })()}
+                  return formattedDate === getTodayDate()
+                    ? 'Your Today Expenses'
+                    : formattedDate;
+                })()}
+              </span>
+              <PDFExportComponent
+                createdAt={data[0]?.createdAt}
+                expenses={expensesDetailArray}
+              />
             </div>
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-white">
