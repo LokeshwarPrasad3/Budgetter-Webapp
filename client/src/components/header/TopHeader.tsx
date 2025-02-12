@@ -150,7 +150,7 @@ const TopHeader: React.FC = () => {
           </Popover>
         </div>
       </div>
-      <Tooltip className="hidden md:block" id="header-tooltip" />
+      <Tooltip className="hidden md:block z-50" id="header-tooltip" />
       <UserTourGuide
         isTourTriggered={isTourTriggered}
         setIsTourTriggered={setIsTourTriggered}

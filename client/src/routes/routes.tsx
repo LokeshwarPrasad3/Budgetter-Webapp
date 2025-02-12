@@ -24,6 +24,7 @@ import Reports from '@/pages/user/reports/Reports';
 import AddLentMoney from '@/pages/user/addLentMoney/AddLentMoney.';
 import AdminLayout from '@/pages/admin/AdminLayout';
 import AppUsersCards from '@/components/admin/UserDetails/AppUsersCards';
+import ErrorPage from '@/components/layout/ErrorPage';
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -60,6 +61,8 @@ const routes = createBrowserRouter(
       <Route path="/" element={<HomePage />} />
       {/* logout page routes */}
       <Route path="logout" element={<Navigate to="/login" />} />
+      {/* Error page */}
+      <Route path="/*" element={<ErrorPage />} />
     </Route>
   )
 );

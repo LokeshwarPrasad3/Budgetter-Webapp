@@ -1,8 +1,6 @@
-* {
-  font-family: 'Karla';
-}
 body {
   background: #f6f7fb;
+  font-family: 'Karla';
 }
 
 .menu_phone_container {
@@ -98,4 +96,7 @@ body {
 }
 .word_break{
   word-break: break-word;
+}
+.error_page_container{
+  font-family: "Arvo", serif;
 }
