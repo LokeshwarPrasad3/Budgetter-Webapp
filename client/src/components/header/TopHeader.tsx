@@ -85,7 +85,7 @@ const TopHeader: React.FC = () => {
         <div className="notification_and_profile_ absolute right-4 sm:right-6 flex justify-center items-center gap-4">
           <div
             id="start_tour_guide"
-            className="flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10"
+            className="hidden sm:flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10"
           >
             <Play
               data-tooltip-id="header-tooltip"

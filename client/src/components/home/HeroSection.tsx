@@ -48,10 +48,10 @@ const HeroSection: React.FC = () => {
             variants={ANIMATE_WORDS_VARIENT}
             initial="initial"
             animate="animate"
-            to="/login"
+            to="https://lokeshwardewangan.in/"
             className="hero_section_button bg-slate-700 hover:bg-slate-600 py-1 px-3 rounded-sm text-white cursor-pointer"
           >
-            About
+            About me
           </MotionLink>
         </div>
       </div>

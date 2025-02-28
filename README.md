@@ -38,6 +38,20 @@
 - Users can add the money they receive from any source (e.g., parents, salary) to their account.
 - The wallet shows previous money entries, stored securely in the database.
 
+#### 6. Add Lent Money
+- Record money you lend with details (amount, recipient, date). The amount is deducted from your wallet and added back when you mark it as "Money Received.
+
+#### 7. Delete Account  
+- Users can permanently delete their account.  
+- Removes all data, including expenses, lent money, and records.  
+
+#### 8. Update User Details  
+- Users can update personal details (name, email, password).  
+- Ensures secure and up-to-date account management.
+
+#### 9. Gmail Service : 
+- User can forgot & change password through reset link and get verification link after account creation.
+
 ---
 
 
@@ -48,7 +62,7 @@
 ![Landing Page Screenshot](https://i.ibb.co/7kmv6k3/image.png)
 
 ### 2. Dashboard
-![Dashboard Page Screenshot](https://i.ibb.co/qDwY2DQ/image.png)
+![Dashboard Page Screenshot](https://i.ibb.co/TBWzJkmd/Screenshot-8.png)
 
 ---
 
