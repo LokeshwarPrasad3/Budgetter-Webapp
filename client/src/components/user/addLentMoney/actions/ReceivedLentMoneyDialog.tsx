@@ -75,7 +75,7 @@ const ReceivedLentMoneyDialog: React.FC<ReceivedLentMoneyDialogPropType> = ({
             type="button"
             variant="outline"
             onClick={() => setIsOpen(false)}
-            className="flex-1 w-full"
+            className="flex-1 w-full dark:hover:text-white"
           >
             Cancel
           </Button>
@@ -83,7 +83,7 @@ const ReceivedLentMoneyDialog: React.FC<ReceivedLentMoneyDialogPropType> = ({
             type="button"
             variant="outline"
             onClick={handleConfirm}
-            className="flex-1 w-full"
+            className="flex-1 w-full dark:hover:text-white"
             disabled={isPending}
           >
             {isPending ? (

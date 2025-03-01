@@ -26,23 +26,25 @@ const Dashboard: React.FC = () => {
   const [CategoryWiseData, setCategoryWiseData] =
     useState<expenseCategoriesTypes>();
 
-  const { mutateAsync: getTotalExpensesAndAddedMoneyMutate, isPending } = useMutation({
-    mutationFn: getTotalExpensesAndAddedMoneyInMonth,
-    onSuccess: (data) => {
-      setTotalExpensesOfMonth(data?.data.totalExpenses);
-      setTotalAddedMoneyOfMonth(data?.data.totalAddedMoney);
-      setlastTotalExpenses(data?.data.lastTotalExpenses);
-      setTotalLentMoney(data?.data.totalLentMoney);
-      setCategoryWiseData(data?.data.categoryWiseExpensesData);
-      // console.log(data?.data.categoryWiseExpensesData);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  const { mutateAsync: getTotalExpensesAndAddedMoneyMutate, isPending } =
+    useMutation({
+      mutationFn: getTotalExpensesAndAddedMoneyInMonth,
+      onSuccess: (data) => {
+        setTotalExpensesOfMonth(data?.data.totalExpenses);
+        setTotalAddedMoneyOfMonth(data?.data.totalAddedMoney);
+        setlastTotalExpenses(data?.data.lastTotalExpenses);
+        setTotalLentMoney(data?.data.totalLentMoney);
+        setCategoryWiseData(data?.data.categoryWiseExpensesData);
+        // console.log(data?.data.categoryWiseExpensesData);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
 
   useEffect(() => {
-    const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+    const month = (new Date().getMonth() - 1 || 12).toString().padStart(2, '0');
+
     // console.log(month);
     // console.log(typeof month);
     getTotalExpensesAndAddedMoneyMutate({ month });
@@ -56,14 +58,14 @@ const Dashboard: React.FC = () => {
             {user && user?.name && (
               <>
                 {' '}
-                <span className="font-bold text-orange-800">
+                <span className="font-bold text-text_heading_light dark:text-text_primary_dark">
                   Welcome! {user.name}
                 </span>
               </>
             )}{' '}
           </h3>
         </div>
-        <div className="summarize_box_container flex flex-col justify-start items-start gap-4 bg-[#FFFEFE] rounded-md w-full p-4 px-5 shadow-sm">
+        <div className="summarize_box_container flex flex-col justify-start items-start gap-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-md border border-border_light dark:border-border_dark w-full p-4 px-5 shadow-sm">
           <h4 className="text-base font-semibold">Your Current Month Report</h4>
         </div>
         <SummarizeBoxes
@@ -73,7 +75,7 @@ const Dashboard: React.FC = () => {
           totalLentMoney={totalLentMoney}
           isPending={isPending}
         />
-        <div className="visual_graph_container flex justify-center flex-col xl:flex-row items-center w-full gap-y-10 md:gap-5">
+        <div className="visual_graph_container grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
           <CategoryWiseExpensesChart
             totalExpensesOfMonth={totalExpensesOfMonth}
             CategoryWiseData={CategoryWiseData}

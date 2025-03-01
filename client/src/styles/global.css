@@ -1,6 +1,15 @@
+:root{
+  --bg-app-light : #f6f7fb;
+  --bg-app-dark: #10101c;
+}
+
 body {
-  background: #f6f7fb;
+  background: var(--bg-app-light);
   font-family: 'Karla';
+}
+
+body.dark{
+  background: var(--bg-app-dark);
 }
 
 .menu_phone_container {

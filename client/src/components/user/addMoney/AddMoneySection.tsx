@@ -33,12 +33,12 @@ const AddMoneySection = () => {
       amount: pocketMoney,
       source: moneySource,
     });
-    setPocketMoney("");
-    setMoneySource("");
+    setPocketMoney('');
+    setMoneySource('');
   };
 
   return (
-    <div className="add_expense_container flex flex-col justify-start items-start gap-4 bg-[#FFFEFE] rounded-md w-full p-4 px-5 shadow-sm">
+    <div className="add_expense_container flex flex-col justify-start items-start gap-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-md border border-border_light dark:border-border_dark w-full p-4 px-5 shadow-sm">
       <h4 className="text-base font-semibold">Add Your Pocket Money</h4>
       <div className="flex justify-start flex-wrap flex-col items-start gap-3 md:gap-5 w-full">
         <div className="input_containers grid grid-cols-12 w-full lg:w-8/12 gap-3 md:gap-5">

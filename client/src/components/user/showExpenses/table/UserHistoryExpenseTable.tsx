@@ -68,7 +68,7 @@ const UserHistoryExpenseTable: React.FC = () => {
 
   return (
     <>
-      <div className="message_outer bg-[#ffffff] rounded-md w-full px-0 py-5">
+      <div className="message_outer bg-bg_primary_light dark:bg-bg_primary_dark rounded-md w-full px-0 py-5">
         {data.length === 0 ? (
           <div className="flex px-5">No Expenses Found</div>
         ) : (
@@ -95,14 +95,14 @@ const UserHistoryExpenseTable: React.FC = () => {
                 expenses={expensesDetailArray}
               />
             </div>
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-white">
+            <table className="min-w-full divide-y border-b border-border_dark">
+              <thead className="dark:bg-bg_secondary_dark">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
                       <th
                         key={header.id}
-                        className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-100 uppercase tracking-wider"
                       >
                         {header.isPlaceholder
                           ? null
@@ -115,16 +115,18 @@ const UserHistoryExpenseTable: React.FC = () => {
                   </tr>
                 ))}
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 {table.getRowModel().rows.map((row, index) => (
                   <tr
                     key={row.id}
-                    className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
+                    className={`dark:bg-bg_primary_dark dark:hover:bg-slate-800 ${
+                      index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                    }`}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                        className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-100"
                       >
                         {flexRender(
                           cell.column.columnDef.cell,

@@ -55,7 +55,7 @@ const IndividualUserDetails = ({ user }: { user: User }) => {
               <h2 className="text-xl font-semibold word_break">
                 {user?.name || 'NA'}
               </h2>
-              <p className="text-gray-500 word_break">
+              <p className="text-gray-500 dark:text-white word_break">
                 @{user?.username || 'NA'}
               </p>
             </div>
@@ -64,36 +64,38 @@ const IndividualUserDetails = ({ user }: { user: User }) => {
           {/* Main Info */}
           <div className="space-y-4 border-t pt-4">
             <div>
-              <p className="text-gray-500">Email</p>
+              <p className="text-gray-500 dark:text-white">Email</p>
               <p>{user?.email || 'NA'}</p>
             </div>
 
             <div>
-              <p className="text-gray-500">Date of Birth</p>
+              <p className="text-gray-500 dark:text-white">Date of Birth</p>
               <p>{user?.dateOfBirth || 'NA'}</p>
             </div>
 
             <div>
-              <p className="text-gray-500">Profession</p>
+              <p className="text-gray-500 dark:text-white">Profession</p>
               <p>{user?.profession || 'NA'}</p>
             </div>
 
             <div>
-              <p className="text-gray-500">Current Pocket Money</p>
+              <p className="text-gray-500 dark:text-white">
+                Current Pocket Money
+              </p>
               <p className="text-lg font-semibold">
                 ₹{user?.currentPocketMoney || 'NA'}
               </p>
             </div>
 
             <div>
-              <p className="text-gray-500">Status</p>
+              <p className="text-gray-500 dark:text-white">Status</p>
               <p>{user?.isVerified ? 'Verified User' : 'Not Verified'}</p>
             </div>
           </div>
 
           {/* Social Links */}
           <div className="border-t pt-4">
-            <p className="text-gray-500 mb-2">Social Media</p>
+            <p className="text-gray-500 dark:text-white mb-2">Social Media</p>
             <div className="space-y-2">
               {user?.instagramLink ? (
                 <a
@@ -103,7 +105,7 @@ const IndividualUserDetails = ({ user }: { user: User }) => {
                   Instagram Profile
                 </a>
               ) : (
-                <p className="text-gray-500">NA</p>
+                <p className="text-gray-500 dark:text-white">NA</p>
               )}
               {user?.facebookLink ? (
                 <a
@@ -113,14 +115,16 @@ const IndividualUserDetails = ({ user }: { user: User }) => {
                   Facebook Profile
                 </a>
               ) : (
-                <p className="text-gray-500">NA</p>
+                <p className="text-gray-500 dark:text-white">NA</p>
               )}
             </div>
           </div>
 
           {/* History */}
           <div className="border-t pt-4">
-            <p className="text-gray-500 mb-2">PocketMoney History</p>
+            <p className="text-gray-500 dark:text-white mb-2">
+              PocketMoney History
+            </p>
             {user?.PocketMoneyHistory.length > 0 ? (
               <div className="space-y-2">
                 {user?.PocketMoneyHistory?.map(
@@ -137,7 +141,7 @@ const IndividualUserDetails = ({ user }: { user: User }) => {
           </div>
 
           {/* Dates */}
-          <div className="border-t pt-4 text-sm text-gray-500">
+          <div className="border-t pt-4 text-sm text-gray-500 dark:text-white">
             <p>
               Member since:{' '}
               {user?.createdAt
