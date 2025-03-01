@@ -87,7 +87,7 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
         ${isSideNavbarOpen && isMobile ? 'w-52 left-0' : ''} 
         ${!isSideNavbarOpen && !isMobile ? 'w-[72px] left-0' : ''} 
         ${!isSideNavbarOpen && isMobile ? 'w-0 left-[-210px]' : ''} 
-         h-full bg-[#1b1a1d] flex flex-col px-3 py-5 gap-2 shadow-lg z-50 overflow-hidden`}
+         h-full bg-bg_sidebar text-text_sidebar flex flex-col px-3 py-5 gap-2 shadow-lg z-50 overflow-hidden`}
       >
         <Link
           to="/"
@@ -119,11 +119,11 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
               key={index}
               to={`/${route}`}
               onClick={() => dispatch(closeSideNavbar())}
-              className={`sidenavbar_menulink_container relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 ${getActiveRouteLink() === route ? 'bg-[#289288]' : ''} hover:bg-[#25635d] items-center`}
+              className={`sidenavbar_menulink_container relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 ${getActiveRouteLink() === route ? 'bg-bg_active_sidebar_link' : ''} hover:bg-bg_active_sidebar_link items-center`}
             >
-              <i className={`${icon} text-2xl text-white`}></i>
+              <i className={`${icon} text-2xl`}></i>
               <span
-                className={`text-base font-medium text-white absolute 
+                className={`text-base font-medium absolute 
               ${!isSideNavbarOpen && !isMobile && 'left-16'}
               ${isSideNavbarOpen && !isMobile && 'left-12'}
               ${isSideNavbarOpen && isMobile && 'left-12'}
@@ -139,16 +139,16 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
           id="logout_section"
           className="menu_logout_container absolute bottom-5 left-3 right-3 flex flex-col gap-3  "
         >
-          <Button
+          <button
             data-tooltip-id="navbarTooltip"
             data-tooltip-content="Logout"
             data-tooltip-place="right"
-            className="logout_container h-12 relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 bg-slate-800 hover:bg-[#2e7a73] items-center"
+            className="logout_container h-12 relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 bg-slate-700 dark:bg-bg_secondary_dark hover:bg-bg_active_sidebar_link dark:hover:bg-bg_active_sidebar_link items-center"
             onClick={handleUserLogout}
           >
-            <i className="ri-logout-box-r-line text-2xl text-white"></i>
+            <i className="ri-logout-box-r-line text-2xl"></i>
             <span
-              className={`text-base font-medium text-white absolute transition-all duration-500 ease-in
+              className={`text-base font-mediu absolute transition-all duration-500 ease-in
                ${!isSideNavbarOpen && !isMobile && 'left-16'}
               ${isSideNavbarOpen && !isMobile && 'left-12'}
               ${isSideNavbarOpen && isMobile && 'left-12'}
@@ -162,7 +162,7 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
                 'Logout'
               )}
             </span>
-          </Button>
+          </button>
         </div>
       </div>
       <Tooltip className="ml-2 z-50 hidden md:block" id="navbarTooltip" />

@@ -2,9 +2,11 @@ import React, { useLayoutEffect, useRef } from 'react';
 import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
+import { useSelector } from 'react-redux';
 
 const CategoryWiseLineChart: React.FC = () => {
   const chartRef = useRef(null);
+  const isDarkMode = useSelector((state: any) => state.themeMode.isDarkMode);
 
   useLayoutEffect(() => {
     if (chartRef.current) {
@@ -46,6 +48,7 @@ const CategoryWiseLineChart: React.FC = () => {
       xAxis.get('renderer').labels.template.setAll({
         fontSize: 10,
         fontWeight: '500',
+        fill: am5.color(isDarkMode ? 0xffffff : 0x000000),
       });
 
       const yAxis = chart.yAxes.push(
@@ -58,6 +61,18 @@ const CategoryWiseLineChart: React.FC = () => {
       yAxis.get('renderer').labels.template.setAll({
         fontSize: 10,
         fontWeight: '500',
+        fill: am5.color(isDarkMode ? 0xffffff : 0x000000),
+      });
+
+      const gridColor = am5.color(isDarkMode ? 0x666666 : 0xd9d8d8);
+      xAxis.get('renderer').grid.template.setAll({
+        stroke: gridColor,
+        strokeOpacity: 0.5,
+      });
+
+      yAxis.get('renderer').grid.template.setAll({
+        stroke: gridColor,
+        strokeOpacity: 0.5,
       });
 
       const series = chart.series.push(
@@ -136,18 +151,18 @@ const CategoryWiseLineChart: React.FC = () => {
         window.removeEventListener('resize', updateLabels);
       };
     }
-  }, []);
+  }, [isDarkMode]);
 
   return (
     <>
-      <div className="flex items-center p-0 py-5 md:p-4 bg-white rounded-lg shadow-sm flex-col max-w-full w-full">
+      <div className="flex items-center p-0 py-5 md:p-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-lg shadow-sm flex-col max-w-full w-full border border-border_light dark:border-border_dark">
         <h2 className="text-lg text-left font-semibold mb-4">
-          Monthly Expenses <span className='text-xs' >[ Pending Feature ]</span>
+          Monthly Expenses <span className="text-xs">[ Pending Feature ]</span>
         </h2>
         <div className="chart_element_container flex justify-center items-center w-full h-full">
           <div
             ref={chartRef}
-            className="h-[210px] w-full xl:w-[650px]"
+            className="h-full w-full xl:w-[650px]"
             style={{ maxWidth: '100%' }}
           ></div>
         </div>

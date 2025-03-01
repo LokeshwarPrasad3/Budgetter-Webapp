@@ -96,8 +96,8 @@ const SpinWheel = () => {
                 key={index}
                 className={`flex flex-col items-center justify-center w-10 h-10 rounded-full ${
                   result === item.text
-                    ? 'bg-yellow-400 text-black'
-                    : 'bg-gray-200 text-gray-700'
+                    ? 'bg-yellow-400 text-black dark:bg-green-400'
+                    : 'bg-gray-200 text-gray-700 dark:bg-bg_secondary_dark dark:text-white'
                 }`}
               >
                 {item.icon}

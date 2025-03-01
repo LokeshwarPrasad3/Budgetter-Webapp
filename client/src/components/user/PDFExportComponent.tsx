@@ -116,7 +116,7 @@ const PDFExportComponent: React.FC<ExportTableProps> = ({
     <div className="">
       <Button
         onClick={exportPDF}
-        className="w-full flex justify-center items-center gap-1 text-gray-100 bg-gradient-to-r from-purple-500 opacity-80 hover:opacity-90 transition-all duration-200 ease-in hover:text-white to-purple-700 hover:from-purple-600 hover:to-purple-800"
+        className="w-full flex justify-center dark:hover:text-white items-center gap-1 text-gray-100 bg-gradient-to-r from-purple-500 opacity-80 hover:opacity-90 transition-all duration-200 ease-in hover:text-white to-purple-700 hover:from-purple-600 hover:to-purple-800"
       >
         <svg
           className="w-5 h-5"

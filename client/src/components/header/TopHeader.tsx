@@ -78,11 +78,11 @@ const TopHeader: React.FC = () => {
 
   return (
     <>
-      <div className="topheader_container sticky top-0 text-black bg-[#FFFEFE] z-40 shadow-sm w-full min-h-16 flex h-full items-center px-1">
+      <div className="topheader_container sticky top-0 text-text_primary_light dark:text-text_primary_dark bg-bg_primary_light dark:bg-bg_primary_dark dark:border-l z-40 shadow-sm w-full min-h-16 flex h-full items-center px-1">
         <i
           id="menu_toggle_button_section"
           onClick={() => dispatch(toggleSideNavbar())}
-          className="ri-menu-line cursor-pointer text-black font-bold mx-4 text-xl"
+          className="ri-menu-line cursor-pointer text-text_primary_light dark:text-text_primary_dark font-bold mx-4 text-xl"
         ></i>
         <div className="name text-lg">
           <h2 className="font-bold ">{currentHeaderName}</h2>
@@ -96,7 +96,7 @@ const TopHeader: React.FC = () => {
               data-tooltip-id="header-tooltip"
               data-tooltip-content="Start Tour"
               onClick={() => setIsTourTriggered(true)}
-              className="cursor-pointer h-5 w-5 text-slate-700"
+              className="cursor-pointer h-5 w-5"
             />
           </div>
           <div className="theme_container_toggle flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10">
@@ -105,14 +105,14 @@ const TopHeader: React.FC = () => {
                 onClick={handleToggleThemeMode}
                 data-tooltip-id="header-tooltip"
                 data-tooltip-content="Switch to Dark"
-                className="cursor-pointer h-5 w-5 focus:outline-none select-none text-slate-700"
+                className="cursor-pointer h-5 w-5 focus:outline-none select-none"
               />
             ) : (
               <Sun
                 onClick={handleToggleThemeMode}
                 data-tooltip-id="header-tooltip"
                 data-tooltip-content="Switch to Light"
-                className="cursor-pointer h-5 w-5 focus:outline-none select-none text-slate-700"
+                className="cursor-pointer h-5 w-5 focus:outline-none select-none"
               />
             )}
           </div>
@@ -126,10 +126,10 @@ const TopHeader: React.FC = () => {
                   data-tooltip-id="header-tooltip"
                   data-tooltip-content="Notification"
                   data-tooltip-place="bottom"
-                  className="focus:outline-none h-5 w-5 focus:ring-0 focus:ring-offset-0 text-red-700"
+                  className="focus:outline-none h-5 w-5 focus:ring-0 focus:ring-offset-0 "
                 />
                 {notifications.length !== 0 && (
-                  <span className="absolute flex justify-center items-center -top-1 -right-0 h-4 w-4 rounded-full bg-[#DC4EA2] text-white text-xs">
+                  <span className="absolute flex justify-center items-center -top-1 -right-0 h-4 w-4 rounded-full bg-[#DC4EA2] text-text_primary_light text-xs">
                     {notifications.length}
                   </span>
                 )}

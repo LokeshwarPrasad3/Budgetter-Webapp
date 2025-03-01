@@ -164,11 +164,13 @@ const ProfilePage: React.FC = () => {
     <div className="profile_page_ page_height_without_header flex flex-col justify-start items-start w-full gap-4 h-full">
       <div className="heading_dashboard_page flex justify-start items-start w-full">
         <h3 className="font-semibold text-lg text-left">
-          <span className="font-bold text-orange-800">Welcome! {name}</span>
+          <span className="font-bold text-text_heading_light dark:text-text_primary_dark">
+            Welcome! {name}
+          </span>
         </h3>
       </div>
       <div className="profile_content_container grid grid-cols-12 col-span-12 gap-4 rounded-md max-w-full w-full h-full">
-        <div className="col-span-12 lg:col-span-4 bg-[#FFFEFE] rounded-lg p-6 lg:p-7 h-full flex flex-col justify-between items-center space-y-4 shadow-sm">
+        <div className="col-span-12 lg:col-span-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-lg p-6 lg:p-7 h-full flex flex-col justify-between items-center space-y-4 shadow-sm">
           <div className="basic_user_profile_details flex flex-col items-center space-y-4 shadow-sm">
             <Avatar className="w-24 h-24 sm:w-32 sm:h-32 shadow-sm">
               <AvatarImage src={profileImage} alt="Profile" />
@@ -199,7 +201,7 @@ const ProfilePage: React.FC = () => {
               />
             </Button>
           </div>
-          <SpinWheel/>
+          <SpinWheel />
           <div className="advance_option_container">
             {/* delete account */}
             <Collapsible
@@ -221,7 +223,7 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="col-span-12 lg:col-span-8 bg-[#FFFEFE] rounded-lg p-6 lg:p-7 lg:pb-10 h-full space-y-6 flex flex-col w-full shadow-sm">
+        <div className="col-span-12 lg:col-span-8 bg-bg_primary_light dark:bg-bg_primary_dark rounded-lg p-6 lg:p-7 lg:pb-10 h-full space-y-6 flex flex-col w-full shadow-sm">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
             {/* Username */}
             <div className="space-y-2 w-full">
@@ -237,7 +239,7 @@ const ProfilePage: React.FC = () => {
                 value={username}
               />
             </div> */}
-              <div className="flex items-center h-9 cursor-not-allowed space-x-2 bg-gray-100 p-2 rounded">
+              <div className="flex items-center h-9 cursor-not-allowed space-x-2 bg-gray-100 dark:bg-bg_secondary_dark p-2 rounded">
                 <User className="text-gray-400 h-4 w-4" />
                 <span className="text-sm">{username}</span>
               </div>
@@ -273,7 +275,7 @@ const ProfilePage: React.FC = () => {
                 value={email}
               />
             </div> */}
-              <div className="flex items-center cursor-not-allowed h-9 space-x-2 bg-gray-100 p-2 rounded">
+              <div className="flex items-center cursor-not-allowed h-9 space-x-2 bg-gray-100 dark:bg-bg_secondary_dark p-2 rounded">
                 <Mail className="text-gray-400 h-4 w-4" />
                 <span className="text-sm">{email}</span>
               </div>
@@ -313,7 +315,7 @@ const ProfilePage: React.FC = () => {
             {/* Current Pocket Money */}
             <div className="space-y-2 w-full">
               <Label>Current Pocket Money</Label>
-              <div className="flex items-center space-x-2 cursor-not-allowed h-9 bg-gray-100 p-2 rounded">
+              <div className="flex items-center space-x-2 cursor-not-allowed h-9 bg-gray-100 dark:bg-bg_secondary_dark p-2 rounded">
                 <IndianRupee className="text-gray-400 h-4 w-4" />
                 <span>{user?.currentPocketMoney || 0}</span>
               </div>
