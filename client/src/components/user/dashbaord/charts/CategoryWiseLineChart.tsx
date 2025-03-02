@@ -336,7 +336,7 @@ const CategoryWiseLineChart: React.FC = () => {
           {!isLoading ? (
             <div
               ref={chartRef}
-              className="h-full w-full"
+              className="h-[250px] lg:h-full w-full"
               style={{ maxWidth: '100%' }}
             ></div>
           ) : (
