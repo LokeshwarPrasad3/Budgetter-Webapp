@@ -8,8 +8,20 @@ import userRoutes from "./routes/user.routes.js"
 import userReportRoutes from "./routes/report.routes.js"
 const FRONTEND_URL = process.env.FRONTEND_URL
 
+const allowedOrigins = [
+    FRONTEND_URL, 
+    /\.netlify\.app$/, // Allow all Netlify deploy previews
+];
+
 app.use(cors({
-    origin: FRONTEND_URL,
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.some(pattern =>
+            typeof pattern === 'string' ? pattern === origin : pattern.test(origin))) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
 }));
 
