@@ -7,7 +7,6 @@ import React, { useEffect, useRef } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { UserLogout } from '@/services/auth';
 import { Loader2 } from 'lucide-react';
-import { Button } from '../ui/button';
 import { getActiveRouteLink } from '@/utils/utility';
 import Cookies from 'universal-cookie';
 
@@ -61,6 +60,8 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
       console.log(data?.message);
       cookie.remove('accessToken', { path: '/' });
       navigate('/');
+      // make default light mode becasue landing page not available for dark
+      document.body.classList.remove("dark");
     },
     onError: (error) => {
       console.log(error);

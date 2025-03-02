@@ -84,7 +84,6 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
       color: 'linear-gradient(to right, #8A2BE2, #6A0DAD)', // BlueViolet to Darker Violet
     },
   ];
-  console.log(categoryData);
 
   const chartRef = useRef<HTMLDivElement>(null);
   const isDarkMode = useSelector((state: any) => state.themeMode.isDarkMode);
