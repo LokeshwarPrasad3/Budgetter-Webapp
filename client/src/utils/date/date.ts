@@ -136,3 +136,24 @@ export const getLast7Days = (): string[] => {
   return dates.reverse(); // Reverse the dates to ensure the correct order
 };
 
+// get day name by date string
+export const getDayName = (dateStr: string): string => {
+  const [day, month, year] = dateStr.split("-").map(Number);
+  const date = new Date(year, month - 1, day); 
+  return date.toLocaleDateString("en-US", { weekday: "long" });
+}
+
+
+// get last 7 days dates
+export const getLast7Dates = [...Array(7)]
+  .map((_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
+
+    const day = String(date.getDate()).padStart(2, '0'); // Ensure two digits
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure two digits (Months are 0-based)
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`; // Format as dd-mm-yyyy
+  })
+  .reverse();

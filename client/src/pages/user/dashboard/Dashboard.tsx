@@ -43,7 +43,7 @@ const Dashboard: React.FC = () => {
     });
 
   useEffect(() => {
-    const month = (new Date().getMonth() - 1 || 12).toString().padStart(2, '0');
+    const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
 
     // console.log(month);
     // console.log(typeof month);
