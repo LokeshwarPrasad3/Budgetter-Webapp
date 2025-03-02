@@ -71,6 +71,13 @@ const MainLayout: React.FC = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    const localIsDarkMode = localStorage.getItem('isDarkMode') === 'true';
+    if (localIsDarkMode) {
+      document.body.classList.toggle("dark", localIsDarkMode);
+    }
+  }, []);
+
   return (
     <>
       <div className="w-full h-full dark:bg-slate-900">

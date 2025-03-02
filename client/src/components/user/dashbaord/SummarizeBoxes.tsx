@@ -68,7 +68,7 @@ const SummarizeBoxes: React.FC<PropType> = ({
                 {title}
               </p>
               {isPending && title !== 'Remain Balance' ? (
-                <p className="text-2xl text-white font-bold text-center animate-pulse rounded-md bg-slate-500 h-7 mt-1 w-2/5 "></p>
+                <p className="text-2xl text-white font-bold text-center animate-pulse rounded-md bg-slate-500 dark:bg-slate-800 h-7 mt-1 w-2/5 "></p>
               ) : (
                 <p className="text-2xl text-white font-bold text-center">
                   {value}

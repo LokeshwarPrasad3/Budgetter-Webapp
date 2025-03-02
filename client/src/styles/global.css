@@ -96,6 +96,20 @@ body.dark{
   position: relative;
 }
 
+.dark .chart_loader {
+  background: conic-gradient(
+    #475569 0deg 85deg,  /* slate-700 */
+    #1e293b 85deg 90deg,  /* slate-800 */
+    #475569 90deg 175deg, /* slate-700 */
+    #1e293b 175deg 180deg, /* slate-800 */
+    #475569 180deg 265deg, /* slate-700 */
+    #1e293b 265deg 270deg, /* slate-800 */
+    #475569 270deg 355deg, /* slate-700 */
+    #1e293b 355deg 360deg  /* slate-800 */
+  );
+}
+
+
 .page_height_without_header{
   height: calc(100vh - 110px);
 }

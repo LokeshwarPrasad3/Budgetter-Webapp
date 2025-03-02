@@ -61,6 +61,10 @@ const LoginSection: React.FC = () => {
         path: '/',
         expires: expirationDate,
       });
+      const localIsDarkMode = localStorage.getItem('isDarkMode') === 'true';
+      if (localIsDarkMode) {
+        document.body.classList.toggle('dark', localIsDarkMode);
+      }
       navigate('/user/dashboard');
     },
     onError: (error) => {
