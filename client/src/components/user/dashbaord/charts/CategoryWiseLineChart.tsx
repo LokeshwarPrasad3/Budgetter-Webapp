@@ -261,7 +261,7 @@ const CategoryWiseLineChart: React.FC = () => {
           valueYField: 'value',
           categoryXField: 'day',
           tooltip: am5.Tooltip.new(root, {
-            labelText: '${valueY}',
+            labelText: '₹{valueY}',
           }),
           stroke: am5.color(0x6794dc),
           fill: am5.color(0x6794dc),
@@ -336,7 +336,7 @@ const CategoryWiseLineChart: React.FC = () => {
           {!isLoading ? (
             <div
               ref={chartRef}
-              className="h-full w-full"
+              className="h-[250px] lg:h-full w-full"
               style={{ maxWidth: '100%' }}
             ></div>
           ) : (

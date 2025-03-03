@@ -10,6 +10,7 @@ import {
   navigateToLandingPage,
   navigateToUserPage,
 } from '@/utils/navigate/NavigateRightPath';
+import { getPageTitle } from '@/utils/utility';
 
 const MainLayout: React.FC = () => {
   const navigate = useNavigate();
@@ -77,6 +78,12 @@ const MainLayout: React.FC = () => {
       document.body.classList.toggle("dark", localIsDarkMode);
     }
   }, []);
+
+  // get current route and set to as title
+  useEffect(() => {
+    const getCurrentPageTitle = getPageTitle();
+    document.title = getCurrentPageTitle;
+  },[location.pathname])
 
   return (
     <>
