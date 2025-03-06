@@ -10,7 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Bell, Moon, Play, Sun } from 'lucide-react';
+import { Bell, Fullscreen, Minimize, Moon, Play, Sun } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { CheckUserAccountVerified } from '@/services/auth';
 import { setUserVerified } from '@/features/user/user';
@@ -23,6 +23,8 @@ const TopHeader: React.FC = () => {
   type Notification = {
     value: string;
   };
+
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [currentHeaderName, setCurrentHeaderName] = useState<string>('');
@@ -76,6 +78,22 @@ const TopHeader: React.FC = () => {
     }
   }, [isUserVerified]);
 
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      setIsFullScreen(true);
+      // Maximize (Enter fullscreen mode)
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+    } else {
+      // Minimize (Exit fullscreen mode)
+      document.exitFullscreen();
+      setIsFullScreen(false);
+    }
+};
+
+
+
   return (
     <>
       <div className="topheader_container sticky top-0 text-text_primary_light dark:text-text_primary_dark bg-bg_primary_light dark:bg-bg_primary_dark dark:border-l z-40 shadow-sm w-full min-h-16 flex h-full items-center px-1">
@@ -90,7 +108,7 @@ const TopHeader: React.FC = () => {
         <div className="notification_and_profile_ absolute right-4 sm:right-6 flex justify-center items-center gap-2.5">
           <div
             id="start_tour_guide"
-            className="hidden sm:flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10"
+            className="hidden sm:flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10 dark:hover:bg-slate-800 hover:bg-slate-200"
           >
             <Play
               data-tooltip-id="header-tooltip"
@@ -99,7 +117,27 @@ const TopHeader: React.FC = () => {
               className="cursor-pointer h-5 w-5"
             />
           </div>
-          <div className="theme_container_toggle flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10">
+          <div
+            id="fullscreens_tour_guide"
+            className={`flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10 dark:hover:bg-slate-800 hover:bg-slate-200 ${isFullScreen ? 'dark:bg-slate-700 bg-slate-200' : ''} `}
+          >
+            {!isFullScreen ? (
+              <Fullscreen
+                onClick={toggleFullscreen}
+                data-tooltip-id="header-tooltip"
+                data-tooltip-content="Maximize Screen"
+                className="cursor-pointer h-5 w-5 outline-none ring-offset-0"
+              />
+            ) : (
+              <Minimize
+                onClick={toggleFullscreen}
+                data-tooltip-id="header-tooltip"
+                data-tooltip-content="Minimize Screen"
+                className="cursor-pointer h-5 w-5 outline-none ring-offset-0"
+              />
+            )}
+          </div>
+          <div className="theme_container_toggle flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10 dark:hover:bg-slate-800 hover:bg-slate-200">
             {!isDarkMode ? (
               <Moon
                 onClick={handleToggleThemeMode}
@@ -120,7 +158,7 @@ const TopHeader: React.FC = () => {
             <PopoverTrigger asChild>
               <button
                 id="notification_section"
-                className="relative notification_icon flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10"
+                className="relative notification_icon flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10 dark:hover:bg-slate-800 hover:bg-slate-200"
               >
                 <Bell
                   data-tooltip-id="header-tooltip"
