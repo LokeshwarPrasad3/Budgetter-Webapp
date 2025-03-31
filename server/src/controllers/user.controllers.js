@@ -8,6 +8,9 @@ import bcrypt from "bcrypt";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { sendMessageToUser } from "../utils/EmailSend.js";
 import jwt from "jsonwebtoken";
+import { OAuth2Client } from 'google-auth-library';
+import { generateUniqueUsername } from "../utils/utilities.js";
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export const registerUser = asyncHandler(async (req, res) => {
     const { username, name, email, password } = req.body;
@@ -510,3 +513,86 @@ export const getAllLentMoneyHistory = asyncHandler(async (req, res) => {
     )
 })
 
+// Login with google authentication
+export const SignWithGoogleAuthentication = asyncHandler(async (req, res) => {
+    const { token } = req.body;
+
+    if (!token) {
+        throw new ApiError(400, "Token cannot be empty");
+    }
+
+    // Verify Google ID Token
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const { sub: googleId, email, name, picture } = payload;
+
+    console.log("User Details:", { googleId, email, name, picture });
+
+    // Check if user exists by Google ID or Email
+    let existedUser = await UserModel.findOne({
+        $or: [{ googleId }, { email }]
+    });
+
+    if (!existedUser) {
+        const uniqueUsername = await generateUniqueUsername(name);
+
+        const user = await UserModel.create({
+            username: uniqueUsername,
+            name,
+            email,
+            googleId,
+            avatar: picture,
+            authProvider: "google"
+        });
+
+        user.accessToken = await user.generateAccessToken();
+        await user.save({ validateBeforeSave: false });
+
+        const createdUser = await UserModel.findById(user._id).select("-password");
+
+        if (!createdUser) {
+            throw new ApiError(500, `${name} - unable to register user!!`);
+        }
+
+        console.log(`${createdUser.name} - Your Account Successfully created!!`);
+        console.log("Sending Email for Verification....");
+
+        const token = jwt.sign(
+            { _id: createdUser._id },
+            process.env.ACCOUNT_VERIFICATION_TOKEN_SECRET,
+            {
+                expiresIn: process.env.ACCOUNT_VERIFICATION_TOKEN_SECRET_EXPIRY,
+            }
+        );
+
+        const isSentGmail = await sendMessageToUser(
+            createdUser.name,
+            "VERIFY_ACCOUNT",
+            createdUser.email,
+            "Budgetter Account Verification",
+            token
+        );
+
+        if (!isSentGmail) {
+            console.log(`Failed to send email to - ${createdUser.email}`);
+        }
+
+        return res.status(201).json(
+            new ApiResponse(201, createdUser, "User registered successfully!")
+        );
+    }
+
+    // If user exists, log them in
+    existedUser.accessToken = await existedUser.generateAccessToken();
+    await existedUser.save({ validateBeforeSave: false });
+
+    console.log(`${existedUser.name} - Your Account Logged in successfully!!`);
+
+    return res.status(200).json(
+        new ApiResponse(200, existedUser, "Login Successfully!!")
+    );
+});

@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import Cookies from 'universal-cookie';
 import { useFormik } from 'formik';
 import { signupSchema } from '@/schemas';
+import GoogleAuthLogin from './GoogleAuthLogin';
 
 const SignupSection: React.FC = () => {
   const cookie = new Cookies();
@@ -199,14 +200,8 @@ const SignupSection: React.FC = () => {
 
         <div className="my-2 text-center text-slate-500 font-bold">Or</div>
 
-        <div className="flex justify-center flex-col gap-4">
-          <Button
-            onClick={() => toast.success('Feature is pending!!')}
-            type="button"
-            className="w-full py-2 px-4 bg-gray-200 text-gray-800 font-semibold rounded-md shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-          >
-            Continue with Google
-          </Button>
+        <div className="flex justify-center items-center gap-4">
+         <GoogleAuthLogin />
         </div>
       </form>
     </div>
