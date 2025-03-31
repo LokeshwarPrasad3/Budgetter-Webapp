@@ -105,7 +105,20 @@ const UserSchema = new Schema({
     },
     password: {
         type: String,
-        required: [true, "Password is required"],
+        required: function () {
+            return this.authProvider === 'local';
+        },
+        select: false,
+    },
+    googleId: {
+        type: String,
+        default: null,
+    },
+    authProvider: {
+        type: String,
+        enum: ['google', 'local'], 
+        required: true,
+        default: 'local',
     },
     accessToken: {
         type: String,

@@ -9,6 +9,7 @@ import { UserLogout } from '@/services/auth';
 import { Loader2 } from 'lucide-react';
 import { getActiveRouteLink } from '@/utils/utility';
 import Cookies from 'universal-cookie';
+import { googleLogout } from '@react-oauth/google';
 
 interface SideNavbarPropType {
   route: string;
@@ -58,6 +59,7 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
     mutationFn: UserLogout,
     onSuccess: (data) => {
       console.log(data?.message);
+      googleLogout();
       cookie.remove('accessToken', { path: '/' });
       navigate('/');
       // make default light mode becasue landing page not available for dark

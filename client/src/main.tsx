@@ -9,16 +9,19 @@ import { Provider } from 'react-redux';
 import 'react-tooltip/dist/react-tooltip.css';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
+const GoogleClientID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <App />
-        <ReactQueryDevtools />
-      </Provider>
-    </QueryClientProvider>
+    <GoogleOAuthProvider clientId={GoogleClientID}>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <App />
+          <ReactQueryDevtools />
+        </Provider>
+      </QueryClientProvider>
+    </GoogleOAuthProvider>
   </StrictMode>
 );

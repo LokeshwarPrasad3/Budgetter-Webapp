@@ -119,6 +119,28 @@ export const LoginUser = async (
   return data;
 };
 
+// signup with google authentication
+
+interface SignupCredentialsType{
+  token: string;
+}
+
+export const SignupWithGoogle = async (
+  credentials: SignupCredentialsType
+): Promise<LoginUserResponseType> => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  const { data } = await axios.post<LoginUserResponseType>(
+    `${backendHostURL}/user/google-login`,
+    credentials,
+    config
+  );
+  return data;
+};
+
 // getting data by accesstoken
 interface userDetailsType {
   statusCode: number;
