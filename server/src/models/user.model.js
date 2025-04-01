@@ -108,7 +108,6 @@ const UserSchema = new Schema({
         required: function () {
             return this.authProvider === 'local';
         },
-        select: false,
     },
     googleId: {
         type: String,
