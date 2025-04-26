@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 export const getTodayDate = (): string => {
   const now = new Date();
   const date = String(now.getDate()).padStart(2, '0');
@@ -40,14 +42,13 @@ export function getMonthInNumber(month: string): string {
     throw new Error('Invalid month name. Please provide a valid month name.');
   }
   // Return the month number (index + 1)
-  return (monthIndex + 1).toString().padStart(2,"0");
+  return (monthIndex + 1).toString().padStart(2, '0');
 }
-
 
 // Get previous months' names based on the passed number
 export function getPreviousMonthsName(previousMonths: number): string[] {
   if (previousMonths < 1 || previousMonths >= 12) {
-    throw new Error("The number of months must be between 1 and 11.");
+    throw new Error('The number of months must be between 1 and 11.');
   }
   const monthNames = [
     'January',
@@ -88,7 +89,7 @@ export const monthsNames = [
   'December',
 ];
 
-// get years 
+// get years
 export const prevYearsName = [
   "2024",
   "2025",
@@ -139,7 +140,7 @@ export const getLast7Days = (): string[] => {
 // get day name by date string
 export const getDayName = (dateStr: string): string => {
   const [day, month, year] = dateStr.split("-").map(Number);
-  const date = new Date(year, month - 1, day); 
+  const date = new Date(year, month - 1, day);
   return date.toLocaleDateString("en-US", { weekday: "long" });
 }
 
@@ -157,3 +158,8 @@ export const getLast7Dates = [...Array(7)]
     return `${day}-${month}-${year}`; // Format as dd-mm-yyyy
   })
   .reverse();
+
+// get current month
+export const getCurrentMonth = (): string => {
+  return format(new Date(), 'MMMM'); 
+}

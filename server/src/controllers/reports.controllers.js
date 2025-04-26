@@ -7,17 +7,18 @@ import asyncHandler from "../utils/asyncHandler.js";
 export const TotalExpensesAndAddedMoneyOfMonth = asyncHandler(async (req, res) => {
     const user = req.user;
     const userId = req.user._id;
-    const { month } = req.body;
-    if (typeof month !== 'string') {
-        console.log("month must be string");
-        throw new ApiError(500, "Month should be string!!");
+    const { month, year } = req.body;
+    if (typeof month !== 'string' || typeof year !== 'string') {
+        console.log("month or year must be string");
+        throw new ApiError(500, "Month and year should be string!!");
     }
+    console.log("year month", month, year)
     // 1. Calculate Total Expenses Of Month
     const MonthExpenses = await ExpenseModel.find({
         user: userId,
-        date: { $regex: `^\\d{2}-${month}-\\d{4}$` }
+        date: { $regex: `^\\d{2}-${month}-${year}` }
     });
-    // console.log(MonthExpenses)
+    console.log(MonthExpenses)
     // Groceries , Housing & Utilities, Medical ,
     // Food , Personal , Educational , Transportation
     // Miscellaneous
