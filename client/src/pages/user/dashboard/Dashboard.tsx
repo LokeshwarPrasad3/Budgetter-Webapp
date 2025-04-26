@@ -17,6 +17,7 @@ import {
   monthsNames,
   prevYearsName,
   getMonthInNumber,
+  getCurrentMonth,
 } from '@/utils/date/date';
 import toast from 'react-hot-toast';
 
@@ -27,9 +28,8 @@ const Dashboard: React.FC = () => {
     useState<number>(0);
   const [lastTotalExpenses, setlastTotalExpenses] = useState<number>(0);
   const [totalLentMoney, setTotalLentMoney] = useState<number>(0);
-  const [filterMonthValue, setFilterMonthValue] = useState<string>(
-    (new Date().getMonth() + 1).toString().padStart(2, '0')
-  );
+  const [filterMonthValue, setFilterMonthValue] =
+    useState<string>(getCurrentMonth());
   const [filterYearValue, setFilterYearValue] = useState<string>(
     new Date().getFullYear().toString()
   );
@@ -64,8 +64,9 @@ const Dashboard: React.FC = () => {
     });
 
   useEffect(() => {
+    const currentMonthInNumber = (new Date().getMonth() + 1).toString().padStart(2, '0');
     getTotalExpensesAndAddedMoneyMutate({
-      month: filterMonthValue,
+      month: currentMonthInNumber,
       year: filterYearValue,
     });
   }, []);

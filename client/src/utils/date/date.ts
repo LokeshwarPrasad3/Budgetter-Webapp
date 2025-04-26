@@ -161,5 +161,19 @@ export const getLast7Dates = [...Array(7)]
 
 // get current month
 export const getCurrentMonth = (): string => {
-  return format(new Date(), 'MMMM'); 
+  return format(new Date(), 'MMMM');
+};
+
+// Get message for last 7 days PDF
+export const getLast7DaysTimelineMessage = (): string => {
+  const today = new Date();
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(today.getDate() - 6); // Subtract 6 days (including today)
+
+  const formatDate = (date: Date) => {
+    return `${date.getDate()} ${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
+  };
+
+  return `${formatDate(sevenDaysAgo).toUpperCase()} to ${formatDate(today).toUpperCase()}`;
 }
+

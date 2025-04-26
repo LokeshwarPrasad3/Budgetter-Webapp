@@ -17,7 +17,7 @@ declare module 'jspdf' {
 interface Expense {
   sno: number;
   name: string;
-  price: string;
+  price: number;
   category: string;
   createdAt: string;
 }
@@ -31,16 +31,16 @@ const PDFExportComponent: React.FC<ExportTableProps> = ({
   expenses,
   createdAt,
 }) => {
-    const user = useSelector((state: any) => state.user?.user);
-    const userDetails = {
-      name: user?.name,
-      username: user?.username,
-      email: user?.email,
-      currentPocketMoney: user?.currentPocketMoney,
-      DOB: user?.DOB,
-    };
+  const user = useSelector((state: any) => state.user?.user);
+  const userDetails = {
+    name: user?.name,
+    username: user?.username,
+    email: user?.email,
+    currentPocketMoney: user?.currentPocketMoney,
+    DOB: user?.DOB,
+  };
 
-
+  
   const exportPDF = () => {
     const doc = new jsPDF('p', 'mm', 'a4');
 
@@ -83,8 +83,12 @@ const PDFExportComponent: React.FC<ExportTableProps> = ({
     });
 
     // 🔹 Expenses Table Heading
-    doc.setFontSize(14);
-    doc.text(`EXPENSES STATEMENT : ${new Date(createdAt).toISOString().split('T')[0].split('-').reverse().join('-')} `, 13, doc.lastAutoTable.finalY + 10);
+    doc.text('EXPENSES STATEMENT :', 13, doc.lastAutoTable.finalY + 10);
+    // Get width of the first part
+    const textWidth = doc.getTextWidth('EXPENSES STATEMENT : ');
+    // Change font size to 12px for createdAt
+    doc.setFontSize(12);
+    doc.text(createdAt, 13 + textWidth, doc.lastAutoTable.finalY + 9.7);
 
     autoTable(doc, {
       startY: doc.lastAutoTable.finalY + 15,
