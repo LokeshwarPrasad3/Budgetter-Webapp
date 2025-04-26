@@ -25,6 +25,7 @@ interface TotalExpensesAndAddedMoneyInMonthResType {
 }
 interface TotalExpensesAndAddedMoneyInMonthCredentialType {
   month: string;
+  year: string;
 }
 
 export const getTotalExpensesAndAddedMoneyInMonth = async (

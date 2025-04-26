@@ -5,6 +5,20 @@ import { getTotalExpensesAndAddedMoneyInMonth } from '@/services/reports';
 import { useMutation } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  monthsNames,
+  prevYearsName,
+  getMonthInNumber,
+} from '@/utils/date/date';
+import toast from 'react-hot-toast';
 
 const Dashboard: React.FC = () => {
   const user = useSelector((state: any) => state.user.user);
@@ -13,6 +27,13 @@ const Dashboard: React.FC = () => {
     useState<number>(0);
   const [lastTotalExpenses, setlastTotalExpenses] = useState<number>(0);
   const [totalLentMoney, setTotalLentMoney] = useState<number>(0);
+  const [filterMonthValue, setFilterMonthValue] = useState<string>(
+    (new Date().getMonth() + 1).toString().padStart(2, '0')
+  );
+  const [filterYearValue, setFilterYearValue] = useState<string>(
+    new Date().getFullYear().toString()
+  );
+
   interface expenseCategoriesTypes {
     GroceriesExpenses: number;
     Housing_UtilitiesExpenses: number;
@@ -43,12 +64,34 @@ const Dashboard: React.FC = () => {
     });
 
   useEffect(() => {
-    const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
-
-    // console.log(month);
-    // console.log(typeof month);
-    getTotalExpensesAndAddedMoneyMutate({ month });
+    getTotalExpensesAndAddedMoneyMutate({
+      month: filterMonthValue,
+      year: filterYearValue,
+    });
   }, []);
+
+  const handleDashboardFilterMonthExpenses = (month: string) => {
+    if (!month) {
+      toast.error('Please Select Month!!');
+      return;
+    }
+    const monthInNum = getMonthInNumber(month);
+    console.log('real selected value', month, filterMonthValue, monthInNum);
+    setFilterMonthValue(month);
+    getTotalExpensesAndAddedMoneyMutate({
+      month: monthInNum,
+      year: filterYearValue,
+    });
+  };
+  const handleDashboardFilterYearExpenses = (year: string) => {
+    if (!year) {
+      toast.error('Please Select Year!!');
+      return;
+    }
+    console.log('real selected value', year, filterMonthValue);
+    getTotalExpensesAndAddedMoneyMutate({ month: filterMonthValue, year });
+    setFilterYearValue(year);
+  };
 
   return (
     <>
@@ -65,8 +108,44 @@ const Dashboard: React.FC = () => {
             )}{' '}
           </h3>
         </div>
-        <div className="summarize_box_container flex flex-col justify-start items-start gap-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-md border border-border_light dark:border-border_dark w-full p-4 px-5 shadow-sm">
-          <h4 className="text-base font-semibold">Your Current Month Report</h4>
+        <div className="summarize_box_container flex justify-center sm:justify-between flex-wrap items-center gap-y-2.5 gap-x-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-md border border-border_light dark:border-border_dark w-full p-4 px-5 shadow-sm">
+          <h4 className="text-base font-semibold">
+            Your {filterMonthValue} Month Report
+          </h4>
+          <div className="filters flex justify-center gap-2 font-medium items-center">
+            <p className="whitespace-nowrap mr-1">Filter Report</p>
+            {/* month */}
+            <Select onValueChange={handleDashboardFilterMonthExpenses}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder={filterMonthValue} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {monthsNames.map((monthName) => (
+                    <SelectItem key={monthName} value={monthName}>
+                      {monthName}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            {/* year */}
+            <Select onValueChange={handleDashboardFilterYearExpenses}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder={filterYearValue} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Year</SelectItem>
+                <SelectGroup>
+                  {prevYearsName.map((year) => (
+                    <SelectItem key={year} value={year}>
+                      {year}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
         <SummarizeBoxes
           totalExpensesOfMonth={totalExpensesOfMonth}

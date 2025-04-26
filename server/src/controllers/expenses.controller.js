@@ -44,7 +44,7 @@ export const addTodayExpenses = asyncHandler(async (req, res) => {
     user.currentPocketMoney = newBalance.toString();
     console.log(`${req.user.username} Your remaining balance `, user.currentPocketMoney)
     await user.save();
-    console.log(createdExpenses);
+    // console.log(createdExpenses);
     return res.status(201).json(
         new ApiResponse(201, createdExpenses, { currentPocketMoney: user.currentPocketMoney }, "Expenses created successfully!!")
     )
@@ -144,7 +144,7 @@ export const showAllDateExpenses = asyncHandler(async (req, res) => {
     if (!AllDateExpenses) {
         throw new ApiError(404, "No expenses found!!");
     }
-    console.log(AllDateExpenses);
+    // console.log(AllDateExpenses);
     res.status(200)
         .json(
             new ApiResponse(200, AllDateExpenses, "All Expenses Found successfully!!")

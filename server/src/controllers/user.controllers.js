@@ -139,7 +139,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     // check if user already exist
     const existedUser = await UserModel.findOne({
         $or: [{ email }, { username }]
-    });
+    }).select("+password");
     if (!existedUser) {
         throw new ApiError(400, `${email} - User does not Exist!!`);
     }
