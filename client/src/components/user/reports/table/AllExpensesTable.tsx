@@ -26,10 +26,12 @@ import {
   getLast7Days,
   monthsNames,
   prevYearsName,
+  getLast7DaysTimelineMessage,
 } from '@/utils/date/date';
 import { ListFilter } from 'lucide-react';
 import { setAllExpenses } from '@/features/expenses/expenses';
 import toast from 'react-hot-toast';
+import PDFExportComponent from '../../PDFExportComponent';
 
 interface Product {
   name: string;
@@ -38,6 +40,14 @@ interface Product {
   _id: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface Expense {
+  sno: number;
+  name: string;
+  price: number;
+  category: string;
+  createdAt: string;
 }
 
 interface FlattenedExpense {
@@ -88,6 +98,8 @@ const AllExpensesTable: React.FC = () => {
   const handlePopoverClose = (open: boolean) => {
     setIsPopoverOpen(open);
   };
+  const [flattenProductsData, setFlattenProductsData] = useState<Expense[]>([]);
+  const [PDFStatementTimeline, setPDFStatementTimeline] = useState<string>('');
 
   const dispatch = useDispatch();
   const [data, setData] = useState<FlattenedExpense[]>([]);
@@ -125,6 +137,21 @@ const AllExpensesTable: React.FC = () => {
         product: product,
       }))
     );
+  };
+
+  // Function filtered data & Provide combined products array
+  const ExpensesProductsFlattenDataForPDF = (
+    flattenedData: FlattenedExpense[],
+    timeLineMessage: string
+  ) => {
+    const allProducts =
+      flattenedData?.map((expense, index) => ({
+        ...expense.product,
+        sno: index + 1,
+      })) ?? [];
+    console.log('all wala ', allProducts);
+    setFlattenProductsData(allProducts);
+    setPDFStatementTimeline(timeLineMessage);
   };
 
   //1️⃣ get selected months filter data
@@ -169,6 +196,12 @@ const AllExpensesTable: React.FC = () => {
     const filteredFinalMonthExpense = getFilteredYearExpenses?.filter(
       (dayExpenses: any) => dayExpenses.date?.slice(3, 5) === monthInNumber
     );
+    // for pdf download data
+    const timeLineMessage = `${monthName} ${filterYearValue}`;
+    ExpensesProductsFlattenDataForPDF(
+      filteredFinalMonthExpense,
+      timeLineMessage
+    );
     // console.log(filteredFinalMonthExpense);
     setData(filteredFinalMonthExpense);
   };
@@ -189,6 +222,12 @@ const AllExpensesTable: React.FC = () => {
     const filteredFinalYearExpense = getFilteredMonthExpenses?.filter(
       (dayExpenses: any) => dayExpenses.date?.slice(6) === year
     );
+    // for pdf download data
+    const timeLineMessage = `${filterMonthValue.toUpperCase()} ${year}`;
+    ExpensesProductsFlattenDataForPDF(
+      filteredFinalYearExpense,
+      timeLineMessage
+    );
     // console.log(filteredFinalYearExpense);
     setData(filteredFinalYearExpense);
   };
@@ -203,6 +242,12 @@ const AllExpensesTable: React.FC = () => {
     // console.log(flattenedData)
     const filteredLast7DaysExpenseData = flattenedData?.filter((dayExpenses) =>
       getLast7DaysDates.includes(dayExpenses.date)
+    );
+    // for pdf download data
+    const timeLineMessage = getLast7DaysTimelineMessage();
+    ExpensesProductsFlattenDataForPDF(
+      filteredLast7DaysExpenseData,
+      timeLineMessage
     );
     // console.log(filteredLast7DaysExpenseData);
     setData(filteredLast7DaysExpenseData);
@@ -224,6 +269,12 @@ const AllExpensesTable: React.FC = () => {
         (dayExpenses: any) => dayExpenses.date?.slice(6) === filterYearValue
       );
       setData(filteredFinalYearExpense);
+      // for pdf download data
+      const timeLineMessage = `ALL Months of ${filterYearValue}`;
+      ExpensesProductsFlattenDataForPDF(
+        filteredFinalYearExpense,
+        timeLineMessage
+      );
     }
   }, [allExpensesArray]);
 
@@ -242,7 +293,17 @@ const AllExpensesTable: React.FC = () => {
   return (
     <div className="allexpenses_table_container bg-[#ffffff] dark:bg-bg_primary_dark rounded-md w-full px-0 py-5 flex justify-center flex-col gap-4">
       <div className="filter_expense_containerr flex justify-between items-center gap-5 flex-wrap text-base px-5 sticky top-16 rounded-md py-3 bg-white dark:bg-bg_primary_dark ">
-        <p className="font-semibold">Your All Expenses</p>
+        <div className="left_sectionss flex justify-start items-center gap-3">
+          <p className="font-semibold">Your All Expenses</p>
+          {flattenProductsData.length !== 0 && (
+            <div className="flex sm:hidden">
+              <PDFExportComponent
+                createdAt={PDFStatementTimeline}
+                expenses={flattenProductsData}
+              />
+            </div>
+          )}
+        </div>
         <div className="filters flex justify-center gap-1 font-medium items-center">
           <span
             data-tooltip-id="header-tooltip"
@@ -276,7 +337,7 @@ const AllExpensesTable: React.FC = () => {
           </Popover>
           {/* month */}
           <Select onValueChange={handleFilterMonthExpenses}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full mr-1">
               <SelectValue placeholder="All Month" />
             </SelectTrigger>
             <SelectContent>
@@ -292,7 +353,7 @@ const AllExpensesTable: React.FC = () => {
           </Select>
           {/* year */}
           <Select onValueChange={handleFilterYearExpenses}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full mr-1.5">
               <SelectValue placeholder={filterYearValue} />
             </SelectTrigger>
             <SelectContent>
@@ -306,6 +367,14 @@ const AllExpensesTable: React.FC = () => {
               </SelectGroup>
             </SelectContent>
           </Select>
+          {flattenProductsData.length !== 0 && (
+            <div className="sm:flex hidden">
+              <PDFExportComponent
+                createdAt={PDFStatementTimeline}
+                expenses={flattenProductsData}
+              />
+            </div>
+          )}
         </div>
       </div>
       {/* {isLoading && (

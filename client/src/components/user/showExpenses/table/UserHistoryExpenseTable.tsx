@@ -91,7 +91,12 @@ const UserHistoryExpenseTable: React.FC = () => {
                 })()}
               </span>
               <PDFExportComponent
-                createdAt={data[0]?.createdAt}
+                createdAt={new Date(data[0]?.createdAt)
+                  .toISOString()
+                  .split('T')[0]
+                  .split('-')
+                  .reverse()
+                  .join('-')}
                 expenses={expensesDetailArray}
               />
             </div>
