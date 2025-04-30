@@ -41,16 +41,16 @@ const FilterShowExpenses = () => {
 
   return (
     <>
-      <div className="add_expense_container flex flex-col justify-start items-start gap-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-md border border-border_light dark:border-border_dark w-full p-4 px-5 shadow-sm">
+      <div className="add_expense_container flex w-full flex-col items-start justify-start gap-4 rounded-md border border-border_light bg-bg_primary_light p-4 px-5 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark">
         <h4 className="text-base font-semibold">Filter Your Expenses</h4>
-        <div className="flex justify-start flex-wrap flex-col items-start gap-3 md:gap-5 w-full">
-          <div className="input_containers grid grid-cols-12 w-full lg:w-8/12 gap-3 md:gap-5">
-            <div className="col-span-12 sm:col-span-6 w-full lg:col-span-3 input_section flex justify-start flex-col items-start gap-1">
+        <div className="flex w-full flex-col flex-wrap items-start justify-start gap-3 md:gap-5">
+          <div className="input_containers grid w-full grid-cols-12 gap-3 md:gap-5 lg:w-8/12">
+            <div className="input_section col-span-12 flex w-full flex-col items-start justify-start gap-1 sm:col-span-6 lg:col-span-3">
               <p className="text-sm">Choose Date</p>
               <DatePicker inputDate={inputDate} setInputDate={setInputDate} />
             </div>
           </div>
-          <div className="action_buttons flex gap-4 justify-start items-center py-2">
+          <div className="action_buttons flex items-center justify-start gap-4 py-2">
             <Button
               disabled={isPending}
               onClick={handleDate}
@@ -68,15 +68,15 @@ const FilterShowExpenses = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center flex-col items-center w-full bg-bg_primary_light dark:bg-bg_primary_dark rounded-md border border-border_light dark:border-border_dark shadow-sm">
-        <div className="expense_details_container flex flex-col justify-start items-start w-full">
+      <div className="flex w-full flex-col items-center justify-center rounded-md border border-border_light bg-bg_primary_light shadow-sm dark:border-border_dark dark:bg-bg_primary_dark">
+        <div className="expense_details_container flex w-full flex-col items-start justify-start">
           {isDataFound && (
-            <h4 className="text-base font-semibold p-4">
+            <h4 className="p-4 text-base font-semibold">
               Your {formatDate(inputDate)} Expenses
             </h4>
           )}
         </div>
-        <UserHistoryExpenseTable />
+        <UserHistoryExpenseTable expensesDate={inputDate} />
       </div>
     </>
   );

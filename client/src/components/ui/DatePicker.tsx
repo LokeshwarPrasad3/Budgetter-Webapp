@@ -23,7 +23,7 @@ export function DatePicker({ inputDate, setInputDate }: DatePickerType) {
         <Button
           variant={'outline'}
           className={cn(
-            'w-full justify-start dark:hover:text-white text-left font-normal dark:bg-bg_secondary_dark h-9',
+            'h-9 w-full justify-start text-left font-normal dark:bg-bg_secondary_dark dark:hover:text-white',
             !inputDate && 'text-muted-foreground'
           )}
         >
@@ -35,7 +35,13 @@ export function DatePicker({ inputDate, setInputDate }: DatePickerType) {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
+
+      <PopoverContent
+        className="w-auto p-0"
+        side="bottom"
+        align="start"
+        avoidCollisions={false} // 👈 important fix
+      >
         <Calendar
           mode="single"
           selected={inputDate}
