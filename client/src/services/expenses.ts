@@ -196,10 +196,10 @@ export const deleteUserExpense = async (
       'Content-Type': 'application/json',
       Authorization: `Bearer ${getCurrentAccessToken()}`,
     },
+    data: credentials
   };
-  const { data } = await axios.patch<DeletedExpenseRes>(
+  const { data } = await axios.delete<DeletedExpenseRes>(
     `${backendHostURL}/user/delete-expenses`,
-    credentials,
     config
   );
   return data;

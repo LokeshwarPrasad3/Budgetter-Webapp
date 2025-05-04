@@ -23,9 +23,10 @@ type ExpensesTypes = {
 
 interface PropType {
   expensesDate: Date;
+  storedExpenseDate: string;
 }
 
-const UserHistoryExpenseTable: React.FC<PropType> = ({ expensesDate }) => {
+const UserHistoryExpenseTable: React.FC<PropType> = ({ expensesDate, storedExpenseDate }) => {
   const [data, setData] = React.useState<ExpensesTypes[]>([]);
   const expensesDetailArray = useSelector((state: any) => {
     return state.user?.expenses;
@@ -75,9 +76,13 @@ const UserHistoryExpenseTable: React.FC<PropType> = ({ expensesDate }) => {
           <div className="flex w-full items-center justify-start space-x-2">
             <EditExpensesDialog
               expensesDate={expensesDate}
+              storedExpenseDate={storedExpenseDate}
               info={info.row.original}
             />
-            <DeleteExpensesDialog />
+            <DeleteExpensesDialog
+              storedExpenseDate={storedExpenseDate}
+              info={info.row.original}
+            />
           </div>
         );
       },

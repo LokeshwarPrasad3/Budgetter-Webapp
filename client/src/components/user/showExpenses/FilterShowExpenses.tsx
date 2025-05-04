@@ -13,12 +13,14 @@ const FilterShowExpenses = () => {
   const dispatch = useDispatch();
   const [isDataFound, setIsDataFound] = useState(false);
   const [inputDate, setInputDate] = useState<Date | undefined>(new Date());
+  const [storedExpenseDate, setStoredExpenseDate] = useState<string>("");
 
   const { mutateAsync: showExpensesMutate, isPending } = useMutation({
     mutationFn: getExpensesByDate,
     onSuccess: (data) => {
       console.log('Expenses fetched successfully', data?.data?.products);
       // console.log("here", data)
+      setStoredExpenseDate(data?.data?.date)
       setIsDataFound(true);
       let products: any[];
       if (data?.data === null) {
@@ -76,7 +78,7 @@ const FilterShowExpenses = () => {
             </h4>
           )}
         </div>
-        <UserHistoryExpenseTable expensesDate={inputDate} />
+        <UserHistoryExpenseTable storedExpenseDate={storedExpenseDate} expensesDate={inputDate} />
       </div>
     </>
   );

@@ -21,6 +21,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { editUserExpense } from '@/services/expenses';
 
 interface EditExpensesDialogPropType {
+  storedExpenseDate: string;
   expensesDate: Date;
   info: {
     _id: string;
@@ -33,11 +34,12 @@ interface EditExpensesDialogPropType {
 }
 
 const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
+  storedExpenseDate,
   expensesDate,
   info,
 }) => {
   const queryClient = useQueryClient();
-  const { _id, category, name, price, createdAt } = info;
+  const { _id, category, name, price } = info;
   const [open, setOpen] = useState(false);
 
   const [expenseDate, setExpenseDate] = useState<string>(() => {
@@ -55,10 +57,12 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
   const { mutateAsync: editExpenseMutate, isPending } = useMutation({
     mutationFn: editUserExpense,
     onSuccess: (data) => {
-      console.log('data response ', data);
+      // console.log('data response ', data);
       queryClient.invalidateQueries({ queryKey: ['todayExpense'] });
       queryClient.invalidateQueries({ queryKey: ['user'] });
       queryClient.invalidateQueries({ queryKey: ['getUserAllExpenses'] });
+      toast.success('Expense Edited Successfully!!');
+      setOpen(false);
     },
     onError: (error) => {
       toast.error('Error updating expense');
@@ -67,10 +71,7 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
   });
 
   const handleUpdateExpense = () => {
-    const actualDate = new Date(createdAt)
-      .toLocaleDateString('en-GB')
-      .split('/')
-      .join('-');
+    const actualDate = storedExpenseDate;
     if (
       !expenseDate ||
       !expenseName?.trim() ||

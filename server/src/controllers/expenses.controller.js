@@ -160,7 +160,7 @@ export const editUserExpenses = asyncHandler(async (req, res) => {
     if (!expenseName || !expenseCategory || !expenseDate || typeof expensePrice !== 'number' || !/^\d{2}-\d{2}-\d{4}$/.test(actualDate)) {
         throw new ApiError(400, "Invalid input values.");
     }
-
+    
     let actualExpensePrice = 0;
 
     // Check if the user wants to edit the same date
@@ -188,11 +188,17 @@ export const editUserExpenses = asyncHandler(async (req, res) => {
         await existExpenses.save();
     } else {
         // Delete previous date products from that
-        await ExpenseModel.findOneAndUpdate(
+        const existingExpenseCollection = await ExpenseModel.findOneAndUpdate(
             { user: userId, date: actualDate },
-            { $pull: { products: { _id: expenseId } } }
+            { $pull: { products: { _id: expenseId } } },
+            { new: true }
         );
 
+        // delete that collection after 0 products
+        if (existingExpenseCollection && existingExpenseCollection.products.length === 0) {
+            await ExpenseModel.findOneAndDelete({ user: userId, date: actualDate });
+        }
+        
         // If user wants to change the date, find if the new date already has expenses
         const ExpenseNewDateExist = await ExpenseModel.findOne({
             user: userId,
@@ -226,7 +232,7 @@ export const editUserExpenses = asyncHandler(async (req, res) => {
 
     // Calculate price difference and update user balance
     const user = req.user;
-    let priceDifferences = parseFloat(expensePrice) - parseFloat(actualExpensePrice); // Corrected subtraction order
+    let priceDifferences = parseFloat(actualExpensePrice) - parseFloat(expensePrice); // Corrected subtraction order
 
     console.log("Price difference:", actualExpensePrice, expensePrice, priceDifferences);
 
