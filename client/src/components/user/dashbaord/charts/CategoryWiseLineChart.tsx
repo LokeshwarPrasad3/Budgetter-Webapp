@@ -2,11 +2,8 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import * as am5 from '@amcharts/amcharts5';
 import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ChartFilterOptions from '../../common/ChartFilterOptions';
-import { setAllExpenses } from '@/features/expenses/expenses';
-import { getUserAllExpenses } from '@/services/expenses';
-import { useQuery } from '@tanstack/react-query';
 import { getDayName, getLast7Dates } from '@/utils/date/date';
 import LineChartLoader from './Loader/LineChartLoader';
 
@@ -17,7 +14,6 @@ interface chartDataType {
 
 const CategoryWiseLineChart: React.FC = () => {
   const chartRef = useRef(null);
-  const dispatch = useDispatch();
   const [chartFilter, setChartFilter] = useState<string>('daily'); // daily, weely, monthly , yearly
   const [chartData, setChartData] = useState<chartDataType[]>([
     { day: 'Sunday', value: 290 },
@@ -33,20 +29,6 @@ const CategoryWiseLineChart: React.FC = () => {
   const allExpensesArray = useSelector(
     (state: any) => state.expenses.allExpenses
   );
-
-  // Use useQuery to fetch data only when necessary
-  const { data: allExpensesResData, isLoading } = useQuery({
-    queryFn: getUserAllExpenses,
-    queryKey: ['getUserAllExpenses'],
-    enabled: !allExpensesArray?.length, // Only fetch if no expenses in store
-  });
-
-  // Update Redux store with fetched data when available
-  useEffect(() => {
-    if (allExpensesResData?.success) {
-      dispatch(setAllExpenses(allExpensesResData.data));
-    }
-  }, [allExpensesResData, dispatch]);
 
   // 1️⃣ Daily wise data in week
   const getWeeklyFilteredExpensesData = () => {
@@ -325,18 +307,18 @@ const CategoryWiseLineChart: React.FC = () => {
 
   return (
     <>
-      <div className="flex items-center p-0 py-5 md:p-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-lg shadow-sm flex-col max-w-full w-full border border-border_light dark:border-border_dark">
-        <div className="heading_part_chart relative w-full flex justify-center items-center">
-          <h2 className="text-lg text-left font-semibold mb-4">
+      <div className="flex w-full max-w-full flex-col items-center rounded-lg border border-border_light bg-bg_primary_light p-0 py-5 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark md:p-4">
+        <div className="heading_part_chart relative flex w-full items-center justify-center">
+          <h2 className="mb-4 text-left text-lg font-semibold">
             Expenses Details
           </h2>
           <ChartFilterOptions setChartFilter={setChartFilter} />
         </div>
-        <div className="chart_element_container flex justify-center items-center w-full h-full flex-col">
-          {!isLoading ? (
+        <div className="chart_element_container flex h-full w-full flex-col items-center justify-center">
+          {allExpensesArray ? (
             <div
               ref={chartRef}
-              className="h-[250px] lg:h-full w-full"
+              className="h-[250px] w-full lg:h-full"
               style={{ maxWidth: '100%' }}
             ></div>
           ) : (

@@ -137,7 +137,7 @@ export const showParticularDateExpenses = asyncHandler(async (req, res) => {
         )
 })
 
-// 3. show all expenses
+// 5. show all expenses
 export const showAllDateExpenses = asyncHandler(async (req, res) => {
     const userId = req.user._id; // from middleware
     const AllDateExpenses = await ExpenseModel.find({ user: userId }).sort({ date: -1 });
@@ -151,9 +151,156 @@ export const showAllDateExpenses = asyncHandler(async (req, res) => {
         )
 })
 
+// 6. Edit single expenses 
+export const editUserExpenses = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+    const { expenseId, actualDate, expenseName, expensePrice, expenseCategory, expenseDate } = req.body;
 
-// NOTE
-// populate is used to show data from different collection
-// in this case, we are showing expense data with user data
+    // Validate input values in one line.
+    if (!expenseName || !expenseCategory || !expenseDate || typeof expensePrice !== 'number' || !/^\d{2}-\d{2}-\d{4}$/.test(actualDate)) {
+        throw new ApiError(400, "Invalid input values.");
+    }
+    
+    let actualExpensePrice = 0;
+
+    // Check if the user wants to edit the same date
+    // Find existing expenses on the given date for the user
+    const existExpenses = await ExpenseModel.findOne({
+        user: userId,
+        date: actualDate
+    });
+
+    if (!existExpenses) {
+        throw new ApiError(500, "Something went wrong!!");
+    }
+
+    // If expenses exist, find the specific product to update
+    const ExpensesFound = existExpenses?.products?.find((prod) => prod._id.toString() === expenseId);
+    actualExpensePrice = ExpensesFound?.price;
+
+    if (actualDate === expenseDate && ExpensesFound) {
+        // Update product details
+        ExpensesFound.name = expenseName;
+        ExpensesFound.price = expensePrice;
+        ExpensesFound.category = expenseCategory;
+
+        // Save updated expense to the database
+        await existExpenses.save();
+    } else {
+        // Delete previous date products from that
+        const existingExpenseCollection = await ExpenseModel.findOneAndUpdate(
+            { user: userId, date: actualDate },
+            { $pull: { products: { _id: expenseId } } },
+            { new: true }
+        );
+
+        // delete that collection after 0 products
+        if (existingExpenseCollection && existingExpenseCollection.products.length === 0) {
+            await ExpenseModel.findOneAndDelete({ user: userId, date: actualDate });
+        }
+        
+        // If user wants to change the date, find if the new date already has expenses
+        const ExpenseNewDateExist = await ExpenseModel.findOne({
+            user: userId,
+            date: expenseDate
+        });
+        console.log("Existing date:", ExpenseNewDateExist);
+
+        const productObject = {
+            name: expenseName,
+            price: expensePrice,
+            category: expenseCategory
+        };
+
+        if (ExpenseNewDateExist === null) {
+            // If no expenses exist for the new date, create new expense record
+            await ExpenseModel.create({
+                user: userId,
+                products: [productObject],
+                date: expenseDate,
+            });
+            console.log("Created new expense record.");
+        } else {
+            // If expenses exist for the new date, push the new product to the products array
+            await ExpenseModel.findOneAndUpdate(
+                { user: userId, date: expenseDate },
+                { $addToSet: { products: productObject } },
+                { new: true }
+            );
+        }
+    }
+
+    // Calculate price difference and update user balance
+    const user = req.user;
+    let priceDifferences = parseFloat(actualExpensePrice) - parseFloat(expensePrice); // Corrected subtraction order
+
+    console.log("Price difference:", actualExpensePrice, expensePrice, priceDifferences);
+
+    const newBalance = parseFloat(user.currentPocketMoney) + priceDifferences;
+    user.currentPocketMoney = newBalance.toString();
+
+    console.log(`${req.user.username} Your remaining balance: `, user.currentPocketMoney);
+
+    // Save updated user balance
+    await user.save();
+
+    // Return success response
+    return res.status(201).json(new ApiResponse(201, null, "Expenses updated successfully!"));
+});
+
+// 7. Delete single expense
+export const deleteUserExpenses = asyncHandler(async (req, res) => {
+    const userId = req.user._id;
+    const { expenseId, expenseDate, isAddPriceToPocketMoney } = req.body;
+
+    // Step 1: Validate input values early
+    if (!expenseDate || !/^\d{2}-\d{2}-\d{4}$/.test(expenseDate)) {
+        throw new ApiError(400, "Invalid expense date format. Expected DD-MM-YYYY.");
+    }
+
+    // Step 2: Find if the product exists inside the expense document
+    const existingExpense = await ExpenseModel.findOne(
+        { user: userId, date: expenseDate, 'products._id': expenseId },
+        { 'products.$': 1 } // Only return the matched product inside products array
+    );
+
+    // Step 3: Check if the product was found
+    const foundProduct = existingExpense?.products?.[0];
+    if (!foundProduct) {
+        throw new ApiError(404, "Expense not found.");
+    }
+
+    const expensePrice = foundProduct.price; 
+
+    // Step 4: Now safely remove the product from the array
+    const updatedExpense = await ExpenseModel.findOneAndUpdate(
+        { user: userId, date: expenseDate },
+        { $pull: { products: { _id: expenseId } } },
+        { new: true }
+    );
+
+    // Step 5: After removal, if the products array becomes empty, delete the whole document
+    if (updatedExpense && updatedExpense.products.length === 0) {
+        await ExpenseModel.deleteOne({ _id: updatedExpense._id });
+    }
+
+    // Step 6: If requested, add the product price back to user's pocket money
+    if (isAddPriceToPocketMoney) {
+        const user = req.user;
+
+        const newBalance = parseFloat(user.currentPocketMoney) + parseFloat(expensePrice || 0);
+        user.currentPocketMoney = newBalance.toString();
+
+        console.log(`${user.username} your updated pocket money balance: ${user.currentPocketMoney}`);
+
+        await user.save(); // Save updated user balance
+    }
+
+    // Step 7: Return success response
+    return res.status(201).json(new ApiResponse(201, null, "Expense deleted successfully!"));
+});
+
+
+
 
 

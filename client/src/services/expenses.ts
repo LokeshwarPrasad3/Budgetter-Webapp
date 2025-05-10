@@ -142,3 +142,65 @@ export const getUserAllExpenses = async (): Promise<AllExpensesRes> => {
   );
   return data;
 };
+
+// Edit existing EXPENSES
+interface EditedExpenseRes {
+  statusCode: number;
+  data: [];
+  message: string;
+  success: boolean;
+}
+interface EditedExpenseCredeType {
+  actualDate: string;
+  expenseId: string;
+  expenseName: string;
+  expensePrice: number;
+  expenseCategory: string;
+  expenseDate: string;
+}
+export const editUserExpense = async (
+  credentials: EditedExpenseCredeType
+): Promise<EditedExpenseRes> => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
+    },
+  };
+  const { data } = await axios.patch<EditedExpenseRes>(
+    `${backendHostURL}/user/edit-expenses`,
+    credentials,
+    config
+  );
+  return data;
+};
+
+// Delete existing EXPENSES
+interface DeletedExpenseRes {
+  statusCode: number;
+  data: [];
+  message: string;
+  success: boolean;
+}
+interface DeleteExpenseCredeType {
+  expenseDate: string; 
+  expenseId: string; 
+  isAddPriceToPocketMoney: boolean; 
+}
+
+export const deleteUserExpense = async (
+  credentials: DeleteExpenseCredeType
+): Promise<DeletedExpenseRes> => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
+    },
+    data: credentials
+  };
+  const { data } = await axios.delete<DeletedExpenseRes>(
+    `${backendHostURL}/user/delete-expenses`,
+    config
+  );
+  return data;
+};

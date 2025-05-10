@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { registerUser, loginUser, resetPassword, changeAvatar, validateResetPasswordToken, validateAccountVerification, addUserPocketMoney, getLoggedUserData, logoutUser, sentTokenToResetPassword, checkUserVerified, changeUserCredentials, deleteUserAccount, getAllAppUsersData, AddLentMoney, getAllLentMoneyHistory, receivedLentMoney, SignWithGoogleAuthentication } from "../controllers/user.controllers.js";
-import { showParticularDateExpenses, addTodayExpenses, addParticularDateExpenses, showTodayExpenses, showAllDateExpenses } from "../controllers/expenses.controller.js";
+import { showParticularDateExpenses, addTodayExpenses, addParticularDateExpenses, showTodayExpenses, showAllDateExpenses, editUserExpenses, deleteUserExpenses } from "../controllers/expenses.controller.js";
 import verifyJwtToken from "../middleware/auth.middleware.js";
 import { upload } from "../middleware/multer.middleware.js"
 const router = Router();
@@ -31,6 +31,8 @@ router.route("/show-today-expenses").get(verifyJwtToken, showTodayExpenses)
 // for past day
 router.route("/add-past-date-expenses").post(verifyJwtToken, addParticularDateExpenses)
 router.route("/show-past-date-expenses").post(verifyJwtToken, showParticularDateExpenses)
+router.route("/edit-expenses").patch(verifyJwtToken, editUserExpenses)
+router.route("/delete-expenses").delete(verifyJwtToken, deleteUserExpenses)
 
 // all expenses of user
 router.route("/show-all-date-expenses").get(verifyJwtToken, showAllDateExpenses);

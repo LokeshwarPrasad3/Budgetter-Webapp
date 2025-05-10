@@ -5,9 +5,9 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useDispatch, useSelector } from 'react-redux';
-import { useQuery } from '@tanstack/react-query';
-import { getUserAllExpenses } from '@/services/expenses';
+import { useSelector } from 'react-redux';
+// import { useQuery } from '@tanstack/react-query';
+// import { getUserAllExpenses } from '@/services/expenses';
 import {
   Select,
   SelectContent,
@@ -29,7 +29,7 @@ import {
   getLast7DaysTimelineMessage,
 } from '@/utils/date/date';
 import { ListFilter } from 'lucide-react';
-import { setAllExpenses } from '@/features/expenses/expenses';
+// import { setAllExpenses } from '@/features/expenses/expenses';
 import toast from 'react-hot-toast';
 import PDFExportComponent from '../../PDFExportComponent';
 
@@ -92,7 +92,7 @@ const columns = [
 
 const AllExpensesTable: React.FC = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
-  const [hasLoaded, setHasLoaded] = useState<boolean>(false);
+  // const [hasLoaded, setHasLoaded] = useState<boolean>(false);
   const [filterMonthValue, setFilterMonthValue] = useState<string>('all');
   const [filterYearValue, setFilterYearValue] = useState<string>('2025');
   const handlePopoverClose = (open: boolean) => {
@@ -101,7 +101,7 @@ const AllExpensesTable: React.FC = () => {
   const [flattenProductsData, setFlattenProductsData] = useState<Expense[]>([]);
   const [PDFStatementTimeline, setPDFStatementTimeline] = useState<string>('');
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [data, setData] = useState<FlattenedExpense[]>([]);
 
   // Get all expenses from the Redux store
@@ -110,23 +110,23 @@ const AllExpensesTable: React.FC = () => {
   );
 
   // Use useQuery to fetch data only when necessary
-  const {
-    data: allExpensesResData,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryFn: getUserAllExpenses,
-    queryKey: ['getUserAllExpenses'],
-    enabled: !allExpensesArray?.length, // Only fetch if no expenses in store
-  });
+  // const {
+  //   data: allExpensesResData,
+  //   isLoading,
+  //   isError,
+  // } = useQuery({
+  //   queryFn: getUserAllExpenses,
+  //   queryKey: ['getUserAllExpenses'],
+  //   enabled: !allExpensesArray?.length, // Only fetch if no expenses in store
+  // });
 
-  // Update Redux store with fetched data when available
-  useEffect(() => {
-    if (allExpensesResData?.success) {
-      // console.log(allExpensesResData);
-      dispatch(setAllExpenses(allExpensesResData.data)); // Ensure to access the correct data structure
-    }
-  }, [allExpensesResData, dispatch]); // Added dependencies
+  // // Update Redux store with fetched data when available
+  // useEffect(() => {
+  //   if (allExpensesResData?.success) {
+  //     // console.log(allExpensesResData);
+  //     dispatch(setAllExpenses(allExpensesResData.data)); // Ensure to access the correct data structure
+  //   }
+  // }, [allExpensesResData, dispatch]); // Added dependencies
 
   // Flatten the expenses data to make each product a single row
   const flattenExpenses = (expenses: any[]): FlattenedExpense[] => {
@@ -149,7 +149,6 @@ const AllExpensesTable: React.FC = () => {
         ...expense.product,
         sno: index + 1,
       })) ?? [];
-    console.log('all wala ', allProducts);
     setFlattenProductsData(allProducts);
     setPDFStatementTimeline(timeLineMessage);
   };
@@ -158,7 +157,6 @@ const AllExpensesTable: React.FC = () => {
   const getSelectedMonthExpenses = () => {
     // console.log(filterMonthValue, 'filteredm onth');
     const flattenedData = flattenExpenses(allExpensesArray);
-    console.log('filtermonth', filterMonthValue);
     if (filterMonthValue === 'all') {
       return flattenedData;
     }
@@ -278,11 +276,11 @@ const AllExpensesTable: React.FC = () => {
     }
   }, [allExpensesArray]);
 
-  useEffect(() => {
-    if (!isLoading) {
-      setHasLoaded(true);
-    }
-  }, [isLoading]);
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     setHasLoaded(true);
+  //   }
+  // }, [isLoading]);
 
   const table = useReactTable({
     data,
@@ -291,9 +289,9 @@ const AllExpensesTable: React.FC = () => {
   });
 
   return (
-    <div className="allexpenses_table_container bg-[#ffffff] dark:bg-bg_primary_dark rounded-md w-full px-0 py-5 flex justify-center flex-col gap-4">
-      <div className="filter_expense_containerr flex justify-between items-center gap-5 flex-wrap text-base px-5 sticky top-16 rounded-md py-3 bg-white dark:bg-bg_primary_dark ">
-        <div className="left_sectionss flex justify-start items-center gap-3">
+    <div className="allexpenses_table_container flex w-full flex-col justify-center gap-4 rounded-md bg-[#ffffff] px-0 py-5 dark:bg-bg_primary_dark">
+      <div className="filter_expense_containerr sticky top-16 flex flex-wrap items-center justify-between gap-5 rounded-md bg-white px-5 py-3 text-base dark:bg-bg_primary_dark">
+        <div className="left_sectionss flex items-center justify-start gap-3">
           <p className="font-semibold">Your All Expenses</p>
           {flattenProductsData.length !== 0 && (
             <div className="flex sm:hidden">
@@ -304,18 +302,18 @@ const AllExpensesTable: React.FC = () => {
             </div>
           )}
         </div>
-        <div className="filters flex justify-center gap-1 font-medium items-center">
+        <div className="filters flex items-center justify-center gap-1 font-medium">
           <span
             data-tooltip-id="header-tooltip"
             data-tooltip-content="Results Lenght"
-            className="bg-pink-600 rounded-full cursor-pointer min-w-6 max-w-full w-full min-h-5 text-xs text-white p-1 flex justify-center items-center"
+            className="flex min-h-5 w-full min-w-6 max-w-full cursor-pointer items-center justify-center rounded-full bg-pink-600 p-1 text-xs text-white"
           >
             {data?.length}
           </span>
           <Popover onOpenChange={handlePopoverClose} open={isPopoverOpen}>
             <PopoverTrigger asChild>
-              <span className="relative rounded-full hover:bg-[#f3f3f3] dark:hover:bg-slate-800 dark:text-white p-2 flex justify-center items-center">
-                <ListFilter className="cursor-pointer w-5 h-5" />
+              <span className="relative flex items-center justify-center rounded-full p-2 hover:bg-[#f3f3f3] dark:text-white dark:hover:bg-slate-800">
+                <ListFilter className="h-5 w-5 cursor-pointer" />
               </span>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-3 px-4">
@@ -337,7 +335,7 @@ const AllExpensesTable: React.FC = () => {
           </Popover>
           {/* month */}
           <Select onValueChange={handleFilterMonthExpenses}>
-            <SelectTrigger className="w-full mr-1">
+            <SelectTrigger className="mr-1 w-full">
               <SelectValue placeholder="All Month" />
             </SelectTrigger>
             <SelectContent>
@@ -353,7 +351,7 @@ const AllExpensesTable: React.FC = () => {
           </Select>
           {/* year */}
           <Select onValueChange={handleFilterYearExpenses}>
-            <SelectTrigger className="w-full mr-1.5">
+            <SelectTrigger className="mr-1.5 w-full">
               <SelectValue placeholder={filterYearValue} />
             </SelectTrigger>
             <SelectContent>
@@ -368,7 +366,7 @@ const AllExpensesTable: React.FC = () => {
             </SelectContent>
           </Select>
           {flattenProductsData.length !== 0 && (
-            <div className="sm:flex hidden">
+            <div className="hidden sm:flex">
               <PDFExportComponent
                 createdAt={PDFStatementTimeline}
                 expenses={flattenProductsData}
@@ -382,29 +380,30 @@ const AllExpensesTable: React.FC = () => {
           🔴 <span className="font-bold">Loading......</span>
         </div>
       )} */}
-      {isError && (
+      {/* {isError && (
         <div className="loading_effects text-semibold px-5 pb-5">
           <span className="font-bold">Oops! Something Went Wrong 😊</span>
         </div>
-      )}
-      {isLoading && !hasLoaded ? (
+      )} */}
+      {/* {!allExpensesArray && !hasLoaded ? (
         <div className="loading_effects text-semibold px-5 pb-5">
           <div className="loader"></div>
         </div>
       ) : hasLoaded && data.length === 0 ? (
-        <div className="message_outer rounded-md w-full p-5 ">
+        <div className="message_outer w-full rounded-md p-5">
           <div className="flex">No Expenses Found</div>
         </div>
-      ) : (
-        <div className="overflow-x-auto w-full">
-          <table className="min-w-full divide-y border-b border-border_dark border-t border-gray-200 dark:border-border_dark">
+      ) : ( */}
+      {data && data.length !== 0 && (
+        <div className="w-full overflow-x-auto">
+          <table className="min-w-full divide-y border-b border-t border-border_dark border-gray-200 dark:border-border_dark">
             <thead className="dark:bg-bg_secondary_dark">
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
-                      className="p-3 text-left text-sm whitespace-nowrap font-medium text-gray-500 dark:text-gray-100 uppercase tracking-wider"
+                      className="whitespace-nowrap p-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100"
                     >
                       {header.isPlaceholder
                         ? null
@@ -428,7 +427,7 @@ const AllExpensesTable: React.FC = () => {
                   {row.getVisibleCells().map((cell) => (
                     <td
                       key={cell.id}
-                      className="px-3 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-100"
+                      className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-100"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -442,6 +441,8 @@ const AllExpensesTable: React.FC = () => {
           </table>
         </div>
       )}
+
+      {/* )} */}
     </div>
   );
 };

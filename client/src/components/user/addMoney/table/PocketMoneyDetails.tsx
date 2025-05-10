@@ -47,7 +47,6 @@ const PocketMoneyDetails: React.FC = () => {
   });
 
   useEffect(() => {
-    console.log(data);
     setData([...pocketMoneyTableData].reverse());
   }, [pocketMoneyTableData]);
 

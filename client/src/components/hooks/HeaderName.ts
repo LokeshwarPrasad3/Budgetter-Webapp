@@ -8,7 +8,7 @@ export const getTopHeaderName = (pathName: string): string => {
     case '/user/show-expenses':
       return 'Show Expenses';
     case '/user/reports':
-      return 'Report & Visualization';
+      return 'Reports';
     case '/user/add-money':
       return 'Add Pocket Money';
     case '/user/add-lent-money':
