@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -57,10 +57,9 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
   const { mutateAsync: editExpenseMutate, isPending } = useMutation({
     mutationFn: editUserExpense,
     onSuccess: (data) => {
-      // console.log('data response ', data);
-      queryClient.invalidateQueries({ queryKey: ['todayExpense'] });
+      console.log('data response ', data.message);
       queryClient.invalidateQueries({ queryKey: ['user'] });
-      queryClient.invalidateQueries({ queryKey: ['getUserAllExpenses'] });
+      queryClient.invalidateQueries({ queryKey: ['user-all-expenses'] });
       toast.success('Expense Edited Successfully!!');
       setOpen(false);
     },

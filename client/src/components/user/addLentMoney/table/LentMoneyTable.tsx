@@ -66,7 +66,6 @@ const LentMoneyTable: React.FC = () => {
   });
 
   useEffect(() => {
-    console.log(LentMoneyHistoryTableData);
     setData(LentMoneyHistoryTableData);
   }, [LentMoneyHistoryTableData]);
 

@@ -15,6 +15,9 @@ import { deleteUserExpense } from '@/services/expenses';
 import toast from 'react-hot-toast';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { useDispatch } from 'react-redux';
+import { deleteFilteredExpense } from '@/features/user/user';
+import { deleteExpensesFromAllCollection } from '@/features/expenses/expenses';
 
 interface DeleteExpensesDialogPropType {
   storedExpenseDate: string;
@@ -32,18 +35,21 @@ const DeleteExpensesDialog: React.FC<DeleteExpensesDialogPropType> = ({
   storedExpenseDate,
   info,
 }) => {
-  const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   const [isUpdatePriceToPocketMoney, setIsUpdatePriceToPocketMoney] =
     useState<boolean>(true);
+  const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   const { mutateAsync: deleteExpenseMutate, isPending } = useMutation({
     mutationFn: deleteUserExpense,
-    onSuccess: (data) => {
+    onSuccess: (data, cred) => {
       console.log(data?.message);
       toast.success('Successfully expense deleted!!');
       setIsOpen(false);
-      queryClient.invalidateQueries({ queryKey: ['todayExpense'] });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+      dispatch(deleteFilteredExpense({ id: cred?.expenseId }));
+      dispatch(deleteExpensesFromAllCollection({id: cred?.expenseId, expenseDate: cred?.expenseDate }));
     },
     onError: (error) => {
       console.log(error);

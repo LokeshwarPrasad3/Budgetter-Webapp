@@ -25,17 +25,22 @@ export const userSlice = createSlice({
       state.user = action.payload;
     },
     setExpenses: (state, action) => {
-      // console.log('from state', typeof action.payload);
-      // console.log('from state', action.payload);
-      // const { projects } =
       state.expenses = action.payload;
     },
-    setUserVerified : (state, action) =>{
+    deleteFilteredExpense: (state, action) => {
+      const { id } = action.payload;
+      const newExpenses = state.expenses.filter(
+        (expense: any) => expense._id !== id
+      );
+      state.expenses = newExpenses;
+    },
+    setUserVerified: (state, action) => {
       state.user.isVerified = action.payload;
-    }
+    },
   },
 });
 
-export const { setUser, setExpenses, setUserVerified } = userSlice.actions;
+export const { setUser, setExpenses, deleteFilteredExpense, setUserVerified } =
+  userSlice.actions;
 
 export default userSlice.reducer;

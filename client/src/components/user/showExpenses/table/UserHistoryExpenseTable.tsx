@@ -5,11 +5,13 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useSelector } from 'react-redux';
-import { getTodayDate } from '@/utils/date/date';
+import { useDispatch, useSelector } from 'react-redux';
 import PDFExportComponent from '../../PDFExportComponent';
 import EditExpensesDialog from '../actions/EditExpensesDialog';
 import DeleteExpensesDialog from '../actions/DeleteExpensesDialog';
+import { getTodayExpenses } from '@/services/expenses';
+import { useQuery } from '@tanstack/react-query';
+import { setExpenses } from '@/features/user/user';
 
 type ExpensesTypes = {
   _id: string;
@@ -18,7 +20,6 @@ type ExpensesTypes = {
   category: string;
   createdAt: string;
   updatedAt: string;
-  action: () => {};
 };
 
 interface PropType {
@@ -26,17 +27,34 @@ interface PropType {
   storedExpenseDate: string;
 }
 
-const UserHistoryExpenseTable: React.FC<PropType> = ({ expensesDate, storedExpenseDate }) => {
+const UserHistoryExpenseTable: React.FC<PropType> = ({
+  expensesDate,
+  storedExpenseDate,
+}) => {
+  const dispatch = useDispatch();
+  
   const [data, setData] = React.useState<ExpensesTypes[]>([]);
+  // get bydefault today expenses
+  const { data: todayExpensesData } = useQuery({
+    queryFn: getTodayExpenses,
+    queryKey: ['todayExpense'],
+  });
+  
+  useEffect(() => {
+    if (todayExpensesData?.success) {
+      setData(todayExpensesData.data);
+      dispatch(setExpenses(todayExpensesData.data));
+    }
+  }, [todayExpensesData]);
+
+  // get expenses from redux store
   const expensesDetailArray = useSelector((state: any) => {
     return state.user?.expenses;
   });
 
   useEffect(() => {
     if (expensesDetailArray) {
-      console.log('main data', expensesDetailArray);
       setData(expensesDetailArray);
-      console.log('Date Expenses:', expensesDetailArray);
     }
   }, [expensesDetailArray]);
 
@@ -103,21 +121,8 @@ const UserHistoryExpenseTable: React.FC<PropType> = ({ expensesDate, storedExpen
         ) : (
           <div className="w-full overflow-x-auto">
             <div className="flex w-full items-center justify-between gap-3 px-5 pb-3">
-              <span>
-                {(() => {
-                  const createdAt = data[0]?.createdAt;
-                  if (!createdAt) return null;
-
-                  const formattedDate = createdAt
-                    .split('T')[0]
-                    .split('-')
-                    .reverse()
-                    .join('-');
-
-                  return formattedDate === getTodayDate()
-                    ? 'Your Today Expenses'
-                    : formattedDate;
-                })()}
+              <span className="text-base font-medium">
+                Your {storedExpenseDate} Expenses
               </span>
               <PDFExportComponent
                 createdAt={new Date(data[0]?.createdAt)

@@ -11,17 +11,24 @@ import UserHistoryExpenseTable from './table/UserHistoryExpenseTable';
 
 const FilterShowExpenses = () => {
   const dispatch = useDispatch();
-  const [isDataFound, setIsDataFound] = useState(false);
+  // const [isDataFound, setIsDataFound] = useState(false);
   const [inputDate, setInputDate] = useState<Date | undefined>(new Date());
-  const [storedExpenseDate, setStoredExpenseDate] = useState<string>("");
+  const [storedExpenseDate, setStoredExpenseDate] = useState<string>(() => {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    return `${dd}-${mm}-${yyyy}`;
+  });
+
 
   const { mutateAsync: showExpensesMutate, isPending } = useMutation({
     mutationFn: getExpensesByDate,
     onSuccess: (data) => {
-      console.log('Expenses fetched successfully', data?.data?.products);
+      console.log(data?.data?.message);
       // console.log("here", data)
       setStoredExpenseDate(data?.data?.date)
-      setIsDataFound(true);
+      // setIsDataFound(true);
       let products: any[];
       if (data?.data === null) {
         products = [];
@@ -71,14 +78,17 @@ const FilterShowExpenses = () => {
         </div>
       </div>
       <div className="flex w-full flex-col items-center justify-center rounded-md border border-border_light bg-bg_primary_light shadow-sm dark:border-border_dark dark:bg-bg_primary_dark">
-        <div className="expense_details_container flex w-full flex-col items-start justify-start">
+        {/* <div className="expense_details_container flex w-full flex-col items-start justify-start">
           {isDataFound && (
             <h4 className="p-4 text-base font-semibold">
               Your {formatDate(inputDate)} Expenses
             </h4>
           )}
-        </div>
-        <UserHistoryExpenseTable storedExpenseDate={storedExpenseDate} expensesDate={inputDate} />
+        </div> */}
+        <UserHistoryExpenseTable
+          storedExpenseDate={storedExpenseDate}
+          expensesDate={inputDate?? new Date()}
+        />
       </div>
     </>
   );
