@@ -11,6 +11,6 @@ export const store = configureStore({
     windowWidth: windowWidthReducer,
     user: userReducer,
     expenses: expensesReducer,
-    themeMode: themeModeReducer
+    themeMode: themeModeReducer,
   },
 });

@@ -96,11 +96,11 @@ const SignupSection: React.FC = () => {
     });
 
   return (
-    <div className="w-full max-w-full p-8 bg-white shadow-lg rounded-lg">
-      <h1 className="text-2xl font-bold tracking-tighter text-gray-800 text-center mb-2">
+    <div className="w-full max-w-full rounded-lg bg-white p-8 shadow-lg">
+      <h1 className="mb-2 text-center text-2xl font-bold tracking-tighter text-gray-800">
         Sign Up
       </h1>
-      <p className="text-gray-600 mb-6 text-center">
+      <p className="mb-6 text-center text-gray-600">
         Have an account?{' '}
         <Link to="/login" className="text-blue-500 hover:underline">
           Log in.
@@ -108,7 +108,7 @@ const SignupSection: React.FC = () => {
       </p>
 
       <form onSubmit={handleSubmit}>
-        <div className="mb-3 relative">
+        <div className="relative mb-3">
           <i className="ri-user-line absolute left-3 top-[7px] text-gray-500"></i>
           <input
             type="text"
@@ -117,13 +117,13 @@ const SignupSection: React.FC = () => {
             onBlur={handleBlur}
             value={values.username}
             placeholder="Username"
-            className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-10 py-2 font-medium text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
           />
           {errors.username && touched.username ? (
-            <span className="text-red-500 text-sm ml-1">{errors.username}</span>
+            <span className="ml-1 text-sm text-red-500">{errors.username}</span>
           ) : null}
         </div>
-        <div className="mb-3 relative">
+        <div className="relative mb-3">
           <i className="ri-user-line absolute left-3 top-[7px] text-gray-500"></i>
           <input
             type="text"
@@ -132,13 +132,13 @@ const SignupSection: React.FC = () => {
             onBlur={handleBlur}
             value={values.name}
             placeholder="Your Name"
-            className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-10 py-2 font-medium text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
           />
           {errors.name && touched.name ? (
-            <span className="text-red-500 text-sm ml-1">{errors.name}</span>
+            <span className="ml-1 text-sm text-red-500">{errors.name}</span>
           ) : null}
         </div>
-        <div className="mb-3 relative">
+        <div className="relative mb-3">
           <i className="ri-mail-line absolute left-3 top-[7px] text-gray-500"></i>
           <input
             type="email"
@@ -147,14 +147,14 @@ const SignupSection: React.FC = () => {
             onBlur={handleBlur}
             value={values.email}
             placeholder="Email address"
-            className="text-slate-900 font-medium mt-1 block w-full px-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-10 py-2 font-medium text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
           />
           {errors.email && touched.email ? (
-            <span className="text-red-500 text-sm ml-1">{errors.email}</span>
+            <span className="ml-1 text-sm text-red-500">{errors.email}</span>
           ) : null}
         </div>
 
-        <div className="mb-4 relative">
+        <div className="relative mb-4">
           <i className="ri-lock-line absolute left-3 top-[7px] text-gray-500"></i>
           <input
             type={showPassword ? 'text' : 'password'}
@@ -164,10 +164,10 @@ const SignupSection: React.FC = () => {
             onBlur={handleBlur}
             value={values.password}
             placeholder="Password"
-            className="text-slate-900 font-medium mt-1 block w-full pl-10 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-10 pr-12 font-medium text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
           />
           {errors.password && touched.password ? (
-            <span className="text-red-500 text-sm ml-1">{errors.password}</span>
+            <span className="ml-1 text-sm text-red-500">{errors.password}</span>
           ) : null}
           <button
             type="button"
@@ -175,18 +175,18 @@ const SignupSection: React.FC = () => {
             className="absolute right-0 top-[7px] flex items-center pr-3"
           >
             {showPassword ? (
-              <i className="ri-eye-off-line text-gray-500 h-5 w-5"></i>
+              <i className="ri-eye-off-line h-5 w-5 text-gray-500"></i>
             ) : (
-              <i className="ri-eye-line text-gray-500 h-5 w-5"></i>
+              <i className="ri-eye-line h-5 w-5 text-gray-500"></i>
             )}
           </button>
         </div>
 
-        <div className="flex items-center justify-between mb-4"></div>
+        <div className="mb-4 flex items-center justify-between"></div>
 
         <Button
           disabled={isPending}
-          className={`w-full h-10 text-base px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none ${isPending ? 'cursor-not-allowed' : 'cursor-pointer'} `}
+          className={`h-10 w-full rounded-md bg-blue-600 px-4 text-base font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none ${isPending ? 'cursor-not-allowed' : 'cursor-pointer'} `}
         >
           {isPending ? (
             <>
@@ -198,10 +198,10 @@ const SignupSection: React.FC = () => {
           )}
         </Button>
 
-        <div className="my-2 text-center text-slate-500 font-bold">Or</div>
+        <div className="my-2 text-center font-bold text-slate-500">Or</div>
 
-        <div className="flex justify-center items-center gap-4">
-         <GoogleAuthLogin />
+        <div className="flex items-center justify-center gap-4">
+          <GoogleAuthLogin />
         </div>
       </form>
     </div>

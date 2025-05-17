@@ -60,15 +60,15 @@ const AddLentSection = () => {
   };
 
   return (
-    <div className="add_lent_container flex flex-col justify-start items-start gap-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-md border border-border_light dark:border-border_dark w-full p-4 px-5 shadow-sm">
+    <div className="add_lent_container flex w-full flex-col items-start justify-start gap-4 rounded-md border border-border_light bg-bg_primary_light p-4 px-5 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark">
       <h4 className="text-base font-semibold">Add Lent Money</h4>
-      <div className="flex justify-start flex-wrap flex-col items-start gap-3 md:gap-5 w-full">
-        <div className="input_containers grid grid-cols-12 w-full max-w-5xl gap-3 md:gap-5">
-          <div className="col-span-12 sm:col-span-6 w-full xl:col-span-3 input_section flex justify-start flex-col items-start gap-1">
+      <div className="flex w-full flex-col flex-wrap items-start justify-start gap-3 md:gap-5">
+        <div className="input_containers grid w-full max-w-5xl grid-cols-12 gap-3 md:gap-5">
+          <div className="input_section col-span-12 flex w-full flex-col items-start justify-start gap-1 sm:col-span-6 xl:col-span-3">
             <p className="text-sm">Date of Lent</p>
             <DatePicker inputDate={inputDate} setInputDate={setInputDate} />
           </div>
-          <div className="col-span-12 sm:col-span-6 w-full xl:col-span-3 input_section flex justify-start flex-col items-start gap-1">
+          <div className="input_section col-span-12 flex w-full flex-col items-start justify-start gap-1 sm:col-span-6 xl:col-span-3">
             <p className="text-sm">Person Name</p>
             <Input
               value={personName}
@@ -77,7 +77,7 @@ const AddLentSection = () => {
               placeholder="Enter Person Name"
             />
           </div>
-          <div className="col-span-12 sm:col-span-6 w-full xl:col-span-3 input_section flex justify-start flex-col items-start gap-1">
+          <div className="input_section col-span-12 flex w-full flex-col items-start justify-start gap-1 sm:col-span-6 xl:col-span-3">
             <p className="text-sm">Lent Money</p>
             <Input
               value={price}
@@ -87,7 +87,7 @@ const AddLentSection = () => {
             />
           </div>
         </div>
-        <div className="action_buttons flex gap-4 justify-start items-center py-2">
+        <div className="action_buttons flex items-center justify-start gap-4 py-2">
           <Button
             disabled={isPending}
             onClick={handleAddLentMoney}

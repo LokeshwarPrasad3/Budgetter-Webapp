@@ -90,11 +90,7 @@ export const monthsNames = [
 ];
 
 // get years
-export const prevYearsName = [
-  "2024",
-  "2025",
-]
-
+export const prevYearsName = ['2024', '2025'];
 
 // Get last 7 days dates
 export const getLast7Days = (): string[] => {
@@ -139,11 +135,10 @@ export const getLast7Days = (): string[] => {
 
 // get day name by date string
 export const getDayName = (dateStr: string): string => {
-  const [day, month, year] = dateStr.split("-").map(Number);
+  const [day, month, year] = dateStr.split('-').map(Number);
   const date = new Date(year, month - 1, day);
-  return date.toLocaleDateString("en-US", { weekday: "long" });
-}
-
+  return date.toLocaleDateString('en-US', { weekday: 'long' });
+};
 
 // get last 7 days dates
 export const getLast7Dates = [...Array(7)]
@@ -175,5 +170,4 @@ export const getLast7DaysTimelineMessage = (): string => {
   };
 
   return `${formatDate(sevenDaysAgo).toUpperCase()} to ${formatDate(today).toUpperCase()}`;
-}
-
+};

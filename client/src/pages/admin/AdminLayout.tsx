@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react';
 import { adminSidenavbarList } from '@/data/AdminSidebarList';
-const adminPassword = import.meta.env.VITE_BUDGETTER_ADMIN_PASSWORD; 
+const adminPassword = import.meta.env.VITE_BUDGETTER_ADMIN_PASSWORD;
 
 const AdminLayout: React.FC = () => {
   // get from reducer state
@@ -38,18 +38,14 @@ const AdminLayout: React.FC = () => {
 
   return (
     <div
-      className={`w-full h-full ${isAdminAuthenticated ? 'block' : 'hidden'}`}
+      className={`h-full w-full ${isAdminAuthenticated ? 'block' : 'hidden'}`}
     >
       <SideNavbar userSidenavbarList={adminSidenavbarList} />
       <div
-        className={`dashboard_layout_container absolute top-0 right-0 flex flex-col
-       ${isSideNavbarOpen && !isMobile && 'dashboard_layout_container_large_screen_open'} 
-        ${!isSideNavbarOpen && !isMobile && 'dashboard_layout_container_large_screen_close'} 
-        ${isMobile && 'dashboard_layout_container_small_screen_close'} 
-        `}
+        className={`dashboard_layout_container absolute right-0 top-0 flex flex-col ${isSideNavbarOpen && !isMobile && 'dashboard_layout_container_large_screen_open'} ${!isSideNavbarOpen && !isMobile && 'dashboard_layout_container_large_screen_close'} ${isMobile && 'dashboard_layout_container_small_screen_close'} `}
       >
         <TopHeader />
-        <div className="flex flex-col gap-5 justify-start items-center px-6 py-5">
+        <div className="flex flex-col items-center justify-start gap-5 px-6 py-5">
           <Outlet />
         </div>
       </div>

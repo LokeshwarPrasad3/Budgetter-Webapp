@@ -64,7 +64,9 @@ const Dashboard: React.FC = () => {
     });
 
   useEffect(() => {
-    const currentMonthInNumber = (new Date().getMonth() + 1).toString().padStart(2, '0');
+    const currentMonthInNumber = (new Date().getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
     getTotalExpensesAndAddedMoneyMutate({
       month: currentMonthInNumber,
       year: filterYearValue,
@@ -96,9 +98,9 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <div className="dashboard_page_ flex flex-col justify-start items-start w-full gap-5">
-        <div className="heading_dashboard_page flex justify-start items-start w-full">
-          <h3 className="font-semibold text-lg text-left">
+      <div className="dashboard_page_ flex w-full flex-col items-start justify-start gap-5">
+        <div className="heading_dashboard_page flex w-full items-start justify-start">
+          <h3 className="text-left text-lg font-semibold">
             {user && user?.name && (
               <>
                 {' '}
@@ -109,12 +111,12 @@ const Dashboard: React.FC = () => {
             )}{' '}
           </h3>
         </div>
-        <div className="summarize_box_container flex justify-center sm:justify-between flex-wrap items-center gap-y-2.5 gap-x-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-md border border-border_light dark:border-border_dark w-full p-4 px-5 shadow-sm">
+        <div className="summarize_box_container flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-2.5 rounded-md border border-border_light bg-bg_primary_light p-4 px-5 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark sm:justify-between">
           <h4 className="text-base font-semibold">
             Your {filterMonthValue} Month Report
           </h4>
-          <div className="filters flex justify-center gap-2 font-medium items-center">
-            <p className="whitespace-nowrap mr-1">Filter Report</p>
+          <div className="filters flex items-center justify-center gap-2 font-medium">
+            <p className="mr-1 whitespace-nowrap">Filter Report</p>
             {/* month */}
             <Select onValueChange={handleDashboardFilterMonthExpenses}>
               <SelectTrigger className="w-full">
@@ -155,7 +157,7 @@ const Dashboard: React.FC = () => {
           totalLentMoney={totalLentMoney}
           isPending={isPending}
         />
-        <div className="visual_graph_container grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
+        <div className="visual_graph_container grid w-full grid-cols-1 gap-6 lg:grid-cols-2">
           <CategoryWiseExpensesChart
             totalExpensesOfMonth={totalExpensesOfMonth}
             CategoryWiseData={CategoryWiseData}

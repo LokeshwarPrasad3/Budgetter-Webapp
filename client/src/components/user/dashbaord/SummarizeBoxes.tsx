@@ -54,23 +54,23 @@ const SummarizeBoxes: React.FC<PropType> = ({
   ];
 
   return (
-    <div className="summarize_box_container flex flex-col justify-start items-start gap-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-md border border-border_light dark:border-border_dark w-full p-4 px-5 shadow-sm">
+    <div className="summarize_box_container flex w-full flex-col items-start justify-start gap-4 rounded-md border border-border_light bg-bg_primary_light p-4 px-5 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark">
       <h4 className="text-base font-semibold">Summaries Information</h4>
-      <div className="summary_boxes_outer flex justify-start lg:justify-start flex-wrap items-center gap-7 w-full">
+      <div className="summary_boxes_outer flex w-full flex-wrap items-center justify-start gap-7 lg:justify-start">
         {summarizeBoxesContents
           .slice(0, 4)
           .map(({ title, value, bgClass }, index) => (
             <div
               key={index}
-              className={`flex flex-col max-w-full md:max-w-[14rem] w-full flex-wrap justify-center items-center gap-0 rounded-[10px] p-3 ${bgClass}`}
+              className={`flex w-full max-w-full flex-col flex-wrap items-center justify-center gap-0 rounded-[10px] p-3 md:max-w-[14rem] ${bgClass}`}
             >
-              <p className="text-lg text-white font-semibold text-center">
+              <p className="text-center text-lg font-semibold text-white">
                 {title}
               </p>
               {isPending && title !== 'Remain Balance' ? (
-                <p className="text-2xl text-white font-bold text-center animate-pulse rounded-md bg-slate-500 dark:bg-slate-800 h-7 mt-1 w-2/5 "></p>
+                <p className="mt-1 h-7 w-2/5 animate-pulse rounded-md bg-slate-500 text-center text-2xl font-bold text-white dark:bg-slate-800"></p>
               ) : (
-                <p className="text-2xl text-white font-bold text-center">
+                <p className="text-center text-2xl font-bold text-white">
                   {value}
                 </p>
               )}

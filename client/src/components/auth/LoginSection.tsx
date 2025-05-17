@@ -96,11 +96,11 @@ const LoginSection: React.FC = () => {
     });
 
   return (
-    <div className="w-full max-w-full p-8 bg-white shadow-lg rounded-lg">
-      <h1 className="text-2xl font-bold tracking-tighter text-gray-800 text-center mb-2">
+    <div className="w-full max-w-full rounded-lg bg-white p-8 shadow-lg">
+      <h1 className="mb-2 text-center text-2xl font-bold tracking-tighter text-gray-800">
         Log In
       </h1>
-      <p className="text-gray-600 mb-6 text-center">
+      <p className="mb-6 text-center text-gray-600">
         New to Budgetter?{' '}
         <Link to="/signup" className="text-blue-500 hover:underline">
           Sign up today.
@@ -108,7 +108,7 @@ const LoginSection: React.FC = () => {
       </p>
 
       <form onSubmit={handleSubmit}>
-        <div className="mb-3 relative">
+        <div className="relative mb-3">
           <i className="ri-mail-line absolute left-3 top-[7px] text-gray-500"></i>
           <input
             onChange={handleChange}
@@ -118,16 +118,16 @@ const LoginSection: React.FC = () => {
             name="emailOrUsername"
             placeholder="Username or Email"
             required={false}
-            className="text-slate-900 font-medium mt-1 block w-full px-9 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-9 py-2 font-medium text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
           />
           {errors.emailOrUsername && touched.emailOrUsername ? (
-            <span className="text-red-500 text-sm ml-1">
+            <span className="ml-1 text-sm text-red-500">
               {errors.emailOrUsername}
             </span>
           ) : null}
         </div>
 
-        <div className="mb-4 relative">
+        <div className="relative mb-4">
           <i className="ri-lock-line absolute left-3 top-1.5 text-gray-500"></i>
           <input
             type={showPassword ? 'text' : 'password'}
@@ -137,10 +137,10 @@ const LoginSection: React.FC = () => {
             value={values.password}
             autoComplete="off"
             placeholder="Password"
-            className="text-slate-900 font-medium mt-1 block w-full pl-9 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-9 pr-12 font-medium text-slate-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
           />
           {errors.password && touched.password ? (
-            <span className="text-red-500 text-sm ml-1">{errors.password}</span>
+            <span className="ml-1 text-sm text-red-500">{errors.password}</span>
           ) : null}
           <button
             type="button"
@@ -148,23 +148,23 @@ const LoginSection: React.FC = () => {
             className="absolute right-0 top-1.5 flex items-center pr-3"
           >
             {showPassword ? (
-              <i className="ri-eye-off-line text-gray-500 h-5 w-5"></i>
+              <i className="ri-eye-off-line h-5 w-5 text-gray-500"></i>
             ) : (
-              <i className="ri-eye-line text-gray-500 h-5 w-5"></i>
+              <i className="ri-eye-line h-5 w-5 text-gray-500"></i>
             )}
           </button>
         </div>
 
-        <div className="flex items-center justify-between mb-6">
+        <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center">
             <input
               type="checkbox"
               id="keep-logged-in"
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             />
             <label
               htmlFor="keep-logged-in"
-              className="ml-2 text-sm text-gray-600 select-none"
+              className="ml-2 select-none text-sm text-gray-600"
             >
               Keep me logged in
             </label>
@@ -179,7 +179,7 @@ const LoginSection: React.FC = () => {
 
         <Button
           disabled={isPending}
-          className="w-full h-10 text-base px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm hover:bg-blue-700 focus:outline-none"
+          className="h-10 w-full rounded-md bg-blue-600 px-4 text-base font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none"
         >
           {isPending ? (
             <>
@@ -191,9 +191,9 @@ const LoginSection: React.FC = () => {
           )}
         </Button>
 
-        <div className="my-2 text-center text-slate-500 font-bold">Or</div>
+        <div className="my-2 text-center font-bold text-slate-500">Or</div>
 
-        <div className="flex justify-center items-center gap-4">
+        <div className="flex items-center justify-center gap-4">
           <GoogleAuthLogin />
         </div>
       </form>

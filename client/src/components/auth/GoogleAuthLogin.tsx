@@ -46,7 +46,7 @@ const GoogleAuthLogin = () => {
           profession,
           dob,
           instagramLink,
-          facebookLink
+          facebookLink,
         })
       );
       console.log(data?.message);

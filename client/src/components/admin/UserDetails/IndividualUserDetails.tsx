@@ -32,9 +32,9 @@ const IndividualUserDetails = ({ user }: { user: User }) => {
       <SheetTrigger asChild>
         <Button
           type="button"
-          className="w-full mt-2 py-3 max-w-fit bg-gradient-to-r opacity-80 from-pink-600 to-purple-600 hover:from-purple-600 hover:to-pink-600 rounded-xl text-white shadow-xl transition duration-300 transform hover:scale-105 focus:outline-none"
+          className="mt-2 w-full max-w-fit transform rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 py-3 text-white opacity-80 shadow-xl transition duration-300 hover:scale-105 hover:from-purple-600 hover:to-pink-600 focus:outline-none"
         >
-          <Eye className="w-5 h-5 mr-2" />
+          <Eye className="mr-2 h-5 w-5" />
           Full Details
         </Button>
       </SheetTrigger>
@@ -49,13 +49,13 @@ const IndividualUserDetails = ({ user }: { user: User }) => {
             <img
               src={user?.avatar}
               alt={user?.name}
-              className="w-16 h-16 rounded-full"
+              className="h-16 w-16 rounded-full"
             />
             <div>
-              <h2 className="text-xl font-semibold word_break">
+              <h2 className="word_break text-xl font-semibold">
                 {user?.name || 'NA'}
               </h2>
-              <p className="text-gray-500 dark:text-white word_break">
+              <p className="word_break text-gray-500 dark:text-white">
                 @{user?.username || 'NA'}
               </p>
             </div>
@@ -95,7 +95,7 @@ const IndividualUserDetails = ({ user }: { user: User }) => {
 
           {/* Social Links */}
           <div className="border-t pt-4">
-            <p className="text-gray-500 dark:text-white mb-2">Social Media</p>
+            <p className="mb-2 text-gray-500 dark:text-white">Social Media</p>
             <div className="space-y-2">
               {user?.instagramLink ? (
                 <a
@@ -122,14 +122,14 @@ const IndividualUserDetails = ({ user }: { user: User }) => {
 
           {/* History */}
           <div className="border-t pt-4">
-            <p className="text-gray-500 dark:text-white mb-2">
+            <p className="mb-2 text-gray-500 dark:text-white">
               PocketMoney History
             </p>
             {user?.PocketMoneyHistory.length > 0 ? (
               <div className="space-y-2">
                 {user?.PocketMoneyHistory?.map(
                   ({ date, amount, source }, index) => (
-                    <div key={index} className="border p-2 rounded">
+                    <div key={index} className="rounded border p-2">
                       {date} - {source} - (₹{amount})
                     </div>
                   )

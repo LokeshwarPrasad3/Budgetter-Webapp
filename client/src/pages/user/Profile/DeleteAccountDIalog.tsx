@@ -69,7 +69,7 @@ const DeleteAccountDialog = () => {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center text-destructive dark:text-red-300">
-            <AlertTriangle className="w-5 h-5 mr-2" />
+            <AlertTriangle className="mr-2 h-5 w-5" />
             Delete Account
           </DialogTitle>
           <DialogDescription className="pt-2 text-slate-700">
@@ -78,12 +78,12 @@ const DeleteAccountDialog = () => {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="py-4 relative">
+        <div className="relative py-4">
           <Label
             htmlFor="password"
-            className="text-sm font-medium flex items-center mb-2"
+            className="mb-2 flex items-center text-sm font-medium"
           >
-            <Lock className="w-4 h-4 mr-2" />
+            <Lock className="mr-2 h-4 w-4" />
             Confirm your password
           </Label>
           <Input
@@ -96,10 +96,10 @@ const DeleteAccountDialog = () => {
           />
           <span
             onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-            className="absolute bottom-[18px] flex justify-center items-center right-0.5 h-8 w-8 hover:bg-slate-100 rounded-full cursor-pointer select-none text-slate-500"
+            className="absolute bottom-[18px] right-0.5 flex h-8 w-8 cursor-pointer select-none items-center justify-center rounded-full text-slate-500 hover:bg-slate-100"
           >
             {isPasswordVisible ? (
-              <Eye className=" h-[18px] w-[18px]" />
+              <Eye className="h-[18px] w-[18px]" />
             ) : (
               <EyeOff className="h-[18px] w-[18px]" />
             )}
@@ -114,7 +114,7 @@ const DeleteAccountDialog = () => {
               setIsOpen(false);
               setPassword('');
             }}
-            className="flex-1 w-full"
+            className="w-full flex-1"
           >
             Cancel
           </Button>
@@ -122,7 +122,7 @@ const DeleteAccountDialog = () => {
             type="button"
             variant="destructive"
             onClick={handleDelete}
-            className="flex-1 w-full"
+            className="w-full flex-1"
             disabled={!password || isPending}
           >
             {isPending ? (
@@ -132,7 +132,7 @@ const DeleteAccountDialog = () => {
               </>
             ) : (
               <>
-                <Trash2 className="w-4 text-white h-4 mr-1.5" />
+                <Trash2 className="mr-1.5 h-4 w-4 text-white" />
                 Delete Account
               </>
             )}

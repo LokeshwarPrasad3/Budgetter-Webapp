@@ -161,18 +161,18 @@ const ProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="profile_page_ page_height_without_header flex flex-col justify-start items-start w-full gap-4 h-full">
-      <div className="heading_dashboard_page flex justify-start items-start w-full">
-        <h3 className="font-semibold text-lg text-left">
+    <div className="profile_page_ page_height_without_header flex h-full w-full flex-col items-start justify-start gap-4">
+      <div className="heading_dashboard_page flex w-full items-start justify-start">
+        <h3 className="text-left text-lg font-semibold">
           <span className="font-bold text-text_heading_light dark:text-text_primary_dark">
             Welcome! {name}
           </span>
         </h3>
       </div>
-      <div className="profile_content_container grid grid-cols-12 col-span-12 gap-4 rounded-md max-w-full w-full h-full">
-        <div className="col-span-12 lg:col-span-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-lg p-6 lg:p-7 h-full flex flex-col justify-between items-center space-y-4 shadow-sm">
+      <div className="profile_content_container col-span-12 grid h-full w-full max-w-full grid-cols-12 gap-4 rounded-md">
+        <div className="col-span-12 flex h-full flex-col items-center justify-between space-y-4 rounded-lg bg-bg_primary_light p-6 shadow-sm dark:bg-bg_primary_dark lg:col-span-4 lg:p-7">
           <div className="basic_user_profile_details flex flex-col items-center space-y-4 shadow-sm">
-            <Avatar className="w-24 h-24 sm:w-32 sm:h-32 shadow-sm">
+            <Avatar className="h-24 w-24 shadow-sm sm:h-32 sm:w-32">
               <AvatarImage src={profileImage} alt="Profile" />
               <AvatarFallback>{name?.slice(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
@@ -180,7 +180,7 @@ const ProfilePage: React.FC = () => {
               variant="outline"
               size="sm"
               disabled={isPending}
-              className="w-40 bg-transparent hover:bg-[##f1f5f9] relative overflow-hidden"
+              className="relative w-40 overflow-hidden bg-transparent hover:bg-[##f1f5f9]"
             >
               {isPending ? (
                 <>
@@ -195,7 +195,7 @@ const ProfilePage: React.FC = () => {
               )}
               <Input
                 type="file"
-                className="absolute inset-0 opacity-0 cursor-pointer"
+                className="absolute inset-0 cursor-pointer opacity-0"
                 onChange={handleImageChange}
                 accept="image/*"
               />
@@ -214,7 +214,7 @@ const ProfilePage: React.FC = () => {
                   Advance Options
                 </Button>
               </CollapsibleTrigger>
-              <CollapsibleContent className="space-y-2 mt-4">
+              <CollapsibleContent className="mt-4 space-y-2">
                 <div className="grid grid-cols-1 gap-4">
                   <DeleteAccountDialog />
                 </div>
@@ -223,10 +223,10 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="col-span-12 lg:col-span-8 bg-bg_primary_light dark:bg-bg_primary_dark rounded-lg p-6 lg:p-7 lg:pb-10 h-full space-y-6 flex flex-col w-full shadow-sm">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+        <div className="col-span-12 flex h-full w-full flex-col space-y-6 rounded-lg bg-bg_primary_light p-6 shadow-sm dark:bg-bg_primary_dark lg:col-span-8 lg:p-7 lg:pb-10">
+          <div className="grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2">
             {/* Username */}
-            <div className="space-y-2 w-full">
+            <div className="w-full space-y-2">
               <Label htmlFor="username">Username</Label>
               {/* <div className="relative">
               <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -239,30 +239,30 @@ const ProfilePage: React.FC = () => {
                 value={username}
               />
             </div> */}
-              <div className="flex items-center h-9 cursor-not-allowed space-x-2 bg-gray-100 dark:bg-bg_secondary_dark p-2 rounded">
-                <User className="text-gray-400 h-4 w-4" />
+              <div className="flex h-9 cursor-not-allowed items-center space-x-2 rounded bg-gray-100 p-2 dark:bg-bg_secondary_dark">
+                <User className="h-4 w-4 text-gray-400" />
                 <span className="text-sm">{username}</span>
               </div>
             </div>
 
             {/* Full Name */}
-            <div className="space-y-2 w-full">
+            <div className="w-full space-y-2">
               <Label htmlFor="fullName">Full Name</Label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                 <Input
                   onChange={(e) => setName(e.target.value)}
                   id="fullName"
                   type="text"
                   placeholder="Full Name"
-                  className="pl-10 w-full"
+                  className="w-full pl-10"
                   value={name}
                 />
               </div>
             </div>
 
             {/* Email */}
-            <div className="space-y-2 w-full">
+            <div className="w-full space-y-2">
               <Label htmlFor="email">Email</Label>
               {/* <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -275,22 +275,22 @@ const ProfilePage: React.FC = () => {
                 value={email}
               />
             </div> */}
-              <div className="flex items-center cursor-not-allowed h-9 space-x-2 bg-gray-100 dark:bg-bg_secondary_dark p-2 rounded">
-                <Mail className="text-gray-400 h-4 w-4" />
+              <div className="flex h-9 cursor-not-allowed items-center space-x-2 rounded bg-gray-100 p-2 dark:bg-bg_secondary_dark">
+                <Mail className="h-4 w-4 text-gray-400" />
                 <span className="text-sm">{email}</span>
               </div>
             </div>
 
             {/* Profession */}
-            <div className="space-y-2 w-full">
+            <div className="w-full space-y-2">
               <Label htmlFor="profession">Profession</Label>
               <div className="relative">
-                <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Briefcase className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                 <Input
                   id="profession"
                   type="text"
                   placeholder="Profession"
-                  className="pl-10 w-full"
+                  className="w-full pl-10"
                   onChange={(e) => setProfession(e.target.value)}
                   value={profession}
                 />
@@ -298,14 +298,14 @@ const ProfilePage: React.FC = () => {
             </div>
 
             {/* Date of Birth */}
-            <div className="space-y-2 w-full">
+            <div className="w-full space-y-2">
               <Label htmlFor="dateOfBirth">Date of Birth</Label>
               <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Calendar className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                 <Input
                   id="dateOfBirth"
                   type="date"
-                  className="pl-10 w-full"
+                  className="w-full pl-10"
                   onChange={(e) => setDOB(e.target.value)}
                   value={dob}
                 />
@@ -313,27 +313,27 @@ const ProfilePage: React.FC = () => {
             </div>
 
             {/* Current Pocket Money */}
-            <div className="space-y-2 w-full">
+            <div className="w-full space-y-2">
               <Label>Current Pocket Money</Label>
-              <div className="flex items-center space-x-2 cursor-not-allowed h-9 bg-gray-100 dark:bg-bg_secondary_dark p-2 rounded">
-                <IndianRupee className="text-gray-400 h-4 w-4" />
+              <div className="flex h-9 cursor-not-allowed items-center space-x-2 rounded bg-gray-100 p-2 dark:bg-bg_secondary_dark">
+                <IndianRupee className="h-4 w-4 text-gray-400" />
                 <span>{user?.currentPocketMoney || 0}</span>
               </div>
             </div>
           </div>
 
           {/* Social Links */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* Instagram */}
-            <div className="space-y-2 w-full">
+            <div className="w-full space-y-2">
               <Label htmlFor="instagramProfile">Instagram</Label>
               <div className="relative">
-                <Instagram className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Instagram className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                 <Input
                   id="instagramProfile"
                   type="text"
                   placeholder="Instagram"
-                  className="pl-10 w-full"
+                  className="w-full pl-10"
                   onChange={(e) => setInstagramLink(e.target.value)}
                   value={instagramLink}
                 />
@@ -341,15 +341,15 @@ const ProfilePage: React.FC = () => {
             </div>
 
             {/* Facebook */}
-            <div className="space-y-2 w-full">
+            <div className="w-full space-y-2">
               <Label htmlFor="facebookProfile">Facebook</Label>
               <div className="relative">
-                <Facebook className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Facebook className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                 <Input
                   id="facebookProfile"
                   type="text"
                   placeholder="Facebook"
-                  className="pl-10 w-full"
+                  className="w-full pl-10"
                   onChange={(e) => setFacebookLink(e.target.value)}
                   value={facebookLink}
                 />
@@ -368,8 +368,8 @@ const ProfilePage: React.FC = () => {
                 Change Password
               </Button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-2 mt-2">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CollapsibleContent className="mt-2 space-y-2">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <Input
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
@@ -387,11 +387,11 @@ const ProfilePage: React.FC = () => {
           </Collapsible>
 
           {/* Save Button */}
-          <div className="button-container flex w-full justify-end items-end">
+          <div className="button-container flex w-full items-end justify-end">
             <Button
               disabled={isUserUpdating}
               onClick={handleSaveChanges}
-              className="w-36 mt-2 bg-[#289288] hover:bg-[#289288]/90"
+              className="mt-2 w-36 bg-[#289288] hover:bg-[#289288]/90"
             >
               {isUserUpdating ? (
                 <>

@@ -5,7 +5,7 @@ type AuthFooterPropType = {};
 const AuthFooter: React.FC<AuthFooterPropType> = () => {
   return (
     <div
-      className={`h-[65px] fixed bottom-0 left-0 flex mt-3 flex-col font-karla justify-center items-center w-full p-4 bg-slate-500 text-white-900`}
+      className={`text-white-900 fixed bottom-0 left-0 mt-3 flex h-[65px] w-full flex-col items-center justify-center bg-slate-500 p-4 font-karla`}
     >
       <p className="text-center text-base">
         © Copyright 2024 Budgetter. All rights reserved.

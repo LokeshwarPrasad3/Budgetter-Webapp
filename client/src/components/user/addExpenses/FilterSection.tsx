@@ -91,15 +91,15 @@ const FilterSection = () => {
   };
 
   return (
-    <div className="add_expense_container flex flex-col justify-start items-start gap-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-md border border-border_light dark:border-border_dark w-full p-4 px-5 shadow-sm">
+    <div className="add_expense_container flex w-full flex-col items-start justify-start gap-4 rounded-md border border-border_light bg-bg_primary_light p-4 px-5 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark">
       <h4 className="text-base font-semibold">Add Your Expenses</h4>
-      <div className="flex justify-start flex-wrap flex-col items-start gap-3 md:gap-5 w-full">
-        <div className="input_containers grid grid-cols-12 w-full max-w-5xl gap-3 md:gap-5">
-          <div className="col-span-12 sm:col-span-6 w-full xl:col-span-3 input_section flex justify-start flex-col items-start gap-1">
+      <div className="flex w-full flex-col flex-wrap items-start justify-start gap-3 md:gap-5">
+        <div className="input_containers grid w-full max-w-5xl grid-cols-12 gap-3 md:gap-5">
+          <div className="input_section col-span-12 flex w-full flex-col items-start justify-start gap-1 sm:col-span-6 xl:col-span-3">
             <p className="text-sm">Date of Expense</p>
             <DatePicker inputDate={inputDate} setInputDate={setInputDate} />
           </div>
-          <div className="col-span-12 sm:col-span-6 w-full xl:col-span-3 input_section flex justify-start flex-col items-start gap-1">
+          <div className="input_section col-span-12 flex w-full flex-col items-start justify-start gap-1 sm:col-span-6 xl:col-span-3">
             <p className="text-sm">Name of Expense</p>
             <Input
               value={expenseName}
@@ -108,7 +108,7 @@ const FilterSection = () => {
               placeholder="Enter Expense"
             />
           </div>
-          <div className="col-span-12 sm:col-span-6 w-full xl:col-span-3 input_section flex justify-start flex-col items-start gap-1">
+          <div className="input_section col-span-12 flex w-full flex-col items-start justify-start gap-1 sm:col-span-6 xl:col-span-3">
             <p className="text-sm">Expenses Category</p>
             <Select
               value={expenseCategory}
@@ -133,7 +133,7 @@ const FilterSection = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="col-span-12 sm:col-span-6 w-full xl:col-span-3 input_section flex justify-start flex-col items-start gap-1">
+          <div className="input_section col-span-12 flex w-full flex-col items-start justify-start gap-1 sm:col-span-6 xl:col-span-3">
             <p className="text-sm">Expense Price</p>
             <Input
               value={price}
@@ -143,7 +143,7 @@ const FilterSection = () => {
             />
           </div>
         </div>
-        <div className="action_buttons flex gap-4 justify-start items-center py-2">
+        <div className="action_buttons flex items-center justify-start gap-4 py-2">
           <Button onClick={handleAddNew} className="bg-green-500">
             <CirclePlus className="h-5 w-5" /> &nbsp; New
           </Button>

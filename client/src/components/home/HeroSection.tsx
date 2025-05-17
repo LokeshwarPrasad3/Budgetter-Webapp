@@ -11,66 +11,81 @@ const HeroSection: React.FC = () => {
       variants={ANIMATE_WORDS_VARIENT}
       initial="initial"
       animate="animate"
-      className="hero_section_container relative bg-[#CCEFF5] font-karla h-full px-4 py-4 pt-10 pb-10 sm:pt-20 sm:pb-4 w-full flex flex-col sm:flex-row justify-center items-center "
+      className="hero_section_container relative mx-auto flex h-full w-full max-w-7xl flex-col items-center justify-between px-4 py-12 pt-8 sm:flex-row sm:py-12"
     >
-      <div className="hero_section_content flex flex-col sm:relative md:left-10 lg:left-16 gap-5 justify-center w-full max-w-full md:max-w-[33rem]">
-        <motion.div
+      <div className="hero_section_content flex w-full max-w-full flex-col justify-center gap-2 sm:gap-8">
+        <motion.h1
           variants={ANIMATE_WORDS_VARIENT}
           initial="initial"
           animate="animate"
-          className="hero_section_title text-2xl sm:text-3xl sm:w-[110%] md:text-4xl font-bold "
+          className="hero_section_title text-2xl font-bold leading-tight sm:text-4xl md:text-5xl"
         >
-          Welcome to{' '}
-          <span className="bg-[#F7CEDC] rounded-md px-2 text-2xl sm:text-3xl md:text-4xl py-0 font-bold">
-            Budgetter
+          Take Control of Your{' '}
+          <span className="inline-block bg-gradient-to-r from-[#2e7dff] to-[#00b87c] bg-clip-text text-transparent sm:text-4xl md:text-5xl">
+            Expenses
           </span>
-        </motion.div>
+        </motion.h1>
+
+        <motion.p
+          variants={ANIMATE_WORDS_VARIENT}
+          initial="initial"
+          animate="animate"
+          className="hero_section_description text-base font-medium leading-5 text-slate-600 sm:text-xl sm:leading-normal md:text-2xl"
+        >
+          Built for students to track spending, manage pocket money, and
+          visualize financial habits — all in one place.
+          <br />
+          Budget smarter with <strong className="font-bold">Budgetter</strong>.
+        </motion.p>
+
         <motion.div
           variants={ANIMATE_WORDS_VARIENT}
           initial="initial"
           animate="animate"
-          className="hero_section_description pr-5 text-base text-slate-600 md:text-lg font-semibold"
+          className="hero_buttons mt-2 flex w-full flex-wrap gap-5"
         >
-          <span> Manage Your Everyday Expenses </span>
-          <br /> A simple budgeting app to help you track your expenses
-        </motion.div>
-        <div className="hero_buttons flex w-full gap-3">
           <MotionLink
-            variants={ANIMATE_WORDS_VARIENT}
             initial="initial"
             animate="animate"
             to="/login"
-            className="hero_section_button bg-slate-700 hover:bg-slate-600 py-1 px-3 rounded-sm text-white cursor-pointer"
+            className="hero_section_button rounded-full bg-gradient-to-r from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 px-6 py-1 text-base font-semibold text-white shadow-xl transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-br sm:px-8 sm:py-1.5 sm:text-lg"
           >
-            Get Started
+            <span className="relative top-0.5">Get Started</span>
           </MotionLink>
           <MotionLink
-            variants={ANIMATE_WORDS_VARIENT}
             initial="initial"
             animate="animate"
             to="https://lokeshwardewangan.in/"
-            className="hero_section_button bg-slate-700 hover:bg-slate-600 py-1 px-3 rounded-sm text-white cursor-pointer"
+            className="hero_section_button rounded-full border-2 border-[#047857] from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 px-6 py-1 text-base font-semibold text-[#047857] shadow-xl transition-all duration-200 hover:scale-105 hover:bg-gradient-to-r hover:text-white sm:px-8 sm:py-1.5 sm:text-lg"
           >
-            About me
+            About Me
           </MotionLink>
-        </div>
+        </motion.div>
       </div>
+
       <motion.div
         variants={ANIMATE_WORDS_VARIENT}
         initial="initial"
         animate="animate"
-        className="flag_image sm:relative sm:top-[-2rem] md:right-10 min-h-[22.3rem] lg:right-16 max-w-full w-full sm:max-w-[20rem] md:max-w-[26rem]"
+        className="flag_image flex w-full max-w-lg"
       >
-        <img
-          className="w-full hidden sm:block"
-          src="./assets/dashboard/hero-left-image.png"
-          alt="describe"
-        />
-        <img
-          className="rounded-lg mt-4 sm:mt-10 w-full p-3 max-w-full block sm:hidden"
-          src="./assets/dashboard/image-2.jpg"
-          alt="describe"
-        />
+        {/* Desktop Image */}
+        <div className="hidden w-full overflow-hidden rounded-3xl transition-all duration-300 hover:scale-[1.015] dark:bg-slate-900 dark:ring-white/10 sm:flex">
+          <img
+            className="h-auto w-full object-cover"
+            src="./assets/dashboard/hero-section-poster.svg"
+            alt="Dashboard Overview"
+          />
+        </div>
+
+        {/* Mobile Image */}
+        <div className="mt-7 overflow-hidden rounded-2xl bg-white p-3 shadow-md ring-1 ring-gray-100 dark:bg-slate-900 dark:ring-white/10 sm:hidden">
+          <img
+            className="h-auto w-full object-cover"
+            src="./assets/dashboard/image-2.jpg"
+            alt="Dashboard Preview"
+          />
+        </div>
       </motion.div>
     </motion.div>
   );
