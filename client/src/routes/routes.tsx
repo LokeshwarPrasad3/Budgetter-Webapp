@@ -35,7 +35,10 @@ const routes = createBrowserRouter(
         <Route path="signup" element={<SignupSection />} />
         <Route path="forgot-password" element={<ForgotPasswordSection />} />
         <Route path="account-verified" element={<AccountVerified />} />
-        <Route path="account-already-verified" element={<AccountAlreadyVerified />} />
+        <Route
+          path="account-already-verified"
+          element={<AccountAlreadyVerified />}
+        />
         <Route path="reset-password/*" element={<ResetPassword />} />
       </Route>
 
@@ -56,7 +59,7 @@ const routes = createBrowserRouter(
       <Route path="admin" element={<AdminLayout />}>
         <Route path="users" element={<AppUsersCards />} />
       </Route>
-        
+
       {/* home */}
       <Route path="/" element={<HomePage />} />
       {/* logout page routes */}

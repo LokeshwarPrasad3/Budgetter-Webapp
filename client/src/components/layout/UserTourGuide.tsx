@@ -59,10 +59,10 @@ const UserTourGuide: React.FC<UserTourGuidePropType> = ({
       setIsTourTriggered(false);
       setTourKey((prevKey) => prevKey + 1);
     }
-    if (action === "close") {
+    if (action === 'close') {
       setIsTourTriggered(false);
       setTourKey(0);
-      return;  
+      return;
     }
   };
 

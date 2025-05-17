@@ -32,10 +32,10 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
   } = user;
 
   return (
-    <div className="user_card_container col-span-12 md:col-span-12 lg:col-span-6 2xl:col-span-3 rounded-2xl flex flex-col items-center gap-2 p-5 bg-white dark:bg-bg_primary_dark dark:border border-[#6a718533]">
-      <div className="user_detail flex flex-col gap-3 justify-center items-center">
-        <div className="user_profiles relative inline-block rounded-full bg-gradient-to-br from-theme-default to-transparent p-[2px]">
-          <div className="relative rounded-full dark:bg-[#262932] bg-white p-[5px]">
+    <div className="user_card_container col-span-12 flex flex-col items-center gap-2 rounded-2xl border-[#6a718533] bg-white p-5 dark:border dark:bg-bg_primary_dark md:col-span-12 lg:col-span-6 2xl:col-span-3">
+      <div className="user_detail flex flex-col items-center justify-center gap-3">
+        <div className="user_profiles from-theme-default relative inline-block rounded-full bg-gradient-to-br to-transparent p-[2px]">
+          <div className="relative rounded-full bg-white p-[5px] dark:bg-[#262932]">
             <img
               alt="User's profile"
               loading="lazy"
@@ -50,41 +50,41 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
           </div>
         </div>
         <div className="details flex flex-col items-center gap-0">
-          <span className="text-sm font-medium text-black ">@{username}</span>
-          <span className="font-medium text-sm text-[#3A3A3A] dark:text-white">
+          <span className="text-sm font-medium text-black">@{username}</span>
+          <span className="text-sm font-medium text-[#3A3A3A] dark:text-white">
             {name}
           </span>
-          <span className="text-sm dark:font-medium text-[#3A3A3A] dark:text-white">
+          <span className="text-sm text-[#3A3A3A] dark:font-medium dark:text-white">
             {email}
           </span>
         </div>
       </div>
-      <ul className="flex items-center justify-center ">
-        <li className="flex flex-col items-center px-4 py-0 relative gap-0">
-          <h5 className="text-base dark:text-white font-semibold">
+      <ul className="flex items-center justify-center">
+        <li className="relative flex flex-col items-center gap-0 px-4 py-0">
+          <h5 className="text-base font-semibold dark:text-white">
             {currentPocketMoney}
           </h5>
-          <span className="text-sm font-medium text-[#888888] dark:text-white text-center flex flex-col leading-4 justify-center items-center">
+          <span className="flex flex-col items-center justify-center text-center text-sm font-medium leading-4 text-[#888888] dark:text-white">
             <span>Pocket</span>
             <span>Money</span>
           </span>
           <div className="absolute right-0 top-2/4 h-5 w-px -translate-y-1/2 bg-gray-300"></div>
         </li>
-        <li className="flex flex-col items-center px-4 py-0 relative gap-0">
-          <h5 className="text-base dark:text-white font-semibold">
+        <li className="relative flex flex-col items-center gap-0 px-4 py-0">
+          <h5 className="text-base font-semibold dark:text-white">
             {Number(isVerified)}
           </h5>
-          <span className="text-sm font-medium text-[#888888] dark:text-white text-center flex flex-col leading-4 justify-center items-center">
+          <span className="flex flex-col items-center justify-center text-center text-sm font-medium leading-4 text-[#888888] dark:text-white">
             <span>Verified</span>
             <span>User</span>
           </span>
           <div className="absolute right-0 top-2/4 h-5 w-px -translate-y-1/2 bg-gray-300"></div>
         </li>
-        <li className="flex flex-col items-center px-4 py-0 gap-0">
-          <h5 className="text-base dark:text-white font-semibold">
+        <li className="flex flex-col items-center gap-0 px-4 py-0">
+          <h5 className="text-base font-semibold dark:text-white">
             {LentMoneyHistory.length}
           </h5>
-          <span className="text-sm font-medium text-[#888888] dark:text-white text-center flex flex-col leading-4 justify-center items-center">
+          <span className="flex flex-col items-center justify-center text-center text-sm font-medium leading-4 text-[#888888] dark:text-white">
             <span>Total</span>
             <span>Lent</span>
           </span>

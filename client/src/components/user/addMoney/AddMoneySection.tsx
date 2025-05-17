@@ -38,11 +38,11 @@ const AddMoneySection = () => {
   };
 
   return (
-    <div className="add_expense_container flex flex-col justify-start items-start gap-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-md border border-border_light dark:border-border_dark w-full p-4 px-5 shadow-sm">
+    <div className="add_expense_container flex w-full flex-col items-start justify-start gap-4 rounded-md border border-border_light bg-bg_primary_light p-4 px-5 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark">
       <h4 className="text-base font-semibold">Add Your Pocket Money</h4>
-      <div className="flex justify-start flex-wrap flex-col items-start gap-3 md:gap-5 w-full">
-        <div className="input_containers grid grid-cols-12 w-full lg:w-8/12 gap-3 md:gap-5">
-          <div className="col-span-12 sm:col-span-6 w-full lg:col-span-3 input_section flex justify-start flex-col items-start gap-1">
+      <div className="flex w-full flex-col flex-wrap items-start justify-start gap-3 md:gap-5">
+        <div className="input_containers grid w-full grid-cols-12 gap-3 md:gap-5 lg:w-8/12">
+          <div className="input_section col-span-12 flex w-full flex-col items-start justify-start gap-1 sm:col-span-6 lg:col-span-3">
             <p className="text-sm">Add Money</p>
             <Input
               value={pocketMoney}
@@ -51,7 +51,7 @@ const AddMoneySection = () => {
               placeholder="Enter Money"
             />
           </div>
-          <div className="col-span-12 sm:col-span-6 w-full lg:col-span-3 input_section flex justify-start flex-col items-start gap-1">
+          <div className="input_section col-span-12 flex w-full flex-col items-start justify-start gap-1 sm:col-span-6 lg:col-span-3">
             <p className="text-sm">Money Source</p>
             <Input
               value={moneySource}
@@ -61,7 +61,7 @@ const AddMoneySection = () => {
             />
           </div>
         </div>
-        <div className="action_buttons flex gap-4 justify-start flex-wrap items-center py-2">
+        <div className="action_buttons flex flex-wrap items-center justify-start gap-4 py-2">
           <Button variant={'outline'}>Cancel</Button>
           <Button onClick={handleAddPocketMoney} className="bg-green-500">
             <CirclePlus className="h-5 w-5" /> &nbsp;

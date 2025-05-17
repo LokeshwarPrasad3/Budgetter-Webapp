@@ -8,7 +8,7 @@ const AddMoney: React.FC = () => {
     <>
       <ShowMoney />
       <AddMoneySection />
-      <PocketMoneyDetails/>
+      <PocketMoneyDetails />
     </>
   );
 };

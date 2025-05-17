@@ -75,7 +75,7 @@ const MainLayout: React.FC = () => {
   useEffect(() => {
     const localIsDarkMode = localStorage.getItem('isDarkMode') === 'true';
     if (localIsDarkMode) {
-      document.body.classList.toggle("dark", localIsDarkMode);
+      document.body.classList.toggle('dark', localIsDarkMode);
     }
   }, []);
 
@@ -83,11 +83,11 @@ const MainLayout: React.FC = () => {
   useEffect(() => {
     const getCurrentPageTitle = getPageTitle();
     document.title = getCurrentPageTitle;
-  },[location.pathname])
+  }, [location.pathname]);
 
   return (
     <>
-      <div className="w-full h-full dark:bg-slate-900">
+      <div className="h-full w-full dark:bg-slate-900">
         <Outlet />
       </div>
       <Toaster />

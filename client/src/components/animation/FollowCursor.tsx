@@ -18,7 +18,7 @@ const FollowCursor = () => {
 
   return (
     <motion.div
-      className="fixed hidden top-0 left-0 w-5 h-5 rounded-full pointer-events-none z-[100] cursor-follow dark:bg-white bg-black"
+      className="cursor-follow pointer-events-none fixed left-0 top-0 z-[100] hidden h-5 w-5 rounded-full bg-black dark:bg-white"
       animate={{
         x: cursorPosition.x - 10, // Subtract half the size to center
         y: cursorPosition.y - 10,

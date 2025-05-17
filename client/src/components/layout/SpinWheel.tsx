@@ -78,11 +78,13 @@ const SpinWheel = () => {
   };
 
   return (
-    <div className="hidden lg:flex flex-col items-center p-6 rounded-lg w-full max-w-md mx-auto">
-      <h2 className="text-sm font-bold mb-4 text-center">🎡 Spin the Wheel & Win!</h2>
-      <div className="relative w-44 h-44 flex items-center justify-center">
+    <div className="mx-auto hidden w-full max-w-md flex-col items-center rounded-lg p-6 lg:flex">
+      <h2 className="mb-4 text-center text-sm font-bold">
+        🎡 Spin the Wheel & Win!
+      </h2>
+      <div className="relative flex h-44 w-44 items-center justify-center">
         <div
-          className="w-44 h-44 border-4 border-yellow-500 rounded-full flex items-center justify-center text-center text-sm font-semibold shadow-xl"
+          className="flex h-44 w-44 items-center justify-center rounded-full border-4 border-yellow-500 text-center text-sm font-semibold shadow-xl"
           style={{
             transform: `rotate(${currentRotation}deg)`,
             transition: isSpinning
@@ -94,7 +96,7 @@ const SpinWheel = () => {
             {items.map((item, index) => (
               <div
                 key={index}
-                className={`flex flex-col items-center justify-center w-10 h-10 rounded-full ${
+                className={`flex h-10 w-10 flex-col items-center justify-center rounded-full ${
                   result === item.text
                     ? 'bg-yellow-400 text-black dark:bg-green-400'
                     : 'bg-gray-200 text-gray-700 dark:bg-bg_secondary_dark dark:text-white'
@@ -106,18 +108,18 @@ const SpinWheel = () => {
             ))}
           </div>
         </div>
-        <div className="absolute rotate-180 top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white w-6 h-6 flex items-center justify-center rounded-full shadow-md">
+        <div className="absolute left-1/2 top-0 flex h-6 w-6 -translate-x-1/2 -translate-y-1/2 rotate-180 transform items-center justify-center rounded-full bg-red-600 text-white shadow-md">
           🔺
         </div>
       </div>
       <button
         onClick={spin}
-        className="mt-4 bg-green-400 select-none text-sm text-black/90 px-5 py-2 rounded-lg font-semibold hover:bg-green-500 transition-all duration-300 disabled:opacity-50"
+        className="mt-4 select-none rounded-lg bg-green-400 px-5 py-2 text-sm font-semibold text-black/90 transition-all duration-300 hover:bg-green-500 disabled:opacity-50"
         disabled={isSpinning}
       >
         {isSpinning ? 'Spinning...' : 'Spin Now! 🎰'}
       </button>
-      <p className="mt-4 text-base font-medium text-center">{result}</p>
+      <p className="mt-4 text-center text-base font-medium">{result}</p>
     </div>
   );
 };

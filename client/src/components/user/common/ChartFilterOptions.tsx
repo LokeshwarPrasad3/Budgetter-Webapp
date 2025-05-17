@@ -10,18 +10,16 @@ interface PropType {
   setChartFilter: (value: string) => void;
 }
 
-const ChartFilterOptions: React.FC<PropType> = ({
-  setChartFilter,
-}) => {
+const ChartFilterOptions: React.FC<PropType> = ({ setChartFilter }) => {
   const [open, setOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('daily'); // Default selection
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 absolute right-0 top-0">
+      <PopoverTrigger className="absolute right-0 top-0 rounded-full p-1 hover:bg-gray-200 dark:hover:bg-gray-700">
         <MoreHorizontal className="h-5 w-5 text-gray-500" />
       </PopoverTrigger>
-      <PopoverContent className="w-28 p-0 bg-white dark:bg-gray-800 rounded-lg shadow-md relative right-6">
+      <PopoverContent className="relative right-6 w-28 rounded-lg bg-white p-0 shadow-md dark:bg-gray-800">
         <ul className="text-sm text-gray-700 dark:text-gray-300">
           {['Daily', 'Weekly', 'Monthly', 'Yearly'].map((item) => {
             const isSelected = selectedFilter === item.toLowerCase();
@@ -33,7 +31,7 @@ const ChartFilterOptions: React.FC<PropType> = ({
                   setSelectedFilter(item.toLowerCase());
                   setOpen(false);
                 }}
-                className={`px-3 py-1 flex justify-between items-center hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md cursor-pointer border-b dark:border-slate-700`}
+                className={`flex cursor-pointer items-center justify-between rounded-md border-b px-3 py-1 hover:bg-gray-100 dark:border-slate-700 dark:hover:bg-gray-700`}
               >
                 {item}
                 {isSelected && (

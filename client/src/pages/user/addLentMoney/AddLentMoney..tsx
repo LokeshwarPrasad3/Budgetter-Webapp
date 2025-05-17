@@ -6,7 +6,7 @@ import React from 'react';
 const AddLentMoney: React.FC = () => {
   return (
     <>
-      <ShowMoney/>
+      <ShowMoney />
       <AddLentSection />
       <LentRecordsDetailsTable />
     </>

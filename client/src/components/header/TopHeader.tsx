@@ -90,67 +90,65 @@ const TopHeader: React.FC = () => {
       document.exitFullscreen();
       setIsFullScreen(false);
     }
-};
-
-
+  };
 
   return (
     <>
-      <div className="topheader_container sticky top-0 text-text_primary_light dark:text-text_primary_dark bg-bg_primary_light dark:bg-bg_primary_dark dark:border-l z-40 shadow-sm w-full min-h-16 flex h-full items-center px-1">
+      <div className="topheader_container sticky top-0 z-40 flex h-full min-h-16 w-full items-center bg-bg_primary_light px-1 text-text_primary_light shadow-sm dark:border-l dark:bg-bg_primary_dark dark:text-text_primary_dark">
         <i
           id="menu_toggle_button_section"
           onClick={() => dispatch(toggleSideNavbar())}
-          className="ri-menu-line cursor-pointer text-text_primary_light dark:text-text_primary_dark font-bold mx-4 text-xl"
+          className="ri-menu-line mx-4 cursor-pointer text-xl font-bold text-text_primary_light dark:text-text_primary_dark"
         ></i>
         <div className="name text-lg">
-          <h2 className="font-bold ">{currentHeaderName}</h2>
+          <h2 className="font-bold">{currentHeaderName}</h2>
         </div>
-        <div className="notification_and_profile_ absolute right-4 sm:right-6 flex justify-center items-center gap-2.5">
+        <div className="notification_and_profile_ absolute right-4 flex items-center justify-center gap-2.5 sm:right-6">
           <div
             id="start_tour_guide"
-            className="hidden sm:flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10 dark:hover:bg-slate-800 hover:bg-slate-200"
+            className="hidden h-10 w-10 items-center justify-center rounded-full bg-[#f2f5fa] hover:bg-slate-200 dark:bg-[#10101c] dark:hover:bg-slate-800 sm:flex"
           >
             <Play
               data-tooltip-id="header-tooltip"
               data-tooltip-content="Start Tour"
               onClick={() => setIsTourTriggered(true)}
-              className="cursor-pointer h-5 w-5"
+              className="h-5 w-5 cursor-pointer"
             />
           </div>
           <div
             id="fullscreens_tour_guide"
-            className={`flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10 dark:hover:bg-slate-800 hover:bg-slate-200 ${isFullScreen ? 'dark:bg-slate-700 bg-slate-200' : ''} `}
+            className={`flex h-10 w-10 items-center justify-center rounded-full bg-[#f2f5fa] hover:bg-slate-200 dark:bg-[#10101c] dark:hover:bg-slate-800 ${isFullScreen ? 'bg-slate-200 dark:bg-slate-700' : ''} `}
           >
             {!isFullScreen ? (
               <Fullscreen
                 onClick={toggleFullscreen}
                 data-tooltip-id="header-tooltip"
                 data-tooltip-content="Maximize Screen"
-                className="cursor-pointer h-5 w-5 outline-none ring-offset-0"
+                className="h-5 w-5 cursor-pointer outline-none ring-offset-0"
               />
             ) : (
               <Minimize
                 onClick={toggleFullscreen}
                 data-tooltip-id="header-tooltip"
                 data-tooltip-content="Minimize Screen"
-                className="cursor-pointer h-5 w-5 outline-none ring-offset-0"
+                className="h-5 w-5 cursor-pointer outline-none ring-offset-0"
               />
             )}
           </div>
-          <div className="theme_container_toggle flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10 dark:hover:bg-slate-800 hover:bg-slate-200">
+          <div className="theme_container_toggle flex h-10 w-10 items-center justify-center rounded-full bg-[#f2f5fa] hover:bg-slate-200 dark:bg-[#10101c] dark:hover:bg-slate-800">
             {!isDarkMode ? (
               <Moon
                 onClick={handleToggleThemeMode}
                 data-tooltip-id="header-tooltip"
                 data-tooltip-content="Switch to Dark"
-                className="cursor-pointer h-5 w-5 focus:outline-none select-none"
+                className="h-5 w-5 cursor-pointer select-none focus:outline-none"
               />
             ) : (
               <Sun
                 onClick={handleToggleThemeMode}
                 data-tooltip-id="header-tooltip"
                 data-tooltip-content="Switch to Light"
-                className="cursor-pointer h-5 w-5 focus:outline-none select-none"
+                className="h-5 w-5 cursor-pointer select-none focus:outline-none"
               />
             )}
           </div>
@@ -158,22 +156,22 @@ const TopHeader: React.FC = () => {
             <PopoverTrigger asChild>
               <button
                 id="notification_section"
-                className="relative notification_icon flex justify-center items-center bg-[#f2f5fa] dark:bg-[#10101c] rounded-full h-10 w-10 dark:hover:bg-slate-800 hover:bg-slate-200"
+                className="notification_icon relative flex h-10 w-10 items-center justify-center rounded-full bg-[#f2f5fa] hover:bg-slate-200 dark:bg-[#10101c] dark:hover:bg-slate-800"
               >
                 <Bell
                   data-tooltip-id="header-tooltip"
                   data-tooltip-content="Notification"
                   data-tooltip-place="bottom"
-                  className="focus:outline-none h-5 w-5 focus:ring-0 focus:ring-offset-0 "
+                  className="h-5 w-5 focus:outline-none focus:ring-0 focus:ring-offset-0"
                 />
                 {notifications.length !== 0 && (
-                  <span className="absolute flex justify-center items-center -top-1 -right-0 h-4 w-4 rounded-full bg-[#DC4EA2] text-text_primary_light text-xs">
+                  <span className="absolute -right-0 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#DC4EA2] text-xs text-text_primary_light">
                     {notifications.length}
                   </span>
                 )}
               </button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-2 px-3 mr-2">
+            <PopoverContent className="mr-2 w-auto p-2 px-3">
               <div className="content_container">
                 <p
                   className="cursor-pointer"
@@ -184,7 +182,7 @@ const TopHeader: React.FC = () => {
                   ) : (
                     <>
                       {notifications.map(({ value }, index) => (
-                        <span key={index} className="text-red-700 font-medium">
+                        <span key={index} className="font-medium text-red-700">
                           {value}
                         </span>
                       ))}
@@ -197,7 +195,7 @@ const TopHeader: React.FC = () => {
           <Link
             id="profile_section"
             to="/user/profile"
-            className="profile_container cursor-pointer h-8 w-8 rounded-full border border-pink-500 overflow-hidden"
+            className="profile_container h-8 w-8 cursor-pointer overflow-hidden rounded-full border border-pink-500"
           >
             <img
               data-tooltip-id="header-tooltip"
@@ -210,7 +208,7 @@ const TopHeader: React.FC = () => {
           </Link>
         </div>
       </div>
-      <Tooltip className="hidden md:block z-50" id="header-tooltip" />
+      <Tooltip className="z-50 hidden md:block" id="header-tooltip" />
       <UserTourGuide
         isTourTriggered={isTourTriggered}
         setIsTourTriggered={setIsTourTriggered}

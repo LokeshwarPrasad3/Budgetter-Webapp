@@ -183,9 +183,9 @@ interface DeletedExpenseRes {
   success: boolean;
 }
 interface DeleteExpenseCredeType {
-  expenseDate: string; 
-  expenseId: string; 
-  isAddPriceToPocketMoney: boolean; 
+  expenseDate: string;
+  expenseId: string;
+  isAddPriceToPocketMoney: boolean;
 }
 
 export const deleteUserExpense = async (
@@ -196,7 +196,7 @@ export const deleteUserExpense = async (
       'Content-Type': 'application/json',
       Authorization: `Bearer ${getCurrentAccessToken()}`,
     },
-    data: credentials
+    data: credentials,
   };
   const { data } = await axios.delete<DeletedExpenseRes>(
     `${backendHostURL}/user/delete-expenses`,

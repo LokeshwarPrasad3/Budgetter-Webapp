@@ -63,7 +63,7 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
       cookie.remove('accessToken', { path: '/' });
       navigate('/');
       // make default light mode becasue landing page not available for dark
-      document.body.classList.remove("dark");
+      document.body.classList.remove('dark');
     },
     onError: (error) => {
       console.log(error);
@@ -80,33 +80,28 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
       {showOverlayEffect && (
         <div
           ref={overlayRef}
-          className={`overlay_effect fixed md:static inset-0 h-full w-full bg-black/30 backdrop-blur-sm z-[11] `}
+          className={`overlay_effect fixed inset-0 z-[11] h-full w-full bg-black/30 backdrop-blur-sm md:static`}
         ></div>
       )}
       <div
         ref={navbarRef}
-        className={`sidenavbar_container font-karla fixed top-0 
-        ${isSideNavbarOpen && !isMobile ? 'w-52 left-0' : ''} 
-        ${isSideNavbarOpen && isMobile ? 'w-52 left-0' : ''} 
-        ${!isSideNavbarOpen && !isMobile ? 'w-[72px] left-0' : ''} 
-        ${!isSideNavbarOpen && isMobile ? 'w-0 left-[-210px]' : ''} 
-         h-full bg-bg_sidebar text-text_sidebar flex flex-col px-3 py-5 gap-2 shadow-lg z-50 overflow-hidden`}
+        className={`sidenavbar_container fixed top-0 font-karla ${isSideNavbarOpen && !isMobile ? 'left-0 w-52' : ''} ${isSideNavbarOpen && isMobile ? 'left-0 w-52' : ''} ${!isSideNavbarOpen && !isMobile ? 'left-0 w-[72px]' : ''} ${!isSideNavbarOpen && isMobile ? 'left-[-210px] w-0' : ''} z-50 flex h-full flex-col gap-2 overflow-hidden bg-bg_sidebar px-3 py-5 text-text_sidebar shadow-lg`}
       >
         <Link
           to="/"
-          className="sidenavbar_heading_container py-5 pl-4 flex items-center relative"
+          className="sidenavbar_heading_container relative flex items-center py-5 pl-4"
         >
           {/* 
         <img className="h-6" src="./assets/logo/logo_name.png" alt="logo" /> 
         */}
           {!isSideNavbarOpen && !isMobile && (
-            <img className="h-8 relative right-1" src={LogoImage} alt="logo" />
+            <img className="relative right-1 h-8" src={LogoImage} alt="logo" />
           )}
           {isSideNavbarOpen && !isMobile && (
-            <h1 className="text-gray-200 text-2xl font-bold">Budgetter</h1>
+            <h1 className="text-2xl font-bold text-gray-200">Budgetter</h1>
           )}
           {isSideNavbarOpen && isMobile && (
-            <h1 className="text-gray-200 text-2xl font-bold">Budgetter</h1>
+            <h1 className="text-2xl font-bold text-gray-200">Budgetter</h1>
           )}
         </Link>
         {/* menu icons */}
@@ -122,15 +117,11 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
               key={index}
               to={`/${route}`}
               onClick={() => dispatch(closeSideNavbar())}
-              className={`sidenavbar_menulink_container relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 ${getActiveRouteLink() === route ? 'bg-bg_active_sidebar_link' : ''} hover:bg-bg_active_sidebar_link items-center`}
+              className={`sidenavbar_menulink_container relative flex w-full justify-start gap-3 rounded-sm px-3 py-2 ${getActiveRouteLink() === route ? 'bg-bg_active_sidebar_link' : ''} items-center hover:bg-bg_active_sidebar_link`}
             >
               <i className={`${icon} text-2xl`}></i>
               <span
-                className={`text-base font-medium absolute 
-              ${!isSideNavbarOpen && !isMobile && 'left-16'}
-              ${isSideNavbarOpen && !isMobile && 'left-12'}
-              ${isSideNavbarOpen && isMobile && 'left-12'}
-                 capitalize whitespace-nowrap`}
+                className={`absolute text-base font-medium ${!isSideNavbarOpen && !isMobile && 'left-16'} ${isSideNavbarOpen && !isMobile && 'left-12'} ${isSideNavbarOpen && isMobile && 'left-12'} whitespace-nowrap capitalize`}
               >
                 {name}
               </span>
@@ -140,22 +131,18 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
         {/* logout button */}
         <div
           id="logout_section"
-          className="menu_logout_container absolute bottom-5 left-3 right-3 flex flex-col gap-3  "
+          className="menu_logout_container absolute bottom-5 left-3 right-3 flex flex-col gap-3"
         >
           <button
             data-tooltip-id="navbarTooltip"
             data-tooltip-content="Logout"
             data-tooltip-place="right"
-            className="logout_container h-12 relative flex justify-start gap-3 w-full px-3 rounded-sm py-2 bg-slate-700 dark:bg-bg_secondary_dark hover:bg-bg_active_sidebar_link dark:hover:bg-bg_active_sidebar_link items-center"
+            className="logout_container relative flex h-12 w-full items-center justify-start gap-3 rounded-sm bg-slate-700 px-3 py-2 hover:bg-bg_active_sidebar_link dark:bg-bg_secondary_dark dark:hover:bg-bg_active_sidebar_link"
             onClick={handleUserLogout}
           >
             <i className="ri-logout-box-r-line text-2xl"></i>
             <span
-              className={`text-base font-mediu absolute transition-all duration-500 ease-in
-               ${!isSideNavbarOpen && !isMobile && 'left-16'}
-              ${isSideNavbarOpen && !isMobile && 'left-12'}
-              ${isSideNavbarOpen && isMobile && 'left-12'}
-              capitalize whitespace-nowrap`}
+              className={`font-mediu absolute text-base transition-all duration-500 ease-in ${!isSideNavbarOpen && !isMobile && 'left-16'} ${isSideNavbarOpen && !isMobile && 'left-12'} ${isSideNavbarOpen && isMobile && 'left-12'} whitespace-nowrap capitalize`}
             >
               {isPending ? (
                 <>
@@ -168,7 +155,7 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
           </button>
         </div>
       </div>
-      <Tooltip className="ml-2 z-50 hidden md:block" id="navbarTooltip" />
+      <Tooltip className="z-50 ml-2 hidden md:block" id="navbarTooltip" />
     </>
   );
 };

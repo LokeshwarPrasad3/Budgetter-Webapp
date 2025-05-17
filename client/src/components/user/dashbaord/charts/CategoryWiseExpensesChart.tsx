@@ -287,26 +287,26 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
   const total = categoryData.reduce((acc, { value }) => acc + (value ?? 0), 0);
 
   return (
-    <div className="flex items-center p-0 py-4 md:p-4 bg-bg_primary_light dark:bg-bg_primary_dark rounded-lg shadow-sm flex-col max-w-full w-full border border-border_light dark:border-border_dark">
-      <h2 className="text-lg md:text-left text-center font-semibold mb-4">
+    <div className="flex w-full max-w-full flex-col items-center rounded-lg border border-border_light bg-bg_primary_light p-0 py-4 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark md:p-4">
+      <h2 className="mb-4 text-center text-lg font-semibold md:text-left">
         Category wise Expenses Visualization
       </h2>
       {isPending && <DonutChartLoader />}
       <div
-        className={`chart_element_container ${isPending ? 'hidden' : 'flex'} flex-col sm:flex-row justify-center items-center w-full gap-4`}
+        className={`chart_element_container ${isPending ? 'hidden' : 'flex'} w-full flex-col items-center justify-center gap-4 sm:flex-row`}
       >
         <div
           ref={chartRef}
           className="h-52 w-52"
           style={{ maxWidth: '400px' }}
         ></div>
-        <div className="flex flex-wrap sm:flex-col gap-2 justify-center sm:justify-start items-center sm:items-start text-sm">
+        <div className="flex flex-wrap items-center justify-center gap-2 text-sm sm:flex-col sm:items-start sm:justify-start">
           {categoryData.map(({ label, value, color }) => (
             <React.Fragment key={label}>
               {value !== 0 && (
                 <div className="flex items-center space-x-2">
                   <div
-                    className="w-8 h-8 rounded-sm p-0.5 flex items-center justify-center text-white font-semibold text-sm"
+                    className="flex h-8 w-8 items-center justify-center rounded-sm p-0.5 text-sm font-semibold text-white"
                     style={{ background: color }}
                   >
                     {`${

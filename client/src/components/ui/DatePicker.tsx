@@ -20,7 +20,7 @@ export function DatePicker({ inputDate, setInputDate }: DatePickerType) {
   const [popoverOpen, setPopoverOpen] = React.useState(false);
 
   return (
-    <Popover open={popoverOpen} onOpenChange={setPopoverOpen} >
+    <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <PopoverTrigger asChild>
         <Button
           variant={'outline'}
@@ -47,7 +47,10 @@ export function DatePicker({ inputDate, setInputDate }: DatePickerType) {
         <Calendar
           mode="single"
           selected={inputDate}
-          onSelect={(value) => { setInputDate(value); setPopoverOpen(false); }}
+          onSelect={(value) => {
+            setInputDate(value);
+            setPopoverOpen(false);
+          }}
           initialFocus
         />
       </PopoverContent>

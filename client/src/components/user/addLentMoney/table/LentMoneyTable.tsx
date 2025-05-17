@@ -78,11 +78,11 @@ const LentMoneyTable: React.FC = () => {
   return (
     <>
       {data?.length === 0 ? (
-        <div className="message_outer rounded-md w-full p-5 ">
+        <div className="message_outer w-full rounded-md p-5">
           <div className="flex">No Records Found</div>
         </div>
       ) : (
-        <div className="overflow-x-auto w-full">
+        <div className="w-full overflow-x-auto">
           <table className="min-w-full divide-y border-b border-border_dark">
             <thead className="dark:bg-bg_secondary_dark">
               {table.getHeaderGroups().map((headerGroup) => (
@@ -90,7 +90,7 @@ const LentMoneyTable: React.FC = () => {
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
-                      className="px-6 py-3 text-left text-sm font-medium text-gray-500 dark:text-gray-100 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100"
                     >
                       {header.isPlaceholder
                         ? null
@@ -114,7 +114,7 @@ const LentMoneyTable: React.FC = () => {
                   {row.getVisibleCells().map((cell) => (
                     <td
                       key={cell.id}
-                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-100"
+                      className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-100"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

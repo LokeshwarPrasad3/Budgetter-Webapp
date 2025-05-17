@@ -49,7 +49,12 @@ const DeleteExpensesDialog: React.FC<DeleteExpensesDialogPropType> = ({
       setIsOpen(false);
       queryClient.invalidateQueries({ queryKey: ['user'] });
       dispatch(deleteFilteredExpense({ id: cred?.expenseId }));
-      dispatch(deleteExpensesFromAllCollection({id: cred?.expenseId, expenseDate: cred?.expenseDate }));
+      dispatch(
+        deleteExpensesFromAllCollection({
+          id: cred?.expenseId,
+          expenseDate: cred?.expenseDate,
+        })
+      );
     },
     onError: (error) => {
       console.log(error);

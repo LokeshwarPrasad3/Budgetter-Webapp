@@ -32,14 +32,14 @@ const UserHistoryExpenseTable: React.FC<PropType> = ({
   storedExpenseDate,
 }) => {
   const dispatch = useDispatch();
-  
+
   const [data, setData] = React.useState<ExpensesTypes[]>([]);
   // get bydefault today expenses
   const { data: todayExpensesData } = useQuery({
     queryFn: getTodayExpenses,
     queryKey: ['todayExpense'],
   });
-  
+
   useEffect(() => {
     if (todayExpensesData?.success) {
       setData(todayExpensesData.data);

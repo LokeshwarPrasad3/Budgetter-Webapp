@@ -52,7 +52,7 @@ const ReceivedLentMoneyDialog: React.FC<ReceivedLentMoneyDialogPropType> = ({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <div className="action_button">
-          <button className="h-fit w-fit rounded-xl text-white bg-[#61ae41] capitalize text-xs border-none py-0.5 px-2.5">
+          <button className="h-fit w-fit rounded-xl border-none bg-[#61ae41] px-2.5 py-0.5 text-xs capitalize text-white">
             money receved
             <i className="ri-checkbox-circle-line ml-0.5 text-yellow-100"></i>
           </button>
@@ -61,10 +61,10 @@ const ReceivedLentMoneyDialog: React.FC<ReceivedLentMoneyDialogPropType> = ({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center text-primary">
-            <CheckCircle className="w-5 h-5 mr-2" />
+            <CheckCircle className="mr-2 h-5 w-5" />
             Confirm Money Received
           </DialogTitle>
-          <DialogDescription className="pt-2 text-slate-700 text-center">
+          <DialogDescription className="pt-2 text-center text-slate-700">
             Are you sure you’ve received the money from {personName}? This will
             remove the entry and update your balance
           </DialogDescription>
@@ -75,7 +75,7 @@ const ReceivedLentMoneyDialog: React.FC<ReceivedLentMoneyDialogPropType> = ({
             type="button"
             variant="outline"
             onClick={() => setIsOpen(false)}
-            className="flex-1 w-full dark:hover:text-white"
+            className="w-full flex-1 dark:hover:text-white"
           >
             Cancel
           </Button>
@@ -83,7 +83,7 @@ const ReceivedLentMoneyDialog: React.FC<ReceivedLentMoneyDialogPropType> = ({
             type="button"
             variant="outline"
             onClick={handleConfirm}
-            className="flex-1 w-full dark:hover:text-white"
+            className="w-full flex-1 dark:hover:text-white"
             disabled={isPending}
           >
             {isPending ? (
@@ -93,7 +93,7 @@ const ReceivedLentMoneyDialog: React.FC<ReceivedLentMoneyDialogPropType> = ({
               </>
             ) : (
               <>
-                <Check className="w-4 h-4 mr-2" />
+                <Check className="mr-2 h-4 w-4" />
                 Confirm
               </>
             )}

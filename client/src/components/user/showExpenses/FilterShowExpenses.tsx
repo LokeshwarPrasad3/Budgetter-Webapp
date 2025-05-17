@@ -21,13 +21,12 @@ const FilterShowExpenses = () => {
     return `${dd}-${mm}-${yyyy}`;
   });
 
-
   const { mutateAsync: showExpensesMutate, isPending } = useMutation({
     mutationFn: getExpensesByDate,
     onSuccess: (data) => {
       console.log(data?.data?.message);
       // console.log("here", data)
-      setStoredExpenseDate(data?.data?.date)
+      setStoredExpenseDate(data?.data?.date);
       // setIsDataFound(true);
       let products: any[];
       if (data?.data === null) {
@@ -87,7 +86,7 @@ const FilterShowExpenses = () => {
         </div> */}
         <UserHistoryExpenseTable
           storedExpenseDate={storedExpenseDate}
-          expensesDate={inputDate?? new Date()}
+          expensesDate={inputDate ?? new Date()}
         />
       </div>
     </>

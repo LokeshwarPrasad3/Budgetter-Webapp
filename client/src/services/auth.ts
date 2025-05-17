@@ -121,7 +121,7 @@ export const LoginUser = async (
 
 // signup with google authentication
 
-interface SignupCredentialsType{
+interface SignupCredentialsType {
   token: string;
 }
 

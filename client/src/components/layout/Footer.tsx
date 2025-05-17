@@ -1,18 +1,149 @@
+import { FOOTER_ANIMATION } from '@/utils/framer/properties';
 import React from 'react';
-
-type FooterPropType = {
-  isFixed: boolean;
-};
-
-const Footer: React.FC<FooterPropType> = ({ isFixed }) => {
+import {
+  RiInstagramLine,
+  RiLinkedinLine,
+  RiTwitterXLine,
+  RiGithubLine,
+} from 'react-icons/ri';
+import { Tooltip } from 'react-tooltip';
+import { motion } from 'framer-motion';
+const Footer: React.FC = () => {
   return (
-    <div
-      className={`h-[65px] ${isFixed ? 'fixed' : ''} bottom-0 left-0 flex mt-3 flex-col font-karla justify-center items-center w-full p-4 bg-[#f2f2f2] text-slate-900`}
+    <motion.footer
+      variants={FOOTER_ANIMATION}
+      initial="hidden"
+      whileInView="visible"
+      className="border-t border-gray-200 bg-[#f8f9fb] text-gray-700"
     >
-      <p className="text-center text-base">
-        © Copyright 2024 Budgetter. All rights reserved.
-      </p>
-    </div>
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-10 sm:grid-cols-2 md:grid-cols-4 lg:py-16 lg:pb-10">
+        {/* Logo + Brand */}
+        <div className="col-span-1">
+          <a href="/home" className="flex items-center">
+            <img src="/assets/logo/logo.png" alt="Budgetter" className="h-10" />
+            <span className="bg-gradient-to-r from-[#2e7dff] to-[#00b87c] bg-clip-text pl-2 text-3xl font-bold text-transparent">
+              Budgetter
+            </span>
+          </a>
+          <p className="mt-4 text-sm text-gray-600">
+            Do money differently. Track, analyze, and manage your daily expenses
+            in a smart way.
+          </p>
+        </div>
+
+        {/* Features */}
+        <div>
+          <h3 className="mb-3 text-xl font-semibold">Features</h3>
+          <ul className="space-y-2 text-sm">
+            <li>Track Expenses</li>
+            <li>Spending Overview</li>
+            <li>Lent Money Management</li>
+            <li>Category Insights</li>
+            <li>Report Generation</li>
+          </ul>
+        </div>
+
+        {/* Quick Links */}
+        <div>
+          <h3 className="mb-3 text-xl font-semibold">Quick Links</h3>
+          <ul className="space-y-2 text-sm">
+            <li>
+              <a
+                href="/home"
+                className="relative before:absolute before:-bottom-0.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-semibold hover:text-[#2e7dff] hover:before:w-full"
+              >
+                Home
+              </a>
+            </li>
+            <li>
+              <a
+                href="/dashboard"
+                className="relative before:absolute before:-bottom-0.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-semibold hover:text-[#00b87c] hover:before:w-full"
+              >
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a
+                href="/features"
+                className="relative before:absolute before:-bottom-0.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-semibold hover:text-[#2e7dff] hover:before:w-full"
+              >
+                Features
+              </a>
+            </li>
+            <li>
+              <a
+                href="/contact"
+                className="relative before:absolute before:-bottom-0.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-semibold hover:text-[#00b87c] hover:before:w-full"
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        {/* Social Media */}
+        <div>
+          <h3 className="mb-3 text-xl font-semibold">Follow Us</h3>
+          <div className="flex space-x-4 text-2xl text-gray-600">
+            <a
+              href="https://www.instagram.com/lokeshwarprasad1"
+              target="_blank"
+              rel="noreferrer"
+              data-tooltip-id="footerTooltip"
+              data-tooltip-content="Instagram"
+              data-tooltip-place="top"
+              className="relative before:absolute before:-bottom-1.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-bold hover:text-pink-500 hover:before:w-full"
+            >
+              <RiInstagramLine />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/lokeshwar-dewangan-7b2163211/"
+              target="_blank"
+              rel="noreferrer"
+              data-tooltip-id="footerTooltip"
+              data-tooltip-content="LinkedIn"
+              data-tooltip-place="top"
+              className="relative before:absolute before:-bottom-1.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-bold hover:text-blue-700 hover:before:w-full"
+            >
+              <RiLinkedinLine />
+            </a>
+            <a
+              href="https://x.com/@LokeshwarPras17"
+              target="_blank"
+              rel="noreferrer"
+              data-tooltip-id="footerTooltip"
+              data-tooltip-content="Twitter"
+              data-tooltip-place="top"
+              className="relative before:absolute before:-bottom-1.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-bold hover:text-black hover:before:w-full"
+            >
+              <RiTwitterXLine />
+            </a>
+            <a
+              href="https://github.com/lokeshwarprasad"
+              target="_blank"
+              rel="noreferrer"
+              data-tooltip-id="footerTooltip"
+              data-tooltip-content="GitHub"
+              data-tooltip-place="top"
+              className="relative before:absolute before:-bottom-1.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-bold hover:text-gray-800 hover:before:w-full"
+            >
+              <RiGithubLine />
+            </a>
+          </div>
+          <Tooltip
+            id="footerTooltip"
+            className="z-50 !rounded-md !bg-gradient-to-r from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 !px-3 !py-1.5 !text-sm !font-medium !text-white"
+            place="top"
+          />
+        </div>
+      </div>
+
+      <div className="border-t border-gray-100 py-4 text-center text-sm text-black">
+        © {new Date().getFullYear()} Budgetter by Lokeshwar Prasad Dewangan.
+        All rights reserved.
+      </div>
+    </motion.footer>
   );
 };
 
