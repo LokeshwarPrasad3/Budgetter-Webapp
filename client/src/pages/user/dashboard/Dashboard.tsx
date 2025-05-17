@@ -20,6 +20,7 @@ import {
   getCurrentMonth,
 } from '@/utils/date/date';
 import toast from 'react-hot-toast';
+import CategoryInsightsTable from '@/components/user/dashbaord/table/CategoryInsightsTable';
 
 const Dashboard: React.FC = () => {
   const user = useSelector((state: any) => state.user.user);
@@ -164,6 +165,12 @@ const Dashboard: React.FC = () => {
             isPending={isPending}
           />
           <CategoryWiseLineChart />
+        </div>
+        <div className="category_insights_container mb-10 w-full">
+          <CategoryInsightsTable
+            filterMonthValue={filterMonthValue}
+            filterYearValue={filterYearValue}
+          />
         </div>
       </div>
     </>

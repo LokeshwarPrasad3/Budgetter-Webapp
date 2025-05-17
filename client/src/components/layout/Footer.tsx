@@ -6,7 +6,6 @@ import {
   RiTwitterXLine,
   RiGithubLine,
 } from 'react-icons/ri';
-import { Tooltip } from 'react-tooltip';
 import { motion } from 'framer-motion';
 const Footer: React.FC = () => {
   return (
@@ -26,8 +25,8 @@ const Footer: React.FC = () => {
             </span>
           </a>
           <p className="mt-4 text-sm text-gray-600">
-            Do money differently. Track, analyze, and manage your daily expenses
-            in a smart way.
+            Take control of your money. Effortlessly track, analyze, and manage
+            your daily expenses with smart insights.
           </p>
         </div>
 
@@ -49,7 +48,7 @@ const Footer: React.FC = () => {
           <ul className="space-y-2 text-sm">
             <li>
               <a
-                href="/home"
+                href="#hero_section"
                 className="relative before:absolute before:-bottom-0.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-semibold hover:text-[#2e7dff] hover:before:w-full"
               >
                 Home
@@ -57,15 +56,15 @@ const Footer: React.FC = () => {
             </li>
             <li>
               <a
-                href="/dashboard"
+                href="#usefullforstudent_section"
                 className="relative before:absolute before:-bottom-0.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-semibold hover:text-[#00b87c] hover:before:w-full"
               >
-                Dashboard
+                For Student
               </a>
             </li>
             <li>
               <a
-                href="/features"
+                href="#features_section"
                 className="relative before:absolute before:-bottom-0.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-semibold hover:text-[#2e7dff] hover:before:w-full"
               >
                 Features
@@ -73,7 +72,7 @@ const Footer: React.FC = () => {
             </li>
             <li>
               <a
-                href="/contact"
+                href="#getintouch_section"
                 className="relative before:absolute before:-bottom-0.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-semibold hover:text-[#00b87c] hover:before:w-full"
               >
                 Contact
@@ -131,17 +130,12 @@ const Footer: React.FC = () => {
               <RiGithubLine />
             </a>
           </div>
-          <Tooltip
-            id="footerTooltip"
-            className="z-50 !rounded-md !bg-gradient-to-r from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 !px-3 !py-1.5 !text-sm !font-medium !text-white"
-            place="top"
-          />
         </div>
       </div>
 
       <div className="border-t border-gray-100 py-4 text-center text-sm text-black">
-        © {new Date().getFullYear()} Budgetter by Lokeshwar Prasad Dewangan.
-        All rights reserved.
+        © {new Date().getFullYear()} Budgetter by Lokeshwar Dewangan. All
+        rights reserved.
       </div>
     </motion.footer>
   );

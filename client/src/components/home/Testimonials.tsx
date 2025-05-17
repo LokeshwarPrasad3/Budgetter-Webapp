@@ -10,9 +10,10 @@ import { FaQuoteRight } from 'react-icons/fa';
 const testimonials = [
   {
     name: 'Lokeshwar Dewangan',
-    quote:'Tracking pocket money used to be a mess. With Budgetter, I get clear visuals of where every rupee goes — it’s perfect for student life and staying stress-free!',
+    quote:
+      'Tracking pocket money used to be a mess. With Budgetter, I get clear visuals of where every rupee goes — it’s perfect for student life and staying stress-free!',
     image:
-    'https://res.cloudinary.com/budgettercloud/image/upload/v1747475519/f6boi90imjmxmj456y33.jpg',
+      'https://res.cloudinary.com/budgettercloud/image/upload/v1747475519/f6boi90imjmxmj456y33.jpg',
   },
   {
     name: 'Poshan Harmukh',
@@ -23,7 +24,8 @@ const testimonials = [
   },
   {
     name: 'Comic Diwakar',
-    quote:'As a student juggling studies and expenses, Budgetter became my daily tool. It showed me where I overspent — especially on food — and helped me save over ₹500 every month!',
+    quote:
+      'As a student juggling studies and expenses, Budgetter became my daily tool. It showed me where I overspent — especially on food — and helped me save over ₹500 every month!',
     image:
       'https://res.cloudinary.com/budgettercloud/image/upload/v1747475473/n45a2mxtdrvhz47c1puu.jpg',
   },
@@ -61,7 +63,7 @@ export const Testimonials = () => {
           variants={TESTIMONIALS_CONTAINER}
           initial="hidden"
           whileInView="visible"
-          className="grid grid-cols-1 gap-7 md:grid-cols-3"
+          className="grid grid-cols-1 gap-14 md:grid-cols-3 md:gap-7"
         >
           {testimonials.map((t) => (
             <motion.div
@@ -75,7 +77,7 @@ export const Testimonials = () => {
                 className="-mt-16 mb-4 h-24 w-24 rounded-full border-[4px] border-[#00b87c] object-cover shadow-md"
               />
               <h4 className="text-lg font-semibold text-zinc-800">{t.name}</h4>
-              <p className="mt-4 text-sm leading-relaxed text-gray-600 font-medium">
+              <p className="mt-4 text-sm font-medium leading-relaxed text-gray-600">
                 {t.quote}
               </p>
               <div className="absolute bottom-5 right-6 text-2xl text-[#2e7dff] opacity-60">

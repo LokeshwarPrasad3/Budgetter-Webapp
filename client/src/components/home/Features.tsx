@@ -17,7 +17,7 @@ const Features: React.FC = () => {
           whileInView="visible"
           className="my-2 text-3xl font-bold"
         >
-          Features
+          Features That Matters
         </motion.div>
 
         <div className="feature_box_container flex w-full flex-wrap items-center justify-center gap-x-7 gap-y-16 xl:justify-between">

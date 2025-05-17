@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const modalRef = useRef<HTMLDivElement>(null);
-  const MotionLink = motion(Link);
+  // const MotionLink = motion(Link);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
           className="flex h-full items-center justify-between px-4"
         >
           {/* Logo */}
-          <Link to="/home" className="flex items-center">
+          <a href="#hero_section" className="flex items-center">
             <img className="h-10" src="/assets/logo/logo.png" alt="Budgetter" />
             {/* <img
               className="h-7 pl-4 relative top-1 right-2"
@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
             <span className="relative top-0.5 bg-gradient-to-r from-[#2e7dff] to-[#00b87c] bg-clip-text pl-2 text-3xl font-bold text-transparent">
               Budgetter
             </span>
-          </Link>
+          </a>
 
           {/* Navigation - Large Screens */}
           <div className="hidden items-center space-x-5 lg:flex">
@@ -70,7 +70,10 @@ const Navbar: React.FC = () => {
                 <span>{name}</span>
               </a>
             ))}
-            <Link to="/signup" className="rounded-full bg-gradient-to-r from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 px-6 py-1.5 text-base font-semibold text-white shadow-xl transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-br">
+            <Link
+              to="/signup"
+              className="rounded-full bg-gradient-to-r from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 px-6 py-1.5 text-base font-semibold text-white shadow-xl transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-br"
+            >
               Signup Today ?
             </Link>
           </div>
@@ -100,22 +103,23 @@ const Navbar: React.FC = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              className={`menu_phone_container fixed right-2 top-16 z-50 mt-2 w-full max-w-[16rem] rounded-lg bg-white py-4 text-center font-karla text-black shadow-md md:hidden`}
+              className={`menu_phone_container fixed right-2 top-16 z-50 mt-2 w-full max-w-[16rem] rounded-lg bg-white py-4 text-center font-karla text-black shadow-md lg:hidden`}
             >
               <motion.div className="flex flex-col justify-center">
                 {navListArray.map(({ route, name }, index) => (
-                  <MotionLink
+                  <motion.a
                     variants={MENU_ITEM_EFFECT_VARIENT}
                     initial="initial"
                     animate="animate"
                     exit="exit"
                     key={index}
-                    to={`/${route}`}
+                    href={`/${route}`}
+                    onClick={() => setIsOpen(false)}
                     className="block py-3 pl-6 text-left text-base font-bold capitalize transition-all duration-300 ease-in hover:underline focus:underline focus:outline-none"
                     style={{ textUnderlineOffset: '8px' }}
                   >
                     {name}
-                  </MotionLink>
+                  </motion.a>
                 ))}
                 <hr />
                 {/* <motion.div className="switch_theme flex justify-between px-6 py-3 pb-0 text-base font-medium">
