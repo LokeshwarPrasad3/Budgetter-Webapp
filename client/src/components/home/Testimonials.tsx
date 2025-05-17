@@ -6,7 +6,7 @@ import {
   UPWARD_WAVE_SCALE_HEADING_ANIMATION,
 } from '@/utils/framer/properties';
 import { motion } from 'framer-motion';
-import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
+import { FaQuoteRight } from 'react-icons/fa';
 const testimonials = [
   {
     name: 'Lokeshwar Dewangan',
