@@ -28,10 +28,11 @@ import {
   prevYearsName,
   getLast7DaysTimelineMessage,
 } from '@/utils/date/date';
-import { ListFilter } from 'lucide-react';
+import { ListFilter, Search, X } from 'lucide-react';
 // import { setAllExpenses } from '@/features/expenses/expenses';
 import toast from 'react-hot-toast';
 import PDFExportComponent from '../../PDFExportComponent';
+import { Input } from '@/components/ui/input';
 
 interface Product {
   name: string;
@@ -100,6 +101,7 @@ const AllExpensesTable: React.FC = () => {
   };
   const [flattenProductsData, setFlattenProductsData] = useState<Expense[]>([]);
   const [PDFStatementTimeline, setPDFStatementTimeline] = useState<string>('');
+  const [filterSearchText, setFilterSearchText] = useState<string>('');
 
   // const dispatch = useDispatch();
   const [data, setData] = useState<FlattenedExpense[]>([]);
@@ -139,7 +141,7 @@ const AllExpensesTable: React.FC = () => {
     );
   };
 
-  // Function filtered data & Provide combined products array
+  // Function filtered data & Provide combined products array and set values for pdf download
   const ExpensesProductsFlattenDataForPDF = (
     flattenedData: FlattenedExpense[],
     timeLineMessage: string
@@ -206,12 +208,12 @@ const AllExpensesTable: React.FC = () => {
 
   // 2️⃣ handle filtered year data
   const handleFilterYearExpenses = (year: string) => {
-    console.log('real selected value', year, filterYearValue);
+    // console.log('real selected value', year, filterYearValue);
     setFilterYearValue(year);
     // get month data filter
     // get selecte year filter data
     const getFilteredMonthExpenses: any = getSelectedMonthExpenses();
-    console.log('all month data', getFilteredMonthExpenses);
+    // console.log('all month data', getFilteredMonthExpenses);
     // filter selected month from year filtered data
     if (year === 'all') {
       setData(getFilteredMonthExpenses);
@@ -249,6 +251,24 @@ const AllExpensesTable: React.FC = () => {
     );
     // console.log(filteredLast7DaysExpenseData);
     setData(filteredLast7DaysExpenseData);
+  };
+
+  // Handle filtered by text search
+  const handleFilterSearchExpenses = (searchText: string) => {
+    setFilterMonthValue('all');
+    handleFilterYearExpenses('all');
+    setFilterSearchText(searchText);
+    const flattenedData = flattenExpenses(allExpensesArray);
+    const filteredSearchExpenseData = flattenedData?.filter((dayExpenses) =>
+      dayExpenses.product.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    // update for pdf download data values
+    const timeLineMessage = `Search: ${searchText}`;
+    ExpensesProductsFlattenDataForPDF(
+      filteredSearchExpenseData,
+      timeLineMessage
+    );
+    setData(filteredSearchExpenseData);
   };
 
   // Show caetgories all expenses
@@ -291,8 +311,8 @@ const AllExpensesTable: React.FC = () => {
   return (
     <div className="allexpenses_table_container flex w-full flex-col justify-center gap-4 rounded-md bg-[#ffffff] px-0 py-5 dark:bg-bg_primary_dark">
       <div className="filter_expense_containerr sticky top-16 flex flex-wrap items-center justify-between gap-5 rounded-md bg-white px-5 py-3 text-base dark:bg-bg_primary_dark">
-        <div className="left_sectionss flex items-center justify-start gap-3">
-          <p className="font-semibold">Your All Expenses</p>
+        <div className="left_sectionss flex flex-row flex-wrap items-center justify-between gap-x-4 gap-y-3 sm:flex-nowrap sm:justify-start">
+          <p className="whitespace-nowrap font-semibold">Your All Expenses</p>
           {flattenProductsData.length !== 0 && (
             <div className="flex sm:hidden">
               <PDFExportComponent
@@ -301,6 +321,25 @@ const AllExpensesTable: React.FC = () => {
               />
             </div>
           )}
+          <div className="relative w-full">
+            <Input
+              value={filterSearchText}
+              onChange={(e) => handleFilterSearchExpenses(e.target.value)}
+              type="text"
+              className="pr-9 sm:w-72"
+              placeholder="Search Expense"
+            />
+            {!filterSearchText ? (
+              <Search className="absolute right-2.5 top-2.5 h-4 w-4" />
+            ) : (
+              <button
+                onClick={() => handleFilterSearchExpenses('')}
+                className="absolute right-2 top-1.5 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-slate-100 transition-all duration-300 ease-in-out hover:scale-105 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+          </div>
         </div>
         <div className="filters flex items-center justify-center gap-1 font-medium">
           <span
