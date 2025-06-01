@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const sendMessageToUser = async (userName, type, userEmail, subject, token) => {
+const sendMessageToUser = async (userName, type, userEmail, subject, token, html = null) => {
     const serverURL = process.env.SERVER_URL;
 
     let customizedHTML;
@@ -32,6 +32,9 @@ const sendMessageToUser = async (userName, type, userEmail, subject, token) => {
         // replace placeholder with actual data
         customizedHTML = htmlContent.replace('{userName}', userName);
     }
+    else if (type === "NEWSLETTER") {
+        customizedHTML = html;
+    }
     else {
         console.log("invalid requrest");
         return;
@@ -50,7 +53,7 @@ const sendMessageToUser = async (userName, type, userEmail, subject, token) => {
         // Email options
         let mailOptions = {
             from: 'message.reponse.web@gmail.com',
-            to: userEmail,
+            to: Array.isArray(userEmail) ? userEmail.join(',') : userEmail,
             subject: `${subject} 🚀`,
             bcc: process.env.ADMIN_GMAIL,
             html: customizedHTML

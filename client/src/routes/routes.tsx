@@ -25,6 +25,7 @@ import AddLentMoney from '@/pages/user/addLentMoney/AddLentMoney.';
 import AdminLayout from '@/pages/admin/AdminLayout';
 import AppUsersCards from '@/components/admin/UserDetails/AppUsersCards';
 import ErrorPage from '@/components/layout/ErrorPage';
+import NewsletterUpload from '@/pages/admin/NewsLetter/NewsletterUpload';
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -58,6 +59,7 @@ const routes = createBrowserRouter(
       {/* for admin private routes */}
       <Route path="admin" element={<AdminLayout />}>
         <Route path="users" element={<AppUsersCards />} />
+        <Route path="newsletter" element={<NewsletterUpload />} />
       </Route>
 
       {/* home */}

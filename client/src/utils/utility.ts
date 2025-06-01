@@ -11,6 +11,10 @@ export const getActiveRouteLink = () => {
       return 'user/reports';
     case '/user/add-money':
       return 'user/add-money';
+    case '/admin/newsletter':
+      return 'admin/newsletter';
+    case '/admin/users':
+      return 'admin/users';
     default:
       return '/';
   }

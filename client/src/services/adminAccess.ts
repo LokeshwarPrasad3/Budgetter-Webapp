@@ -39,3 +39,30 @@ export const GetAppUsersDetails = async () => {
   );
   return data;
 };
+
+// Send newsletter to all users
+interface NewsletterRes {
+  statusCode: number;
+  data: null;
+  message: string;
+  success: boolean;
+}
+interface NewsletterCredType {
+  emails: string[];
+  subject: string;
+  html: string;
+}
+export const SendNewsletter = async (credentials: NewsletterCredType) => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getCurrentAccessToken()}`,
+    },
+  };
+  const { data } = await axios.post<NewsletterRes>(
+    `${backendHostURL}/user/send-newsletter`,
+    credentials,
+    config
+  );
+  return data;
+};

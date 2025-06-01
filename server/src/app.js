@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config({ path: ".env" })
 import express from "express";
+import morgan from 'morgan';
 const app = express();
 import cors from "cors"
 import cookieParser from "cookie-parser";
@@ -12,6 +13,8 @@ const allowedOrigins = [
     FRONTEND_URL, 
     /\.netlify\.app$/, // Allow all Netlify deploy previews
 ];
+
+app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
 app.use(cors({
     origin: (origin, callback) => {
