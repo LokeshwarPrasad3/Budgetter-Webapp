@@ -432,6 +432,62 @@ export const getAllAppUsersData = asyncHandler(async (req, res) => {
     )
 })
 
+export const sendNewsletterToUsers = asyncHandler(async (req, res) => {
+    // validate all emails and subject and html template starts with html tag
+    const { emails, subject, html } = req.body;
+
+    // Validate emails array
+    if (!Array.isArray(emails) || emails.length === 0) {
+        throw new ApiError(400, "Emails must be a non-empty array");
+    }
+
+    // Validate each email in the array
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const invalidEmails = emails.filter(email => !emailRegex.test(email));
+    if (invalidEmails.length > 0) {
+        throw new ApiError(400, `Invalid email formats: ${invalidEmails.join(", ")}`);
+    }
+    console.log("✅ All Emails are Valid")
+
+    // Validate subject
+    if (typeof subject !== 'string' || subject.trim().length === 0) {
+        throw new ApiError(400, "Subject must be a non-empty string");
+    }
+    if (subject.length > 50) {
+        throw new ApiError(400, "Subject cannot exceed 100 characters");
+    }
+    console.log("✅ Subject is Valid")
+
+    // Validate HTML content
+    if (typeof html !== 'string' || html.trim().length === 0) {
+        throw new ApiError(400, "HTML content must be a non-empty string");
+    }
+    if (!html.toLowerCase().includes('<!doctype html>') && !html.toLowerCase().startsWith('<html')) {
+        throw new ApiError(400, "Invalid HTML format - must start with proper HTML structure");
+    }
+
+    console.log("✅ HTML content is Valid")
+    // now send email to all users
+    const isSentGmail = await sendMessageToUser(
+        null,
+        "NEWSLETTER",
+        emails,
+        subject,
+        null, 
+        html
+    );
+    console.log("✅ All Emails are Sent")
+
+    // write next line
+    if (!isSentGmail) {
+        throw new ApiError(500, "Failed to send newsletter emails");
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, null, "Newsletter sent successfully to all users!")
+    );
+})
+
 
 // Add Lent Money of any person
 export const AddLentMoney = asyncHandler(async (req, res) => {

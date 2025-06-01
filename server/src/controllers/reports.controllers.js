@@ -12,13 +12,13 @@ export const TotalExpensesAndAddedMoneyOfMonth = asyncHandler(async (req, res) =
         console.log("month or year must be string");
         throw new ApiError(500, "Month and year should be string!!");
     }
-    console.log("year month", month, year)
+    // console.log("year month", month, year)
     // 1. Calculate Total Expenses Of Month
     const MonthExpenses = await ExpenseModel.find({
         user: userId,
         date: { $regex: `^\\d{2}-${month}-${year}` }
     });
-    console.log(MonthExpenses)
+    // console.log(MonthExpenses)
     // Groceries , Housing & Utilities, Medical ,
     // Food , Personal , Educational , Transportation
     // Miscellaneous

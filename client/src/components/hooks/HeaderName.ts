@@ -18,6 +18,8 @@ export const getTopHeaderName = (pathName: string): string => {
     // for admin private routes
     case '/admin/users':
       return 'App Users';
+    case '/admin/newsletter':
+      return 'NewsLetter';
     default:
       return 'Oops! Wrong Page';
   }

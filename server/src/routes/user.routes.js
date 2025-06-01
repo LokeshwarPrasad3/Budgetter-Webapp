@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerUser, loginUser, resetPassword, changeAvatar, validateResetPasswordToken, validateAccountVerification, addUserPocketMoney, getLoggedUserData, logoutUser, sentTokenToResetPassword, checkUserVerified, changeUserCredentials, deleteUserAccount, getAllAppUsersData, AddLentMoney, getAllLentMoneyHistory, receivedLentMoney, SignWithGoogleAuthentication } from "../controllers/user.controllers.js";
+import { registerUser, loginUser, resetPassword, changeAvatar, validateResetPasswordToken, validateAccountVerification, addUserPocketMoney, getLoggedUserData, logoutUser, sentTokenToResetPassword, checkUserVerified, changeUserCredentials, deleteUserAccount, getAllAppUsersData, AddLentMoney, getAllLentMoneyHistory, receivedLentMoney, SignWithGoogleAuthentication, sendNewsletterToUsers } from "../controllers/user.controllers.js";
 import { showParticularDateExpenses, addTodayExpenses, addParticularDateExpenses, showTodayExpenses, showAllDateExpenses, editUserExpenses, deleteUserExpenses } from "../controllers/expenses.controller.js";
 import verifyJwtToken from "../middleware/auth.middleware.js";
 import { upload } from "../middleware/multer.middleware.js"
@@ -48,6 +48,7 @@ router.route("/logout").get(verifyJwtToken, logoutUser)
 
 // get all users list
 router.route("/get-all-users").get(verifyJwtToken, getAllAppUsersData);
+router.route("/send-newsletter").post(verifyJwtToken, sendNewsletterToUsers);
 
 // Lent Money to some person API routes
 router.route("/add-lent-money").post(verifyJwtToken, AddLentMoney);
