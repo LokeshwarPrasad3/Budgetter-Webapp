@@ -32,6 +32,10 @@ app.use(express.json({ limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
+// Welcome route
+app.get('/', (req, res) => {
+    res.json({ message: 'Welcome to Budgetter API' });
+});
 
 // Api EndPoints
 app.use("/api/user", userRoutes)
