@@ -1,23 +1,8 @@
+import { User } from '@/types/api/admin/reports/userReports';
 import IndividualUserDetails from '../IndividualUserDetails';
 
 interface UserCardProps {
-  user: {
-    _id: string;
-    username: string;
-    name: string;
-    email: string;
-    avatar: string;
-    dateOfBirth: string;
-    profession: string;
-    instagramLink: string;
-    facebookLink: string;
-    currentPocketMoney: string;
-    isVerified: boolean;
-    LentMoneyHistory: [];
-    PocketMoneyHistory: [];
-    createdAt: string;
-    updatedAt: string;
-  };
+  user: User
 }
 
 const UserCard: React.FC<UserCardProps> = ({ user }) => {

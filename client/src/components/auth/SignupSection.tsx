@@ -11,7 +11,7 @@ import Cookies from 'universal-cookie';
 import { useFormik } from 'formik';
 import { signupSchema } from '@/schemas';
 import GoogleAuthLogin from './GoogleAuthLogin';
-import { UserDetailsResType } from '@/types/auth/auth';
+import { UserDetailsResType } from '@/types/api/auth/auth';
 
 const SignupSection: React.FC = () => {
   const cookie = new Cookies();

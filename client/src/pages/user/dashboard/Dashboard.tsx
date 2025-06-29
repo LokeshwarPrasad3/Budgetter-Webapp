@@ -21,6 +21,7 @@ import {
 } from '@/utils/date/date';
 import toast from 'react-hot-toast';
 import CategoryInsightsTable from '@/components/user/dashbaord/table/CategoryInsightsTable';
+import { CategoryWiseExpensesData } from '@/types/api/reports/reports';
 
 const Dashboard: React.FC = () => {
   const user = useSelector((state: any) => state.user.user);
@@ -35,18 +36,8 @@ const Dashboard: React.FC = () => {
     new Date().getFullYear().toString()
   );
 
-  interface expenseCategoriesTypes {
-    GroceriesExpenses: number;
-    Housing_UtilitiesExpenses: number;
-    MedicalExpenses: number;
-    FoodExpenses: number;
-    PersonalExpenses: number;
-    EducationalExpenses: number;
-    TransportationExpenses: number;
-    MiscellaneousExpenses: number;
-  }
   const [CategoryWiseData, setCategoryWiseData] =
-    useState<expenseCategoriesTypes>();
+    useState<CategoryWiseExpensesData>();
 
   const { mutateAsync: getTotalExpensesAndAddedMoneyMutate, isPending } =
     useMutation({

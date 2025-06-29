@@ -11,7 +11,7 @@ import {
   UserAccountVerifiedResType,
   UserDetailsResType,
   UserLogoutResType,
-} from '@/types/auth/auth';
+} from '@/types/api/auth/auth';
 import {
   AddPocketMoneyCredentialType,
   DeleteUserCredType,
@@ -21,7 +21,7 @@ import {
   SendResetLinkCredType,
   SignupGoogleCredentialsType,
   UpdateUserDetailsCredType,
-} from '@/types/auth/credentials';
+} from '@/types/api/auth/credentials';
 import { apiURL } from '@/lib/http';
 import axios, { AxiosRequestConfig } from 'axios';
 import { backendHostURL } from './api';

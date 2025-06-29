@@ -7,12 +7,7 @@ import toast from 'react-hot-toast';
 import { formatDate } from '@/utils/date/date';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addLentMoney } from '@/services/lentmoney';
-
-interface LentMoneyCredentialsType {
-  personName: string;
-  date: string;
-  price: number;
-}
+import { LentMoneyCredType } from '@/types/api/lentmoney/credentials';
 
 const AddLentSection = () => {
   const queryClient = useQueryClient();
@@ -49,7 +44,7 @@ const AddLentSection = () => {
     // console.log(inputDate, personName, price);
     const formattedDate: string = formatDate(inputDate);
     console.log(formatDate(inputDate));
-    const lentMoneyData: LentMoneyCredentialsType = {
+    const lentMoneyData: LentMoneyCredType = {
       date: formattedDate,
       personName,
       price: parseInt(price),

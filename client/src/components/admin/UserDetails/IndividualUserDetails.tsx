@@ -6,25 +6,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import { User } from '@/types/api/admin/reports/userReports';
 import { Eye } from 'lucide-react';
-
-interface User {
-  _id: string;
-  username: string;
-  name: string;
-  email: string;
-  avatar: string;
-  dateOfBirth: string;
-  profession: string;
-  instagramLink: string;
-  facebookLink: string;
-  currentPocketMoney: string;
-  isVerified: boolean;
-  LentMoneyHistory: any[];
-  PocketMoneyHistory: any[];
-  createdAt: string;
-  updatedAt: string;
-}
 
 const IndividualUserDetails = ({ user }: { user: User }) => {
   return (
