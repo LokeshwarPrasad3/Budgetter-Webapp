@@ -18,17 +18,11 @@ import { Label } from '@/components/ui/label';
 import { useDispatch } from 'react-redux';
 import { deleteFilteredExpense } from '@/features/user/user';
 import { deleteExpensesFromAllCollection } from '@/features/expenses/expenses';
+import { ExpenseProduct } from '@/types/api/expenses/expenses';
 
 interface DeleteExpensesDialogPropType {
   storedExpenseDate: string;
-  info: {
-    _id: string;
-    name: string;
-    price: number;
-    category: string;
-    createdAt: string;
-    updatedAt: string;
-  };
+  info: ExpenseProduct;
 }
 
 const DeleteExpensesDialog: React.FC<DeleteExpensesDialogPropType> = ({

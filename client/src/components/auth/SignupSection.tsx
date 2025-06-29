@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { registerUser, RegisterUserResponseType } from '@/services/auth';
+import { registerUser } from '@/services/auth';
 import { Button } from '../ui/button';
 import { Loader2 } from 'lucide-react';
 import { useDispatch } from 'react-redux';
@@ -11,6 +11,7 @@ import Cookies from 'universal-cookie';
 import { useFormik } from 'formik';
 import { signupSchema } from '@/schemas';
 import GoogleAuthLogin from './GoogleAuthLogin';
+import { UserDetailsResType } from '@/types/api/auth/auth';
 
 const SignupSection: React.FC = () => {
   const cookie = new Cookies();
@@ -20,7 +21,7 @@ const SignupSection: React.FC = () => {
 
   const { mutateAsync: registerUserMutate, isPending } = useMutation({
     mutationFn: registerUser,
-    onSuccess: (data: RegisterUserResponseType) => {
+    onSuccess: (data: UserDetailsResType) => {
       // console.log('User registered successfully:', data);
       const {
         _id,

@@ -1,296 +1,102 @@
 // services/auth.ts
+import Cookies from 'universal-cookie';
+const cookie = new Cookies();
+import {
+  ChangeAvatarResType,
+  DeleteUserResType,
+  PocketMoneyResType,
+  ResetPasswordResType,
+  SendPassResetLinkResType,
+  UpdateUserDetailsResType,
+  UserAccountVerifiedResType,
+  UserDetailsResType,
+  UserLogoutResType,
+} from '@/types/api/auth/auth';
+import {
+  AddPocketMoneyCredentialType,
+  DeleteUserCredType,
+  LoginCredentialsType,
+  RegisterCredentialsType,
+  ResetPasswordCredType,
+  SendResetLinkCredType,
+  SignupGoogleCredentialsType,
+  UpdateUserDetailsCredType,
+} from '@/types/api/auth/credentials';
+import { apiURL } from '@/lib/http';
 import axios, { AxiosRequestConfig } from 'axios';
 import { backendHostURL } from './api';
-import Cookies from 'universal-cookie';
 import { getCurrentAccessToken } from '@/utils/cookie/CookiesInfo';
-const cookie = new Cookies();
 
-// For User Registration
-export interface RegisterCredentialsType {
-  username: string;
-  name: string;
-  email: string;
-  password: string;
-}
-export interface RegisterUserResponseType {
-  statusCode: number;
-  data: {
-    _id: string;
-    username: string;
-    name: string;
-    email: string;
-    avatar: string;
-    currentPocketMoney: string;
-    isVerified: boolean;
-    profession: string;
-    dob: string;
-    instagramLink: string;
-    facebookLink: string;
-    PocketMoneyHistory: [];
-    LentMoneyHistory: [];
-    accessToken: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  };
-  message: string;
-  success: boolean;
-}
+// For User Registration through email password form
 export const registerUser = async (
   credentials: RegisterCredentialsType
-): Promise<RegisterUserResponseType> => {
-  const config: AxiosRequestConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${getCurrentAccessToken()}`,
-    },
-  };
-
-  const { data } = await axios.post<RegisterUserResponseType>(
-    `${backendHostURL}/user/register`,
-    credentials,
-    config
+): Promise<UserDetailsResType> => {
+  const { data } = await apiURL.post<UserDetailsResType>(
+    `/user/register`,
+    credentials
   );
   return data;
 };
 
-// For User Login
-export interface LoginCredentialsType {
-  username: string;
-  email: string;
-  password: string;
-}
-export interface LoginUserResponseType {
-  statusCode: number;
-  data: {
-    _id: string;
-    username: string;
-    name: string;
-    email: string;
-    avatar: string;
-    currentPocketMoney: string;
-    profession: string;
-    dob: string;
-    instagramLink: string;
-    facebookLink: string;
-    isVerified: boolean;
-    accessToken: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-    PocketMoneyHistory: [
-      {
-        date: string;
-        amount: string;
-        source: string;
-        _id: string;
-        createdAt: string;
-        updatedAt: string;
-      },
-    ];
-    LentMoneyHistory: [
-      {
-        _id: string;
-        personName: string;
-        price: string;
-        date: string;
-        createdAt: string;
-        updatedAt: string;
-      },
-    ];
-  };
-  message: string;
-  success: boolean;
-}
+// For User Login through email password form
 export const LoginUser = async (
   credentials: LoginCredentialsType
-): Promise<LoginUserResponseType> => {
-  const config: AxiosRequestConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${getCurrentAccessToken()}`,
-    },
-  };
-  const { data } = await axios.post<LoginUserResponseType>(
-    `${backendHostURL}/user/login`,
-    credentials,
-    config
+): Promise<UserDetailsResType> => {
+  const { data } = await apiURL.post<UserDetailsResType>(
+    `/user/login`,
+    credentials
   );
   return data;
 };
 
-// signup with google authentication
-
-interface SignupCredentialsType {
-  token: string;
-}
-
+// Signup with google authentication
 export const SignupWithGoogle = async (
-  credentials: SignupCredentialsType
-): Promise<LoginUserResponseType> => {
-  const config: AxiosRequestConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-  const { data } = await axios.post<LoginUserResponseType>(
-    `${backendHostURL}/user/google-login`,
-    credentials,
-    config
+  credentials: SignupGoogleCredentialsType
+): Promise<UserDetailsResType> => {
+  const { data } = await apiURL.post<UserDetailsResType>(
+    `/user/google-login`,
+    credentials
   );
   return data;
 };
 
-// getting data by accesstoken
-interface userDetailsType {
-  statusCode: number;
-  data: {
-    _id: string;
-    username: string;
-    name: string;
-    email: string;
-    avatar: string;
-    currentPocketMoney: string;
-    profession: string;
-    dob: string;
-    instagramLink: string;
-    facebookLink: string;
-    accessToken: string;
-    isVerified: boolean;
-    PocketMoneyHistory: [
-      {
-        date: string;
-        amount: string;
-        source: string;
-        _id: string;
-        createdAt: string;
-        updatedAt: string;
-      },
-    ];
-    LentMoneyHistory: [
-      {
-        _id: string;
-        personName: string;
-        price: string;
-        date: string;
-        createdAt: string;
-        updatedAt: string;
-      },
-    ];
-  } | null;
-  message: string;
-  success: boolean;
-}
-export const getCurrentUser = async (): Promise<userDetailsType> => {
+// Getting current user details
+export const getCurrentUser = async (): Promise<UserDetailsResType> => {
   const token = cookie.get('accessToken');
   if (!token) {
-    return {
-      statusCode: 404,
-      data: null,
-      message: 'Access token is missing. Please log in.',
-      success: false,
-    };
+    throw new Error('Access token is missing. Please log in.');
   }
-  const config: AxiosRequestConfig = {
-    headers: {
-      Authorization: `Bearer ${getCurrentAccessToken()}`,
-    },
-  };
-  const { data } = await axios.get<userDetailsType>(
-    `${backendHostURL}/user/get-user-data`,
-    config
-  );
+  const { data } = await apiURL.get<UserDetailsResType>('/user/get-user-data');
   return data;
 };
 
-// add your pocket money
-interface AddedPocketMoneyRes {
-  statusCode: number;
-  data: {
-    PocketMoneyHistory: [
-      {
-        date: string;
-        amount: string;
-        source: string;
-        _id: string;
-        createdAt: string;
-        updatedAt: string;
-      },
-    ];
-    currentPocketMoney: string;
-  };
-  message: string;
-  success: boolean;
-}
-interface AddPocketMoneyCredentialType {
-  date: string;
-  amount: string;
-  source: string;
-}
+// Add Pocket Money to User Account
 export const AddUserPocketMoney = async (
   credentials: AddPocketMoneyCredentialType
-): Promise<AddedPocketMoneyRes> => {
-  const config: AxiosRequestConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${getCurrentAccessToken()}`,
-    },
-  };
-  const { data } = await axios.post<AddedPocketMoneyRes>(
-    `${backendHostURL}/user/add-money`,
-    credentials,
-    config
+): Promise<PocketMoneyResType> => {
+  const { data } = await apiURL.post<PocketMoneyResType>(
+    '/user/add-money',
+    credentials
   );
   return data;
 };
 
 // User Logout
-interface UserLogoutRes {
-  statusCode: number;
-  data: null;
-  message: string;
-  success: boolean;
-}
-export const UserLogout = async (): Promise<UserLogoutRes> => {
-  const token = getCurrentAccessToken();
-  if (!token) {
-    return {
-      statusCode: 401,
-      data: null,
-      message: 'No token provided, logout failed.',
-      success: false,
-    };
-  }
-  const config: AxiosRequestConfig = {
-    headers: {
-      Authorization: `Bearer ${getCurrentAccessToken()}`,
-    },
-  };
-  const { data } = await axios.get<UserLogoutRes>(
-    `${backendHostURL}/user/logout`,
-    config
-  );
+export const UserLogout = async (): Promise<UserLogoutResType> => {
+  const { data } = await apiURL.get<UserLogoutResType>('/user/logout');
   return data;
 };
 
-// change avatar
-interface ChangeAvatarRes {
-  statusCode: number;
-  data: {
-    avatar: string;
-  };
-  message: string;
-  success: boolean;
-}
+// Change User Avatar
 export const changeUserAvatar = async (
   formData: FormData
-): Promise<ChangeAvatarRes> => {
+): Promise<ChangeAvatarResType> => {
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: `Bearer ${getCurrentAccessToken()}`,
     },
   };
-  const { data } = await axios.post<ChangeAvatarRes>(
+  const { data } = await axios.post<ChangeAvatarResType>(
     `${backendHostURL}/user/change-avatar`,
     formData,
     config
@@ -298,133 +104,58 @@ export const changeUserAvatar = async (
   return data;
 };
 
-// Send reset link for forgot account
-interface SendResetLinkResType {
-  statusCode: number;
-  data: string;
-  message: string;
-  success: boolean;
-}
-interface SendResetLinkCredType {
-  email: string;
-}
+// Send Reset Password Link to User Email
 export const SendResetLinkToUserEmail = async (
   credentials: SendResetLinkCredType
-): Promise<SendResetLinkResType> => {
-  const config: AxiosRequestConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-  const { data } = await axios.post<SendResetLinkResType>(
-    `${backendHostURL}/user/send-reset-link`,
-    credentials,
-    config
+): Promise<SendPassResetLinkResType> => {
+  const { data } = await apiURL.post<SendPassResetLinkResType>(
+    `/user/send-reset-link`,
+    credentials
   );
   return data;
 };
 
-// Get User by their ID
-interface ResetPasswordResType {
-  statusCode: number;
-  data: null;
-  message: string;
-  success: boolean;
-}
-interface ResetPasswordCredType {
-  userId: string;
-  newPassword: string;
-}
+// Reset User Password
 export const ResetUserPassword = async (
   credentials: ResetPasswordCredType
 ): Promise<ResetPasswordResType> => {
-  const config: AxiosRequestConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-  // console.log(credentials);
-  const { data } = await axios.patch<ResetPasswordResType>(
-    `${backendHostURL}/user/reset-password`,
-    credentials,
-    config
+  const { data } = await apiURL.patch<ResetPasswordResType>(
+    `/user/reset-password`,
+    credentials
   );
   return data;
 };
 
-// Get User account verified or not
-interface UserAccountVerifiedResType {
-  statusCode: number;
-  data: boolean;
-  message: string;
-  success: boolean;
-}
+// Check if User Account is Verified
 export const CheckUserAccountVerified =
   async (): Promise<UserAccountVerifiedResType> => {
-    const config: AxiosRequestConfig = {
-      headers: {
-        Authorization: `Bearer ${getCurrentAccessToken()}`,
-      },
-    };
-    const { data } = await axios.get<UserAccountVerifiedResType>(
-      `${backendHostURL}/user/is-user-verified`,
-      config
+    const { data } = await apiURL.get<UserAccountVerifiedResType>(
+      `/user/is-user-verified`
     );
     return data;
   };
 
-// Change User Details
-interface UpdateUserDetailsRes {
-  statusCode: number;
-  data: string;
-  message: string;
-  success: boolean;
-}
-interface UpdateUserDetailsCredType {
-  name: string;
-  dob: string;
-  currentPassword: string;
-  newPassword: string;
-  instagramLink: string;
-  facebookLink: string;
-  profession: string;
-}
+// Update User Details
 export const updatedUserDetails = async (
   credentials: UpdateUserDetailsCredType
-): Promise<UpdateUserDetailsRes> => {
-  const config: AxiosRequestConfig = {
-    headers: {
-      Authorization: `Bearer ${getCurrentAccessToken()}`,
-    },
-  };
-  const { data } = await axios.patch<UpdateUserDetailsRes>(
-    `${backendHostURL}/user/change-user-details`,
-    credentials,
-    config
+): Promise<UpdateUserDetailsResType> => {
+  const { data } = await apiURL.patch<UpdateUserDetailsResType>(
+    `/user/change-user-details`,
+    credentials
   );
   return data;
 };
 
-// Delete User account res
-interface DeleteUserRes {
-  statusCode: number;
-  data: null;
-  message: string;
-  success: boolean;
-}
-interface DeleteUserCredType {
-  password: string;
-}
-export const deleteUserAccount = async (credentials: DeleteUserCredType) => {
-  const config: AxiosRequestConfig = {
-    headers: {
-      Authorization: `Bearer ${getCurrentAccessToken()}`,
-    },
-    data: credentials,
-  };
-  const { data } = await axios.delete<DeleteUserRes>(
-    `${backendHostURL}/user/delete-account`,
-    config
+// Delete User Account
+export const deleteUserAccount = async (
+  credentials: DeleteUserCredType
+): Promise<DeleteUserResType> => {
+  const { data } = await apiURL.delete<DeleteUserResType>(
+    '/user/delete-account',
+    {
+      data: credentials,
+    }
   );
+
   return data;
 };

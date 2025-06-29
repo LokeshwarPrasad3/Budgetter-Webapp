@@ -7,6 +7,7 @@ import ReactSelect, { MultiValue, StylesConfig } from 'react-select';
 import toast from 'react-hot-toast';
 import { GetAppUsersDetails } from '@/services/adminAccess';
 import { useQuery } from '@tanstack/react-query';
+import { User } from '@/types/api/admin/reports/userReports';
 
 interface UploadFormProps {
   heading: string;
@@ -17,14 +18,8 @@ interface UploadFormProps {
   setUsersEmails: (emails: string[]) => void;
 }
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
 interface Option {
-  value: number;
+  value: string;
   label: string;
 }
 
@@ -55,7 +50,7 @@ const UploadForm: React.FC<UploadFormProps> = ({
 
   const getFilteredEmails = (): string[] => {
     const includedEmails = allUsers.filter(
-      (user) => !excludedUsers.some((excluded) => excluded.value === user.id)
+      (user) => !excludedUsers.some((excluded) => excluded.value === user._id)
     );
     // console.log(includedEmails);
     const allEmails = [...includedEmails.map((user) => user.email), ...emails];
@@ -64,19 +59,19 @@ const UploadForm: React.FC<UploadFormProps> = ({
 
   useEffect(() => {
     if (data?.data) {
-      const fetchedUsers: User[] = data.data.map((user, index) => ({
-        id: Number(user._id) || 100 + index, // convert id to number or fallback
+      const fetchedUsers: any = data.data.map((user: User, index: number) => ({
+        _id: Number(user._id) || 100 + index, // convert id to number or fallback
         name: user.name || user.username || 'Unknown User',
         email: user.email,
       }));
       setAllUsers(fetchedUsers);
 
       const includedEmails = fetchedUsers.filter(
-        (user) => !excludedUsers.some((excluded) => excluded.value === user.id)
+        (user: any) => !excludedUsers.some((excluded) => excluded.value === user._id)
       );
       // console.log(includedEmails);
       const allEmails = [
-        ...includedEmails.map((user) => user.email),
+        ...includedEmails.map((user: any) => user.email),
         ...emails,
       ];
       setUsersEmails(allEmails);
@@ -84,7 +79,7 @@ const UploadForm: React.FC<UploadFormProps> = ({
   }, [data]);
 
   const userOptions: Option[] = allUsers.map((user) => ({
-    value: user.id,
+    value: user._id,
     label: user.name,
   }));
 

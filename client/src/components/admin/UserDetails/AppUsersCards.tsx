@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { GetAppUsersDetails } from '@/services/adminAccess';
+import { User } from '@/types/api/admin/reports/userReports';
 
 const AppUsersCards: React.FC = () => {
   // current loggedin user
@@ -40,7 +41,7 @@ const AppUsersCards: React.FC = () => {
           />
         </div>
         <div className="users_cards_container user_cards_section grid h-full w-full grid-cols-12 gap-6 rounded-md">
-          {data?.data?.map((user, index) => (
+          {data?.data?.map((user: User, index: number) => (
             <React.Fragment key={index}>
               <UserCard user={user} />
             </React.Fragment>

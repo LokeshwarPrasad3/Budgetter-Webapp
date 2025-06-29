@@ -24,7 +24,7 @@ const FilterShowExpenses = () => {
   const { mutateAsync: showExpensesMutate, isPending } = useMutation({
     mutationFn: getExpensesByDate,
     onSuccess: (data) => {
-      console.log(data?.data?.message);
+      // console.log(data?.data?.message);
       // console.log("here", data)
       setStoredExpenseDate(data?.data?.date);
       // setIsDataFound(true);

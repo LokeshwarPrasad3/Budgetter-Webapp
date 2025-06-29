@@ -15,18 +15,7 @@ import toast from 'react-hot-toast';
 import { formatDate } from '@/utils/date/date';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addExpenses } from '@/services/expenses';
-
-interface ExpensesCredentialsType {
-  date: string; // Add this line
-  pastDaysExpensesArray: {
-    date: string;
-    productsArray: {
-      name: string;
-      price: number;
-      category: string;
-    }[];
-  }[];
-}
+import { AddExpensesCredType } from '@/types/api/expenses/credentials';
 
 const FilterSection = () => {
   const queryClient = useQueryClient();
@@ -63,7 +52,7 @@ const FilterSection = () => {
     // console.log(inputDate, expenseCategory, expenseName, price);
     const formattedDate: string = formatDate(inputDate);
     console.log(formatDate(inputDate));
-    const pastDaysExpensesArray: ExpensesCredentialsType['pastDaysExpensesArray'] =
+    const pastDaysExpensesArray: AddExpensesCredType['pastDaysExpensesArray'] =
       [
         {
           date: formattedDate,
@@ -76,7 +65,7 @@ const FilterSection = () => {
           ],
         },
       ];
-    const expensesData: ExpensesCredentialsType = {
+    const expensesData: AddExpensesCredType = {
       date: formattedDate,
       pastDaysExpensesArray: pastDaysExpensesArray,
     };

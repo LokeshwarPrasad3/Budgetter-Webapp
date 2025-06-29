@@ -4,19 +4,11 @@ import * as am5percent from '@amcharts/amcharts5/percent';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import DonutChartLoader from './Loader/DonutChartLoader';
 import { useSelector } from 'react-redux';
+import { CategoryWiseExpensesData } from '@/types/api/reports/reports';
 
 interface CategoryWiseDataPropTypes {
   totalExpensesOfMonth: number | undefined;
-  CategoryWiseData?: {
-    GroceriesExpenses: number;
-    Housing_UtilitiesExpenses: number;
-    MedicalExpenses: number;
-    FoodExpenses: number;
-    PersonalExpenses: number;
-    EducationalExpenses: number;
-    TransportationExpenses: number;
-    MiscellaneousExpenses: number;
-  };
+  CategoryWiseData?: CategoryWiseExpensesData;
   isPending: boolean;
 }
 

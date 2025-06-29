@@ -33,15 +33,7 @@ import { ListFilter, Search, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 import PDFExportComponent from '../../PDFExportComponent';
 import { Input } from '@/components/ui/input';
-
-interface Product {
-  name: string;
-  price: number;
-  category: string;
-  _id: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { ExpenseProduct } from '@/types/api/expenses/expenses';
 
 export interface Expense {
   sno: number;
@@ -54,7 +46,7 @@ export interface Expense {
 interface FlattenedExpense {
   user: string;
   date: string;
-  product: Product;
+  product: ExpenseProduct;
 }
 
 const columnHelper = createColumnHelper<FlattenedExpense>();
