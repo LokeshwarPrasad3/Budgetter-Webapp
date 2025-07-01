@@ -62,7 +62,7 @@ const SummarizeBoxes: React.FC<PropType> = ({
           .map(({ title, value, bgClass }, index) => (
             <div
               key={index}
-              className={`flex w-full max-w-full flex-col flex-wrap items-center justify-center gap-0 rounded-[10px] p-3 md:max-w-[14rem] ${bgClass}`}
+              className={`flex w-full max-w-full flex-col flex-wrap items-center justify-center gap-0 rounded-[10px] p-3 md:max-w-[13rem] 2xl:max-w-[14rem] ${bgClass}`}
             >
               <p className="text-center text-lg font-semibold text-white">
                 {title}
