@@ -5,7 +5,8 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import useCategoryStats from './useCategoryStats';
+import useCategoryStats, { getFullExpensesList } from './useCategoryStats';
+import ViewCategoryExpensesDialog from '../actions/view-expenses/ViewCategoryExpensesDialog';
 
 // Define color map for category
 const categoryColorMap: Record<string, string> = {
@@ -118,6 +119,20 @@ const CategoryInsightsTable: React.FC<PropTypes> = ({
           ₹{info.getValue()}
         </span>
       ),
+    }),
+    columnHelper.display({
+      id: 'actions',
+      header: 'Actions',
+      cell: (info) => {
+        const category = info.row.original.category;
+        const fullExpenses = getFullExpensesList(category, filterMonthValue, filterYearValue)
+        return (
+          <ViewCategoryExpensesDialog
+            fullExpenses={fullExpenses}
+            category={category}
+          />
+        );
+      },
     }),
   ];
 

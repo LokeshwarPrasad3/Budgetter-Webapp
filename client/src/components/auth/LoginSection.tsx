@@ -37,6 +37,8 @@ const LoginSection: React.FC = () => {
         dob,
         instagramLink,
         facebookLink,
+        lastLogin,
+        createdAt,
       } = data.data;
       dispatch(
         setUser({
@@ -53,6 +55,8 @@ const LoginSection: React.FC = () => {
           dob,
           instagramLink,
           facebookLink,
+          lastLogin,
+          createdAt,
         })
       );
       console.log(data?.message);

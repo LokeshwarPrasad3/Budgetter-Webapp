@@ -34,6 +34,7 @@ export interface UserDetailsResType {
     ];
     accessToken: string;
     createdAt: string;
+    lastLogin: Date;
     updatedAt: string;
     __v: number;
   };

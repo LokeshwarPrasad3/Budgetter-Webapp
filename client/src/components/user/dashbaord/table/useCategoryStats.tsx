@@ -72,4 +72,25 @@ const useCategoryStats = (
   return groupedByCategory;
 };
 
+export const getFullExpensesList = (
+  categoryName: string,
+  filterMonthValue: string,
+  filterYearValue: string
+) => {
+  const allExpensesArray = useSelector(
+    (state: any) => state.expenses.allExpenses
+  );
+
+  return allExpensesArray
+    .filter((entry: any) => {
+      const [_, month, year] = entry.date.split('-');
+      return (
+        month === getMonthInNumber(filterMonthValue) &&
+        year === filterYearValue
+      );
+    })
+    .flatMap((entry: any) => entry.products)
+    .filter((product: any) => product.category === categoryName);
+};
+
 export default useCategoryStats;

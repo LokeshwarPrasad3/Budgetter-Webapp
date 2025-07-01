@@ -29,6 +29,8 @@ export const registerUser = asyncHandler(async (req, res) => {
         username: username.toLowerCase(), name, email, password
     })
     user.accessToken = await user.generateAccessToken();
+    user.lastLogin = user.currentLogin;
+    user.currentLogin = new Date();
     const accessToken = user.accessToken;
     await user.save({ validateBeforeSave: false });
     const createdUser = await UserModel.findById(user._id).select("-password");
@@ -123,6 +125,8 @@ export const getLoggedUserData = asyncHandler(async (req, res) => {
         dob: user?.dateOfBirth,
         instagramLink: user?.instagramLink,
         facebookLink: user?.facebookLink,
+        createdAt: user?.createdAt,
+        lastLogin: user?.lastLogin,
     }
     res.status(200).json(
         new ApiResponse(200, data, "User Found Successfully!!")
@@ -148,12 +152,16 @@ export const loginUser = asyncHandler(async (req, res) => {
         throw new ApiError(400, `${email} - Your credentials are invalid!!`);
     }
     existedUser.accessToken = await existedUser.generateAccessToken();
+    // Update last login time
+    // Handle first time login case where currentLogin is null
+    existedUser.lastLogin = existedUser.currentLogin || new Date();
+    existedUser.currentLogin = new Date();
     const accessToken = existedUser.accessToken;
     await existedUser.save({ validateBeforeSave: false });
 
     // Now User is valid
     const user = await UserModel.findById(existedUser._id).select("-password")
-    // console.log(user);
+    console.log(user);
     console.log(`${user.name} - Your Account Loggedin successfully!!`);
 
     const options = {
@@ -604,7 +612,8 @@ export const SignWithGoogleAuthentication = asyncHandler(async (req, res) => {
             avatar: picture,
             authProvider: "google"
         });
-
+        user.lastLogin = user.currentLogin;
+        user.currentLogin = new Date();
         user.accessToken = await user.generateAccessToken();
         await user.save({ validateBeforeSave: false });
 
