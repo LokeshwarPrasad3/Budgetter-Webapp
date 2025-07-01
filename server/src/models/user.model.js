@@ -126,7 +126,15 @@ const UserSchema = new Schema({
     isVerified: {
         type: Boolean,
         default: false
-    }
+    },
+    lastLogin: {
+        type: Date,
+        default: null
+    },
+    currentLogin: {
+        type: Date,
+        default: null
+    },
 }, {
     timestamps: true
 })

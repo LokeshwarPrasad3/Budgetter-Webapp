@@ -30,6 +30,8 @@ const GoogleAuthLogin = () => {
         dob,
         instagramLink,
         facebookLink,
+        lastLogin,
+        createdAt,
       } = data.data;
       dispatch(
         setUser({
@@ -47,6 +49,8 @@ const GoogleAuthLogin = () => {
           dob,
           instagramLink,
           facebookLink,
+          lastLogin,
+          createdAt,
         })
       );
       console.log(data?.message);

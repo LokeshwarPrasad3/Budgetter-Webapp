@@ -38,6 +38,8 @@ const SignupSection: React.FC = () => {
         dob,
         instagramLink,
         facebookLink,
+        lastLogin,
+        createdAt,
       } = data.data;
       dispatch(
         setUser({
@@ -54,6 +56,8 @@ const SignupSection: React.FC = () => {
           dob,
           instagramLink,
           facebookLink,
+          lastLogin,
+          createdAt,
         })
       );
       // toast.success('Successfully Signup!!');

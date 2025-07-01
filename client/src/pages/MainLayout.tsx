@@ -50,6 +50,8 @@ const MainLayout: React.FC = () => {
         dob,
         instagramLink,
         facebookLink,
+        createdAt,
+        lastLogin,
       } = data.data;
       dispatch(
         setUser({
@@ -66,6 +68,8 @@ const MainLayout: React.FC = () => {
           dob,
           instagramLink,
           facebookLink,
+          createdAt,
+          lastLogin,
         })
       );
       navigate(navigateToUserPage());

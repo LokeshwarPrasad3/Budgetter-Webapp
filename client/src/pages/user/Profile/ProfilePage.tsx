@@ -12,6 +12,7 @@ import {
   IndianRupee,
   Loader2,
   Settings2,
+  Clock,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -50,6 +51,8 @@ const ProfilePage: React.FC = () => {
   // const [dob, setDOB] = useState<Date>(new Date());
   const [facebookLink, setFacebookLink] = useState<string>('');
   const [instagramLink, setInstagramLink] = useState<string>('');
+  const [memberSince, setMemberSince] = useState<string>('');
+  const [lastLogin, setLastLogin] = useState<Date>(new Date());
   const [currentPassword, setCurrentPassword] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
   const user = useSelector((state: any) => state.user.user);
@@ -64,6 +67,8 @@ const ProfilePage: React.FC = () => {
       dob,
       instagramLink,
       facebookLink,
+      createdAt,
+      lastLogin,
     } = user;
     setName(name);
     setUsername(username);
@@ -73,6 +78,9 @@ const ProfilePage: React.FC = () => {
     setDOB(dob);
     setInstagramLink(instagramLink);
     setFacebookLink(facebookLink);
+    setMemberSince(createdAt);
+    setLastLogin(lastLogin);
+    console.log('laste login is ', lastLogin);
     // console.log(
     //   name,
     //   username,
@@ -200,6 +208,44 @@ const ProfilePage: React.FC = () => {
                 accept="image/*"
               />
             </Button>
+          </div>
+          <div className="information_details_user rounded-lg space-y-1 w-fit flex flex-col justify-center items-start">
+            {/* member since */}
+            {memberSince && (
+              <div className="flex items-center gap-3 justify-between rounded-md bg-white shadow-sm dark:bg-bg_primary_dark">
+                <div className="flex items-center gap-2">
+                  <div className="rounded-full bg-blue-100/50 p-2 dark:bg-blue-900/20">
+                    <Calendar className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Member Since</span>
+                </div>
+                <span className="text-sm font-medium text-gray-900 dark:text-gray-200">
+                  {new Date(memberSince).toLocaleDateString('en-US', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
+                </span>
+              </div>
+            )}
+            {/* last active date */}
+            {lastLogin && (
+              <div className="flex items-center gap-3 justify-between rounded-md shadow-sm ">
+                <div className="flex items-center gap-2">
+                  <div className="rounded-full bg-green-100/50 p-2 dark:bg-green-900/20">
+                    <Clock className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  </div>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Last Active</span>
+                </div>
+                <span className="text-sm font-medium text-gray-900 dark:text-gray-200">
+                  {new Date(lastLogin).toLocaleDateString('en-US', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
+                </span>
+              </div>
+            )}
           </div>
           <SpinWheel />
           <div className="advance_option_container">
