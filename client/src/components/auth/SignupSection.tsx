@@ -9,7 +9,7 @@ import { setUser } from '@/features/user/user';
 import toast from 'react-hot-toast';
 import Cookies from 'universal-cookie';
 import { useFormik } from 'formik';
-import { signupSchema } from '@/schemas';
+import { signupSchema } from '@/schemas/userAuth';
 import GoogleAuthLogin from './GoogleAuthLogin';
 import { UserDetailsResType } from '@/types/api/auth/auth';
 

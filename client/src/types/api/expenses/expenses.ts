@@ -2,6 +2,7 @@ export interface ExpenseProduct {
   name: string;
   price: number;
   category: string;
+  label: string;
   _id: string;
   createdAt: string;
   updatedAt: string;
@@ -53,4 +54,20 @@ export interface DeletedExpenseResType {
   data: ExpenseProduct[];
   message: string;
   success: boolean;
+}
+
+
+export interface AllExpenseExpenseTableType {
+  sno: number;
+  name: string;
+  price: number;
+  label: string | null;
+  category: string;
+  createdAt: string;
+}
+
+export interface FlattenedExpense {
+  user: string;
+  date: string;
+  product: ExpenseProduct;
 }

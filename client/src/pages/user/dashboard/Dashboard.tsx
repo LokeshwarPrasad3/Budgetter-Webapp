@@ -71,7 +71,7 @@ const Dashboard: React.FC = () => {
       return;
     }
     const monthInNum = getMonthInNumber(month);
-    console.log('real selected value', month, filterMonthValue, monthInNum);
+    // console.log('real selected value', month, filterMonthValue, monthInNum);
     setFilterMonthValue(month);
     getTotalExpensesAndAddedMoneyMutate({
       month: monthInNum,
@@ -83,7 +83,7 @@ const Dashboard: React.FC = () => {
       toast.error('Please Select Year!!');
       return;
     }
-    console.log('real selected value', year, filterMonthValue);
+    // console.log('real selected value', year, filterMonthValue);
     getTotalExpensesAndAddedMoneyMutate({ month: filterMonthValue, year });
     setFilterYearValue(year);
   };

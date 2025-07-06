@@ -154,7 +154,7 @@ export const showAllDateExpenses = asyncHandler(async (req, res) => {
 // 6. Edit single expenses 
 export const editUserExpenses = asyncHandler(async (req, res) => {
     const userId = req.user._id;
-    const { expenseId, actualDate, expenseName, expensePrice, expenseCategory, expenseDate } = req.body;
+    const { expenseId, actualDate, expenseName, selectedLabel, expensePrice, expenseCategory, expenseDate } = req.body;
 
     // Validate input values in one line.
     if (!expenseName || !expenseCategory || !expenseDate || typeof expensePrice !== 'number' || !/^\d{2}-\d{2}-\d{4}$/.test(actualDate)) {
@@ -183,6 +183,7 @@ export const editUserExpenses = asyncHandler(async (req, res) => {
         ExpensesFound.name = expenseName;
         ExpensesFound.price = expensePrice;
         ExpensesFound.category = expenseCategory;
+        ExpensesFound.label = selectedLabel;
 
         // Save updated expense to the database
         await existExpenses.save();

@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import Cookies from 'universal-cookie';
 import { useFormik } from 'formik';
-import { loginSchema } from '@/schemas';
+import { loginSchema } from '@/schemas/userAuth';
 import GoogleAuthLogin from './GoogleAuthLogin';
 
 const LoginSection: React.FC = () => {

@@ -8,6 +8,7 @@ const ExpenseDetailsTable = () => {
       <div className="flex w-full items-center justify-center">
         {/* <UserExpenseTable /> */}
         <UserHistoryExpenseTable
+          fromAddExpensePage={true}
           expensesDate={new Date()}
           storedExpenseDate={getTodayDate()}
         />

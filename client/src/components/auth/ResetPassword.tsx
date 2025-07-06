@@ -7,7 +7,7 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { useNavigate, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { resetPasswordSchema } from '@/schemas';
+import { resetPasswordSchema } from '@/schemas/userAuth';
 
 const ResetPassword: React.FC = () => {
   const navigate = useNavigate();

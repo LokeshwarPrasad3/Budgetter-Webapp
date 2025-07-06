@@ -80,7 +80,7 @@ const ProfilePage: React.FC = () => {
     setFacebookLink(facebookLink);
     setMemberSince(createdAt);
     setLastLogin(lastLogin);
-    console.log('laste login is ', lastLogin);
+    // console.log('laste login is ', lastLogin);
     // console.log(
     //   name,
     //   username,

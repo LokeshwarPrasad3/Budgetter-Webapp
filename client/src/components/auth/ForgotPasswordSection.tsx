@@ -8,7 +8,7 @@ import { SendResetLinkToUserEmail } from '@/services/auth';
 import { Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useFormik } from 'formik';
-import { forgotPasswordSchema } from '@/schemas';
+import { forgotPasswordSchema } from '@/schemas/userAuth';
 
 const ForgotPasswordSection: React.FC = () => {
   const { mutateAsync: sendResetLinkMutate, isPending } = useMutation({

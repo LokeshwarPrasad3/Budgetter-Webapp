@@ -10,6 +10,7 @@ export interface AddExpensesCredType {
       name: string;
       price: number;
       category: string;
+      label: string | null;
     }[];
   }[];
 }
@@ -21,6 +22,7 @@ export interface EditExpenseCredType {
   expensePrice: number;
   expenseCategory: string;
   expenseDate: string;
+  selectedLabel: string | null;
 }
 
 export interface DeleteExpenseCredType {
@@ -28,3 +30,13 @@ export interface DeleteExpenseCredType {
   expenseId: string;
   isAddPriceToPocketMoney: boolean;
 }
+
+export type ExpensesTableTypes = {
+  _id: string;
+  name: string;
+  price: number;
+  label: string;
+  category: string;
+  createdAt: string;
+  updatedAt: string;
+};
