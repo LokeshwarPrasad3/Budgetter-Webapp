@@ -55,3 +55,14 @@ export const getLabelColorStyle = (
   const index = Math.abs(hash) % fallbackLabelStylePalette.length;
   return fallbackLabelStylePalette[index];
 };
+
+export const expensesCategories = [
+  'Groceries',
+  'Housing & Utilities',
+  'Medical',
+  'Food',
+  'Personal',
+  'Educational',
+  'Transportation',
+  'Miscellaneous',
+];
