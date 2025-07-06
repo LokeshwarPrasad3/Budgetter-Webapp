@@ -13,6 +13,10 @@ const ProductSchema = new Schema({
     category: {
         type: String,
         required: true
+    },
+    label: {
+        type: String,
+        required: false
     }
 }, { timestamps: true })
 

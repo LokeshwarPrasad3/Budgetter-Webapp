@@ -1,3 +1,17 @@
+export interface OptionType {
+  value: string;
+  label: string;
+}
+
+export const LabelOptions: OptionType[] = [
+  { value: '', label: 'No Label' },
+  { value: 'market', label: 'Market' },
+  { value: 'health', label: 'Health' },
+  { value: 'family', label: 'Family' },
+  { value: 'office', label: 'Office' },
+  { value: 'trip', label: 'Trip' },
+];
+
 export const getActiveRouteLink = () => {
   const path = location.pathname;
   switch (path) {

@@ -33,21 +33,11 @@ import { ListFilter, Search, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 import PDFExportComponent from '../../PDFExportComponent';
 import { Input } from '@/components/ui/input';
-import { ExpenseProduct } from '@/types/api/expenses/expenses';
-
-export interface Expense {
-  sno: number;
-  name: string;
-  price: number;
-  category: string;
-  createdAt: string;
-}
-
-interface FlattenedExpense {
-  user: string;
-  date: string;
-  product: ExpenseProduct;
-}
+import {
+  AllExpenseExpenseTableType,
+  FlattenedExpense,
+} from '@/types/api/expenses/expenses';
+import { getLabelColorStyle } from '@/utils/ui/utility';
 
 const columnHelper = createColumnHelper<FlattenedExpense>();
 
@@ -65,7 +55,30 @@ const columns = [
   }),
   columnHelper.accessor('product.name', {
     header: 'Product Name',
-    footer: (info) => info.column.id,
+    cell: (info) => {
+      const row = info.row.original;
+      return (
+        <span className="flex items-center gap-1">
+          {row.product.name}
+          {row.product.label &&
+            (() => {
+              const style = getLabelColorStyle(row.product.label);
+              return (
+                <span
+                  style={{
+                    color: style.color,
+                    backgroundColor: style.backgroundColor,
+                    border: `1px solid ${style.borderColor}`,
+                  }}
+                  className="relative -top-1 inline-flex h-4 w-fit items-center gap-1 rounded-sm px-1.5 text-[10px] font-medium"
+                >
+                  {row.product.label}
+                </span>
+              );
+            })()}
+        </span>
+      );
+    },
   }),
   columnHelper.accessor('product.price', {
     header: 'Price ₹',
@@ -91,7 +104,7 @@ const AllExpensesTable: React.FC = () => {
   const handlePopoverClose = (open: boolean) => {
     setIsPopoverOpen(open);
   };
-  const [flattenProductsData, setFlattenProductsData] = useState<Expense[]>([]);
+  const [flattenProductsData, setFlattenProductsData] = useState<AllExpenseExpenseTableType[]>([]);
   const [PDFStatementTimeline, setPDFStatementTimeline] = useState<string>('');
   const [filterSearchText, setFilterSearchText] = useState<string>('');
 

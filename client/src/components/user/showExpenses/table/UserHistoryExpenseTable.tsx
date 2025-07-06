@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   createColumnHelper,
   flexRender,
@@ -12,53 +12,73 @@ import DeleteExpensesDialog from '../actions/DeleteExpensesDialog';
 import { getTodayExpenses } from '@/services/expenses';
 import { useQuery } from '@tanstack/react-query';
 import { setExpenses } from '@/features/user/user';
-
-type ExpensesTypes = {
-  _id: string;
-  name: string;
-  price: number;
-  category: string;
-  createdAt: string;
-  updatedAt: string;
-};
+import { ExpensesTableTypes } from '@/types/api/expenses/credentials';
+import { getLabelColorStyle } from '@/utils/ui/utility';
+import { formatDate, isDateToday } from '@/utils/date/date';
 
 interface PropType {
+  fromAddExpensePage: boolean;
   expensesDate: Date;
   storedExpenseDate: string;
 }
 
 const UserHistoryExpenseTable: React.FC<PropType> = ({
+  fromAddExpensePage,
   expensesDate,
   storedExpenseDate,
 }) => {
   const dispatch = useDispatch();
+  const [data, setData] = useState<ExpensesTableTypes[]>([]);
 
-  const [data, setData] = React.useState<ExpensesTypes[]>([]);
-  // get bydefault today expenses
-  const { data: todayExpensesData } = useQuery({
+  // Redux selectors
+  const expensesDetailArray = useSelector((state: any) => state.user?.expenses);
+  const allExpensesArray = useSelector(
+    (state: any) => state.expenses.allExpenses
+  );
+
+  // Setup query, but do NOT auto-fetch (enabled: false)
+  const { data: todayExpensesData, refetch: refetchTodayExpenses } = useQuery({
     queryFn: getTodayExpenses,
     queryKey: ['todayExpense'],
   });
 
+  // Always set default data to today (from Redux store)
   useEffect(() => {
-    if (todayExpensesData?.success) {
+    if (isDateToday(expensesDate) && expensesDetailArray) {
+      setData(expensesDetailArray);
+    }
+  }, [expensesDetailArray, expensesDate]);
+
+  // If coming from Add Expense page, manually fetch today's expenses
+  useEffect(() => {
+    if (fromAddExpensePage && isDateToday(expensesDate)) {
+      refetchTodayExpenses();
+    }
+  }, [fromAddExpensePage, expensesDate, refetchTodayExpenses]);
+
+  // After fetching, set data and dispatch to Redux
+  useEffect(() => {
+    if (todayExpensesData?.success && fromAddExpensePage) {
       setData(todayExpensesData.data);
       dispatch(setExpenses(todayExpensesData.data));
     }
-  }, [todayExpensesData]);
+  }, [todayExpensesData, fromAddExpensePage]);
 
-  // get expenses from redux store
-  const expensesDetailArray = useSelector((state: any) => {
-    return state.user?.expenses;
-  });
-
+  // For other dates, filter from all expenses
   useEffect(() => {
-    if (expensesDetailArray) {
-      setData(expensesDetailArray);
+    if (!fromAddExpensePage && !isDateToday(expensesDate)) {
+      const matchedDay = allExpensesArray.find(
+        (expense: { date: string }) => expense.date === formatDate(expensesDate)
+      );
+      if (matchedDay) {
+        setData(matchedDay.products);
+      } else {
+        setData([]);
+      }
     }
-  }, [expensesDetailArray]);
+  }, [fromAddExpensePage, expensesDate, allExpensesArray]);
 
-  const columnHelper = createColumnHelper<ExpensesTypes>();
+  const columnHelper = createColumnHelper<ExpensesTableTypes>();
 
   // Define columns
   const columns = [
@@ -70,7 +90,30 @@ const UserHistoryExpenseTable: React.FC<PropType> = ({
     }),
     columnHelper.accessor('name', {
       header: 'Name',
-      footer: (info) => info.column.id,
+      cell: (info) => {
+        const row = info.row.original;
+        return (
+          <span className="flex items-center gap-1">
+            {row.name}
+            {row.label &&
+              (() => {
+                const style = getLabelColorStyle(row.label);
+                return (
+                  <span
+                    style={{
+                      color: style.color,
+                      backgroundColor: style.backgroundColor,
+                      border: `1px solid ${style.borderColor}`,
+                    }}
+                    className="relative -top-1 inline-flex h-4 w-fit items-center gap-1 rounded-sm px-1.5 text-[10px] font-medium"
+                  >
+                    {row.label}
+                  </span>
+                );
+              })()}
+          </span>
+        );
+      },
     }),
     columnHelper.accessor('price', {
       header: 'Price',
@@ -116,7 +159,7 @@ const UserHistoryExpenseTable: React.FC<PropType> = ({
   return (
     <>
       <div className="message_outer w-full rounded-md bg-bg_primary_light px-0 py-5 dark:bg-bg_primary_dark">
-        {data.length === 0 ? (
+        {data?.length === 0 ? (
           <div className="flex px-5">No Expenses Found</div>
         ) : (
           <div className="w-full overflow-x-auto">

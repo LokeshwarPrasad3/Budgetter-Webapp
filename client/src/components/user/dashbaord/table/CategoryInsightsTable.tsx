@@ -7,18 +7,8 @@ import {
 } from '@tanstack/react-table';
 import useCategoryStats, { getFullExpensesList } from './useCategoryStats';
 import ViewCategoryExpensesDialog from '../actions/view-expenses/ViewCategoryExpensesDialog';
+import { categoryColorMap } from '@/utils/ui/utility';
 
-// Define color map for category
-const categoryColorMap: Record<string, string> = {
-  Groceries: 'text-green-600 dark:text-green-400',
-  'Housing & Utilities': 'text-blue-600 dark:text-blue-400',
-  Medical: 'text-red-600 dark:text-red-400',
-  Food: 'text-yellow-600 dark:text-yellow-400',
-  Personal: 'text-pink-600 dark:text-pink-400',
-  Educational: 'text-indigo-600 dark:text-indigo-400',
-  Transportation: 'text-purple-600 dark:text-purple-400',
-  Miscellaneous: 'text-gray-600 dark:text-gray-400',
-};
 
 interface PropTypes {
   filterMonthValue: string;

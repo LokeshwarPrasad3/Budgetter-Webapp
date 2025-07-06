@@ -23,7 +23,7 @@ interface Option {
   label: string;
 }
 
-interface RootState {
+export interface RootState {
   themeMode: {
     isDarkMode: boolean;
   };

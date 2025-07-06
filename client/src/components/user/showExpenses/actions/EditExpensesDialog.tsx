@@ -19,18 +19,17 @@ import { Button } from '@/components/ui/button';
 import toast from 'react-hot-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { editUserExpense } from '@/services/expenses';
+import CreatableSelect from 'react-select/creatable';
+import { LabelOptions, OptionType } from '@/utils/utility';
+import { getCustomReactSelectStyles } from '@/styles/global';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/components/admin/NewsLetter/UploadForm';
+import { ExpensesTableTypes } from '@/types/api/expenses/credentials';
 
 interface EditExpensesDialogPropType {
   storedExpenseDate: string;
   expensesDate: Date;
-  info: {
-    _id: string;
-    name: string;
-    price: number;
-    category: string;
-    createdAt: string;
-    updatedAt: string;
-  };
+  info: ExpensesTableTypes;
 }
 
 const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
@@ -39,7 +38,7 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
   info,
 }) => {
   const queryClient = useQueryClient();
-  const { _id, category, name, price } = info;
+  const { _id, category, name, price, label } = info;
   const [open, setOpen] = useState(false);
 
   const [expenseDate, setExpenseDate] = useState<string>(() => {
@@ -50,16 +49,33 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
     return `${day}-${month}-${year}`;
   });
 
+  const isDarkMode = useSelector(
+    (state: RootState) => state.themeMode.isDarkMode
+  );
+
   const [expenseName, setExpenseName] = useState<string>(name);
   const [expenseCategory, setExpenseCategory] = useState<string>(category);
   const [expensePrice, setExpensePrice] = useState<number>(price);
+  const [selectedLabel, setSelectedLabel] = useState<OptionType | null>({
+    label: label??"No Label",
+    value: label??"",
+  });
+
+  const [labelOptions, setLabelOptions] = useState<OptionType[]>(LabelOptions);
+
+  const handleCreate = (inputValue: string) => {
+    const newOption = { value: inputValue.toLowerCase(), label: inputValue };
+    setLabelOptions((prev) => [...prev, newOption]);
+    setSelectedLabel(newOption);
+  };
 
   const { mutateAsync: editExpenseMutate, isPending } = useMutation({
     mutationFn: editUserExpense,
     onSuccess: (data) => {
-      console.log('data response ', data.message);
+      console.log(data.message);
       queryClient.invalidateQueries({ queryKey: ['user'] });
       queryClient.invalidateQueries({ queryKey: ['user-all-expenses'] });
+      queryClient.invalidateQueries({ queryKey: ['todayExpense'] });
       toast.success('Expense Edited Successfully!!');
       setOpen(false);
     },
@@ -82,20 +98,21 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
       return;
     }
     // validaton
-    console.log('Expense updated:', {
-      actualDate,
-      expenseId: _id,
-      expenseName,
-      expensePrice,
-      expenseCategory,
-      expenseDate,
-    });
+    // console.log('Expense updated:', {
+    //   actualDate,
+    //   expenseId: _id,
+    //   expenseName,
+    //   expensePrice,
+    //   expenseCategory,
+    //   expenseDate,
+    // });
     editExpenseMutate({
       actualDate,
       expenseId: _id,
       expenseName,
       expensePrice,
       expenseCategory,
+      selectedLabel: selectedLabel?.value ?? null,
       expenseDate,
     });
   };
@@ -104,6 +121,8 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
     const [day, month, year] = ddmmyyyy.split('-');
     return `${year}-${month}-${day}`; // yyyy-MM-dd for input
   };
+
+  const customReactSelectStyles = getCustomReactSelectStyles(isDarkMode);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -117,10 +136,10 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
         <div className="flex w-full flex-col items-start justify-start gap-4 rounded-md border border-border_light bg-bg_primary_light shadow-sm dark:border-none dark:border-border_dark dark:bg-transparent">
           <h4 className="text-base font-semibold">Edit Your Expenses</h4>
           <div className="flex w-full flex-col gap-5">
-            <div className="col-span-12 grid w-full grid-cols-12 gap-5">
+            <div className="col-span-10 grid w-full grid-cols-10 gap-5">
               {/* Date Picker */}
-              <div className="col-span-12 flex flex-col gap-1 sm:col-span-6">
-                <p className="text-sm">Date of Expense</p>
+              <div className="col-span-10 flex flex-col gap-1 sm:col-span-5">
+                <p className="text-sm">Date of Expense *</p>
                 <input
                   type="date"
                   value={expenseDate ? formatToInputDate(expenseDate) : ''}
@@ -134,8 +153,8 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
               </div>
 
               {/* Expense Name */}
-              <div className="col-span-12 flex flex-col gap-1 sm:col-span-6">
-                <p className="text-sm">Name of Expense</p>
+              <div className="col-span-10 flex flex-col gap-1 sm:col-span-5">
+                <p className="text-sm">Name of Expense *</p>
                 <Input
                   value={expenseName}
                   onChange={(e) => setExpenseName(e.target.value)}
@@ -145,8 +164,8 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
               </div>
 
               {/* Category */}
-              <div className="col-span-12 flex flex-col gap-1 sm:col-span-6">
-                <p className="text-sm">Expenses Category</p>
+              <div className="col-span-10 flex flex-col gap-1 sm:col-span-5">
+                <p className="text-sm">Expenses Category *</p>
                 <Select
                   value={expenseCategory}
                   onValueChange={(value) => setExpenseCategory(value)}
@@ -176,13 +195,27 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
               </div>
 
               {/* Price */}
-              <div className="col-span-12 flex flex-col gap-1 sm:col-span-6">
-                <p className="text-sm">Expense Price</p>
+              <div className="col-span-10 flex flex-col gap-1 sm:col-span-5">
+                <p className="text-sm">Expense Price *</p>
                 <Input
                   value={expensePrice}
                   onChange={(e) => setExpensePrice(Number(e.target.value))}
                   type="number"
                   placeholder="Enter Price"
+                />
+              </div>
+
+              {/* label */}
+              <div className="col-span-10 flex flex-col gap-1 sm:col-span-5">
+                <p className="text-sm">Label</p>
+                <CreatableSelect
+                  placeholder="Choose Label"
+                  options={labelOptions}
+                  value={selectedLabel}
+                  onChange={setSelectedLabel}
+                  onCreateOption={handleCreate}
+                  isSearchable
+                  styles={customReactSelectStyles}
                 />
               </div>
             </div>
