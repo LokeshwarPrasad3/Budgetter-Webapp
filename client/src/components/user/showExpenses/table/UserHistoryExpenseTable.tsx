@@ -17,12 +17,14 @@ import { getLabelColorStyle } from '@/utils/ui/utility';
 import { formatDate, isDateToday } from '@/utils/date/date';
 
 interface PropType {
+  setStoredExpenseDate: (date: string) => void;
   fromAddExpensePage: boolean;
   expensesDate: Date;
   storedExpenseDate: string;
 }
 
 const UserHistoryExpenseTable: React.FC<PropType> = ({
+  setStoredExpenseDate,
   fromAddExpensePage,
   expensesDate,
   storedExpenseDate,
@@ -46,6 +48,7 @@ const UserHistoryExpenseTable: React.FC<PropType> = ({
   useEffect(() => {
     if (isDateToday(expensesDate) && expensesDetailArray) {
       setData(expensesDetailArray);
+      setStoredExpenseDate(formatDate(expensesDate));
     }
   }, [expensesDetailArray, expensesDate]);
 
@@ -67,6 +70,7 @@ const UserHistoryExpenseTable: React.FC<PropType> = ({
   // For other dates, filter from all expenses
   useEffect(() => {
     if (!fromAddExpensePage && !isDateToday(expensesDate)) {
+      setStoredExpenseDate(formatDate(expensesDate));
       const matchedDay = allExpensesArray.find(
         (expense: { date: string }) => expense.date === formatDate(expensesDate)
       );

@@ -15,7 +15,7 @@ export const addExpensesSchema = Yup.object({
     .required('Price is required.'),
   selectedLabel: Yup.object()
     .shape({
-      value: Yup.string().required(),
+      value: Yup.string(),
       label: Yup.string().required(),
     })
     .nullable(),

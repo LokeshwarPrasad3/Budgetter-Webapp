@@ -160,10 +160,9 @@ export const editUserExpenses = asyncHandler(async (req, res) => {
     if (!expenseName || !expenseCategory || !expenseDate || typeof expensePrice !== 'number' || !/^\d{2}-\d{2}-\d{4}$/.test(actualDate)) {
         throw new ApiError(400, "Invalid input values.");
     }
-    
+
     let actualExpensePrice = 0;
 
-    // Check if the user wants to edit the same date
     // Find existing expenses on the given date for the user
     const existExpenses = await ExpenseModel.findOne({
         user: userId,
@@ -174,9 +173,13 @@ export const editUserExpenses = asyncHandler(async (req, res) => {
         throw new ApiError(500, "Something went wrong!!");
     }
 
-    // If expenses exist, find the specific product to update
+    // Find the specific product to update
     const ExpensesFound = existExpenses?.products?.find((prod) => prod._id.toString() === expenseId);
     actualExpensePrice = ExpensesFound?.price;
+
+    if (typeof actualExpensePrice !== 'number' || isNaN(actualExpensePrice)) {
+        throw new ApiError(500, "Previous expense price is invalid.");
+    }
 
     if (actualDate === expenseDate && ExpensesFound) {
         // Update product details
@@ -185,44 +188,41 @@ export const editUserExpenses = asyncHandler(async (req, res) => {
         ExpensesFound.category = expenseCategory;
         ExpensesFound.label = selectedLabel;
 
-        // Save updated expense to the database
+        // Save updated expense
         await existExpenses.save();
     } else {
-        // Delete previous date products from that
+        // Delete product from previous date
         const existingExpenseCollection = await ExpenseModel.findOneAndUpdate(
             { user: userId, date: actualDate },
             { $pull: { products: { _id: expenseId } } },
             { new: true }
         );
 
-        // delete that collection after 0 products
+        // Delete the entire document if no products left
         if (existingExpenseCollection && existingExpenseCollection.products.length === 0) {
             await ExpenseModel.findOneAndDelete({ user: userId, date: actualDate });
         }
-        
-        // If user wants to change the date, find if the new date already has expenses
+
+        // Add product to the new date
         const ExpenseNewDateExist = await ExpenseModel.findOne({
             user: userId,
             date: expenseDate
         });
-        console.log("Existing date:", ExpenseNewDateExist);
 
         const productObject = {
             name: expenseName,
             price: expensePrice,
-            category: expenseCategory
+            category: expenseCategory,
+            label: selectedLabel
         };
 
-        if (ExpenseNewDateExist === null) {
-            // If no expenses exist for the new date, create new expense record
+        if (!ExpenseNewDateExist) {
             await ExpenseModel.create({
                 user: userId,
                 products: [productObject],
                 date: expenseDate,
             });
-            console.log("Created new expense record.");
         } else {
-            // If expenses exist for the new date, push the new product to the products array
             await ExpenseModel.findOneAndUpdate(
                 { user: userId, date: expenseDate },
                 { $addToSet: { products: productObject } },
@@ -231,14 +231,28 @@ export const editUserExpenses = asyncHandler(async (req, res) => {
         }
     }
 
-    // Calculate price difference and update user balance
+    // Update user's pocket money
     const user = req.user;
-    let priceDifferences = parseFloat(actualExpensePrice) - parseFloat(expensePrice); // Corrected subtraction order
 
-    console.log("Price difference:", actualExpensePrice, expensePrice, priceDifferences);
+    const priceDifferences = parseFloat(actualExpensePrice) - parseFloat(expensePrice);
 
-    const newBalance = parseFloat(user.currentPocketMoney) + priceDifferences;
-    user.currentPocketMoney = newBalance.toString();
+    if (isNaN(priceDifferences)) {
+        throw new ApiError(500, "Price difference calculation failed.");
+    }
+
+    const currentMoney = parseFloat(user.currentPocketMoney);
+
+    if (isNaN(currentMoney)) {
+        throw new ApiError(500, "User's current pocket money is invalid.");
+    }
+
+    const newBalance = currentMoney + priceDifferences;
+
+    if (isNaN(newBalance)) {
+        throw new ApiError(500, "New balance calculation failed.");
+    }
+
+    user.currentPocketMoney = newBalance.toFixed(2);
 
     console.log(`${req.user.username} Your remaining balance: `, user.currentPocketMoney);
 
@@ -253,6 +267,7 @@ export const editUserExpenses = asyncHandler(async (req, res) => {
 export const deleteUserExpenses = asyncHandler(async (req, res) => {
     const userId = req.user._id;
     const { expenseId, expenseDate, isAddPriceToPocketMoney } = req.body;
+    console.log("Delete Expense:", expenseId, "Date:", expenseDate, "Update Price to Pocket Money:", isAddPriceToPocketMoney);
 
     // Step 1: Validate input values early
     if (!expenseDate || !/^\d{2}-\d{2}-\d{4}$/.test(expenseDate)) {
@@ -271,7 +286,7 @@ export const deleteUserExpenses = asyncHandler(async (req, res) => {
         throw new ApiError(404, "Expense not found.");
     }
 
-    const expensePrice = foundProduct.price; 
+    const expensePrice = foundProduct.price;
 
     // Step 4: Now safely remove the product from the array
     const updatedExpense = await ExpenseModel.findOneAndUpdate(

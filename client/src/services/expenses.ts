@@ -1,4 +1,3 @@
-import { backendHostURL } from './api';
 import { AddExpensesCredType, DeleteExpenseCredType, EditExpenseCredType, GetExpensesCredType } from '@/types/api/expenses/credentials';
 import { AddExpensesResType, DeletedExpenseResType, EditedExpenseResType, ExpensesResType, TodayExpensesResType } from '@/types/api/expenses/expenses';
 import { apiURL } from '@/lib/http';
@@ -46,7 +45,6 @@ export const getUserAllExpenses = async (): Promise<AddExpensesResType> => {
 export const editUserExpense = async (
   credentials: EditExpenseCredType
 ): Promise<EditedExpenseResType> => {
-  console.log('credentials', credentials);
   const { data } = await apiURL.patch<EditedExpenseResType>(
     `/user/edit-expenses`,
     credentials,
@@ -61,7 +59,7 @@ export const deleteUserExpense = async (
 ): Promise<DeletedExpenseResType> => {
   
   const { data } = await apiURL.delete<DeletedExpenseResType>(
-    `${backendHostURL}/user/delete-expenses`,
+    `/user/delete-expenses`,
     {
       data: credentials,
     }

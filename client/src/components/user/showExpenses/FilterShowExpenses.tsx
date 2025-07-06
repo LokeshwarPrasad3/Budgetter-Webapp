@@ -85,6 +85,7 @@ const FilterShowExpenses = () => {
           )}
         </div> */}
         <UserHistoryExpenseTable
+          setStoredExpenseDate={setStoredExpenseDate}
           fromAddExpensePage={false}
           storedExpenseDate={storedExpenseDate}
           expensesDate={inputDate ?? new Date()}
