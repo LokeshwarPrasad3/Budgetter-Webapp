@@ -4,6 +4,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { getMonthName } from '@/utils/date/date';
+import { getLabelColorStyle } from '@/utils/ui/utility';
 import {
   createColumnHelper,
   flexRender,
@@ -17,6 +19,7 @@ type ExpensesTypes = {
   _id: string;
   name: string;
   price: number;
+  label: string;
   category: string;
   createdAt: string;
   updatedAt: string;
@@ -43,16 +46,45 @@ const ViewCategoryExpensesDialog: React.FC<
     }),
     columnHelper.accessor('name', {
       header: 'Name',
-      footer: (info) => info.column.id,
+      cell: (info) => {
+        const row = info.row.original;
+        return (
+          <span className="flex items-center gap-1">
+            {row.name}
+            {row.label &&
+              (() => {
+                const style = getLabelColorStyle(row.label);
+                return (
+                  <span
+                    style={{
+                      color: style.color,
+                      backgroundColor: style.backgroundColor,
+                      border: `1px solid ${style.borderColor}`,
+                    }}
+                    className="relative -top-1 inline-flex h-4 w-fit items-center gap-1 rounded-sm px-1.5 text-[10px] font-medium"
+                  >
+                    {row.label}
+                  </span>
+                );
+              })()}
+          </span>
+        );
+      },
     }),
     columnHelper.accessor('price', {
       header: 'Price',
       footer: (info) => info.column.id,
     }),
     columnHelper.accessor('createdAt', {
-      header: 'TIME',
-      cell: (info) =>
-        new Date(info.getValue<string>()).toLocaleString().split(',')[1],
+      header: 'DATE',
+      cell: (info) => {
+        const createdDate = new Date(info.getValue<string>())
+          .toLocaleString()
+          .split(',')[0];
+        const monthInString = getMonthName(createdDate.split('/')[0]);
+        const date = createdDate.split('/')[1];
+        return `${date} ${monthInString}`;
+      },
       footer: (info) => info.column.id,
     }),
   ];

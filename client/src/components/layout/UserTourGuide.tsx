@@ -19,13 +19,23 @@ const UserTourGuide: React.FC<UserTourGuidePropType> = ({
       spotlightPadding: 10,
     },
     {
-      target: '#profile_section',
-      content: 'This is the Profile section where you can edit details',
+      target: '#fullscreens_tour_guide',
+      content: 'Use Budgetter in full screen view',
+      spotlightPadding: 10,
+    },
+    {
+      target: '#theme_change_tour',
+      content: 'Change Your Comfortable Theme',
       spotlightPadding: 10,
     },
     {
       target: '#notification_section',
       content: 'View your notifications from here',
+      spotlightPadding: 10,
+    },
+    {
+      target: '#profile_section',
+      content: 'This is the Profile section where you can edit details',
       spotlightPadding: 10,
     },
     {

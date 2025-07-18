@@ -130,7 +130,7 @@ const Dashboard: React.FC = () => {
                 <SelectValue placeholder={filterYearValue} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Year</SelectItem>
+                {/* <SelectItem value="all">All Year</SelectItem> */}
                 <SelectGroup>
                   {prevYearsName.map((year) => (
                     <SelectItem key={year} value={year}>

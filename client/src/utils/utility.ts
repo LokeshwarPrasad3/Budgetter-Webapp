@@ -23,6 +23,8 @@ export const getActiveRouteLink = () => {
       return 'user/show-expenses';
     case '/user/reports':
       return 'user/reports';
+    case '/user/add-lent-money':
+      return 'user/add-lent-money';
     case '/user/add-money':
       return 'user/add-money';
     case '/admin/newsletter':
