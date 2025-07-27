@@ -91,7 +91,7 @@ const MainLayout: React.FC = () => {
 
   return (
     <>
-      <div className="h-full w-full dark:bg-slate-900">
+      <div id="main_layout" className="h-full w-full dark:bg-slate-900">
         <Outlet />
       </div>
       <Toaster />

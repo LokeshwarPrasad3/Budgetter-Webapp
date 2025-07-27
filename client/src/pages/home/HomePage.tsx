@@ -21,9 +21,9 @@ const HomePage: React.FC = () => {
       >
         <HeroSection />
       </div>
-      <div className="features_container mx-auto max-w-7xl p-0">
+      {/* <div className="features_container mx-auto max-w-5xl 2xl:max-w-7xl p-0"> */}
         <Features />
-      </div>
+      {/* </div> */}
       <WhyItIsUseful />
       <InsightsPreview />
       <Testimonials />

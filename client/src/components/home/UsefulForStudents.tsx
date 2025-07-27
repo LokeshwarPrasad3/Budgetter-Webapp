@@ -56,14 +56,14 @@ export const WhyItIsUseful = () => {
       initial="initial"
       animate="animate"
       id="usefullforstudent_section"
-      className="relative w-full bg-gradient-to-b from-[#ccf2f4]/60 to-[#CCEFF5] px-4 py-5 sm:py-10 lg:py-16"
+      className="landingpage_section_paddings  relative w-full bg-gradient-to-b from-[#ccf2f4]/60 to-[#CCEFF5]"
     >
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto flex flex-col justify-center items-center gap-3 max-w-5xl 2xl:max-w-7xl">
         <motion.div
           variants={UPWARD_WAVE_SCALE_HEADING_ANIMATION}
           initial="hidden"
           whileInView="visible"
-          className="my-2 mb-10 text-center text-3xl font-bold"
+          className="landingpage_section_heading"
         >
           Why Budgetter is Useful for Students
         </motion.div>
@@ -71,11 +71,11 @@ export const WhyItIsUseful = () => {
           variants={CARDS_CONTAINER}
           initial="hidden"
           whileInView="visible"
-          className="grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-6"
+          className="grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3 xl:gap-2 2xl:gap-6"
         >
           {items.map((item, idx) => (
             <motion.a
-              key={item.link}
+              key={`${item.link}-${idx}`}
               variants={CARD_ITEM}
               href={item.link}
               className="group relative block py-2 sm:p-2"

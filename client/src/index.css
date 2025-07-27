@@ -67,3 +67,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components{
+  .landingpage_section_heading{
+    @apply my-2 text-2xl font-bold text-center 2xl:text-3xl;
+  }
+  .landingpage_section_subheading{
+    @apply mx-auto mb-10 2xl:mb-12 font-medium text-sm 2xl:text-base max-w-2xl text-center text-gray-600;
+  }
+  .landingpage_section_paddings{
+    @apply px-4 py-10 pt-5 sm:py-10 lg:py-8;
+  }
+  .landingpage_section_width{
+    @apply mx-auto max-w-5xl 2xl:max-w-7xl;
+  }
+}

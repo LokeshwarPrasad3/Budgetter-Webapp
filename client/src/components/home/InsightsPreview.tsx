@@ -9,14 +9,14 @@ const InsightsPreview = () => {
   return (
     <section
       id="insightspreview_section"
-      className="bg-[#f9f9ff] px-4 py-10 sm:py-10 lg:py-20"
+      className="landingpage_section_paddings bg-[#f9f9ff]"
     >
-      <div className="mx-auto max-w-7xl">
+      <div className="landingpage_section_width">
         <motion.div
           variants={UPWARD_WAVE_SCALE_HEADING_ANIMATION}
           initial="hidden"
           whileInView="visible"
-          className="my-2 text-center text-3xl font-bold"
+          className="landingpage_section_heading"
         >
           Expense Analytics & Insights
         </motion.div>
@@ -24,7 +24,7 @@ const InsightsPreview = () => {
           variants={FADE_UP_DESCRIPTION}
           initial="hidden"
           whileInView="visible"
-          className="mx-auto mb-12 max-w-2xl text-center text-gray-600"
+          className="landingpage_section_subheading"
         >
           Understand your spending behavior better with interactive graphs and
           breakdowns. Gain insights into your expenses and optimize where your
@@ -35,17 +35,17 @@ const InsightsPreview = () => {
           variants={GRAPH_CONTAINER}
           initial="hidden"
           whileInView="visible"
-          className="grid gap-10 md:grid-cols-2"
+          className="grid gap-8 md:grid-cols-2 2xl:gap-10"
         >
           {/* Category Wise Expense Visualization */}
           <motion.div
             variants={GRAPH_BOX}
             className="rounded-2xl bg-white p-6 shadow-xl transition-shadow duration-300 hover:shadow-2xl"
           >
-            <h3 className="mb-2 text-xl font-bold text-[#00b87c]">
+            <h3 className="mb-2 text-lg font-bold text-[#00b87c] 2xl:text-xl">
               Category Breakdown
             </h3>
-            <p className="mb-4 text-gray-500">
+            <p className="mb-4 text-sm text-gray-500 2xl:text-base">
               Get a clear visual distribution of your expenses across different
               categories. Easily spot which areas consume most of your budget.
             </p>
@@ -61,10 +61,10 @@ const InsightsPreview = () => {
             variants={GRAPH_BOX}
             className="rounded-2xl bg-white p-6 shadow-xl transition-shadow duration-300 hover:shadow-2xl"
           >
-            <h3 className="mb-2 text-xl font-bold text-[#00b87c]">
+            <h3 className="mb-2 text-lg font-bold text-[#00b87c] 2xl:text-xl">
               Spending Trends Over Time
             </h3>
-            <p className="mb-4 text-gray-500">
+            <p className="mb-4 text-sm text-gray-500 2xl:text-base">
               Monitor your monthly, weekly, or daily expenses. Understand your
               financial flow and identify months with higher spending patterns.
             </p>

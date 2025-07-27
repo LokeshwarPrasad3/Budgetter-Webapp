@@ -8,14 +8,14 @@ import { Outlet } from 'react-router-dom';
 const AuthLayout: React.FC = () => {
   return (
     <div
-      className="auth_layout_container relative h-full min-h-screen w-full font-karla text-slate-200"
+      className="auth_layout_container relative h-full min-h-[100svh] w-full font-karla text-slate-200"
       style={{
         background: `url("./assets/bg/bottom-left-bg.svg") bottom left / 300px auto no-repeat ,url("./assets/bg/full-bg.svg") center -300px / 1870px auto no-repeat`,
         backgroundColor: '#2C396A',
       }}
     >
       {/*  */}
-      <div className="auth_layout_container flex h-full w-full max-w-full flex-col justify-normal gap-8 px-4 py-4 pb-0 sm:justify-between sm:gap-10 md:py-5 lg:px-5">
+      <div className="auth_layout_container gap- flex h-full w-full max-w-full flex-col justify-normal px-4 py-4 sm:justify-between md:py-5 lg:px-5 2xl:gap-10">
         {/* header section */}
         <AuthHeader />
 
@@ -27,7 +27,7 @@ const AuthLayout: React.FC = () => {
               src="/assets/logo/logo.png"
               alt="logo"
             /> */}
-            <Link to="/home" className="flex items-center">
+            <Link to="/home" className="flex items-center my-3 sm:mt-0">
               <img
                 className="relative -top-0.5 right-0.5 h-12"
                 src="/assets/logo/logo.png"

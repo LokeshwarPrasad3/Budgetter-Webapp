@@ -72,7 +72,7 @@ const DeleteExpensesDialog: React.FC<DeleteExpensesDialogPropType> = ({
         </button>
       </DialogTrigger>
 
-      <DialogContent className="overflow-visible">
+      <DialogContent aria-describedby={undefined} className="overflow-visible">
         <DialogHeader>
           <DialogTitle className="flex items-center text-destructive dark:text-red-300">
             <AlertTriangle className="mr-2 h-5 w-5" />

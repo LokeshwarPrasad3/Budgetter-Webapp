@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 mx-auto h-20 max-w-7xl bg-[#e6faff]/20 font-karla text-gray-800 shadow-sm backdrop-blur-sm sm:h-24 sm:shadow-none">
+      <nav className="sticky top-0 z-50 mx-auto h-[72px] max-w-5xl bg-[#e6faff]/20 font-karla text-gray-800 shadow-sm backdrop-blur-sm sm:shadow-none 2xl:h-24 2xl:max-w-7xl">
         <motion.div
           variants={ANIMATE_WORDS_VARIENT}
           initial="initial"
@@ -47,24 +47,28 @@ const Navbar: React.FC = () => {
         >
           {/* Logo */}
           <a href="#hero_section" className="flex items-center">
-            <img className="h-10" src="/assets/logo/logo.png" alt="Budgetter" />
+            <img
+              className="h-8 2xl:h-10"
+              src="/assets/logo/logo.png"
+              alt="Budgetter"
+            />
             {/* <img
               className="h-7 pl-4 relative top-1 right-2"
               src="/assets/logo/logo_name.png"
               alt="Budgetter"
             /> */}
-            <span className="relative top-0.5 bg-gradient-to-r from-[#2e7dff] to-[#00b87c] bg-clip-text pl-2 text-3xl font-bold text-transparent">
+            <span className="relative top-0.5 bg-gradient-to-r from-[#2e7dff] to-[#00b87c] bg-clip-text pl-2 text-2xl fn font-bold text-transparent 2xl:text-3xl">
               Budgetter
             </span>
           </a>
 
           {/* Navigation - Large Screens */}
-          <div className="hidden items-center space-x-5 lg:flex">
+          <div className="hidden items-center space-x-4 lg:flex 2xl:space-x-5">
             {navListArray.map(({ route, name }, index) => (
               <a
                 key={index}
                 href={`/${route}`}
-                className="top_nav_list relative rounded-lg p-1 py-0.5 text-lg font-medium capitalize text-[#1a1a1a] transition-all duration-300 ease-in before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:before:w-full"
+                className="top_nav_list relative rounded-lg p-0.5 py-0.5 text-sm font-medium capitalize text-[#1a1a1a] transition-all duration-300 ease-in before:absolute before:bottom-0 before:left-0 before:h-[1.5px] before:w-0 before:bg-[#317c63] before:transition-all before:duration-300 hover:before:w-full 2xl:text-lg"
                 style={{ textUnderlineOffset: '8px' }}
               >
                 <span>{name}</span>
@@ -72,7 +76,7 @@ const Navbar: React.FC = () => {
             ))}
             <Link
               to="/signup"
-              className="rounded-full bg-gradient-to-r from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 px-6 py-1.5 text-base font-semibold text-white shadow-xl transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-br"
+              className="rounded-full bg-gradient-to-r from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 px-4 text-xs text-white shadow-xl transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-br 2xl:px-6 py-1.5 2xl:text-base 2xl:font-semibold"
             >
               Signup Today ?
             </Link>
@@ -81,7 +85,7 @@ const Navbar: React.FC = () => {
       </nav>
 
       {/* Mobile Nav Icon */}
-      <div className="fixed right-4 top-6 z-[50] block lg:right-8 lg:hidden">
+      <div className="fixed right-4 top-5 z-[50] block lg:right-8 lg:hidden">
         <button
           aria-label="navigation"
           type="button"

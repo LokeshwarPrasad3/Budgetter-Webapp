@@ -61,11 +61,11 @@ const SignupSection: React.FC = () => {
         })
       );
       // toast.success('Successfully Signup!!');
-      const expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 3);
+      // const expirationDate = new Date();
+      // expirationDate.setDate(expirationDate.getDate() + 3);
       cookie.set('accessToken', accessToken, {
         path: '/',
-        expires: expirationDate,
+        // expires: expirationDate,
       });
       navigate('/user/dashboard');
     },

@@ -61,7 +61,11 @@ const UserHistoryExpenseTable: React.FC<PropType> = ({
 
   // After fetching, set data and dispatch to Redux
   useEffect(() => {
-    if (todayExpensesData?.success && fromAddExpensePage) {
+    if (
+      todayExpensesData?.success &&
+      fromAddExpensePage &&
+      todayExpensesData.data.length !== 0
+    ) {
       setData(todayExpensesData.data);
       dispatch(setExpenses(todayExpensesData.data));
     }
