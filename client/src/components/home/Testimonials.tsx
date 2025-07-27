@@ -38,14 +38,14 @@ export const Testimonials = () => {
       initial="initial"
       animate="animate"
       id="testimonials_section"
-      className="relative w-full bg-gradient-to-b from-[#ccf2f4]/60 to-[#CCEFF5] px-4 py-16 sm:py-20 lg:py-24"
+      className="landingpage_section_paddings relative w-full bg-gradient-to-b from-[#ccf2f4]/60 to-[#CCEFF5]"
     >
-      <div className="mx-auto max-w-7xl text-center">
+      <div className="landingpage_section_width">
         <motion.h2
           variants={UPWARD_WAVE_SCALE_HEADING_ANIMATION}
           initial="hidden"
           whileInView="visible"
-          className="mb-4 text-4xl font-bold text-zinc-800"
+          className="landingpage_section_heading text-zinc-800"
         >
           What Students Are Saying
         </motion.h2>
@@ -53,7 +53,7 @@ export const Testimonials = () => {
           variants={FADE_UP_DESCRIPTION}
           initial="hidden"
           whileInView="visible"
-          className="mx-auto mb-16 max-w-xl text-base text-zinc-500 md:text-lg"
+          className="landingpage_section_subheading text-zinc-500 "
         >
           Budgetter empowers students to control their money smartly. Hear what
           our users are loving about it.
@@ -63,7 +63,7 @@ export const Testimonials = () => {
           variants={TESTIMONIALS_CONTAINER}
           initial="hidden"
           whileInView="visible"
-          className="grid grid-cols-1 gap-14 md:grid-cols-3 md:gap-7"
+          className="grid grid-cols-1 gap-14 md:grid-cols-3 md:gap-7 mt-16"
         >
           {testimonials.map((t) => (
             <motion.div
@@ -74,10 +74,10 @@ export const Testimonials = () => {
               <img
                 src={t.image}
                 alt={t.name}
-                className="-mt-16 mb-4 h-24 w-24 rounded-full border-[4px] border-[#00b87c] object-cover shadow-md"
+                className="-mt-16 mb-2 h-24 w-24 rounded-full border-[4px] border-[#00b87c] object-cover shadow-md"
               />
               <h4 className="text-lg font-semibold text-zinc-800">{t.name}</h4>
-              <p className="mt-4 text-sm font-medium leading-relaxed text-gray-600">
+              <p className="text-center mt-1 text-sm font-medium leading-relaxed text-gray-600">
                 {t.quote}
               </p>
               <div className="absolute bottom-5 right-6 text-2xl text-[#2e7dff] opacity-60">

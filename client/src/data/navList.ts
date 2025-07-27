@@ -5,6 +5,10 @@ type navListType = {
 
 export const navListArray: navListType[] = [
   {
+    route: '#main_layout',
+    name: 'Home',
+  },
+  {
     route: '#features_section',
     name: 'Features',
   },

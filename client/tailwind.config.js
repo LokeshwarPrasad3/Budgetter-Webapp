@@ -105,6 +105,9 @@ module.exports = {
       },
       fontFamily: {
         karla: ['Karla'],
+        overpass: ['Overpass'],
+        bree: ['Bree Serif'],
+        arvo: ['Arvo'],
       },
     },
   },

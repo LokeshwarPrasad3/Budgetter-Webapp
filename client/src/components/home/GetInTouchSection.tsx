@@ -20,7 +20,7 @@ const GetInTouchSection: React.FC = () => {
       initial="initial"
       animate="animate"
       id="getintouch_section"
-      className="relative w-full bg-gradient-to-b from-[#ccf2f4]/60 to-[#CCEFF5] py-10 sm:py-10 lg:py-20"
+      className="landingpage_section_paddings relative w-full bg-gradient-to-b from-[#ccf2f4]/60 to-[#CCEFF5]"
     >
       <div className="mx-auto w-full max-w-full px-4 font-karla md:max-w-[38rem]">
         <div className="w-full max-w-full rounded-sm p-4">
@@ -28,7 +28,7 @@ const GetInTouchSection: React.FC = () => {
             variants={UPWARD_WAVE_SCALE_HEADING_ANIMATION}
             initial="hidden"
             whileInView="visible"
-            className="my-2 mb-2 text-center text-3xl font-bold"
+            className="landingpage_section_heading"
           >
             Get in Touch
           </motion.div>
@@ -36,7 +36,7 @@ const GetInTouchSection: React.FC = () => {
             variants={FADE_UP_DESCRIPTION}
             initial="hidden"
             whileInView="visible"
-            className="mb-8 text-center text-lg text-gray-600"
+            className="landingpage_section_subheading text-gray-600"
           >
             We'd love to hear from you!
           </motion.p>

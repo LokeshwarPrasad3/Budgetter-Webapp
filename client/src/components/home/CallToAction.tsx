@@ -12,13 +12,13 @@ export const CallToAction = () => {
       initial="initial"
       animate="animate"
       id="calltoaction_section"
-      className="relative flex w-full flex-col items-center justify-center px-4 py-10 sm:py-10 lg:py-20"
+      className="landingpage_section_paddings relative flex w-full flex-col items-center justify-center"
     >
       <motion.div
         variants={UPWARD_WAVE_SCALE_HEADING_ANIMATION}
         initial="hidden"
         whileInView="visible"
-        className="my-2 mb-10 text-center text-3xl font-bold"
+        className="landingpage_section_heading"
       >
         Take Control of Your Finances Today
       </motion.div>
@@ -27,7 +27,7 @@ export const CallToAction = () => {
         variants={FADE_UP_DESCRIPTION}
         initial="hidden"
         whileInView="visible"
-        className="mb-8 max-w-lg text-center text-lg text-[#047857]"
+        className="landingpage_section_subheading text-[#047857]"
       >
         Join thousands of students using Budgetter to track expenses, manage
         pocket money, and build smart spending habits effortlessly.
