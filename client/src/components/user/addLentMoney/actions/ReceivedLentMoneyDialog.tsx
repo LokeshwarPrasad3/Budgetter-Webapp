@@ -58,7 +58,7 @@ const ReceivedLentMoneyDialog: React.FC<ReceivedLentMoneyDialogPropType> = ({
           </button>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent aria-describedby={undefined} className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center text-primary">
             <CheckCircle className="mr-2 h-5 w-5" />

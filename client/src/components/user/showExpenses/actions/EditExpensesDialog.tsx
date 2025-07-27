@@ -126,12 +126,12 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <button className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-green-600 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700">
           <Edit className="h-4 w-4" />
         </button>
       </DialogTrigger>
-      <DialogContent className="max-w-2xl overflow-visible">
+      <DialogContent aria-describedby={undefined} className="max-w-2xl overflow-visible">
         <DialogTitle className="hidden"></DialogTitle>
         <div className="flex w-full flex-col items-start justify-start gap-4 rounded-md border border-border_light bg-bg_primary_light shadow-sm dark:border-none dark:border-border_dark dark:bg-transparent">
           <h4 className="text-base font-semibold">Edit Your Expenses</h4>

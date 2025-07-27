@@ -54,13 +54,9 @@ export const addTodayExpenses = asyncHandler(async (req, res) => {
 export const showTodayExpenses = asyncHandler(async (req, res) => {
     const currentDate = getTodayDate();
     const todayExpenses = await ExpenseModel.findOne({ user: req.user._id, date: currentDate });
-    if (!todayExpenses) {
-        throw new ApiError(404, "No expenses found!!");
-    }
-    const { products } = todayExpenses
-    console.log(todayExpenses);
+    const products = todayExpenses?.products || [];
     return res.status(200).json(
-        new ApiResponse(200, products, "Today expenses found!!")
+        new ApiResponse(200, products, todayExpenses ? "Today expenses found!!" : "No expenses found for today")
     )
 })
 

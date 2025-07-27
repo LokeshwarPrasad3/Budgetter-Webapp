@@ -69,7 +69,13 @@ const routes = createBrowserRouter(
       {/* Error page */}
       <Route path="/*" element={<ErrorPage />} />
     </Route>
-  )
+  ),
+  {
+    future: {
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+    } as any, 
+  }
 );
 
 export default routes;

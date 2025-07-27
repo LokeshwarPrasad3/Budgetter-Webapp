@@ -54,11 +54,11 @@ const GoogleAuthLogin = () => {
         })
       );
       console.log(data?.message);
-      const expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 3);
+      // const expirationDate = new Date();
+      // expirationDate.setDate(expirationDate.getDate() + 3);
       cookie.set('accessToken', accessToken, {
         path: '/',
-        expires: expirationDate,
+        // expires: expirationDate,
       });
       const localIsDarkMode = localStorage.getItem('isDarkMode') === 'true';
       if (localIsDarkMode) {

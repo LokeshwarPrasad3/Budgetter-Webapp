@@ -66,7 +66,7 @@ const DeleteAccountDialog = () => {
           Delete My Account
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent aria-describedby={undefined} className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center text-destructive dark:text-red-300">
             <AlertTriangle className="mr-2 h-5 w-5" />

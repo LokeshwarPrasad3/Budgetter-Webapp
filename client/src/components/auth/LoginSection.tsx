@@ -60,11 +60,11 @@ const LoginSection: React.FC = () => {
         })
       );
       console.log(data?.message);
-      const expirationDate = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 3);
+      // const expirationDate = new Date();
+      // expirationDate.setDate(expirationDate.getDate() + 3);
       cookie.set('accessToken', accessToken, {
         path: '/',
-        expires: expirationDate,
+        // expires: expirationDate,
       });
       const localIsDarkMode = localStorage.getItem('isDarkMode') === 'true';
       if (localIsDarkMode) {
@@ -182,6 +182,7 @@ const LoginSection: React.FC = () => {
         </div>
 
         <Button
+          type="submit"
           disabled={isPending}
           className="h-10 w-full rounded-md bg-blue-600 px-4 text-base font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none"
         >

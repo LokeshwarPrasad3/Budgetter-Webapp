@@ -75,7 +75,7 @@ export const WhyItIsUseful = () => {
         >
           {items.map((item, idx) => (
             <motion.a
-              key={item.link}
+              key={`${item.link}-${idx}`}
               variants={CARD_ITEM}
               href={item.link}
               className="group relative block py-2 sm:p-2"

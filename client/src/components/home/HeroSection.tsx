@@ -4,7 +4,7 @@ import { ANIMATE_WORDS_VARIENT } from '@/utils/framer/properties';
 import React from 'react';
 
 const HeroSection: React.FC = () => {
-  const MotionLink = motion(Link);
+  const MotionLink = motion.create(Link);
 
   return (
     <motion.div
