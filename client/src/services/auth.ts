@@ -3,6 +3,7 @@ import Cookies from 'universal-cookie';
 const cookie = new Cookies();
 import {
   ChangeAvatarResType,
+  ContactFormResType,
   DeleteUserResType,
   PocketMoneyResType,
   ResetPasswordResType,
@@ -14,6 +15,7 @@ import {
 } from '@/types/api/auth/auth';
 import {
   AddPocketMoneyCredentialType,
+  contactFormCredentialsType,
   DeleteUserCredType,
   LoginCredentialsType,
   RegisterCredentialsType,
@@ -24,7 +26,7 @@ import {
 } from '@/types/api/auth/credentials';
 import { apiURL } from '@/lib/http';
 import axios, { AxiosRequestConfig } from 'axios';
-import { backendHostURL } from './api';
+import { backendHostURL, contactFormServerHostURL } from './api';
 import { getCurrentAccessToken } from '@/utils/cookie/CookiesInfo';
 
 // For User Registration through email password form
@@ -157,5 +159,16 @@ export const deleteUserAccount = async (
     }
   );
 
+  return data;
+};
+
+// Send contact form message
+export const submitContactForm = async (
+  credentials: contactFormCredentialsType
+): Promise<ContactFormResType> => {
+  const { data } = await axios.post<ContactFormResType>(
+    contactFormServerHostURL,
+    credentials
+  );
   return data;
 };

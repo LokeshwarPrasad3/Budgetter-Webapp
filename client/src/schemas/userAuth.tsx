@@ -7,6 +7,11 @@ const emailValidation = Yup.string()
   .email('Invalid email format')
   .required('Email is required');
 
+const userMessageValidation = Yup.string()
+  .min(20, 'Message must be at least 20 characters')
+  .max(500, 'Message must be less than 500 characters')
+  .required('Message is required');
+
 const usernameValidation = Yup.string()
   .min(4, 'Username must be at least 4 characters')
   .max(20, 'Username must be less than 20 characters')
@@ -52,3 +57,10 @@ export const resetPasswordSchema = Yup.object({
     .min(6, 'Password must be at least 6 characters')
     .oneOf([Yup.ref('password')], 'Passwords must match'),
 });
+
+// Contact form schema validation
+export const contactFormSchema = Yup.object({
+  name: nameValidation,
+  email: emailValidation,
+  message: userMessageValidation,
+})
