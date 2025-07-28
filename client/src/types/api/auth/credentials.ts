@@ -43,3 +43,9 @@ export interface UpdateUserDetailsCredType {
   facebookLink: string;
   profession: string;
 }
+
+export interface contactFormCredentialsType {
+  name: string;
+  email: string;
+  message: string;
+}
