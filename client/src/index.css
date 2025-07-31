@@ -76,7 +76,7 @@
     @apply mx-auto mb-10 max-w-2xl text-center text-sm font-medium text-gray-600 2xl:mb-12 2xl:text-base;
   }
   .landingpage_section_paddings {
-    @apply px-4 py-10 pt-5 sm:py-10 lg:py-8;
+    @apply px-4 py-10 pt-5 sm:py-10 lg:py-10 2xl:py-12;
   }
   .landingpage_section_width {
     @apply mx-auto max-w-5xl 2xl:max-w-7xl;

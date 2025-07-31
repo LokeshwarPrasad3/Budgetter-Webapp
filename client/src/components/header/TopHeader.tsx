@@ -135,7 +135,10 @@ const TopHeader: React.FC = () => {
               />
             )}
           </div>
-          <div id="theme_change_tour" className="theme_container_toggle flex h-10 w-10 items-center justify-center rounded-full bg-[#f2f5fa] hover:bg-slate-200 dark:bg-[#10101c] dark:hover:bg-slate-800">
+          <div
+            id="theme_change_tour"
+            className="theme_container_toggle flex h-10 w-10 items-center justify-center rounded-full bg-[#f2f5fa] hover:bg-slate-200 dark:bg-[#10101c] dark:hover:bg-slate-800"
+          >
             {!isDarkMode ? (
               <Moon
                 onClick={handleToggleThemeMode}

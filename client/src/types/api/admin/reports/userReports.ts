@@ -22,8 +22,6 @@ export interface AppUsersResType {
   success: boolean;
 }
 
-
-
 export interface NewsletterResType {
   statusCode: number;
   data: null;

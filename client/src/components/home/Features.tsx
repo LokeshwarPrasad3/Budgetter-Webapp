@@ -20,7 +20,7 @@ const Features: React.FC = () => {
           Features That Matters
         </motion.div>
 
-        <div className="feature_box_container grid w-full gap-x-7 gap-y-16 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="feature_box_container grid w-full grid-cols-1 gap-x-7 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
           {/* box -1 */}
           {cardData.map(({ title, description, icon, bg }, index) => (
             <React.Fragment key={index}>

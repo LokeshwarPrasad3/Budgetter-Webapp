@@ -1,6 +1,13 @@
 import axios from 'axios';
-import { AddLentMoneyResType, AllLentMoneyResType, ReceivedLentMoneyResType } from '@/types/api/lentmoney/lentmoney';
-import { LentMoneyCredType, ReceivedLentMoneyCredType } from '@/types/api/lentmoney/credentials';
+import {
+  AddLentMoneyResType,
+  AllLentMoneyResType,
+  ReceivedLentMoneyResType,
+} from '@/types/api/lentmoney/lentmoney';
+import {
+  LentMoneyCredType,
+  ReceivedLentMoneyCredType,
+} from '@/types/api/lentmoney/credentials';
 import { apiURL } from '@/lib/http';
 
 //✅ ADD LENT MONEY
@@ -9,7 +16,7 @@ export const addLentMoney = async (
 ): Promise<AddLentMoneyResType> => {
   const { data } = await apiURL.post<AddLentMoneyResType>(
     `/user/add-lent-money`,
-    credentials,
+    credentials
   );
   return data;
 };
@@ -20,7 +27,7 @@ export const updateReceivedLentMoney = async (
 ): Promise<ReceivedLentMoneyResType> => {
   const { data } = await apiURL.post<ReceivedLentMoneyResType>(
     `/user/received-lent-money`,
-    credentials,
+    credentials
   );
   return data;
 };
@@ -28,7 +35,7 @@ export const updateReceivedLentMoney = async (
 //✅ SHOW-ALL LENT MONEY
 export const getUserAllLentMoney = async (): Promise<AllLentMoneyResType> => {
   const { data } = await axios.get<AllLentMoneyResType>(
-    `/user/get-all-lent-money`,
+    `/user/get-all-lent-money`
   );
   return data;
 };

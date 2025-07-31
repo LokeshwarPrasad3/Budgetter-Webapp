@@ -183,7 +183,10 @@ export const isDateToday = (date: Date) => {
 
 // Convert month number to month name
 export function getMonthName(monthNumber: string | number): string {
-  const monthIndex = typeof monthNumber === 'string' ? parseInt(monthNumber) - 1 : monthNumber - 1;
+  const monthIndex =
+    typeof monthNumber === 'string'
+      ? parseInt(monthNumber) - 1
+      : monthNumber - 1;
   if (monthIndex < 0 || monthIndex > 11) {
     throw new Error('Month number must be between 1 and 12');
   }

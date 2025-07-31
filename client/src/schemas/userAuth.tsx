@@ -63,4 +63,4 @@ export const contactFormSchema = Yup.object({
   name: nameValidation,
   email: emailValidation,
   message: userMessageValidation,
-})
+});

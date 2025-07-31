@@ -19,7 +19,7 @@ const PreviewBox: React.FC<PreviewBoxProps> = ({ htmlContent }) => {
   }, [htmlContent]);
 
   return (
-    <div className="h-[600px] overflow-hidden rounded-md  bg-white shadow-sm">
+    <div className="h-[600px] overflow-hidden rounded-md bg-white shadow-sm">
       <iframe
         ref={iframeRef}
         title="Newsletter Preview"

@@ -56,7 +56,6 @@ export interface DeletedExpenseResType {
   success: boolean;
 }
 
-
 export interface AllExpenseExpenseTableType {
   sno: number;
   name: string;

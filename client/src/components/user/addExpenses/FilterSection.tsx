@@ -52,9 +52,9 @@ const FilterSection = () => {
     initialValues,
     validationSchema: addExpensesSchema,
     onSubmit: (value, _) => {
-
       // destrucuture values after click to submit
-      const { inputDate, expenseName, expenseCategory, price, selectedLabel } = value;
+      const { inputDate, expenseName, expenseCategory, price, selectedLabel } =
+        value;
       const label = selectedLabel?.value || null;
 
       const formattedDate: string = formatDate(inputDate);
@@ -117,7 +117,6 @@ const FilterSection = () => {
     },
   });
 
-
   const handleAddNew = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     toast.error('Feature is Pending!');
@@ -144,7 +143,9 @@ const FilterSection = () => {
             />
             {formik.errors.inputDate && formik.touched.inputDate && (
               <span className="ml-1 text-sm text-red-500">
-                {typeof formik.errors.inputDate === 'string' ? formik.errors.inputDate : ''}
+                {typeof formik.errors.inputDate === 'string'
+                  ? formik.errors.inputDate
+                  : ''}
               </span>
             )}
           </div>

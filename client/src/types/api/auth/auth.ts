@@ -112,7 +112,7 @@ export interface DeleteUserResType {
   success: boolean;
 }
 
-export interface ContactFormResType{
+export interface ContactFormResType {
   statusCode: number;
   data: null;
   message: string;

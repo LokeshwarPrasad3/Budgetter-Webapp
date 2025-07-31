@@ -29,7 +29,7 @@ const ReceivedLentMoneyDialog: React.FC<ReceivedLentMoneyDialogPropType> = ({
   const { mutateAsync: DeleteLentRecordMutate, isPending } = useMutation({
     mutationFn: updateReceivedLentMoney,
     onSuccess: (data) => {
-      console.log(data);
+      console.log(data?.message);
       queryClient.invalidateQueries({ queryKey: ['user'] });
       toast.success('Lent Record Deleted Successfully');
       setIsOpen(false);

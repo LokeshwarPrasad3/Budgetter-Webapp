@@ -19,5 +19,3 @@ apiURL.interceptors.request.use((config) => {
   }
   return config;
 });
-
-

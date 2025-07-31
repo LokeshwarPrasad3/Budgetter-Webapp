@@ -1,0 +1,11 @@
+echo "🔧 Running client build and format..."
+cd client && npm run build && npm run format && git add .
+echo "✅ Client build and format completed."
+cd ..
+
+echo "🔧 Running server format..."
+cd server && npm run format && git add .
+echo "✅ Server format completed."
+cd ..
+
+echo "🎉 All pre-commit tasks completed successfully."

@@ -53,7 +53,7 @@ export const Testimonials = () => {
           variants={FADE_UP_DESCRIPTION}
           initial="hidden"
           whileInView="visible"
-          className="landingpage_section_subheading text-zinc-500 "
+          className="landingpage_section_subheading text-zinc-500"
         >
           Budgetter empowers students to control their money smartly. Hear what
           our users are loving about it.
@@ -63,7 +63,7 @@ export const Testimonials = () => {
           variants={TESTIMONIALS_CONTAINER}
           initial="hidden"
           whileInView="visible"
-          className="grid grid-cols-1 gap-14 md:grid-cols-3 md:gap-7 mt-16"
+          className="mt-16 grid grid-cols-1 gap-14 md:grid-cols-3 md:gap-7"
         >
           {testimonials.map((t) => (
             <motion.div
@@ -77,7 +77,7 @@ export const Testimonials = () => {
                 className="-mt-16 mb-2 h-24 w-24 rounded-full border-[4px] border-[#00b87c] object-cover shadow-md"
               />
               <h4 className="text-lg font-semibold text-zinc-800">{t.name}</h4>
-              <p className="text-center mt-1 text-sm font-medium leading-relaxed text-gray-600">
+              <p className="mt-1 text-center text-sm font-medium leading-relaxed text-gray-600">
                 {t.quote}
               </p>
               <div className="absolute bottom-5 right-6 text-2xl text-[#2e7dff] opacity-60">

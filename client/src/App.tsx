@@ -35,10 +35,10 @@ const App: React.FC = () => {
 
   return (
     <Sentry.ErrorBoundary fallback={<ErrorPage />}>
-      <RouterProvider 
-        router={routes} 
+      <RouterProvider
+        router={routes}
         future={{
-          v7_startTransition: true
+          v7_startTransition: true,
         }}
       />
       {windowWidth > 768 && <FollowCursor />}

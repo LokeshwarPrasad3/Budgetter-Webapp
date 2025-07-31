@@ -45,7 +45,7 @@ const AdminLayout: React.FC = () => {
         className={`dashboard_layout_container absolute right-0 top-0 flex flex-col ${isSideNavbarOpen && !isMobile && 'dashboard_layout_container_large_screen_open'} ${!isSideNavbarOpen && !isMobile && 'dashboard_layout_container_large_screen_close'} ${isMobile && 'dashboard_layout_container_small_screen_close'} `}
       >
         <TopHeader />
-        <div className="flex flex-col items-center justify-start gap-5 px-6 py-5 w-full">
+        <div className="flex w-full flex-col items-center justify-start gap-5 px-6 py-5">
           <Outlet />
         </div>
       </div>

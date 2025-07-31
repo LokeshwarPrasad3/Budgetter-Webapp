@@ -34,7 +34,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ htmlContent, onChange }) => {
   }, [monaco, themeReady]);
 
   return (
-    <div className="h-[400px] mt-3 overflow-hidden rounded-md">
+    <div className="mt-3 h-[400px] overflow-hidden rounded-md">
       <Editor
         height="100%"
         defaultLanguage="html"

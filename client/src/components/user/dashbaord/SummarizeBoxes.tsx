@@ -20,7 +20,8 @@ const SummarizeBoxes: React.FC<PropType> = ({
       id: 1,
       title: 'Total Expenses',
       value: totalExpensesOfMonth,
-      bgClass: 'bg-gradient-to-br from-[#9f78ff] to-[#32cafe] hover:bg-gradient-to-tl',
+      bgClass:
+        'bg-gradient-to-br from-[#9f78ff] to-[#32cafe] hover:bg-gradient-to-tl',
     },
     {
       id: 2,

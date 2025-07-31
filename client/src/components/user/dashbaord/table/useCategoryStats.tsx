@@ -85,8 +85,7 @@ export const getFullExpensesList = (
     .filter((entry: any) => {
       const [_, month, year] = entry.date.split('-');
       return (
-        month === getMonthInNumber(filterMonthValue) &&
-        year === filterYearValue
+        month === getMonthInNumber(filterMonthValue) && year === filterYearValue
       );
     })
     .flatMap((entry: any) => entry.products)

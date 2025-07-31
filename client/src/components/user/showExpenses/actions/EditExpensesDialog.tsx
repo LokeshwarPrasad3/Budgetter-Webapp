@@ -57,8 +57,8 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
   const [expenseCategory, setExpenseCategory] = useState<string>(category);
   const [expensePrice, setExpensePrice] = useState<number>(price);
   const [selectedLabel, setSelectedLabel] = useState<OptionType | null>({
-    label: label??"No Label",
-    value: label??"",
+    label: label ?? 'No Label',
+    value: label ?? '',
   });
 
   const [labelOptions, setLabelOptions] = useState<OptionType[]>(LabelOptions);
@@ -72,7 +72,7 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
   const { mutateAsync: editExpenseMutate, isPending } = useMutation({
     mutationFn: editUserExpense,
     onSuccess: (data) => {
-      console.log(data.message);
+      console.log(data?.message);
       queryClient.invalidateQueries({ queryKey: ['user'] });
       queryClient.invalidateQueries({ queryKey: ['user-all-expenses'] });
       queryClient.invalidateQueries({ queryKey: ['todayExpense'] });
@@ -131,7 +131,10 @@ const EditExpensesDialog: React.FC<EditExpensesDialogPropType> = ({
           <Edit className="h-4 w-4" />
         </button>
       </DialogTrigger>
-      <DialogContent aria-describedby={undefined} className="max-w-2xl overflow-visible">
+      <DialogContent
+        aria-describedby={undefined}
+        className="max-w-2xl overflow-visible"
+      >
         <DialogTitle className="hidden"></DialogTitle>
         <div className="flex w-full flex-col items-start justify-start gap-4 rounded-md border border-border_light bg-bg_primary_light shadow-sm dark:border-none dark:border-border_dark dark:bg-transparent">
           <h4 className="text-base font-semibold">Edit Your Expenses</h4>
