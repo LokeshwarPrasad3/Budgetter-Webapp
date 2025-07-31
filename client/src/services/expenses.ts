@@ -1,5 +1,16 @@
-import { AddExpensesCredType, DeleteExpenseCredType, EditExpenseCredType, GetExpensesCredType } from '@/types/api/expenses/credentials';
-import { AddExpensesResType, DeletedExpenseResType, EditedExpenseResType, ExpensesResType, TodayExpensesResType } from '@/types/api/expenses/expenses';
+import {
+  AddExpensesCredType,
+  DeleteExpenseCredType,
+  EditExpenseCredType,
+  GetExpensesCredType,
+} from '@/types/api/expenses/credentials';
+import {
+  AddExpensesResType,
+  DeletedExpenseResType,
+  EditedExpenseResType,
+  ExpensesResType,
+  TodayExpensesResType,
+} from '@/types/api/expenses/expenses';
 import { apiURL } from '@/lib/http';
 
 // GET EXPENSES BY DATE
@@ -8,9 +19,8 @@ export const getExpensesByDate = async (
 ): Promise<ExpensesResType> => {
   const { data } = await apiURL.post<ExpensesResType>(
     `/user/show-past-date-expenses`,
-    credentials,
+    credentials
   );
-  console.log(data);
   return data;
 };
 
@@ -20,7 +30,7 @@ export const addExpenses = async (
 ): Promise<AddExpensesResType> => {
   const { data } = await apiURL.post<AddExpensesResType>(
     `/user/add-past-date-expenses`,
-    credentials,
+    credentials
   );
   return data;
 };
@@ -28,7 +38,7 @@ export const addExpenses = async (
 // SHOW TODAY EXPENSES
 export const getTodayExpenses = async (): Promise<TodayExpensesResType> => {
   const { data } = await apiURL.get<TodayExpensesResType>(
-    `/user/show-today-expenses`,
+    `/user/show-today-expenses`
   );
   return data;
 };
@@ -36,7 +46,7 @@ export const getTodayExpenses = async (): Promise<TodayExpensesResType> => {
 // SHOW-ALL EXPENSES
 export const getUserAllExpenses = async (): Promise<AddExpensesResType> => {
   const { data } = await apiURL.get<AddExpensesResType>(
-    `/user/show-all-date-expenses`,
+    `/user/show-all-date-expenses`
   );
   return data;
 };
@@ -47,7 +57,7 @@ export const editUserExpense = async (
 ): Promise<EditedExpenseResType> => {
   const { data } = await apiURL.patch<EditedExpenseResType>(
     `/user/edit-expenses`,
-    credentials,
+    credentials
   );
   return data;
 };
@@ -57,7 +67,6 @@ export const editUserExpense = async (
 export const deleteUserExpense = async (
   credentials: DeleteExpenseCredType
 ): Promise<DeletedExpenseResType> => {
-  
   const { data } = await apiURL.delete<DeletedExpenseResType>(
     `/user/delete-expenses`,
     {

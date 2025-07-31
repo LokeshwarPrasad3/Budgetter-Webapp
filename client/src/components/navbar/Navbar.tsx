@@ -57,7 +57,7 @@ const Navbar: React.FC = () => {
               src="/assets/logo/logo_name.png"
               alt="Budgetter"
             /> */}
-            <span className="relative top-0.5 bg-gradient-to-r from-[#2e7dff] to-[#00b87c] bg-clip-text pl-2 text-2xl fn font-bold text-transparent 2xl:text-3xl">
+            <span className="fn relative top-0.5 bg-gradient-to-r from-[#2e7dff] to-[#00b87c] bg-clip-text pl-2 text-2xl font-bold text-transparent 2xl:text-3xl">
               Budgetter
             </span>
           </a>
@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
             ))}
             <Link
               to="/signup"
-              className="rounded-full bg-gradient-to-r from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 px-4 text-xs text-white shadow-xl transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-br 2xl:px-6 py-1.5 2xl:text-base 2xl:font-semibold"
+              className="rounded-full bg-gradient-to-r from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 px-4 py-1.5 text-xs text-white shadow-xl transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-br 2xl:px-6 2xl:text-base 2xl:font-semibold"
             >
               Signup Today ?
             </Link>

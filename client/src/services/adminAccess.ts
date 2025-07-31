@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { apiURL } from '@/lib/http';
-import { AppUsersResType, NewsletterResType } from '@/types/api/admin/reports/userReports';
+import {
+  AppUsersResType,
+  NewsletterResType,
+} from '@/types/api/admin/reports/userReports';
 import { NewsletterCredType } from '@/types/api/admin/reports/credentials';
 
 // Get all app users

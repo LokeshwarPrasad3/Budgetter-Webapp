@@ -107,7 +107,10 @@ const ViewCategoryExpensesDialog: React.FC<
           <Eye className="h-5 w-5" />
         </button>
       </DialogTrigger>
-      <DialogContent aria-describedby={undefined} className="mx-auto w-[97%] max-w-2xl rounded-lg p-0 pb-5">
+      <DialogContent
+        aria-describedby={undefined}
+        className="mx-auto w-[97%] max-w-2xl rounded-lg p-0 pb-5"
+      >
         <DialogTitle className="hidden"></DialogTitle>
         <h4 className="p-5 pb-0 text-base font-medium">
           Your{' '}

@@ -67,7 +67,8 @@ const UploadForm: React.FC<UploadFormProps> = ({
       setAllUsers(fetchedUsers);
 
       const includedEmails = fetchedUsers.filter(
-        (user: any) => !excludedUsers.some((excluded) => excluded.value === user._id)
+        (user: any) =>
+          !excludedUsers.some((excluded) => excluded.value === user._id)
       );
       // console.log(includedEmails);
       const allEmails = [

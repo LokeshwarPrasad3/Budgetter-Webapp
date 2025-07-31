@@ -13,9 +13,9 @@ const Footer: React.FC = () => {
       variants={FOOTER_ANIMATION}
       initial="hidden"
       whileInView="visible"
-      className="border-t border-gray-200 bg-[#f8f9fb] "
+      className="border-t border-gray-200 bg-[#f8f9fb]"
     >
-      <div className="landingpage_section_width text-gray-700 mx-auto grid grid-cols-1 gap-10 px-6 py-10 sm:grid-cols-2 md:grid-cols-4 lg:py-16 lg:pb-10">
+      <div className="landingpage_section_width mx-auto grid grid-cols-1 gap-10 px-6 py-10 text-gray-700 sm:grid-cols-2 md:grid-cols-4 lg:py-16 lg:pb-10">
         {/* Logo + Brand */}
         <div className="col-span-1">
           <a href="/home" className="flex items-center">
@@ -136,8 +136,8 @@ const Footer: React.FC = () => {
       <div className="bg-gradient-to-b from-[#ccf2f4]/60 to-[#CCEFF5] py-4 text-center text-sm text-black">
         © {new Date().getFullYear()} Budgetter by{' '}
         <a
-          className="bg-gradient-to-r from-[#2e7dff] to-[#036e4b] font-overpass font-semibold bg-clip-text text-transparent "
-          target='_blank'
+          className="bg-gradient-to-r from-[#2e7dff] to-[#036e4b] bg-clip-text font-overpass font-semibold text-transparent"
+          target="_blank"
           href="https://lokeshwardewangan.in"
         >
           Developer

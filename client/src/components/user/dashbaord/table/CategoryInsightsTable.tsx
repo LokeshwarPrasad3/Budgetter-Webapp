@@ -9,7 +9,6 @@ import useCategoryStats, { getFullExpensesList } from './useCategoryStats';
 import ViewCategoryExpensesDialog from '../actions/view-expenses/ViewCategoryExpensesDialog';
 import { categoryColorMap } from '@/utils/ui/utility';
 
-
 interface PropTypes {
   filterMonthValue: string;
   filterYearValue: string;
@@ -115,7 +114,11 @@ const CategoryInsightsTable: React.FC<PropTypes> = ({
       header: 'Actions',
       cell: (info) => {
         const category = info.row.original.category;
-        const fullExpenses = getFullExpensesList(category, filterMonthValue, filterYearValue)
+        const fullExpenses = getFullExpensesList(
+          category,
+          filterMonthValue,
+          filterYearValue
+        );
         return (
           <ViewCategoryExpensesDialog
             fullExpenses={fullExpenses}

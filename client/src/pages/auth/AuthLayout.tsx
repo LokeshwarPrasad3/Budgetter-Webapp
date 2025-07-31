@@ -27,7 +27,7 @@ const AuthLayout: React.FC = () => {
               src="/assets/logo/logo.png"
               alt="logo"
             /> */}
-            <Link to="/home" className="flex items-center my-3 sm:mt-0">
+            <Link to="/home" className="my-3 flex items-center sm:mt-0">
               <img
                 className="relative -top-0.5 right-0.5 h-12"
                 src="/assets/logo/logo.png"

@@ -2,7 +2,7 @@ import { User } from '@/types/api/admin/reports/userReports';
 import IndividualUserDetails from '../IndividualUserDetails';
 
 interface UserCardProps {
-  user: User
+  user: User;
 }
 
 const UserCard: React.FC<UserCardProps> = ({ user }) => {

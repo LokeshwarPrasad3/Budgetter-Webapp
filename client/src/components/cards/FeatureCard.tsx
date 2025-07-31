@@ -31,11 +31,13 @@ const FeatureCard: React.FC<FeatureCardType> = ({
         <div className="right_hook min-h-12 min-w-4 rounded-b-sm border-b border-l border-r border-slate-400 bg-[#F4D7C4] shadow-md"></div>
       </div>
       <div className="feature_box_content flex flex-col items-center justify-center gap-1 2xl:gap-2">
-        <div className="heading flex justify-center items-center gap-2 2xl:gap-3">
+        <div className="heading flex items-center justify-center gap-2 2xl:gap-3">
           <i className={`${icon} text-xl 2xl:text-2xl`}></i>
-          <span className="text-lg 2xl:text-xl font-bold">{title}</span>
+          <span className="text-lg font-bold 2xl:text-xl">{title}</span>
         </div>
-        <p className="px-3 text-center text-sm 2xl:text-base font-medium">{description}</p>
+        <p className="px-3 text-center text-sm font-medium 2xl:text-base">
+          {description}
+        </p>
       </div>
     </motion.div>
   );

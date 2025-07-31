@@ -43,7 +43,7 @@ const FilterShowExpenses = () => {
 
   const handleDate = () => {
     const formattedDate = formatDate(inputDate);
-    console.log(formattedDate);
+    // console.log(formattedDate);
     showExpensesMutate({ date: formattedDate });
   };
 

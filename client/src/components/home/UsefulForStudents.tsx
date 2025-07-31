@@ -56,9 +56,9 @@ export const WhyItIsUseful = () => {
       initial="initial"
       animate="animate"
       id="usefullforstudent_section"
-      className="landingpage_section_paddings  relative w-full bg-gradient-to-b from-[#ccf2f4]/60 to-[#CCEFF5]"
+      className="landingpage_section_paddings relative w-full bg-gradient-to-b from-[#ccf2f4]/60 to-[#CCEFF5]"
     >
-      <div className="mx-auto flex flex-col justify-center items-center gap-3 max-w-5xl 2xl:max-w-7xl">
+      <div className="mx-auto flex max-w-5xl flex-col items-center justify-center gap-3 2xl:max-w-7xl">
         <motion.div
           variants={UPWARD_WAVE_SCALE_HEADING_ANIMATION}
           initial="hidden"

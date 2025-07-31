@@ -1,6 +1,26 @@
+# Node modules
 node_modules/
-dist/
+
+# Build outputs (if any, e.g., Babel or custom transpile)
 build/
-logs/
-coverage/
+out/
+
+# Environment variables
 .env
+
+# Editor settings
+.vscode/
+
+# Logs
+*.log
+
+# Husky hooks (optional)
+.husky/
+
+# Lock files (optional)
+*.lock
+package-lock.json
+
+# Prettier config files (if you don’t want them formatted)
+.prettierrc
+.prettierignore

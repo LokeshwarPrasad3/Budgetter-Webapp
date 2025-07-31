@@ -1,55 +1,59 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
-const ProductSchema = new Schema({
+const ProductSchema = new Schema(
+  {
     name: {
-        type: String,
-        required: true,
-        trim: true,
+      type: String,
+      required: true,
+      trim: true,
     },
     price: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true,
     },
     category: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     label: {
-        type: String,
-        required: false
-    }
-}, { timestamps: true })
+      type: String,
+      required: false,
+    },
+  },
+  { timestamps: true },
+);
 
-
-const ExpensesSchema = new Schema({
+const ExpensesSchema = new Schema(
+  {
     user: {
-        type: Schema.Types.ObjectId,
-        ref: "User"
+      type: Schema.Types.ObjectId,
+      ref: 'User',
     },
     date: {
-        type: String,
-        required: true,
-        default: () => {
-            const now = new Date();
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const year = String(now.getFullYear()).slice(-2);
-            return `${day}-${month}-${year}`;
-        },
+      type: String,
+      required: true,
+      default: () => {
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = String(now.getFullYear()).slice(-2);
+        return `${day}-${month}-${year}`;
+      },
     },
     products: {
-        type: [ProductSchema],
-        validate: [arrayLimit, "Must have at least 1 product"]
-    }
-}, {
-    timestamps: true
-})
-
+      type: [ProductSchema],
+      validate: [arrayLimit, 'Must have at least 1 product'],
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 // validate array should be at least 1 length
 function arrayLimit(val) {
-    return val.length > 0;
+  return val.length > 0;
 }
 
-const Expense = mongoose.model("Expense", ExpensesSchema);
+const Expense = mongoose.model('Expense', ExpensesSchema);
 export default Expense;

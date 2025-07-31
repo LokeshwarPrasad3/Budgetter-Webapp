@@ -104,7 +104,9 @@ const AllExpensesTable: React.FC = () => {
   const handlePopoverClose = (open: boolean) => {
     setIsPopoverOpen(open);
   };
-  const [flattenProductsData, setFlattenProductsData] = useState<AllExpenseExpenseTableType[]>([]);
+  const [flattenProductsData, setFlattenProductsData] = useState<
+    AllExpenseExpenseTableType[]
+  >([]);
   const [PDFStatementTimeline, setPDFStatementTimeline] = useState<string>('');
   const [filterSearchText, setFilterSearchText] = useState<string>('');
 
