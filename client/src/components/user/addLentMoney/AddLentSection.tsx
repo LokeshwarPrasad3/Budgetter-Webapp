@@ -58,7 +58,10 @@ const AddLentSection = () => {
     <div className="add_lent_container flex w-full flex-col items-start justify-start gap-4 rounded-md border border-border_light bg-bg_primary_light p-4 px-5 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark">
       <h4 className="text-base font-semibold">Add Lent Money</h4>
       <div className="flex w-full flex-col flex-wrap items-start justify-start gap-3 md:gap-5">
-        <div className="input_containers grid w-full max-w-5xl grid-cols-12 gap-3 md:gap-5">
+        <div
+          id="inputs_lent_money_section"
+          className="input_containers grid w-full max-w-5xl grid-cols-12 gap-3 md:gap-5"
+        >
           <div className="input_section col-span-12 flex w-full flex-col items-start justify-start gap-1 sm:col-span-6 xl:col-span-3">
             <p className="text-sm">Date of Lent</p>
             <DatePicker inputDate={inputDate} setInputDate={setInputDate} />

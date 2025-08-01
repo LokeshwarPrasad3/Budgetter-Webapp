@@ -179,7 +179,10 @@ const ProfilePage: React.FC = () => {
       </div>
       <div className="profile_content_container col-span-12 grid h-full w-full max-w-full grid-cols-12 gap-4 rounded-md">
         <div className="col-span-12 flex h-full flex-col items-center justify-between space-y-4 rounded-lg bg-bg_primary_light p-6 shadow-sm dark:bg-bg_primary_dark lg:col-span-4 lg:p-7">
-          <div className="basic_user_profile_details flex flex-col items-center space-y-4 shadow-sm">
+          <div
+            id="your_profile_picture_section"
+            className="basic_user_profile_details flex flex-col items-center space-y-4 shadow-sm"
+          >
             <Avatar className="h-24 w-24 shadow-sm sm:h-32 sm:w-32">
               <AvatarImage src={profileImage} alt="Profile" />
               <AvatarFallback>{name?.slice(0, 2).toUpperCase()}</AvatarFallback>
@@ -188,6 +191,7 @@ const ProfilePage: React.FC = () => {
               variant="outline"
               size="sm"
               disabled={isPending}
+              id="change_your_avatar_section"
               className="relative w-40 overflow-hidden bg-transparent hover:bg-[##f1f5f9]"
             >
               {isPending ? (
@@ -209,7 +213,10 @@ const ProfilePage: React.FC = () => {
               />
             </Button>
           </div>
-          <div className="information_details_user flex w-fit flex-col items-start justify-center space-y-1 rounded-lg">
+          <div
+            id="your_membership_and_last_active_details_section"
+            className="information_details_user flex w-fit flex-col items-start justify-center space-y-1 rounded-lg"
+          >
             {/* member since */}
             {memberSince && (
               <div className="flex items-center justify-between gap-3 rounded-md bg-white shadow-sm dark:bg-bg_primary_dark">
@@ -252,7 +259,10 @@ const ProfilePage: React.FC = () => {
             )}
           </div>
           <SpinWheel />
-          <div className="advance_option_container">
+          <div
+            id="account_advance_options"
+            className="advance_option_container"
+          >
             {/* delete account */}
             <Collapsible
               open={isAdvanceOptionOpen}
@@ -273,7 +283,10 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="col-span-12 flex h-full w-full flex-col space-y-6 rounded-lg bg-bg_primary_light p-6 shadow-sm dark:bg-bg_primary_dark lg:col-span-8 lg:p-7 lg:pb-10">
+        <div
+          id="update_your_basic_deatils_section"
+          className="col-span-12 flex h-full w-full flex-col space-y-6 rounded-lg bg-bg_primary_light p-6 shadow-sm dark:bg-bg_primary_dark lg:col-span-8 lg:p-7 lg:pb-10"
+        >
           <div className="grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2">
             {/* Username */}
             <div className="w-full space-y-2">

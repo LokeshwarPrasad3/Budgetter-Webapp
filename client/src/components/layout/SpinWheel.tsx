@@ -78,7 +78,10 @@ const SpinWheel = () => {
   };
 
   return (
-    <div className="mx-auto hidden w-full max-w-md flex-col items-center rounded-lg p-6 lg:flex">
+    <div
+      id="fun_time_spin_wheel_section"
+      className="mx-auto hidden w-full max-w-md flex-col items-center rounded-lg p-6 lg:flex"
+    >
       <h2 className="mb-4 text-center text-sm font-bold">
         🎡 Spin the Wheel & Win!
       </h2>

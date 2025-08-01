@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
       <ScrollToTopButton />
       <Tooltip
         id="footerTooltip"
-        className="z-50 !rounded-md !bg-gradient-to-r from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 !px-3 !py-1.5 !text-sm !font-medium !text-white"
+        className="custom-react-tooltip"
         place="top"
       />
     </>
