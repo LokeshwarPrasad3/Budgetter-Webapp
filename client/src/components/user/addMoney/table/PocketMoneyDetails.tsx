@@ -63,7 +63,10 @@ const PocketMoneyDetails: React.FC = () => {
           <div className="flex">Your Have Not Added Pocket Money</div>
         </div>
       ) : (
-        <div className="w-full overflow-x-auto rounded-lg border-border_dark dark:border">
+        <div
+          id="pocket_money_details_table_section"
+          className="w-full overflow-x-auto rounded-lg border-border_dark dark:border"
+        >
           <table className="min-w-full divide-y border-b border-border_dark">
             <thead className="dark:bg-bg_secondary_dark">
               {table.getHeaderGroups().map((headerGroup) => (

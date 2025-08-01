@@ -64,6 +64,7 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
       navigate('/');
       // make default light mode becasue landing page not available for dark
       document.body.classList.remove('dark');
+      localStorage.removeItem('hasSeenTour');
     },
     onError: (error) => {
       console.log(error);
@@ -117,11 +118,11 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
               key={index}
               to={`/${route}`}
               onClick={() => dispatch(closeSideNavbar())}
-              className={`sidenavbar_menulink_container relative flex w-full justify-start gap-3 rounded-sm px-3 py-2 ${getActiveRouteLink() === route ? 'bg-bg_active_sidebar_link' : ''} items-center hover:bg-bg_active_sidebar_link`}
+              className={`sidenavbar_menulink_container relative flex w-full justify-start gap-3 rounded-sm px-3 py-2 ${getActiveRouteLink() === route ? 'bg-bg_active_sidebar_link' : ''} items-center hover:bg-slate-700`}
             >
               <i className={`${icon} text-2xl`}></i>
               <span
-                className={`absolute text-base font-medium ${!isSideNavbarOpen && !isMobile && 'left-16'} ${isSideNavbarOpen && !isMobile && 'left-12'} ${isSideNavbarOpen && isMobile && 'left-12'} whitespace-nowrap capitalize`}
+                className={`font- absolute text-base ${!isSideNavbarOpen && !isMobile && 'left-16'} ${isSideNavbarOpen && !isMobile && 'left-12'} ${isSideNavbarOpen && isMobile && 'left-12'} whitespace-nowrap capitalize`}
               >
                 {name}
               </span>
@@ -137,7 +138,7 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
             data-tooltip-id="navbarTooltip"
             data-tooltip-content="Logout"
             data-tooltip-place="right"
-            className="logout_container relative flex h-12 w-full items-center justify-start gap-3 rounded-sm bg-slate-700 px-3 py-2 hover:bg-bg_active_sidebar_link dark:bg-bg_secondary_dark dark:hover:bg-bg_active_sidebar_link"
+            className="logout_container relative flex h-12 w-full items-center justify-start gap-3 rounded-sm bg-slate-700 px-3 py-2 hover:bg-bg_active_sidebar_link dark:hover:bg-slate-500"
             onClick={handleUserLogout}
           >
             <i className="ri-logout-box-r-line text-2xl"></i>
@@ -155,7 +156,7 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
           </button>
         </div>
       </div>
-      <Tooltip className="z-50 ml-2 hidden md:block" id="navbarTooltip" />
+      <Tooltip className="custom-react-tooltip" id="navbarTooltip" />
     </>
   );
 };

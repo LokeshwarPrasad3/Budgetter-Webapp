@@ -131,7 +131,10 @@ const FilterSection = () => {
         onSubmit={formik.handleSubmit}
         className="flex w-full flex-col flex-wrap items-start justify-start gap-3 md:gap-5"
       >
-        <div className="input_containers grid w-full max-w-7xl grid-cols-10 gap-3 md:gap-5">
+        <div
+          id="inputs_for_add_expense_section"
+          className="input_containers grid w-full max-w-7xl grid-cols-10 gap-3 md:gap-5"
+        >
           <div className="input_section col-span-10 flex w-full flex-col items-start justify-start gap-1 sm:col-span-5 xl:col-span-2">
             <p className="text-sm">
               Date of Expense{' '}
@@ -239,7 +242,12 @@ const FilterSection = () => {
           <Button onClick={handleAddNew} className="bg-green-500">
             <CirclePlus className="h-5 w-5" /> &nbsp; New
           </Button>
-          <Button type="submit" disabled={isPending} className="bg-blue-500">
+          <Button
+            id="add_new_expense_section"
+            type="submit"
+            disabled={isPending}
+            className="bg-blue-500"
+          >
             {isPending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

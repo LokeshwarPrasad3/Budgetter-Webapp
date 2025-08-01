@@ -8,28 +8,15 @@ import cookieParser from 'cookie-parser';
 import userRoutes from './routes/user.routes.js';
 import userReportRoutes from './routes/report.routes.js';
 const FRONTEND_URL = process.env.FRONTEND_URL;
-
-const allowedOrigins = [
-  FRONTEND_URL,
-  /\.netlify\.app$/, // Allow all Netlify deploy previews
-];
+const DEV_FRONTEND_URL = process.env.DEV_FRONTEND_URL;
 
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
+const allowedOrigins = [FRONTEND_URL, DEV_FRONTEND_URL];
+
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (
-        !origin ||
-        allowedOrigins.some((pattern) =>
-          typeof pattern === 'string' ? pattern === origin : pattern.test(origin),
-        )
-      ) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin: allowedOrigins,
     credentials: true,
   }),
 );

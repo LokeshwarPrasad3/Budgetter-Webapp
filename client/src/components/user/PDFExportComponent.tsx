@@ -116,7 +116,7 @@ const PDFExportComponent: React.FC<ExportTableProps> = ({
   };
 
   return (
-    <div className="">
+    <div id="export_expenses_section" className="">
       <Button
         onClick={exportPDF}
         className="flex w-full items-center justify-center gap-1 bg-gradient-to-r from-purple-500 to-purple-700 text-gray-100 opacity-80 transition-all duration-200 ease-in hover:from-purple-600 hover:to-purple-800 hover:text-white hover:opacity-90 dark:hover:text-white"

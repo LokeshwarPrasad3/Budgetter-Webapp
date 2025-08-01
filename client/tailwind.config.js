@@ -20,11 +20,14 @@ module.exports = {
       screens: {
         xs: '400px',
       },
+      backgroundImage: {
+        bg_active_sidebar_link:
+          'linear-gradient(to bottom right, #10b98190, #0d948890)',
+      },
       colors: {
         // my custom variable
         bg_sidebar: '#171829',
         text_sidebar: '#ffffff',
-        bg_active_sidebar_link: '#289288',
         bg_primary_dark: '#171829',
         bg_primary_light: '#FFFEFE',
         bg_secondary_dark: '#10101c',

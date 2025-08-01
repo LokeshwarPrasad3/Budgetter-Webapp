@@ -52,10 +52,10 @@ export const registerUser = asyncHandler(async (req, res) => {
   const type = 'VERIFY_ACCOUNT';
   const userEmail = createdUser.email;
   const subject = 'Budgetter Account Verification';
-  const isSentGmail = await sendMessageToUser(userName, type, userEmail, subject, token);
-  if (!isSentGmail) {
-    console.log(`Failed to sent email to - ${userEmail}`);
-  }
+  // const isSentGmail = await sendMessageToUser(userName, type, userEmail, subject, token);
+  // if (!isSentGmail) {
+  //   console.log(`Failed to sent email to - ${userEmail}`);
+  // }
 
   const options = {
     httpOnly: true, // cannot access & modified by client javascript (document.cookie)

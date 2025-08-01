@@ -57,7 +57,10 @@ const SummarizeBoxes: React.FC<PropType> = ({
   return (
     <div className="summarize_box_container flex w-full flex-col items-start justify-start gap-4 rounded-md border border-border_light bg-bg_primary_light p-4 px-5 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark">
       <h4 className="text-base font-semibold">Summaries Information</h4>
-      <div className="summary_boxes_outer flex w-full flex-wrap items-center justify-start gap-7 lg:justify-start">
+      <div
+        id="summarize_budget_section"
+        className="summary_boxes_outer flex w-full flex-wrap items-center justify-start gap-7 lg:justify-start"
+      >
         {summarizeBoxesContents
           .slice(0, 4)
           .map(({ title, value, bgClass }, index) => (

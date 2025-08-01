@@ -166,7 +166,10 @@ const UserHistoryExpenseTable: React.FC<PropType> = ({
 
   return (
     <>
-      <div className="message_outer w-full rounded-md bg-bg_primary_light px-0 py-5 dark:bg-bg_primary_dark">
+      <div
+        id="today_expenses_show_section"
+        className="message_outer w-full rounded-md bg-bg_primary_light px-0 py-5 dark:bg-bg_primary_dark"
+      >
         {data?.length === 0 ? (
           <div className="flex px-5">No Expenses Found</div>
         ) : (

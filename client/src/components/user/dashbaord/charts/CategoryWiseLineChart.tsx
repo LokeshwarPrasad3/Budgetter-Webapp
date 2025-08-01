@@ -307,7 +307,10 @@ const CategoryWiseLineChart: React.FC = () => {
 
   return (
     <>
-      <div className="flex w-full max-w-full flex-col items-center rounded-lg border border-border_light bg-bg_primary_light p-0 py-5 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark md:p-4">
+      <div
+        id="interval_time_expense_insight_section"
+        className="flex w-full max-w-full flex-col items-center rounded-lg border border-border_light bg-bg_primary_light p-0 py-5 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark md:p-4"
+      >
         <div className="heading_part_chart relative flex w-full items-center justify-center">
           <h2 className="mb-4 text-left text-lg font-semibold">
             Expenses Details
