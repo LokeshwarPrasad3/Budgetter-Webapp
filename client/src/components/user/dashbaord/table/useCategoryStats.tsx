@@ -81,15 +81,21 @@ export const getFullExpensesList = (
     (state: any) => state.expenses.allExpenses
   );
 
-  return allExpensesArray
+  const filteredProducts = allExpensesArray
     .filter((entry: any) => {
       const [_, month, year] = entry.date.split('-');
       return (
         month === getMonthInNumber(filterMonthValue) && year === filterYearValue
       );
     })
-    .flatMap((entry: any) => entry.products)
+    .flatMap((entry: any) =>
+      entry.products.map((product: any) => ({
+        ...product,
+        date: entry.date,
+      }))
+    )
     .filter((product: any) => product.category === categoryName);
+  return filteredProducts;
 };
 
 export default useCategoryStats;
