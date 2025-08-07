@@ -13,10 +13,20 @@ const DEV_FRONTEND_URL = process.env.DEV_FRONTEND_URL;
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
 const allowedOrigins = [FRONTEND_URL, DEV_FRONTEND_URL];
-
+const netlifyPreviewPattern = /^https:\/\/deploy-preview-\d+--mybudgetter\.netlify\.app$/;
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+      if (
+        !origin || // allow non-browser tools like curl/postman
+        allowedOrigins.includes(origin) ||
+        netlifyPreviewPattern.test(origin)
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   }),
 );

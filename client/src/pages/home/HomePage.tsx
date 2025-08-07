@@ -3,7 +3,7 @@ import HeroSection from '@/components/home/HeroSection';
 import ContactSection from '@/components/home/GetInTouchSection';
 import Footer from '@/components/layout/Footer';
 import Navbar from '@/components/navbar/Navbar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { WhyItIsUseful } from '@/components/home/UsefulForStudents';
 import { Testimonials } from '@/components/home/Testimonials';
 import { CallToAction } from '@/components/home/CallToAction';
@@ -12,6 +12,10 @@ import ScrollToTopButton from '@/components/home/ScrollTopTop';
 import { Tooltip } from 'react-tooltip';
 
 const HomePage: React.FC = () => {
+  useEffect(() => {
+    localStorage.removeItem('isDarkMode');
+  }, []);
+
   return (
     <>
       <Navbar />
