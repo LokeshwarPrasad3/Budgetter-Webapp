@@ -1,6 +1,6 @@
-echo "🔧 Running client build and format..."
-cd client && npm run build && npm run format && git add .
-echo "✅ Client build and format completed."
+echo "🔧 Running client build, test, and format..."
+cd client && npm run build && npm run test && npm run format && git add .
+echo "✅ Client build, test, and format completed."
 cd ..
 
 echo "🔧 Running server format..."
