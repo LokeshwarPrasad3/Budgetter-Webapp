@@ -10,12 +10,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Bell, Fullscreen, Minimize, Moon, Play, Sun } from 'lucide-react';
+import { Bell, Fullscreen, Minimize, Play } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { CheckUserAccountVerified } from '@/services/auth';
 import { setUserVerified } from '@/features/user/user';
 import UserTourGuide from '../layout/UserTourGuide';
-import { toggleThemeMode } from '@/features/theme/themeModeSlice';
+import { ThemeToggleButton } from '../ui/theme-toggle-button';
 
 const TopHeader: React.FC = () => {
   const dispatch = useDispatch();
@@ -50,11 +50,6 @@ const TopHeader: React.FC = () => {
   const isUserVerified = useSelector(
     (state: any) => state.user?.user?.isVerified
   );
-
-  const isDarkMode = useSelector((state: any) => state.themeMode.isDarkMode);
-  const handleToggleThemeMode = () => {
-    dispatch(toggleThemeMode());
-  };
 
   useEffect(() => {
     const path = location.pathname;
@@ -104,11 +99,11 @@ const TopHeader: React.FC = () => {
 
   return (
     <>
-      <div className="topheader_container sticky top-0 z-40 flex h-full min-h-16 w-full items-center bg-bg_primary_light px-1 text-text_primary_light shadow-sm dark:border-l dark:bg-bg_primary_dark dark:text-text_primary_dark">
+      <div className="topheader_container sticky top-0 z-10 flex h-full min-h-16 w-full items-center bg-bg_primary_light px-1 text-text_primary_light shadow-sm dark:border-l dark:bg-bg_primary_dark dark:text-text_primary_dark">
         <i
           id="menu_toggle_button_section"
           onClick={() => dispatch(toggleSideNavbar())}
-          className="ri-menu-line mx-4 cursor-pointer text-xl font-bold text-text_primary_light dark:text-text_primary_dark"
+          className="ri-menu-line mx-3 cursor-pointer text-xl font-bold text-text_primary_light dark:text-text_primary_dark sm:mx-4"
         ></i>
         <div className="name text-lg">
           <h2 className="font-bold">{currentHeaderName}</h2>
@@ -119,10 +114,10 @@ const TopHeader: React.FC = () => {
             // data-tooltip-content="Start Tour"
             id="start_tour_guide"
             onClick={() => setIsTourTriggered(true)}
-            className="group hidden h-10 w-10 cursor-pointer items-center overflow-hidden rounded-full bg-[#f2f5fa] p-2.5 text-black transition-all duration-300 hover:h-9 hover:w-[132px] hover:bg-[#047857]/20 hover:px-4 focus:outline-none dark:bg-[#10101c] dark:text-white dark:hover:bg-slate-700 sm:flex"
+            className="group flex h-10 w-10 cursor-pointer items-center overflow-hidden rounded-full bg-[#f2f5fa] p-2.5 text-black transition-all duration-300 hover:bg-[#047857]/20 focus:outline-none dark:bg-[#10101c] dark:text-white dark:hover:bg-slate-700 sm:hover:h-9 sm:hover:w-[132px] sm:hover:px-4"
           >
             <Play className="h-5 w-5 shrink-0 transition-all duration-300" />
-            <span className="ml-1.5 whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <span className="ml-1.5 whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-300 sm:group-hover:opacity-100">
               Take a Tour
             </span>
           </button>
@@ -144,12 +139,8 @@ const TopHeader: React.FC = () => {
               {isFullScreen ? 'Minmize' : 'Maximize'}
             </span>
           </button>
-          <button
+          {/* <button
             id="theme_change_tour"
-            // data-tooltip-id="header-tooltip"
-            // data-tooltip-content="Switch to Dark"
-            // data-tooltip-id="header-tooltip"
-            // data-tooltip-content="Switch to Light"
             onClick={handleToggleThemeMode}
             className="theme_container_toggle group hidden h-10 w-10 cursor-pointer items-center overflow-hidden rounded-full bg-[#f2f5fa] p-2.5 text-black transition-all duration-300 hover:h-9 hover:w-[156px] hover:bg-[#047857]/20 hover:px-4 focus:outline-none dark:bg-[#10101c] dark:text-white dark:hover:bg-slate-700 sm:flex"
           >
@@ -161,7 +152,11 @@ const TopHeader: React.FC = () => {
             <span className="ml-1.5 whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               {isDarkMode ? 'Switch to Light' : 'Switch to Dark'}
             </span>
-          </button>
+          </button> */}
+          <ThemeToggleButton
+            variant="circle-blur"
+            start="top-left"
+          ></ThemeToggleButton>
           <Popover onOpenChange={handlePopoverClose} open={isPopoverOpen}>
             <PopoverTrigger asChild>
               <div className="container_notification relative">
@@ -170,10 +165,10 @@ const TopHeader: React.FC = () => {
                   // data-tooltip-id="header-tooltip"
                   // data-tooltip-content="Notification"
                   // data-tooltip-place="bottom"
-                  className="notification_icon group relative hidden h-10 w-10 cursor-pointer items-center overflow-hidden rounded-full bg-[#f2f5fa] p-2.5 text-black transition-all duration-300 hover:h-9 hover:w-[132px] hover:bg-[#047857]/20 hover:px-4 focus:outline-none dark:bg-[#10101c] dark:text-white dark:hover:bg-slate-700 sm:flex"
+                  className="notification_icon group relative flex h-10 w-10 cursor-pointer items-center overflow-hidden rounded-full bg-[#f2f5fa] p-2.5 text-black transition-all duration-300 hover:h-9 hover:bg-[#047857]/20 focus:outline-none dark:bg-[#10101c] dark:text-white dark:hover:bg-slate-700 sm:hover:w-[132px] sm:hover:px-4"
                 >
                   <Bell className="h-5 w-5 shrink-0 transition-all duration-300" />
-                  <span className="ml-1.5 whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="ml-1.5 whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-300 sm:group-hover:opacity-100">
                     Notification
                   </span>
                 </button>
@@ -211,14 +206,14 @@ const TopHeader: React.FC = () => {
             // data-tooltip-id="header-tooltip"
             // // data-tooltip-content="Profile"
             // data-tooltip-place="bottom"
-            className="group flex h-9 w-9 items-center justify-start gap-1 overflow-hidden rounded-full border border-pink-300 transition-all duration-300 hover:w-32 hover:border-pink-200 hover:bg-[#047857]/20 hover:p-1 hover:py-2 dark:border-0 dark:hover:bg-slate-700 sm:flex"
+            className="group flex h-9 w-9 items-center justify-start gap-1 overflow-hidden rounded-full border border-pink-300 transition-all duration-300 hover:border-pink-200 hover:bg-[#047857]/20 dark:border-0 dark:hover:bg-slate-700 sm:flex sm:hover:w-32 sm:hover:p-1 sm:hover:py-2"
           >
             <img
               src={useSelector((state: any) => state.user.user.avatar)}
               alt="avatar"
-              className="h-9 w-9 shrink-0 rounded-full object-cover group-hover:h-8 group-hover:w-8"
+              className="h-9 w-9 shrink-0 rounded-full object-cover sm:group-hover:h-8 sm:group-hover:w-8"
             />
-            <span className="whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <span className="whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-300 sm:group-hover:opacity-100">
               Visit Profile
             </span>
           </Link>

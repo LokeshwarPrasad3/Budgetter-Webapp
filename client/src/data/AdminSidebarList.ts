@@ -1,23 +1,25 @@
-type adminSidenavbarListType = {
+import { Shield, Mail } from 'lucide-react';
+
+type AdminSidenavbarListType = {
   route: string;
   name: string;
-  icon: string;
+  icon: React.ElementType;
 };
 
-export const adminSidenavbarList: adminSidenavbarListType[] = [
+export const adminSidenavbarList: AdminSidenavbarListType[] = [
   {
     route: 'admin/users',
     name: 'Users',
-    icon: 'ri-shield-user-line',
+    icon: Shield,
   },
   // {
-  //   route: 'admin/users',
-  //   name: 'reports',
-  //   icon: 'ri-folder-chart-line',
+  //   route: 'admin/reports',
+  //   name: 'Reports',
+  //   icon: BarChart3,
   // },
   {
     route: 'admin/newsletter',
     name: 'NewsLetter',
-    icon: 'ri-mail-line',
+    icon: Mail,
   },
 ];
