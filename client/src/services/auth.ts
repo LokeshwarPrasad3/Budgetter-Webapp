@@ -2,7 +2,9 @@
 import Cookies from 'universal-cookie';
 const cookie = new Cookies();
 import {
+  AllSessionsResType,
   ChangeAvatarResType,
+  CommonNullResType,
   ContactFormResType,
   DeleteUserResType,
   PocketMoneyResType,
@@ -169,6 +171,35 @@ export const submitContactForm = async (
   const { data } = await axios.post<ContactFormResType>(
     contactFormServerHostURL,
     credentials
+  );
+  return data;
+};
+
+// Get all sessions of the user
+export const getUserSessions = async (): Promise<AllSessionsResType> => {
+  const { data } = await apiURL.get<AllSessionsResType>(
+    `/user/get-all-sessions`
+  );
+  return data;
+};
+
+// delete one sessions of the user
+export const deleteOneUserSessions = async (credentials: {
+  sessionId: string;
+}): Promise<CommonNullResType> => {
+  const { data } = await apiURL.delete<CommonNullResType>(
+    `/user/delete-active-session`,
+    {
+      data: credentials,
+    }
+  );
+  return data;
+};
+
+// delete all sessions of the user
+export const deleteAllUserSessions = async (): Promise<CommonNullResType> => {
+  const { data } = await apiURL.delete<CommonNullResType>(
+    `/user/delete-all-active-sessions`
   );
   return data;
 };

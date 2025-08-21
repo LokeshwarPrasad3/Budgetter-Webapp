@@ -10,9 +10,9 @@ export const getTopHeaderName = (pathName: string): string => {
     case '/user/reports':
       return 'Reports';
     case '/user/add-money':
-      return 'Add Pocket Money';
+      return 'Pocket Money';
     case '/user/add-lent-money':
-      return 'Add Lent Money';
+      return 'Lent Money';
     case '/user/profile':
       return 'Profile';
     // for admin private routes

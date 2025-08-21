@@ -35,7 +35,7 @@ const MainLayout: React.FC = () => {
 
   useEffect(() => {
     if (data?.data) {
-      // console.log('user', data);
+      console.log('user', data);
       const {
         _id,
         username,
@@ -52,6 +52,7 @@ const MainLayout: React.FC = () => {
         facebookLink,
         createdAt,
         lastLogin,
+        activeSessions,
       } = data.data;
       dispatch(
         setUser({
@@ -70,6 +71,7 @@ const MainLayout: React.FC = () => {
           facebookLink,
           createdAt,
           lastLogin,
+          activeSessions,
         })
       );
       navigate(navigateToUserPage());

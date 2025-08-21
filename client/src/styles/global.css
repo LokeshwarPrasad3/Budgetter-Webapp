@@ -110,7 +110,7 @@ body.dark {
 }
 
 .page_height_without_header {
-  height: calc(100vh - 110px);
+  height: calc(100svh - 110px);
 }
 
 .user_profiles {

@@ -32,7 +32,7 @@ const SignupSection: React.FC = () => {
         currentPocketMoney,
         PocketMoneyHistory,
         LentMoneyHistory,
-        accessToken,
+        activeSessions,
         isVerified,
         profession,
         dob,
@@ -53,6 +53,7 @@ const SignupSection: React.FC = () => {
           LentMoneyHistory,
           isVerified,
           profession,
+          activeSessions,
           dob,
           instagramLink,
           facebookLink,
@@ -63,7 +64,7 @@ const SignupSection: React.FC = () => {
       // toast.success('Successfully Signup!!');
       // const expirationDate = new Date();
       // expirationDate.setDate(expirationDate.getDate() + 3);
-      cookie.set('accessToken', accessToken, {
+      cookie.set('accessToken', activeSessions[0].token, {
         path: '/',
         // expires: expirationDate,
       });
