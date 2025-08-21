@@ -1,24 +1,19 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeSideNavbar } from '../../features/sideNavbar/sideNavbarSlice';
 import LogoImage from '../../../public/assets/logo/logo.png';
 import { Tooltip } from 'react-tooltip';
 import React, { useEffect, useRef } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { UserLogout } from '@/services/auth';
 import { Loader2, LogOut } from 'lucide-react';
 import { getActiveRouteLink } from '@/utils/utility';
-import Cookies from 'universal-cookie';
-import { googleLogout } from '@react-oauth/google';
 import { userSidenavbarListType } from '@/data/UserSideNavbarList';
+import { useUserLogout } from '@/hooks/auth/useUserLogout';
 
 interface SideNavbarProps {
   userSidenavbarList: userSidenavbarListType[];
 }
 
 const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
-  const cookie = new Cookies();
-  const navigate = useNavigate();
   const overlayRef = useRef<HTMLDivElement>(null);
   const navbarRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
@@ -51,26 +46,7 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
     };
   }, []);
 
-  const { mutateAsync: userLogoutMutate, isPending } = useMutation({
-    mutationFn: UserLogout,
-    onSuccess: (data) => {
-      console.log(data?.message);
-      googleLogout();
-      cookie.remove('accessToken', { path: '/' });
-      navigate('/');
-      // make default light mode becasue landing page not available for dark
-      document.body.classList.remove('dark');
-      localStorage.removeItem('hasSeenTour');
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
-  const handleUserLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    userLogoutMutate();
-  };
+  const { handleUserLogout, isPending } = useUserLogout();
 
   return (
     <>
@@ -86,7 +62,7 @@ const SideNavbar: React.FC<SideNavbarProps> = ({ userSidenavbarList }) => {
       >
         <Link
           to="/"
-          className="sidenavbar_heading_container relative flex items-center py-5 pl-2.5 2xl:py-6"
+          className="sidenavbar_heading_container relative flex items-center py-5 pl-2.5"
         >
           {/* 
         <img className="h-6" src="./assets/logo/logo_name.png" alt="logo" /> 

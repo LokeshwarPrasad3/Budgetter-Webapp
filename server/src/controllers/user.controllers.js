@@ -9,7 +9,7 @@ import { uploadOnCloudinary } from '../utils/cloudinary.js';
 import { sendMessageToUser } from '../utils/EmailSend.js';
 import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
-import { generateUniqueUsername } from '../utils/utilities.js';
+import { createSession, createUserAndSendVerification } from '../services/auth.service.js';
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export const registerUser = asyncHandler(async (req, res) => {
@@ -25,46 +25,10 @@ export const registerUser = asyncHandler(async (req, res) => {
   if (existedUser) {
     throw new ApiError(400, `${username} - User Already Exist!!`);
   }
-  const user = await UserModel.create({
-    username: username.toLowerCase(),
-    name,
-    email,
-    password,
-  });
-  user.accessToken = await user.generateAccessToken();
-  user.lastLogin = user.currentLogin;
-  user.currentLogin = new Date();
-  const accessToken = user.accessToken;
-  await user.save({ validateBeforeSave: false });
-  const createdUser = await UserModel.findById(user._id).select('-password');
-  if (!createdUser) {
-    throw new ApiError(500, `${username} - unable to register user!!`);
-  }
-  console.log(`${createdUser.name} - Your Account Successfully created!!`);
-  console.log('Sending Email for Verification....');
 
-  // now sent mail to verified their gmail
-  // const token = await createdUser.generateAccountVerificationToken();
-  const token = jwt.sign({ _id: createdUser._id }, process.env.ACCOUNT_VERIFICATION_TOKEN_SECRET, {
-    expiresIn: process.env.ACCOUNT_VERIFICATION_TOKEN_SECRET_EXPIRY,
-  });
-  const userName = createdUser.name;
-  const type = 'VERIFY_ACCOUNT';
-  const userEmail = createdUser.email;
-  const subject = 'Budgetter Account Verification';
-  // const isSentGmail = await sendMessageToUser(userName, type, userEmail, subject, token);
-  // if (!isSentGmail) {
-  //   console.log(`Failed to sent email to - ${userEmail}`);
-  // }
+  const createdUser = await createUserAndSendVerification(req, name, email, password);
 
-  const options = {
-    httpOnly: true, // cannot access & modified by client javascript (document.cookie)
-    secure: true, // only send to https:// clinet
-  };
-  res
-    .status(201)
-    // .cookie("accessToken", accessToken, options)
-    .json(new ApiResponse(201, createdUser, 'User registered successfully!'));
+  res.status(201).json(new ApiResponse(201, createdUser, 'User registered successfully!'));
 });
 
 // verify link clicked then this controller run
@@ -122,6 +86,10 @@ export const getLoggedUserData = asyncHandler(async (req, res) => {
     facebookLink: user?.facebookLink,
     createdAt: user?.createdAt,
     lastLogin: user?.lastLogin,
+    // only get their own active sessions
+    // accessToken:  req.token,
+    // find that user.activeSessions.token which match with req.token
+    activeSessions: user?.activeSessions.find((session) => session.token === req.token),
   };
   res.status(200).json(new ApiResponse(200, data, 'User Found Successfully!!'));
 });
@@ -143,26 +111,18 @@ export const loginUser = asyncHandler(async (req, res) => {
   if (!isPasswordValid) {
     throw new ApiError(400, `${email} - Your credentials are invalid!!`);
   }
-  existedUser.accessToken = await existedUser.generateAccessToken();
-  // Update last login time
-  // Handle first time login case where currentLogin is null
-  existedUser.lastLogin = existedUser.currentLogin || new Date();
-  existedUser.currentLogin = new Date();
-  const accessToken = existedUser.accessToken;
-  await existedUser.save({ validateBeforeSave: false });
+
+  await createSession(existedUser, req);
 
   // Now User is valid
   const user = await UserModel.findById(existedUser._id).select('-password');
-  console.log(`${user.name} - Your Account Loggedin successfully!!`);
 
-  const options = {
-    httpOnly: false,
-    secure: false,
-  };
-  res
-    .status(200)
-    // .cookie("accessToken", accessToken, options)
-    .json(new ApiResponse(200, user, 'Login Successfully!!'));
+  const userObj = user.toObject(); // convert mongoose doc → plain object
+  userObj.activeSessions = userObj.activeSessions.slice(-1); // keep only last element
+
+  console.log(`${userObj.name} - Your Account Logged in successfully!!`);
+
+  res.status(200).json(new ApiResponse(200, userObj, 'Login Successfully!!'));
 });
 
 export const sentTokenToResetPassword = asyncHandler(async (req, res) => {
@@ -600,58 +560,86 @@ export const SignWithGoogleAuthentication = asyncHandler(async (req, res) => {
   });
 
   if (!existedUser) {
-    const uniqueUsername = await generateUniqueUsername(name);
-
-    const user = await UserModel.create({
-      username: uniqueUsername,
-      name,
-      email,
-      googleId,
-      avatar: picture,
-      authProvider: 'google',
-    });
-    user.lastLogin = user.currentLogin;
-    user.currentLogin = new Date();
-    user.accessToken = await user.generateAccessToken();
-    await user.save({ validateBeforeSave: false });
-
-    const createdUser = await UserModel.findById(user._id).select('-password');
-
-    if (!createdUser) {
-      throw new ApiError(500, `${name} - unable to register user!!`);
-    }
-
-    console.log(`${createdUser.name} - Your Account Successfully created!!`);
-    console.log('Sending Email for Verification....');
-
-    const token = jwt.sign(
-      { _id: createdUser._id },
-      process.env.ACCOUNT_VERIFICATION_TOKEN_SECRET,
-      {
-        expiresIn: process.env.ACCOUNT_VERIFICATION_TOKEN_SECRET_EXPIRY,
-      },
-    );
-
-    const isSentGmail = await sendMessageToUser(
-      createdUser.name,
-      'VERIFY_ACCOUNT',
-      createdUser.email,
-      'Budgetter Account Verification',
-      token,
-    );
-
-    if (!isSentGmail) {
-      console.log(`Failed to send email to - ${createdUser.email}`);
-    }
-
+    const createdUser = createUserAndSendVerification(req, name, email, null, googleId, picture);
     return res.status(201).json(new ApiResponse(201, createdUser, 'User registered successfully!'));
   }
 
   // If user exists, log them in
-  existedUser.accessToken = await existedUser.generateAccessToken();
-  await existedUser.save({ validateBeforeSave: false });
+  await createSession(existedUser, req);
 
   console.log(`${existedUser.name} - Your Account Logged in successfully!!`);
 
   return res.status(200).json(new ApiResponse(200, existedUser, 'Login Successfully!!'));
+});
+
+// Get all session information of user without token
+export const getAllActiveSessions = asyncHandler(async (req, res) => {
+  const user = req.user;
+
+  if (!user) {
+    throw new ApiError(401, 'User not authenticated');
+  }
+
+  const activeSessions = user.activeSessions.map((session) => ({
+    _id: session._id,
+    ip: session.ip,
+    userAgent: session.userAgent,
+    lastUsedAt: session.lastUsedAt,
+    createdAt: session.createdAt,
+    updatedAt: session.updatedAt,
+  }));
+
+  if (!activeSessions || activeSessions.length === 0) {
+    return res.status(200).json(new ApiResponse(200, [], 'No active sessions found'));
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, activeSessions, 'Active sessions retrieved successfully'));
+});
+
+// Delete single active sessions
+export const deleteActiveSession = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const { sessionId } = req.body;
+
+  if (!user) {
+    throw new ApiError(401, 'User not authenticated');
+  }
+
+  if (!sessionId) {
+    throw new ApiError(400, 'Session ID is required');
+  }
+
+  // Find the session to delete
+  const sessionToDelete = user.activeSessions.find(
+    (session) => session._id.toString() === sessionId,
+  );
+
+  if (!sessionToDelete) {
+    throw new ApiError(404, 'Session not found');
+  }
+
+  // Remove the session from the user's active sessions
+  user.activeSessions = user.activeSessions.filter(
+    (session) => session._id.toString() !== sessionId,
+  );
+  await user.save();
+
+  return res.status(200).json(new ApiResponse(200, null, 'Session deleted successfully'));
+});
+
+//  delete all active session but not they currently logggedin
+export const deleteAllActiveSessions = asyncHandler(async (req, res) => {
+  const user = req.user;
+
+  if (!user) {
+    throw new ApiError(401, 'User not authenticated');
+  }
+  user.activeSessions = [];
+  await user.save();
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, null, 'All other active sessions deleted successfully'));
 });

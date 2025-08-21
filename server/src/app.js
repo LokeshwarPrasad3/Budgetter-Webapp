@@ -10,6 +10,7 @@ import userReportRoutes from './routes/report.routes.js';
 const FRONTEND_URL = process.env.FRONTEND_URL;
 const DEV_FRONTEND_URL = process.env.DEV_FRONTEND_URL;
 
+app.set('trust proxy', true);
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
 const allowedOrigins = [FRONTEND_URL, DEV_FRONTEND_URL];

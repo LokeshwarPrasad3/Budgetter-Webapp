@@ -19,6 +19,9 @@ import {
   receivedLentMoney,
   SignWithGoogleAuthentication,
   sendNewsletterToUsers,
+  getAllActiveSessions,
+  deleteActiveSession,
+  deleteAllActiveSessions,
 } from '../controllers/user.controllers.js';
 import {
   showParticularDateExpenses,
@@ -81,5 +84,10 @@ router.route('/send-newsletter').post(verifyJwtToken, sendNewsletterToUsers);
 router.route('/add-lent-money').post(verifyJwtToken, AddLentMoney);
 router.route('/get-all-lent-money').get(verifyJwtToken, getAllLentMoneyHistory);
 router.route('/received-lent-money').post(verifyJwtToken, receivedLentMoney);
+
+// user session management
+router.route('/get-all-sessions').get(verifyJwtToken, getAllActiveSessions);
+router.route('/delete-active-session').delete(verifyJwtToken, deleteActiveSession);
+router.route('/delete-all-active-sessions').delete(verifyJwtToken, deleteAllActiveSessions);
 
 export default router;

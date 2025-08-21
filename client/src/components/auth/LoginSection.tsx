@@ -31,7 +31,7 @@ const LoginSection: React.FC = () => {
         currentPocketMoney,
         PocketMoneyHistory,
         LentMoneyHistory,
-        accessToken,
+        activeSessions,
         isVerified,
         profession,
         dob,
@@ -62,7 +62,7 @@ const LoginSection: React.FC = () => {
       console.log(data?.message);
       // const expirationDate = new Date();
       // expirationDate.setDate(expirationDate.getDate() + 3);
-      cookie.set('accessToken', accessToken, {
+      cookie.set('accessToken', activeSessions[0]?.token, {
         path: '/',
         // expires: expirationDate,
       });

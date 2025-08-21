@@ -32,7 +32,17 @@ export interface UserDetailsResType {
         updatedAt: string;
       },
     ];
-    accessToken: string;
+    activeSessions: [
+      {
+        _id: string;
+        userAgent: string;
+        ip: string;
+        token: string;
+        createdAt: string;
+        updatedAt: string;
+      },
+    ];
+
     createdAt: string;
     lastLogin: Date;
     updatedAt: string;
@@ -115,6 +125,27 @@ export interface DeleteUserResType {
 export interface ContactFormResType {
   statusCode: number;
   data: null;
+  message: string;
+  success: boolean;
+}
+export interface CommonNullResType {
+  statusCode: number;
+  data: null;
+  message: string;
+  success: boolean;
+}
+
+export interface SessionType {
+  _id: string;
+  userAgent: string;
+  ip: string;
+  lastUsedAt: string;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface AllSessionsResType {
+  statusCode: number;
+  data: SessionType[];
   message: string;
   success: boolean;
 }
