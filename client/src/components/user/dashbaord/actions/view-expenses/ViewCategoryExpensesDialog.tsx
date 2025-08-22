@@ -20,6 +20,7 @@ type ExpensesTypes = {
   name: string;
   price: number;
   label: string;
+  date: string;
   category: string;
   createdAt: string;
   updatedAt: string;
@@ -75,15 +76,11 @@ const ViewCategoryExpensesDialog: React.FC<
       header: 'Price',
       footer: (info) => info.column.id,
     }),
-    columnHelper.accessor('createdAt', {
+    columnHelper.accessor('date', {
       header: 'DATE',
       cell: (info) => {
-        const createdDate = new Date(info.getValue<string>())
-          .toLocaleString()
-          .split(',')[0];
-        const monthInString = getMonthName(createdDate.split('/')[0]);
-        const date = createdDate.split('/')[1];
-        return `${date} ${monthInString}`;
+        const [day, month, _] = info.getValue<string>().split('-');
+        return `${parseInt(day, 10)} ${getMonthName(month)}`;
       },
       footer: (info) => info.column.id,
     }),

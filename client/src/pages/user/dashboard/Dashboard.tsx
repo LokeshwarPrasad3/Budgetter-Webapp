@@ -107,7 +107,10 @@ const Dashboard: React.FC = () => {
           <h4 className="text-base font-semibold">
             Your {filterMonthValue} Month Report
           </h4>
-          <div className="filters flex items-center justify-center gap-2 font-medium">
+          <div
+            id="filter_report_section"
+            className="filters flex items-center justify-center gap-2 font-medium"
+          >
             <p className="mr-1 whitespace-nowrap">Filter Report</p>
             {/* month */}
             <Select onValueChange={handleDashboardFilterMonthExpenses}>

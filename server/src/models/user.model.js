@@ -49,6 +49,27 @@ const LentMoneyHistorySchema = new Schema(
   },
 );
 
+const activeSessionsSchema = new Schema(
+  {
+    token: {
+      type: String,
+      required: true,
+    },
+    ip: {
+      type: String,
+      required: true,
+    },
+    userAgent: {
+      type: String, // Chrome on Window
+      required: true,
+    },
+    lastUsedAt: { type: Date, default: Date.now },
+  },
+  {
+    timestamps: true,
+  },
+);
+
 const UserSchema = new Schema(
   {
     username: {
@@ -57,10 +78,6 @@ const UserSchema = new Schema(
       unique: true,
       trim: true,
       index: true,
-    },
-    LentMoneyHistory: {
-      type: [LentMoneyHistorySchema],
-      default: [],
     },
     name: {
       type: String,
@@ -129,6 +146,10 @@ const UserSchema = new Schema(
     accessToken: {
       type: String,
       default: undefined,
+    },
+    activeSessions: {
+      type: [activeSessionsSchema],
+      default: [],
     },
     isVerified: {
       type: Boolean,

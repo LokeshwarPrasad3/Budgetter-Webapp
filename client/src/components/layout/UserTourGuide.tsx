@@ -1,5 +1,6 @@
+import { getStepsForPath } from '@/utils/tour/tourguides';
 import React, { useState } from 'react';
-import Joyride from 'react-joyride';
+import Joyride, { CallBackProps, Step } from 'react-joyride';
 
 interface UserTourGuidePropType {
   isTourTriggered: boolean;
@@ -12,48 +13,7 @@ const UserTourGuide: React.FC<UserTourGuidePropType> = ({
 }) => {
   const [tourKey, setTourKey] = useState(0);
 
-  const steps = [
-    {
-      target: '#start_tour_guide',
-      content: 'Welcome to User Tour Guide',
-      spotlightPadding: 10,
-    },
-    {
-      target: '#fullscreens_tour_guide',
-      content: 'Use Budgetter in full screen view',
-      spotlightPadding: 10,
-    },
-    {
-      target: '#theme_change_tour',
-      content: 'Change Your Comfortable Theme',
-      spotlightPadding: 10,
-    },
-    {
-      target: '#notification_section',
-      content: 'View your notifications from here',
-      spotlightPadding: 10,
-    },
-    {
-      target: '#profile_section',
-      content: 'This is the Profile section where you can edit details',
-      spotlightPadding: 10,
-    },
-    {
-      target: '#menu_toggle_button_section',
-      content: 'Toggle the sidebar from here',
-      spotlightPadding: 10,
-    },
-    {
-      target: '#sidebar_section',
-      content: 'Your navigation menu is here',
-      spotlightPadding: 10,
-    },
-    {
-      target: '#logout_section',
-      content: 'Logout from your account from here',
-      spotlightPadding: 10,
-    },
-  ];
+  const steps: Step[] = getStepsForPath(location.pathname);
 
   const locale = {
     last: 'Finish',
@@ -62,7 +22,7 @@ const UserTourGuide: React.FC<UserTourGuidePropType> = ({
     skip: 'Skip',
   };
 
-  const handleJoyrideCallback = (data: any) => {
+  const handleJoyrideCallback = (data: CallBackProps) => {
     const { status, action } = data;
     const finishedStatuses = ['finished', 'skipped'];
     if (finishedStatuses.includes(status)) {
@@ -80,11 +40,11 @@ const UserTourGuide: React.FC<UserTourGuidePropType> = ({
     <Joyride
       key={tourKey}
       steps={steps}
-      disableScrolling={true}
       run={isTourTriggered}
       continuous={true}
       locale={locale}
-      scrollToFirstStep={false} // Prevents unnecessary repositioning
+      scrollToFirstStep={false}
+      scrollOffset={100}
       callback={handleJoyrideCallback}
       styles={{
         options: {

@@ -279,7 +279,10 @@ const CategoryWiseExpensesChart: React.FC<CategoryWiseDataPropTypes> = ({
   const total = categoryData.reduce((acc, { value }) => acc + (value ?? 0), 0);
 
   return (
-    <div className="flex w-full max-w-full flex-col items-center rounded-lg border border-border_light bg-bg_primary_light p-0 py-4 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark md:p-4">
+    <div
+      id="donut_chart_category_expense_section"
+      className="flex w-full max-w-full flex-col items-center rounded-lg border border-border_light bg-bg_primary_light p-0 py-4 shadow-sm dark:border-border_dark dark:bg-bg_primary_dark md:p-4"
+    >
       <h2 className="mb-4 text-center text-lg font-semibold md:text-left">
         Category wise Expenses Visualization
       </h2>

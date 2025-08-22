@@ -19,7 +19,15 @@ const verifyJwtToken = async (req, _, next) => {
     if (!user) {
       throw new ApiError(401, 'User not found by Access Token');
     }
+
+    // Update last used time
+    await UserModel.updateOne(
+      { _id: user._id, 'activeSessions.token': token },
+      { $set: { 'activeSessions.$.lastUsedAt': new Date() } },
+    );
+
     req.user = user;
+    req.token = token;
     next();
   } catch (error) {
     // throw new ApiError(401, "Invalid Access Token!!");

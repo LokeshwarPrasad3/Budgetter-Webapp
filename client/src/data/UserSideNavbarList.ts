@@ -1,38 +1,47 @@
-type userSidenavbarListType = {
+import {
+  HandCoins,
+  CirclePlus,
+  ListOrdered,
+  ChartPie,
+  LayoutDashboard,
+  Wallet,
+} from 'lucide-react';
+
+export type userSidenavbarListType = {
   route: string;
   name: string;
-  icon: string;
+  icon: React.ElementType;
 };
 
 export const userSidenavbarList: userSidenavbarListType[] = [
   {
     route: 'user/dashboard',
     name: 'Dashboard',
-    icon: 'ri-dashboard-line',
+    icon: LayoutDashboard,
   },
   {
     route: 'user/add-expenses',
     name: 'Add Expenses',
-    icon: 'ri-add-circle-line',
+    icon: CirclePlus,
   },
   {
     route: 'user/show-expenses',
-    name: 'show-expenses',
-    icon: 'ri-eye-line',
+    name: 'Show-expenses',
+    icon: ListOrdered,
   },
   {
     route: 'user/reports',
-    name: 'reports',
-    icon: 'ri-folder-chart-line',
+    name: 'Reports',
+    icon: ChartPie,
   },
   {
     route: 'user/add-money',
     name: 'Add Money',
-    icon: 'ri-money-rupee-circle-line',
+    icon: Wallet,
   },
   {
     route: 'user/add-lent-money',
     name: 'Add Lent Money',
-    icon: 'ri-copper-coin-line',
+    icon: HandCoins,
   },
 ];

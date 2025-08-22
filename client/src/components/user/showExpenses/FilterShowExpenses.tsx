@@ -53,7 +53,10 @@ const FilterShowExpenses = () => {
         <h4 className="text-base font-semibold">Filter Your Expenses</h4>
         <div className="flex w-full flex-col flex-wrap items-start justify-start gap-3 md:gap-5">
           <div className="input_containers grid w-full grid-cols-12 gap-3 md:gap-5 lg:w-8/12">
-            <div className="input_section col-span-12 flex w-full flex-col items-start justify-start gap-1 sm:col-span-6 lg:col-span-3">
+            <div
+              id="filter_expenses_section"
+              className="input_section col-span-12 flex w-full flex-col items-start justify-start gap-1 sm:col-span-6 lg:col-span-3"
+            >
               <p className="text-sm">Choose Date</p>
               <DatePicker inputDate={inputDate} setInputDate={setInputDate} />
             </div>

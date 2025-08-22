@@ -10,12 +10,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Bell, Fullscreen, Minimize, Moon, Play, Sun } from 'lucide-react';
+import { Bell, Fullscreen, Minimize, Play } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { CheckUserAccountVerified } from '@/services/auth';
 import { setUserVerified } from '@/features/user/user';
 import UserTourGuide from '../layout/UserTourGuide';
-import { toggleThemeMode } from '@/features/theme/themeModeSlice';
+import { ThemeToggleButton } from '../ui/theme-toggle-button';
 
 const TopHeader: React.FC = () => {
   const dispatch = useDispatch();
@@ -25,6 +25,8 @@ const TopHeader: React.FC = () => {
   };
 
   const [isFullScreen, setIsFullScreen] = useState(false);
+
+  const isNewUser = useSelector((state: any) => state.user.user.lastLogin);
 
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [currentHeaderName, setCurrentHeaderName] = useState<string>('');
@@ -48,11 +50,6 @@ const TopHeader: React.FC = () => {
   const isUserVerified = useSelector(
     (state: any) => state.user?.user?.isVerified
   );
-
-  const isDarkMode = useSelector((state: any) => state.themeMode.isDarkMode);
-  const handleToggleThemeMode = () => {
-    dispatch(toggleThemeMode());
-  };
 
   useEffect(() => {
     const path = location.pathname;
@@ -92,87 +89,95 @@ const TopHeader: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const alreadySeenTour = localStorage.getItem('hasSeenTour');
+    if (!isNewUser && !alreadySeenTour) {
+      localStorage.setItem('hasSeenTour', 'true');
+      setIsTourTriggered(true);
+    }
+  }, [isNewUser]);
+
   return (
     <>
-      <div className="topheader_container sticky top-0 z-40 flex h-full min-h-16 w-full items-center bg-bg_primary_light px-1 text-text_primary_light shadow-sm dark:border-l dark:bg-bg_primary_dark dark:text-text_primary_dark">
+      <div className="topheader_container sticky top-0 z-10 flex h-full min-h-16 w-full items-center bg-bg_primary_light px-1 text-text_primary_light shadow-sm dark:border-l dark:bg-bg_primary_dark dark:text-text_primary_dark">
         <i
           id="menu_toggle_button_section"
           onClick={() => dispatch(toggleSideNavbar())}
-          className="ri-menu-line mx-4 cursor-pointer text-xl font-bold text-text_primary_light dark:text-text_primary_dark"
+          className="ri-menu-line mx-3 cursor-pointer text-xl font-bold text-text_primary_light dark:text-text_primary_dark sm:mx-4"
         ></i>
         <div className="name text-lg">
           <h2 className="font-bold">{currentHeaderName}</h2>
         </div>
         <div className="notification_and_profile_ absolute right-4 flex items-center justify-center gap-2.5 sm:right-6">
-          <div
+          <button
+            // data-tooltip-id="header-tooltip"
+            // data-tooltip-content="Start Tour"
             id="start_tour_guide"
-            className="hidden h-10 w-10 items-center justify-center rounded-full bg-[#f2f5fa] hover:bg-slate-200 dark:bg-[#10101c] dark:hover:bg-slate-800 sm:flex"
+            onClick={() => setIsTourTriggered(true)}
+            className="group flex h-10 w-10 cursor-pointer items-center overflow-hidden rounded-full bg-[#f2f5fa] p-2.5 text-black transition-all duration-300 hover:bg-[#047857]/20 focus:outline-none dark:bg-[#10101c] dark:text-white dark:hover:bg-slate-700 sm:hover:h-9 sm:hover:w-[132px] sm:hover:px-4"
           >
-            <Play
-              data-tooltip-id="header-tooltip"
-              data-tooltip-content="Start Tour"
-              onClick={() => setIsTourTriggered(true)}
-              className="h-5 w-5 cursor-pointer"
-            />
-          </div>
-          <div
+            <Play className="h-5 w-5 shrink-0 transition-all duration-300" />
+            <span className="ml-1.5 whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-300 sm:group-hover:opacity-100">
+              Take a Tour
+            </span>
+          </button>
+          <button
+            onClick={toggleFullscreen}
+            // data-tooltip-id="header-tooltip"
+            // data-tooltip-content="Maximize Screen"
+            // data-tooltip-id="header-tooltip"
+            // data-tooltip-content="Minimize Screen"
             id="fullscreens_tour_guide"
-            className={`flex h-10 w-10 items-center justify-center rounded-full bg-[#f2f5fa] hover:bg-slate-200 dark:bg-[#10101c] dark:hover:bg-slate-800 ${isFullScreen ? 'bg-slate-200 dark:bg-slate-700' : ''} `}
+            className={`group hidden h-10 w-10 cursor-pointer items-center overflow-hidden rounded-full bg-[#f2f5fa] p-2.5 text-black transition-all duration-300 hover:h-9 hover:w-[118px] hover:bg-[#047857]/20 hover:px-4 focus:outline-none dark:bg-[#10101c] dark:text-white dark:hover:bg-slate-700 sm:flex ${isFullScreen ? 'bg-[#047857]/20 dark:bg-slate-700' : ''} `}
           >
             {!isFullScreen ? (
-              <Fullscreen
-                onClick={toggleFullscreen}
-                data-tooltip-id="header-tooltip"
-                data-tooltip-content="Maximize Screen"
-                className="h-5 w-5 cursor-pointer outline-none ring-offset-0"
-              />
+              <Fullscreen className="h-5 w-5 shrink-0 transition-all duration-300" />
             ) : (
-              <Minimize
-                onClick={toggleFullscreen}
-                data-tooltip-id="header-tooltip"
-                data-tooltip-content="Minimize Screen"
-                className="h-5 w-5 cursor-pointer outline-none ring-offset-0"
-              />
+              <Minimize className="h-5 w-5 shrink-0 transition-all duration-300" />
             )}
-          </div>
-          <div
+            <span className="ml-1.5 whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              {isFullScreen ? 'Minmize' : 'Maximize'}
+            </span>
+          </button>
+          {/* <button
             id="theme_change_tour"
-            className="theme_container_toggle flex h-10 w-10 items-center justify-center rounded-full bg-[#f2f5fa] hover:bg-slate-200 dark:bg-[#10101c] dark:hover:bg-slate-800"
+            onClick={handleToggleThemeMode}
+            className="theme_container_toggle group hidden h-10 w-10 cursor-pointer items-center overflow-hidden rounded-full bg-[#f2f5fa] p-2.5 text-black transition-all duration-300 hover:h-9 hover:w-[156px] hover:bg-[#047857]/20 hover:px-4 focus:outline-none dark:bg-[#10101c] dark:text-white dark:hover:bg-slate-700 sm:flex"
           >
             {!isDarkMode ? (
-              <Moon
-                onClick={handleToggleThemeMode}
-                data-tooltip-id="header-tooltip"
-                data-tooltip-content="Switch to Dark"
-                className="h-5 w-5 cursor-pointer select-none focus:outline-none"
-              />
+              <Moon className="h-5 w-5 shrink-0 transition-all duration-300" />
             ) : (
-              <Sun
-                onClick={handleToggleThemeMode}
-                data-tooltip-id="header-tooltip"
-                data-tooltip-content="Switch to Light"
-                className="h-5 w-5 cursor-pointer select-none focus:outline-none"
-              />
+              <Sun className="h-5 w-5 shrink-0 transition-all duration-300" />
             )}
-          </div>
+            <span className="ml-1.5 whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              {isDarkMode ? 'Switch to Light' : 'Switch to Dark'}
+            </span>
+          </button> */}
+          <ThemeToggleButton
+            variant="circle-blur"
+            start="top-left"
+          ></ThemeToggleButton>
           <Popover onOpenChange={handlePopoverClose} open={isPopoverOpen}>
             <PopoverTrigger asChild>
-              <button
-                id="notification_section"
-                className="notification_icon relative flex h-10 w-10 items-center justify-center rounded-full bg-[#f2f5fa] hover:bg-slate-200 dark:bg-[#10101c] dark:hover:bg-slate-800"
-              >
-                <Bell
-                  data-tooltip-id="header-tooltip"
-                  data-tooltip-content="Notification"
-                  data-tooltip-place="bottom"
-                  className="h-5 w-5 focus:outline-none focus:ring-0 focus:ring-offset-0"
-                />
+              <div className="container_notification relative">
+                <button
+                  id="notification_section"
+                  // data-tooltip-id="header-tooltip"
+                  // data-tooltip-content="Notification"
+                  // data-tooltip-place="bottom"
+                  className="notification_icon group relative flex h-10 w-10 cursor-pointer items-center overflow-hidden rounded-full bg-[#f2f5fa] p-2.5 text-black transition-all duration-300 hover:h-9 hover:bg-[#047857]/20 focus:outline-none dark:bg-[#10101c] dark:text-white dark:hover:bg-slate-700 sm:hover:w-[132px] sm:hover:px-4"
+                >
+                  <Bell className="h-5 w-5 shrink-0 transition-all duration-300" />
+                  <span className="ml-1.5 whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-300 sm:group-hover:opacity-100">
+                    Notification
+                  </span>
+                </button>
                 {notifications.length !== 0 && (
-                  <span className="absolute -right-0 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#DC4EA2] text-xs text-text_primary_light">
+                  <span className="absolute -right-0 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#DC4EA2] text-xs text-white">
                     {notifications.length}
                   </span>
                 )}
-              </button>
+              </div>
             </PopoverTrigger>
             <PopoverContent className="mr-2 w-auto p-2 px-3">
               <div className="content_container">
@@ -198,20 +203,23 @@ const TopHeader: React.FC = () => {
           <Link
             id="profile_section"
             to="/user/profile"
-            className="profile_container h-8 w-8 cursor-pointer overflow-hidden rounded-full border border-pink-500"
+            // data-tooltip-id="header-tooltip"
+            // // data-tooltip-content="Profile"
+            // data-tooltip-place="bottom"
+            className="group flex h-9 w-9 items-center justify-start gap-1 overflow-hidden rounded-full border border-pink-300 transition-all duration-300 hover:border-pink-200 hover:bg-[#047857]/20 dark:border-0 dark:hover:bg-slate-700 sm:flex sm:hover:w-32 sm:hover:p-1 sm:hover:py-2"
           >
             <img
-              data-tooltip-id="header-tooltip"
-              data-tooltip-content="Profile"
-              data-tooltip-place="bottom"
               src={useSelector((state: any) => state.user.user.avatar)}
-              className="h-full w-full"
-              alt="logo"
+              alt="avatar"
+              className="h-9 w-9 shrink-0 rounded-full object-cover sm:group-hover:h-8 sm:group-hover:w-8"
             />
+            <span className="whitespace-nowrap text-sm font-medium opacity-0 transition-opacity duration-300 sm:group-hover:opacity-100">
+              Visit Profile
+            </span>
           </Link>
         </div>
       </div>
-      <Tooltip className="z-50 hidden md:block" id="header-tooltip" />
+      <Tooltip className="custom-react-tooltip" id="header-tooltip" />
       <UserTourGuide
         isTourTriggered={isTourTriggered}
         setIsTourTriggered={setIsTourTriggered}

@@ -317,7 +317,10 @@ const AllExpensesTable: React.FC = () => {
 
   return (
     <div className="allexpenses_table_container flex w-full flex-col justify-center gap-4 rounded-md bg-[#ffffff] px-0 py-5 dark:bg-bg_primary_dark">
-      <div className="filter_expense_containerr sticky top-16 flex flex-wrap items-center justify-between gap-5 rounded-md bg-white px-5 py-3 text-base dark:bg-bg_primary_dark">
+      <div
+        id="filter_your_all_expense_section"
+        className="filter_expense_containerr sticky top-16 flex flex-wrap items-center justify-between gap-5 rounded-md bg-white px-5 py-3 text-base dark:bg-bg_primary_dark"
+      >
         <div className="left_sectionss flex flex-row flex-wrap items-center justify-between gap-x-4 gap-y-3 sm:flex-nowrap sm:justify-start">
           <p className="whitespace-nowrap font-semibold">Your All Expenses</p>
           {flattenProductsData.length !== 0 && (
@@ -441,7 +444,10 @@ const AllExpensesTable: React.FC = () => {
         </div>
       ) : ( */}
       {data && data.length !== 0 && (
-        <div className="w-full overflow-x-auto">
+        <div
+          id="all_expense_data_in_table_section"
+          className="w-full overflow-x-auto"
+        >
           <table className="min-w-full divide-y border-b border-t border-border_dark border-gray-200 dark:border-border_dark">
             <thead className="dark:bg-bg_secondary_dark">
               {table.getHeaderGroups().map((headerGroup) => (

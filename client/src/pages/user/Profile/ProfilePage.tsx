@@ -13,6 +13,8 @@ import {
   Loader2,
   Settings2,
   Clock,
+  ChevronUp,
+  ChevronDown,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -29,7 +31,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { changeUserAvatar, updatedUserDetails } from '@/services/auth';
 import { setUser } from '@/features/user/user';
 import DeleteAccountDialog from './DeleteAccountDIalog';
-import SpinWheel from '@/components/layout/SpinWheel';
+import PopoverFormFeedbackExample from '@/components/profile/sessions/ShowSessions';
+// import SpinWheel from '@/components/layout/SpinWheel';
 
 const ProfilePage: React.FC = () => {
   const queryClient = useQueryClient();
@@ -179,7 +182,10 @@ const ProfilePage: React.FC = () => {
       </div>
       <div className="profile_content_container col-span-12 grid h-full w-full max-w-full grid-cols-12 gap-4 rounded-md">
         <div className="col-span-12 flex h-full flex-col items-center justify-between space-y-4 rounded-lg bg-bg_primary_light p-6 shadow-sm dark:bg-bg_primary_dark lg:col-span-4 lg:p-7">
-          <div className="basic_user_profile_details flex flex-col items-center space-y-4 shadow-sm">
+          <div
+            id="your_profile_picture_section"
+            className="basic_user_profile_details flex flex-col items-center space-y-4 shadow-sm"
+          >
             <Avatar className="h-24 w-24 shadow-sm sm:h-32 sm:w-32">
               <AvatarImage src={profileImage} alt="Profile" />
               <AvatarFallback>{name?.slice(0, 2).toUpperCase()}</AvatarFallback>
@@ -188,6 +194,7 @@ const ProfilePage: React.FC = () => {
               variant="outline"
               size="sm"
               disabled={isPending}
+              id="change_your_avatar_section"
               className="relative w-40 overflow-hidden bg-transparent hover:bg-[##f1f5f9]"
             >
               {isPending ? (
@@ -208,72 +215,88 @@ const ProfilePage: React.FC = () => {
                 accept="image/*"
               />
             </Button>
-          </div>
-          <div className="information_details_user flex w-fit flex-col items-start justify-center space-y-1 rounded-lg">
-            {/* member since */}
-            {memberSince && (
-              <div className="flex items-center justify-between gap-3 rounded-md bg-white shadow-sm dark:bg-bg_primary_dark">
-                <div className="flex items-center gap-2">
-                  <div className="rounded-full bg-blue-100/50 p-2 dark:bg-blue-900/20">
-                    <Calendar className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+            <div
+              id="your_membership_and_last_active_details_section"
+              className="information_details_user flex w-fit flex-col items-start justify-center space-y-1 rounded-lg"
+            >
+              {/* member since */}
+              {memberSince && (
+                <div className="flex flex-wrap items-center justify-between gap-3 rounded-md bg-white shadow-sm dark:bg-bg_primary_dark">
+                  <div className="flex items-center gap-2">
+                    <div className="rounded-full bg-blue-100/50 p-2 dark:bg-blue-900/20">
+                      <Calendar className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                      Member Since
+                    </span>
                   </div>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">
-                    Member Since
+                  <span className="text-sm font-medium text-gray-900 dark:text-gray-200">
+                    {new Date(memberSince).toLocaleDateString('en-US', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    })}
                   </span>
                 </div>
-                <span className="text-sm font-medium text-gray-900 dark:text-gray-200">
-                  {new Date(memberSince).toLocaleDateString('en-US', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
-                  })}
-                </span>
-              </div>
-            )}
-            {/* last active date */}
-            {lastLogin && (
-              <div className="flex items-center justify-between gap-3 rounded-md shadow-sm">
-                <div className="flex items-center gap-2">
-                  <div className="rounded-full bg-green-100/50 p-2 dark:bg-green-900/20">
-                    <Clock className="h-4 w-4 text-green-600 dark:text-green-400" />
+              )}
+              {/* last active date */}
+              {lastLogin && (
+                <div className="flex flex-wrap items-center justify-between gap-3 rounded-md shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="rounded-full bg-green-100/50 p-2 dark:bg-green-900/20">
+                      <Clock className="h-4 w-4 text-green-600 dark:text-green-400" />
+                    </div>
+                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                      Last Active
+                    </span>
                   </div>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">
-                    Last Active
+                  <span className="text-sm font-medium text-gray-900 dark:text-gray-200">
+                    {new Date(lastLogin).toLocaleDateString('en-US', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    })}
                   </span>
                 </div>
-                <span className="text-sm font-medium text-gray-900 dark:text-gray-200">
-                  {new Date(lastLogin).toLocaleDateString('en-US', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
-                  })}
-                </span>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-          <SpinWheel />
-          <div className="advance_option_container">
+
+          {/* <SpinWheel /> */}
+          <div
+            id="account_advance_options"
+            className="advance_option_container"
+          >
             {/* delete account */}
             <Collapsible
               open={isAdvanceOptionOpen}
               onOpenChange={setIsAdvanceOptionOpen}
             >
-              <CollapsibleTrigger asChild>
-                <Button variant="outline" className="w-full">
-                  <Settings2 className="mr-2 h-4 w-4" />
-                  Advance Options
-                </Button>
-              </CollapsibleTrigger>
               <CollapsibleContent className="mt-4 space-y-2">
                 <div className="grid grid-cols-1 gap-4">
+                  <PopoverFormFeedbackExample />
                   <DeleteAccountDialog />
                 </div>
               </CollapsibleContent>
+              <CollapsibleTrigger className="mt-5" asChild>
+                <Button variant="outline" className="w-full">
+                  <Settings2 className="mr-2 h-4 w-4" />
+                  Advance Options
+                  {!isAdvanceOptionOpen ? (
+                    <ChevronUp className="ml-1 h-5 w-5" />
+                  ) : (
+                    <ChevronDown className="ml-1 h-5 w-5" />
+                  )}
+                </Button>
+              </CollapsibleTrigger>
             </Collapsible>
           </div>
         </div>
 
-        <div className="col-span-12 flex h-full w-full flex-col space-y-6 rounded-lg bg-bg_primary_light p-6 shadow-sm dark:bg-bg_primary_dark lg:col-span-8 lg:p-7 lg:pb-10">
+        <div
+          id="update_your_basic_deatils_section"
+          className="col-span-12 flex h-full w-full flex-col space-y-6 rounded-lg bg-bg_primary_light p-6 shadow-sm dark:bg-bg_primary_dark lg:col-span-8 lg:p-7 lg:pb-10"
+        >
           <div className="grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2">
             {/* Username */}
             <div className="w-full space-y-2">

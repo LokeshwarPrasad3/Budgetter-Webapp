@@ -155,7 +155,10 @@ const CategoryInsightsTable: React.FC<PropTypes> = ({
   });
 
   return (
-    <div className="w-full rounded-md bg-bg_primary_light px-0 py-6 shadow-sm dark:bg-bg_primary_dark">
+    <div
+      id="individual_expenses_by_category_insight_section"
+      className="w-full rounded-md bg-bg_primary_light px-0 py-6 shadow-sm dark:bg-bg_primary_dark"
+    >
       {categoryStatsData.length === 0 ? (
         <div className="flex px-6 text-lg">No Expenses Found</div>
       ) : (
