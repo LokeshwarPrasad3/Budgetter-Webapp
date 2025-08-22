@@ -34,7 +34,7 @@ const ShowSessions = () => {
   const [open, setOpen] = useState(false);
   const [sessions, setSessions] = useState<SessionType[] | []>([]);
   const currentAccessTokenId = useSelector(
-    (state: any) => state.user?.user?.activeSessions?._id
+    (state: any) => state.user?.user?.activeSessions[0]?._id
   );
 
   const { mutateAsync: showSessionsMutate, isPending } = useMutation({

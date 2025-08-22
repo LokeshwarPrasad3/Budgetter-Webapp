@@ -57,6 +57,7 @@ const LoginSection: React.FC = () => {
           facebookLink,
           lastLogin,
           createdAt,
+          activeSessions,
         })
       );
       console.log(data?.message);

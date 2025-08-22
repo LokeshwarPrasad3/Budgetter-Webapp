@@ -25,6 +25,9 @@ const SessionsCard = ({
   const lastUsed = session.lastUsedAt
     ? new Date(session.lastUsedAt).toLocaleString()
     : 'N/A';
+  const loginTime = session.createdAt
+    ? new Date(session.createdAt).toLocaleString()
+    : 'N/A';
 
   const { mutateAsync: deleteSessionMutate, isPending } = useMutation({
     mutationFn: deleteOneUserSessions,
@@ -62,6 +65,9 @@ const SessionsCard = ({
         <div>
           <p className="font-medium text-gray-900 dark:text-gray-100">
             {browser} on {os}
+          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Login Time: {loginTime}
           </p>
           <p className="text-sm text-gray-600 dark:text-gray-400">
             Last used: {lastUsed}

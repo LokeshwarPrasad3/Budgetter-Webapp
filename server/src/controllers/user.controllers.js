@@ -89,7 +89,7 @@ export const getLoggedUserData = asyncHandler(async (req, res) => {
     // only get their own active sessions
     // accessToken:  req.token,
     // find that user.activeSessions.token which match with req.token
-    activeSessions: user?.activeSessions.find((session) => session.token === req.token),
+    activeSessions: user?.activeSessions.filter((session) => session.token === req.token),
   };
   res.status(200).json(new ApiResponse(200, data, 'User Found Successfully!!'));
 });
@@ -371,8 +371,9 @@ export const logoutUser = asyncHandler(async (req, res) => {
     throw new ApiError('User not exist, not logout');
     return;
   }
-  user.accessToken = undefined;
-  user.save();
+  // user.accessToken = undefined;
+  user.activeSessions = user.activeSessions.filter((session) => session.token !== req.token);
+  await user.save();
   console.log(`${user?.username} Your Account has successfully Logout!!`);
   return res.status(200).json(new ApiResponse(200, null, 'Successfully Logout'));
 });
