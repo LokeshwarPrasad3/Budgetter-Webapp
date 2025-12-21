@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { apiURL } from '@/lib/http';
 import {
   AppUsersResType,
@@ -14,7 +13,7 @@ export const GetAppUsersDetails = async () => {
 
 // Send newsletter to all users
 export const SendNewsletter = async (credentials: NewsletterCredType) => {
-  const { data } = await axios.post<NewsletterResType>(
+  const { data } = await apiURL.post<NewsletterResType>(
     `/user/send-newsletter`,
     credentials
   );
