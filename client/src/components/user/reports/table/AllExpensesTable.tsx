@@ -100,7 +100,9 @@ const AllExpensesTable: React.FC = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
   // const [hasLoaded, setHasLoaded] = useState<boolean>(false);
   const [filterMonthValue, setFilterMonthValue] = useState<string>('all');
-  const [filterYearValue, setFilterYearValue] = useState<string>('2025');
+  const [filterYearValue, setFilterYearValue] = useState<string>(
+    prevYearsName[prevYearsName.length - 1]
+  );
   const handlePopoverClose = (open: boolean) => {
     setIsPopoverOpen(open);
   };

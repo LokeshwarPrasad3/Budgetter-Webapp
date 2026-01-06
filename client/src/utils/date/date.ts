@@ -90,7 +90,7 @@ export const monthsNames = [
 ];
 
 // get years
-export const prevYearsName = ['2024', '2025'];
+export const prevYearsName = ['2024', '2025', '2026'];
 
 // Get last 7 days dates
 export const getLast7Days = (): string[] => {
