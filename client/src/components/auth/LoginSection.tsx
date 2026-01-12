@@ -60,7 +60,7 @@ const LoginSection: React.FC = () => {
           activeSessions,
         })
       );
-      console.log(data?.message);
+      // console.log(data?.message);
       // const expirationDate = new Date();
       // expirationDate.setDate(expirationDate.getDate() + 3);
       cookie.set('accessToken', activeSessions[0]?.token, {

@@ -10,8 +10,8 @@ export function useUserLogout() {
 
   const { mutateAsync: userLogoutMutate, isPending } = useMutation({
     mutationFn: UserLogout,
-    onSuccess: (data) => {
-      console.log(data?.message);
+    onSuccess: () => {
+      // console.log(data?.message);
       googleLogout();
       cookie.remove('accessToken', { path: '/' });
       navigate('/');

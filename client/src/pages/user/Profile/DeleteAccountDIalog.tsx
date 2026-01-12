@@ -61,7 +61,7 @@ const DeleteAccountDialog = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="destructive" className="w-full">
+        <Button variant="destructive" className="hidden w-full">
           <UserX className="mr-2 h-4 w-4" />
           Delete My Account
         </Button>

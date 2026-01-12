@@ -95,8 +95,8 @@ const FilterSection = () => {
 
   const { mutateAsync: addExpensesMutate, isPending } = useMutation({
     mutationFn: addExpenses,
-    onSuccess: (data) => {
-      console.log(data?.message);
+    onSuccess: () => {
+      // console.log(data?.message);
       toast.success('Expenses Added Successfully!!');
       queryClient.invalidateQueries({ queryKey: ['todayExpense'] });
       queryClient.invalidateQueries({ queryKey: ['user'] });

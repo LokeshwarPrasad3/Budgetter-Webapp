@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { getCurrentUser } from '@/services/auth';
+import { useSentryIntegration } from '@/hooks/useSentryIntegration';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { setUser } from '@/features/user/user';
@@ -14,6 +15,8 @@ import { getPageTitle } from '@/utils/utility';
 
 const MainLayout: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation(); // Replaces implicit/global location usage
+  useSentryIntegration(); // Initialize Sentry tracking
   const cookie = new Cookies();
   const dispatch = useDispatch();
 
@@ -35,7 +38,6 @@ const MainLayout: React.FC = () => {
 
   useEffect(() => {
     if (data?.data) {
-      console.log('user', data);
       const {
         _id,
         username,

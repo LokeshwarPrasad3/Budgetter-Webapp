@@ -100,7 +100,7 @@ const ProfilePage: React.FC = () => {
   const { mutateAsync: changeAvatarMutate, isPending } = useMutation({
     mutationFn: changeUserAvatar,
     onSuccess: (data) => {
-      console.log(data?.message);
+      // console.log(data?.message);
       dispatch(setUser({ ...user, avatar: data.data.avatar }));
       toast.success('Avatar Changed Successfully!!');
     },
@@ -130,8 +130,8 @@ const ProfilePage: React.FC = () => {
   const { mutateAsync: updateUserDetailsMutate, isPending: isUserUpdating } =
     useMutation({
       mutationFn: updatedUserDetails,
-      onSuccess: (data) => {
-        console.log(data?.message);
+      onSuccess: () => {
+        // console.log(data?.message);
         toast.success('User Details Updated Successfully!!');
         queryClient.invalidateQueries({ queryKey: ['user'] });
         setCurrentPassword('');
@@ -464,7 +464,7 @@ const ProfilePage: React.FC = () => {
             <Button
               disabled={isUserUpdating}
               onClick={handleSaveChanges}
-              className="mt-2 w-36 bg-[#289288] hover:bg-[#289288]/90"
+              className="mt-2 w-36 bg-green-600"
             >
               {isUserUpdating ? (
                 <>

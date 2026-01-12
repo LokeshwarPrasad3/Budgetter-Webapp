@@ -11,7 +11,7 @@ const HeroSection: React.FC = () => {
       variants={ANIMATE_WORDS_VARIENT}
       initial="initial"
       animate="animate"
-      className="hero_section_container relative mx-auto flex h-full w-full max-w-5xl flex-col items-center justify-between px-4 py-5 pb-10 sm:flex-row xl:pb-5 2xl:max-w-7xl"
+      className="hero_section_container relative mx-auto flex h-full w-full max-w-5xl flex-col items-center justify-between px-4 py-10 pb-14 sm:flex-row xl:pb-14 2xl:max-w-7xl"
     >
       <div className="hero_section_content flex w-full max-w-full flex-col justify-center gap-2 xl:gap-5 2xl:gap-8">
         <motion.h1
@@ -73,7 +73,7 @@ const HeroSection: React.FC = () => {
         <div className="hidden w-full overflow-hidden rounded-3xl transition-all duration-300 hover:scale-[1.015] dark:bg-slate-900 dark:ring-white/10 sm:flex">
           <img
             className="h-auto w-full object-cover"
-            src="./assets/dashboard/hero-section-poster.svg"
+            src="./assets/dashboard/hero-min.svg"
             alt="Dashboard Overview"
           />
         </div>
