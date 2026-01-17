@@ -561,7 +561,14 @@ export const SignWithGoogleAuthentication = asyncHandler(async (req, res) => {
   });
 
   if (!existedUser) {
-    const createdUser = createUserAndSendVerification(req, name, email, null, googleId, picture);
+    const createdUser = await createUserAndSendVerification(
+      req,
+      name,
+      email,
+      null,
+      googleId,
+      picture,
+    );
     return res.status(201).json(new ApiResponse(201, createdUser, 'User registered successfully!'));
   }
 

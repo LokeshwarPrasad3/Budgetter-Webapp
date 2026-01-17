@@ -13,18 +13,18 @@ const Footer: React.FC = () => {
       variants={FOOTER_ANIMATION}
       initial="hidden"
       whileInView="visible"
-      className="border-t border-gray-200 bg-[#f8f9fb]"
+      className="border-t border-slate-200 bg-slate-50 pt-16"
     >
-      <div className="landingpage_section_width mx-auto grid grid-cols-1 gap-10 px-6 py-10 text-gray-700 sm:grid-cols-2 md:grid-cols-4 lg:py-16 lg:pb-10">
+      <div className="landingpage_section_width mx-auto grid grid-cols-1 gap-12 px-6 pb-12 text-slate-600 sm:grid-cols-2 md:grid-cols-4">
         {/* Logo + Brand */}
         <div className="col-span-1">
-          <a href="/home" className="flex items-center">
-            <img src="/assets/logo/logo.png" alt="Budgetter" className="h-10" />
-            <span className="bg-gradient-to-r from-[#2e7dff] to-[#00b87c] bg-clip-text pl-2 text-3xl font-bold text-transparent">
+          <a href="/home" className="flex items-center gap-2">
+            <img src="/assets/logo/logo.png" alt="Budgetter" className="h-9" />
+            <span className="bg-gradient-to-r from-[#2e7dff] to-[#00b87c] bg-clip-text text-2xl font-bold text-transparent">
               Budgetter
             </span>
           </a>
-          <p className="mt-4 text-sm text-gray-600">
+          <p className="mt-6 text-sm leading-relaxed text-slate-500">
             Take control of your money. Effortlessly track, analyze, and manage
             your daily expenses with smart insights.
           </p>
@@ -32,67 +32,59 @@ const Footer: React.FC = () => {
 
         {/* Features */}
         <div>
-          <h3 className="mb-3 text-xl font-semibold">Features</h3>
-          <ul className="space-y-2 text-sm">
-            <li>Track Expenses</li>
-            <li>Spending Overview</li>
-            <li>Lent Money Management</li>
-            <li>Category Insights</li>
-            <li>Report Generation</li>
+          <h3 className="mb-6 text-sm font-bold uppercase tracking-wider text-slate-900">
+            Features
+          </h3>
+          <ul className="space-y-3 text-sm">
+            {[
+              'Track Expenses',
+              'Spending Overview',
+              'Lent Money Management',
+              'Category Insights',
+              'Report Generation',
+            ].map((item) => (
+              <li key={item} className="transition-colors hover:text-[#2e7dff]">
+                {item}
+              </li>
+            ))}
           </ul>
         </div>
 
         {/* Quick Links */}
         <div>
-          <h3 className="mb-3 text-xl font-semibold">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <a
-                href="#hero_section"
-                className="relative before:absolute before:-bottom-0.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-semibold hover:text-[#2e7dff] hover:before:w-full"
-              >
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href="#usefullforstudent_section"
-                className="relative before:absolute before:-bottom-0.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-semibold hover:text-[#00b87c] hover:before:w-full"
-              >
-                For Student
-              </a>
-            </li>
-            <li>
-              <a
-                href="#features_section"
-                className="relative before:absolute before:-bottom-0.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-semibold hover:text-[#2e7dff] hover:before:w-full"
-              >
-                Features
-              </a>
-            </li>
-            <li>
-              <a
-                href="#getintouch_section"
-                className="relative before:absolute before:-bottom-0.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-semibold hover:text-[#00b87c] hover:before:w-full"
-              >
-                Contact
-              </a>
-            </li>
+          <h3 className="mb-6 text-sm font-bold uppercase tracking-wider text-slate-900">
+            Quick Links
+          </h3>
+          <ul className="space-y-3 text-sm">
+            {[
+              { name: 'Home', href: '#hero_section' },
+              { name: 'For Student', href: '#usefullforstudent_section' },
+              { name: 'Features', href: '#features_section' },
+              { name: 'Contact', href: '#getintouch_section' },
+            ].map((link) => (
+              <li key={link.name}>
+                <a
+                  href={link.href}
+                  className="transition-colors hover:text-[#2e7dff]"
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
         {/* Social Media */}
         <div>
-          <h3 className="mb-3 text-xl font-semibold">Follow Us</h3>
-          <div className="flex space-x-4 text-2xl text-gray-600">
+          <h3 className="mb-6 text-sm font-bold uppercase tracking-wider text-slate-900">
+            Follow Us
+          </h3>
+          <div className="flex space-x-5 text-xl text-slate-400">
             <a
               href="https://www.instagram.com/lokeshwarprasad1"
               target="_blank"
               rel="noreferrer"
-              data-tooltip-id="footerTooltip"
-              data-tooltip-content="Instagram"
-              data-tooltip-place="top"
-              className="relative before:absolute before:-bottom-1.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-bold hover:text-pink-500 hover:before:w-full"
+              className="transition-colors hover:text-[#E1306C]"
             >
               <RiInstagramLine />
             </a>
@@ -100,10 +92,7 @@ const Footer: React.FC = () => {
               href="https://www.linkedin.com/in/lokeshwar-dewangan-7b2163211/"
               target="_blank"
               rel="noreferrer"
-              data-tooltip-id="footerTooltip"
-              data-tooltip-content="LinkedIn"
-              data-tooltip-place="top"
-              className="relative before:absolute before:-bottom-1.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-bold hover:text-blue-700 hover:before:w-full"
+              className="transition-colors hover:text-[#0077B5]"
             >
               <RiLinkedinLine />
             </a>
@@ -111,10 +100,7 @@ const Footer: React.FC = () => {
               href="https://x.com/@LokeshwarPras17"
               target="_blank"
               rel="noreferrer"
-              data-tooltip-id="footerTooltip"
-              data-tooltip-content="Twitter"
-              data-tooltip-place="top"
-              className="relative before:absolute before:-bottom-1.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-bold hover:text-black hover:before:w-full"
+              className="transition-colors hover:text-black"
             >
               <RiTwitterXLine />
             </a>
@@ -122,10 +108,7 @@ const Footer: React.FC = () => {
               href="https://github.com/lokeshwarprasad"
               target="_blank"
               rel="noreferrer"
-              data-tooltip-id="footerTooltip"
-              data-tooltip-content="GitHub"
-              data-tooltip-place="top"
-              className="relative before:absolute before:-bottom-1.5 before:left-0 before:h-[2px] before:w-0 before:bg-[#1a1a1a] before:transition-all before:duration-300 hover:font-bold hover:text-gray-800 hover:before:w-full"
+              className="transition-colors hover:text-[#333]"
             >
               <RiGithubLine />
             </a>
@@ -133,16 +116,16 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-gradient-to-b from-[#ccf2f4]/60 to-[#CCEFF5] py-4 text-center text-sm text-black">
-        © {new Date().getFullYear()} Budgetter by{' '}
+      <div className="border-t border-slate-200 py-8 text-center text-sm text-slate-500">
+        © {new Date().getFullYear()} Budgetter. Built by{' '}
         <a
-          className="bg-gradient-to-r from-[#2e7dff] to-[#036e4b] bg-clip-text font-overpass font-semibold text-transparent"
+          className="font-semibold text-slate-700 hover:text-[#2e7dff]"
           target="_blank"
           href="https://lokeshwardewangan.in"
         >
-          Developer
+          Lokeshwar Dewangan
         </a>
-        . All rights reserved.
+        .
       </div>
     </motion.footer>
   );

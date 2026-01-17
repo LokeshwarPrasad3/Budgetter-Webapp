@@ -79,7 +79,7 @@
     @apply px-4 py-10 pt-5 sm:py-10 lg:py-12 lg:pb-16 2xl:py-12 2xl:pb-16;
   }
   .landingpage_section_width {
-    @apply mx-auto max-w-5xl 2xl:max-w-7xl;
+    @apply mx-auto max-w-6xl 2xl:max-w-7xl;
   }
   .custom-react-tooltip {
     @apply !z-50 !ml-2 !hidden !rounded-md !from-[#065f46]/80 !via-[#047857]/80 !to-[#059669]/80 !px-3 !py-1.5 !text-sm !font-medium !capitalize !text-white !opacity-100 dark:!bg-gradient-to-r md:!block;

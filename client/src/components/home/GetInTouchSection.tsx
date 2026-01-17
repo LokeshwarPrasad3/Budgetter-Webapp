@@ -47,7 +47,7 @@ const GetInTouchSection: React.FC = () => {
       initial="initial"
       animate="animate"
       id="getintouch_section"
-      className="landingpage_section_paddings relative w-full bg-gradient-to-b from-[#ccf2f4]/60 to-[#CCEFF5]"
+      className="landingpage_section_paddings relative w-full bg-gradient-to-b from-[#ccf2f4]/40 to-[#CCEFF5]/40"
     >
       <div className="mx-auto w-full max-w-full px-4 font-karla md:max-w-[38rem]">
         <div className="w-full max-w-full rounded-sm p-4">

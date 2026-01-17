@@ -19,15 +19,10 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Navbar />
-      <div
-        id="hero_section"
-        className="hero_section bg-gradient-to-b from-[#e6faff] to-[#CCEFF5]"
-      >
+      <div id="hero_section" className="hero_section bg-[#eefbff]">
         <HeroSection />
       </div>
-      {/* <div className="features_container mx-auto max-w-5xl 2xl:max-w-7xl p-0"> */}
       <Features />
-      {/* </div> */}
       <WhyItIsUseful />
       <InsightsPreview />
       <Testimonials />

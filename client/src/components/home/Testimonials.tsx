@@ -7,7 +7,7 @@ import {
 } from '@/utils/framer/properties';
 import { motion } from 'framer-motion';
 import { FaQuoteRight } from 'react-icons/fa';
-const testimonials = [
+export const testimonials = [
   {
     name: 'Lokeshwar Dewangan',
     quote:
@@ -38,7 +38,7 @@ export const Testimonials = () => {
       initial="initial"
       animate="animate"
       id="testimonials_section"
-      className="landingpage_section_paddings relative w-full bg-gradient-to-b from-[#ccf2f4]/60 to-[#CCEFF5]"
+      className="landingpage_section_paddings relative w-full bg-gradient-to-b from-[#ccf2f4]/40 to-[#CCEFF5]/40"
     >
       <div className="landingpage_section_width">
         <motion.h2

@@ -56,7 +56,7 @@ export const WhyItIsUseful = () => {
       initial="initial"
       animate="animate"
       id="usefullforstudent_section"
-      className="landingpage_section_paddings relative w-full bg-gradient-to-b from-[#ccf2f4]/60 to-[#CCEFF5]"
+      className="landingpage_section_paddings relative w-full bg-gradient-to-b from-[#ccf2f4]/40 to-[#CCEFF5]/40"
     >
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-center gap-3 2xl:max-w-7xl">
         <motion.div
