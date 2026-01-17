@@ -20,7 +20,7 @@ export const CallToAction = () => {
         whileInView="visible"
         className="mb-6 max-w-4xl text-center"
       >
-        <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+        <h2 className="font-bree text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
           Take Control of Your <span className="text-[#00b87c]">Finances</span>{' '}
           Today
         </h2>

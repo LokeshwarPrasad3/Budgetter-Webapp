@@ -82,17 +82,17 @@ export async function createUserAndSendVerification(req, name, email, password, 
     expiresIn: process.env.ACCOUNT_VERIFICATION_TOKEN_SECRET_EXPIRY,
   });
 
-  // const isSentGmail = await sendMessageToUser(
-  //     createdUser.name,
-  //     'VERIFY_ACCOUNT',
-  //     createdUser.email,
-  //     'Budgetter Account Verification',
-  //     token,
-  // );
+  const isSentGmail = await sendMessageToUser(
+    createdUser.name,
+    'VERIFY_ACCOUNT',
+    createdUser.email,
+    'Budgetter Account Verification',
+    token,
+  );
 
-  // if (!isSentGmail) {
-  //     console.log(`Failed to send email to - ${createdUser.email}`);
-  // }
+  if (!isSentGmail) {
+    console.log(`Failed to send email to - ${createdUser.email}`);
+  }
 
   return createdUser;
 }

@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 mx-auto h-[72px] max-w-6xl bg-[#e6faff]/20 font-karla text-gray-800 shadow-sm backdrop-blur-sm sm:shadow-none 2xl:h-24 2xl:max-w-7xl">
+      <nav className="sticky top-0 z-50 mx-auto h-[72px] max-w-6xl rounded-xl bg-[#e6faff]/20 font-karla text-gray-800 shadow-sm backdrop-blur-sm sm:shadow-none 2xl:h-24 2xl:max-w-7xl">
         <motion.div
           variants={ANIMATE_WORDS_VARIENT}
           initial="initial"

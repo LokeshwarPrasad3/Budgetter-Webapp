@@ -15,7 +15,7 @@ const Features: React.FC = () => {
           variants={UPWARD_WAVE_SCALE_HEADING_ANIMATION}
           initial="hidden"
           whileInView="visible"
-          className="my-2 text-2xl font-bold 2xl:text-3xl"
+          className="landingpage_section_heading"
         >
           Features That Matters
         </motion.div>
