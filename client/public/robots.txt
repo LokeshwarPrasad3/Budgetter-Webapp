@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /user/
+
+Sitemap: https://mybudgetter.netlify.app/sitemap.xml
