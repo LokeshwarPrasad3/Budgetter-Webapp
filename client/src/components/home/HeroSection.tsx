@@ -19,7 +19,7 @@ const HeroSection: React.FC = () => {
       variants={ANIMATE_WORDS_VARIENT}
       initial="initial"
       animate="animate"
-      className="hero_section_container relative mx-auto flex h-full w-full max-w-6xl flex-col items-center justify-between py-10 pb-14 sm:flex-row xl:pb-14 2xl:max-w-7xl 2xl:py-14"
+      className="hero_section_container relative mx-auto flex h-full w-full max-w-6xl flex-col items-center justify-between px-4 py-10 pb-14 sm:flex-row xl:pb-14 2xl:max-w-7xl 2xl:py-14"
     >
       <div className="hero_section_content z-10 flex w-full max-w-xl flex-col justify-center gap-5 xl:w-1/2 xl:max-w-none">
         <motion.div variants={ANIMATE_WORDS_VARIENT}>

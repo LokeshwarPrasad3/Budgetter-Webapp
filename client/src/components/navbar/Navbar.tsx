@@ -63,12 +63,12 @@ const Navbar: React.FC = () => {
           </a>
 
           {/* Navigation - Large Screens */}
-          <div className="hidden items-center space-x-4 lg:flex 2xl:space-x-5">
+          <div className="hidden items-center space-x-4 lg:flex">
             {navListArray.map(({ route, name }, index) => (
               <a
                 key={index}
                 href={`/${route}`}
-                className="top_nav_list relative rounded-lg p-0.5 py-0.5 text-sm font-medium capitalize text-[#1a1a1a] transition-all duration-300 ease-in before:absolute before:bottom-0 before:left-0 before:h-[1.5px] before:w-0 before:bg-[#317c63] before:transition-all before:duration-300 hover:before:w-full 2xl:text-lg"
+                className="top_nav_list relative rounded-lg p-0.5 py-0.5 text-sm font-medium capitalize text-[#1a1a1a] transition-all duration-300 ease-in before:absolute before:bottom-0 before:left-0 before:h-[1.5px] before:w-0 before:bg-[#317c63] before:transition-all before:duration-300 hover:before:w-full"
                 style={{ textUnderlineOffset: '8px' }}
               >
                 <span>{name}</span>
