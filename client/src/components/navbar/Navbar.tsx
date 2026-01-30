@@ -57,18 +57,33 @@ const Navbar: React.FC = () => {
               src="/assets/logo/logo_name.png"
               alt="Budgetter"
             /> */}
-            <span className="fn relative top-0.5 bg-gradient-to-r from-[#2e7dff] to-[#00b87c] bg-clip-text pl-2 text-2xl font-bold text-transparent 2xl:text-3xl">
+            {/* <span className="font-bree relative top-0.5 bg-gradient-to-r from-[#2e7dff] to-[#00b87c] bg-clip-text pl-2 text-2xl font-semibold tracking-wider text-transparent 2xl:text-4xl">
               Budgetter
+            </span> */}
+            <span className="relative inline-block bg-gradient-to-r from-[#2e7dff] to-[#00b87c] bg-clip-text pb-2 pl-2.5 font-bree text-2xl font-medium text-transparent 2xl:text-3xl">
+              Budgetter
+              <svg
+                className="absolute bottom-0.5 left-1.5 h-2.5 w-full text-emerald-500 opacity-60 2xl:bottom-0"
+                viewBox="0 0 100 10"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0 5 Q 50 10 100 5"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  fill="none"
+                ></path>
+              </svg>
             </span>
           </a>
 
           {/* Navigation - Large Screens */}
-          <div className="hidden items-center space-x-4 lg:flex">
+          <div className="hidden items-center space-x-5 lg:flex">
             {navListArray.map(({ route, name }, index) => (
               <a
                 key={index}
                 href={`/${route}`}
-                className="top_nav_list relative rounded-lg p-0.5 py-0.5 text-sm font-medium capitalize text-[#1a1a1a] transition-all duration-300 ease-in before:absolute before:bottom-0 before:left-0 before:h-[1.5px] before:w-0 before:bg-[#317c63] before:transition-all before:duration-300 hover:before:w-full"
+                className="top_nav_list relative rounded-lg p-0.5 py-0.5 text-sm font-medium capitalize text-[#1a1a1a] transition-all duration-300 ease-in before:absolute before:bottom-0 before:left-0 before:h-[1.5px] before:w-0 before:bg-[#317c63] before:transition-all before:duration-300 hover:before:w-full 2xl:text-base"
                 style={{ textUnderlineOffset: '8px' }}
               >
                 <span>{name}</span>
@@ -76,7 +91,7 @@ const Navbar: React.FC = () => {
             ))}
             <Link
               to="/signup"
-              className="rounded-full bg-gradient-to-r from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 px-4 py-1.5 text-xs text-white shadow-xl transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-br 2xl:px-6 2xl:text-base 2xl:font-semibold"
+              className="rounded-full bg-gradient-to-r from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 px-4 py-1.5 text-xs text-white shadow-xl transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-br 2xl:px-6 2xl:text-sm 2xl:font-semibold"
             >
               Signup Today ?
             </Link>
