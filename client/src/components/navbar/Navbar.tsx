@@ -90,10 +90,10 @@ const Navbar: React.FC = () => {
               </a>
             ))}
             <Link
-              to="/signup"
+              to="/login"
               className="rounded-full bg-gradient-to-r from-[#065f46]/80 via-[#047857]/80 to-[#059669]/80 px-4 py-1.5 text-xs text-white shadow-xl transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-br 2xl:px-6 2xl:text-sm 2xl:font-semibold"
             >
-              Signup Today ?
+              Login Today ?
             </Link>
           </div>
         </motion.div>

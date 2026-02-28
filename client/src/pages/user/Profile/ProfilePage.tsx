@@ -49,7 +49,7 @@ const ProfilePage: React.FC = () => {
   const [dob, setDOB] = useState<string>('');
   const [profession, setProfession] = useState<string>('');
   const [profileImage, setProfileImage] = useState<string>(
-    'https://i.ibb.co/cDvPNm5/360-F-864477167-q-Srg-Ao5j-QHc-PYacblj-ZXu-FPVHy-Q9-QOln.webp'
+    'https://res.cloudinary.com/budgettercloud/image/upload/v1751145841/w9zvxc59fcppjnoxgi65.png'
   );
   // const [dob, setDOB] = useState<Date>(new Date());
   const [facebookLink, setFacebookLink] = useState<string>('');

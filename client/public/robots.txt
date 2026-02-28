@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /user/
 
-Sitemap: https://mybudgetter.netlify.app/sitemap.xml
+Sitemap: https://budgetter.lokeshwardewangan.in/sitemap.xml

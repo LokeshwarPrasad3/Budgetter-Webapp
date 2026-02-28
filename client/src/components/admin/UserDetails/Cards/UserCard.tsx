@@ -28,7 +28,10 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
               height="68"
               decoding="async"
               className="h-[68px] rounded-full"
-              src={avatar || 'https://i.ibb.co/ymqwMZ2N/Rri-Zq-Bv-400x400.jpg'}
+              src={
+                avatar ||
+                'https://res.cloudinary.com/budgettercloud/image/upload/v1728999013/u1v1qmzpj91vdhd3cimu.webp'
+              }
               crossOrigin="anonymous"
               style={{ color: 'transparent' }}
             />

@@ -50,7 +50,7 @@ const InsightsPreview = () => {
               categories. Easily spot which areas consume most of your budget.
             </p>
             <img
-              src="https://i.ibb.co/SXyb0jbP/report-1.png"
+              src="https://res.cloudinary.com/budgettercloud/image/upload/v1772306486/Screenshot_3_idi9w6.png"
               alt="Category wise expense chart"
               className="rounded-lg"
             />
@@ -69,7 +69,7 @@ const InsightsPreview = () => {
               financial flow and identify months with higher spending patterns.
             </p>
             <img
-              src="https://i.ibb.co/tpT968J7/repo-2.png"
+              src="https://res.cloudinary.com/budgettercloud/image/upload/v1772306476/Screenshot_4_hesrgg.png"
               alt="Expenses over time graph"
               className="rounded-lg"
             />

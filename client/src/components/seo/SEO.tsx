@@ -24,7 +24,7 @@ const SEO: React.FC<SEOProps> = ({
   structuredData,
   children,
 }) => {
-  const siteUrl = 'https://mybudgetter.netlify.app';
+  const siteUrl = 'https://budgetter.lokeshwardewangan.in';
   const fullCanonical = canonical || siteUrl;
   const fullImage =
     image ||

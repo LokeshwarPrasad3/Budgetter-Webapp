@@ -42,7 +42,8 @@ const HomePage: React.FC = () => {
     title: 'Budgetter - Smart Finance Tracker for Students',
     description:
       'Take control of your student finances with Budgetter. Track expenses, analytics habits, and save money with our easy-to-use budget planner.',
-    image: 'https://mybudgetter.netlify.app/assets/dashboard/hero-min.svg',
+    image:
+      'https://budgetter.lokeshwardewangan.in/assets/dashboard/hero-min.svg',
     structuredData: {
       '@context': 'https://schema.org',
       '@type': 'SoftwareApplication',
@@ -55,7 +56,8 @@ const HomePage: React.FC = () => {
         priceCurrency: 'INR',
       },
       description: 'Take control of your student finances with Budgetter.',
-      image: 'https://mybudgetter.netlify.app/assets/dashboard/hero-min.svg',
+      image:
+        'https://budgetter.lokeshwardewangan.in/assets/dashboard/hero-min.svg',
       author: {
         '@type': 'Person',
         name: 'Lokeshwar Prasad Dewangan',
