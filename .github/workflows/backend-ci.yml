@@ -1,0 +1,37 @@
+name: backend-ci
+
+on:
+  push:
+    branches: 
+      - master
+  pull_request:
+    branches: 
+      - master
+
+jobs:
+  format-check:
+    runs-on: ubuntu-latest
+
+    defaults: 
+      run: 
+        working-directory: server
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install server deps
+        run: npm install
+
+      - name: Check formatting
+        run: npx prettier --check .
+
+      - name: Syntax sanity check
+        run: node --check src/index.js
